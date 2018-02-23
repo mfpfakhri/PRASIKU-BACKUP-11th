@@ -1,0 +1,47 @@
+<resources>
+    <string name="app_name">PRASIKU</string>
+    <string name="slogan">Let us find your catmate here and take it home</string>
+    <string name="main_sign_up">Sign Up</string>
+    <string name="main_sign_in">Sign In</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Password</string>
+    <string name="action_sign_up">Register</string>
+    <string name="intent_sign_in">Already registered. Login Here!</string>
+    <string name="action_sign_in">Sign In</string>
+    <string name="intent_reset_password">Forgot your password?</string>
+    <string name="lbl_forgot_password">Forgot password?</string>
+    <string name="forgot_password_msg">We just need your registered Email Id to sent you password reset instructions.</string>
+    <string name="action_reset_password">Reset Password</string>
+    <string name="action_back"><![CDATA[<< Back]]></string>
+    <string name="minimum_password">Password too short, enter minimum 6 characters!</string>
+    <string name="auth_failed">Authentication failed, check your email and password or sign up</string>
+    <string name="action_sign_out">Sign Out</string>
+    <string name="action_change_password">Change Password</string>
+    <string name="new_password">Your New Password</string>
+    <string name="old_password">Your Current Password</string>
+
+    <!--NAVIGATION DRAWER-->
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="openDrawer">open_drawer</string>
+    <string name="closeDrawer">close_drawer</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="app_submitted">Application Submitted</string>
+    <string name="app_received">Application Received</string>
+    <string name="about_us">About Us</string>
+    <string name="tutorial">Tutorial</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="home">Home</string>
+    <string name="hint_username">Username</string>
+    <string name="hint_cp">Phone Number</string>
+    <string name="hint_full_name">Full Name (according ID card)</string>
+    <string name="hint_dob">Date of Birth</string>
+    <string name="user_registration_header">User Registration</string>
+    <string name="hint_province">Province</string>
+    <string name="hint_regency">Regency</string>
+    <string name="hint_sub_district">Sub-district</string>
+    <string name="hint_city">City</string>
+    <string name="hint_street">Street</string>
+</resources>
