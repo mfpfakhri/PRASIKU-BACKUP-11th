@@ -20,16 +20,16 @@ public class AddProvinceActivity extends AppCompatActivity {
     private EditText inputProvince;
     private Button btnAddProvince, btnClearText;
 
-    DatabaseReference databaseReference;
+    DatabaseReference databaseProvinces;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_province);
 
-        databaseReference = FirebaseDatabase.getInstance().getReference("province");
+        databaseProvinces = FirebaseDatabase.getInstance().getReference("province");
 
-        inputProvince = (EditText)findViewById(R.id.add_provinces_edit_text);
+        inputProvince = (EditText)findViewById(R.id.add_province_edit_text);
         btnAddProvince = (Button)findViewById(R.id.action_add_province_button);
         btnClearText = (Button)findViewById(R.id.action_clear_text_button);
 
@@ -53,11 +53,11 @@ public class AddProvinceActivity extends AppCompatActivity {
 
         if (!TextUtils.isEmpty(name)){
 
-            String id = databaseReference.push().getKey();
+            String id = databaseProvinces.push().getKey();
 
             Province province = new Province(id, name);
 
-            databaseReference.child(id).setValue(province);
+            databaseProvinces.child(id).setValue(province);
 
             Toast.makeText(this, "Province Added", Toast.LENGTH_SHORT).show();
 

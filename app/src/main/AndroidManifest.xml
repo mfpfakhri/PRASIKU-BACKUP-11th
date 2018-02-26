@@ -35,7 +35,7 @@
             android:resource="@array/preloaded_fonts" />
 
         <activity android:name=".activity.activity.AddProvinceActivity" />
-        <activity android:name=".activity.activity.AddCityActivity"></activity>
+        <activity android:name=".activity.activity.AddCityActivity" />
     </application>
 
 </manifest>

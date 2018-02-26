@@ -29,7 +29,7 @@
                 android:layout_marginTop="@dimen/activity_horizontal_margin">
 
                 <EditText
-                    android:id="@+id/add_provinces_edit_text"
+                    android:id="@+id/add_province_edit_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Type Province Name Here"

@@ -26,7 +26,6 @@
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/activity_vertical_margin"
             android:layout_marginTop="@dimen/activity_vertical_margin">
 
             <EditText
@@ -41,12 +40,11 @@
 
         </android.support.design.widget.TextInputLayout>
 
-        <com.jaredrummler.materialspinner.MaterialSpinner
+        <fr.ganfra.materialspinner.MaterialSpinner
             android:id="@+id/provinceSpinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Select Province"
-            app:ms_background_color="@color/colorPrimaryDark"/>
+            app:ms_hint="Select Province"/>
 
         <LinearLayout
             android:layout_width="fill_parent"
