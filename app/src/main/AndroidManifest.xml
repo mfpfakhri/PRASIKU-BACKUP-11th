@@ -28,11 +28,14 @@
         <activity android:name=".activity.activity.TutorialActivity" />
         <activity android:name=".activity.activity.AboutUsActivity" />
         <activity android:name=".activity.activity.AppReceivedActivity" />
-        <activity android:name=".activity.activity.AppSubmittedActivity"></activity>
+        <activity android:name=".activity.activity.AppSubmittedActivity" />
 
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+
+        <activity android:name=".activity.activity.AddProvinceActivity" />
+        <activity android:name=".activity.activity.AddCityActivity"></activity>
     </application>
 
 </manifest>

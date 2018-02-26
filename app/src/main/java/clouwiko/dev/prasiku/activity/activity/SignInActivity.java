@@ -15,6 +15,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import clouwiko.dev.prasiku.R;
 
@@ -93,5 +94,18 @@ public class SignInActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        //Get Firebase auth instance
+        auth = FirebaseAuth.getInstance();
+
+        //Get Current User
+        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user == null) {
+            startActivity(new Intent(SignInActivity.this, LandingActivity.class));
+            finish();
+        }
     }
 }

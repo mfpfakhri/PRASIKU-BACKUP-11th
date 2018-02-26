@@ -9,13 +9,14 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import clouwiko.dev.prasiku.R;
 
 public class LandingActivity extends AppCompatActivity {
 
     private FirebaseAuth auth;
-    private Button btnSignIn, btnSignUp;
+    private Button btnSignIn, btnSignUp, btnInputProvinces, btnInputCities;
     TextView textSlogan;
 
     @Override
@@ -38,6 +39,9 @@ public class LandingActivity extends AppCompatActivity {
         btnSignIn = (Button)findViewById(R.id.main_sign_in_button);
         btnSignUp = (Button)findViewById(R.id.main_sign_up_button);
 
+        btnInputProvinces = (Button)findViewById(R.id.main_province_intent_button);
+        btnInputCities = (Button)findViewById(R.id.main_city_intent_button);
+
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -53,5 +57,36 @@ public class LandingActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        btnInputProvinces.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LandingActivity.this, AddProvinceActivity.class));
+                finish();
+            }
+        });
+
+        btnInputCities.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LandingActivity.this, AddCityActivity.class));
+                finish();
+            }
+        });
+    }
+
+    @Override
+    public void onBackPressed() {
+        //Get Firebase auth instance
+        auth = FirebaseAuth.getInstance();
+
+        //Get Current User
+        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user == null) {
+            Intent intent = new Intent(Intent.ACTION_MAIN);
+            intent.addCategory(Intent.CATEGORY_HOME);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        }
     }
 }
