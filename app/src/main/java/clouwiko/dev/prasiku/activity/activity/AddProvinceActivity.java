@@ -27,11 +27,11 @@ public class AddProvinceActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_province);
 
-        databaseProvinces = FirebaseDatabase.getInstance().getReference("province");
+        databaseProvinces = FirebaseDatabase.getInstance().getReference("provinces");
 
-        inputProvince = (EditText)findViewById(R.id.add_province_edit_text);
-        btnAddProvince = (Button)findViewById(R.id.action_add_province_button);
-        btnClearText = (Button)findViewById(R.id.action_clear_text_button);
+        inputProvince = (EditText) findViewById(R.id.add_province_edit_text);
+        btnAddProvince = (Button) findViewById(R.id.action_add_province_button);
+        btnClearText = (Button) findViewById(R.id.action_clear_text_button);
 
         btnClearText.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,10 +48,10 @@ public class AddProvinceActivity extends AppCompatActivity {
         });
     }
 
-    private void addProvince(){
+    private void addProvince() {
         String name = inputProvince.getText().toString().trim();
 
-        if (!TextUtils.isEmpty(name)){
+        if (!TextUtils.isEmpty(name)) {
 
             String id = databaseProvinces.push().getKey();
 

@@ -7,16 +7,14 @@ package clouwiko.dev.prasiku.activity.model;
 public class City {
     private String cityId;
     private String cityName;
-    private String cityProvince;
 
     public City(){
 
     }
 
-    public City(String cityId, String cityName, String cityProvince) {
+    public City(String cityId, String cityName) {
         this.cityId = cityId;
         this.cityName = cityName;
-        this.cityProvince = cityProvince;
     }
 
     public String getCityId() {
@@ -25,9 +23,5 @@ public class City {
 
     public String getCityName() {
         return cityName;
-    }
-
-    public String getCityProvince() {
-        return cityProvince;
     }
 }

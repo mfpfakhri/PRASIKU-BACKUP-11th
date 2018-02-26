@@ -29,7 +29,7 @@ public class AddCityActivity extends AppCompatActivity {
     private Button btnAddCity, btnClearText;
     private MaterialSpinner spinnerProvinces;
 
-    DatabaseReference databaseCities, databaseProvinces;
+    private DatabaseReference databaseCities, databaseProvinces;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,11 +39,11 @@ public class AddCityActivity extends AppCompatActivity {
         inputCity = (EditText) findViewById(R.id.add_city_edit_text);
         btnAddCity = (Button) findViewById(R.id.action_add_city_button);
         btnClearText = (Button) findViewById(R.id.action_clear_text_button);
-        spinnerProvinces = (MaterialSpinner)findViewById(R.id.provinceSpinner);
+        spinnerProvinces = (MaterialSpinner) findViewById(R.id.provinceSpinner);
 
-        databaseProvinces = FirebaseDatabase.getInstance().getReference();
+        databaseProvinces = FirebaseDatabase.getInstance().getReference().child("provinces");
 
-        databaseProvinces.child("province").addValueEventListener(new ValueEventListener() {
+        databaseProvinces.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // Is better to use a List, because you don't know the size
@@ -85,15 +85,17 @@ public class AddCityActivity extends AppCompatActivity {
 
     private void addCity() {
         String name = inputCity.getText().toString().trim();
-        String province = spinnerProvinces.getSelectedItem().toString();
-        if (!TextUtils.isEmpty(name)){
+        databaseCities = FirebaseDatabase.getInstance().getReference("cities");
+        if (!TextUtils.isEmpty(name)) {
             String id = databaseCities.push().getKey();
 
-            City city = new City(id, name, province);
+            City city = new City(id, name);
 
             databaseCities.child(id).setValue(city);
 
             Toast.makeText(this, "City Added", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Enter City Name", Toast.LENGTH_SHORT).show();
         }
     }
 
