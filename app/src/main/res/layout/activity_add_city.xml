@@ -44,7 +44,7 @@
             android:id="@+id/provinceSpinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:ms_hint="Select Province"/>
+            app:ms_hint="Select Province" />
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -57,25 +57,61 @@
             <Button
                 android:id="@+id/action_add_city_button"
                 style="?android:textAppearanceSmall"
-                android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="8dp"
                 android:layout_marginTop="16dp"
+                android:layout_weight="1"
                 android:background="@color/colorAccent"
                 android:text="Add City"
                 android:textColor="@android:color/black"
-                android:layout_marginRight="8dp"
                 android:textStyle="bold" />
+
             <Button
                 android:id="@+id/action_clear_text_button"
                 style="?android:textAppearanceSmall"
-                android:layout_marginLeft="8dp"
-                android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
                 android:layout_marginTop="16dp"
+                android:layout_weight="1"
                 android:background="@color/colorAccent"
                 android:text="Clear Text"
+                android:textColor="@android:color/black"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimaryDark"
+            android:gravity="bottom"
+            android:orientation="horizontal"
+            android:paddingTop="@dimen/activity_vertical_margin">
+
+            <Button
+                android:id="@+id/action_add_city_text_button"
+                style="?android:textAppearanceSmall"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_weight="1"
+                android:background="@color/colorAccent"
+                android:text="City"
+                android:textColor="@android:color/black"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/action_add_regency_text_button"
+                style="?android:textAppearanceSmall"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_weight="1"
+                android:background="@color/colorAccent"
+                android:text="Regency"
                 android:textColor="@android:color/black"
                 android:textStyle="bold" />
         </LinearLayout>

@@ -14,7 +14,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -27,7 +26,7 @@ import fr.ganfra.materialspinner.MaterialSpinner;
 public class AddCityActivity extends AppCompatActivity {
 
     private EditText inputCity;
-    private Button btnAddCity, btnClearText;
+    private Button btnAddCity, btnClearText, btnTextCity, btnTextRegency;
     private MaterialSpinner spinnerProvinces;
 
     private DatabaseReference databaseCities, databaseProvinces;
@@ -40,6 +39,8 @@ public class AddCityActivity extends AppCompatActivity {
         inputCity = (EditText) findViewById(R.id.add_city_edit_text);
         btnAddCity = (Button) findViewById(R.id.action_add_city_button);
         btnClearText = (Button) findViewById(R.id.action_clear_text_button);
+        btnTextCity = (Button)findViewById(R.id.action_add_city_text_button);
+        btnTextRegency = (Button)findViewById(R.id.action_add_regency_text_button);
         spinnerProvinces = (MaterialSpinner) findViewById(R.id.provinceSpinner);
 
         databaseProvinces = FirebaseDatabase.getInstance().getReference().child("provinces");
@@ -81,6 +82,20 @@ public class AddCityActivity extends AppCompatActivity {
                 addCity();
             }
         });
+
+        btnTextCity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                inputCity.setText("Kota ");
+            }
+        });
+
+        btnTextRegency.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                inputCity.setText("Kab. ");
+            }
+        });
     }
 
     private void addCity() {
@@ -94,7 +109,7 @@ public class AddCityActivity extends AppCompatActivity {
 
             databaseCities.child(id).setValue(city);
 
-            Toast.makeText(this, "City Added", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "City or Regency Added", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(this, "Enter City Name", Toast.LENGTH_SHORT).show();
         }
