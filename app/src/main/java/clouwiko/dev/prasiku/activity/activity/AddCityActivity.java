@@ -14,6 +14,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -42,7 +43,6 @@ public class AddCityActivity extends AppCompatActivity {
         spinnerProvinces = (MaterialSpinner) findViewById(R.id.provinceSpinner);
 
         databaseProvinces = FirebaseDatabase.getInstance().getReference().child("provinces");
-
         databaseProvinces.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -85,11 +85,12 @@ public class AddCityActivity extends AppCompatActivity {
 
     private void addCity() {
         String name = inputCity.getText().toString().trim();
+        String province = spinnerProvinces.getSelectedItem().toString().trim();
         databaseCities = FirebaseDatabase.getInstance().getReference("cities");
         if (!TextUtils.isEmpty(name)) {
             String id = databaseCities.push().getKey();
 
-            City city = new City(id, name);
+            City city = new City(id, name, province);
 
             databaseCities.child(id).setValue(city);
 
