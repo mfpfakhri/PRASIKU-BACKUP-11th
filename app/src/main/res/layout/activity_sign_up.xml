@@ -32,22 +32,6 @@
                 android:layout_height="wrap_content">
 
                 <EditText
-                    android:id="@+id/username"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/hint_username"
-                    android:inputType="text"
-                    android:maxLines="1"
-                    android:singleLine="true"
-                    android:textColor="@android:color/white" />
-
-            </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <EditText
                     android:id="@+id/email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -83,22 +67,6 @@
                 android:layout_height="wrap_content">
 
                 <EditText
-                    android:id="@+id/cp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/hint_cp"
-                    android:inputType="phone"
-                    android:maxLines="1"
-                    android:singleLine="true"
-                    android:textColor="@android:color/white" />
-
-            </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <EditText
                     android:id="@+id/full_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -115,7 +83,7 @@
                 android:layout_height="wrap_content">
 
                 <EditText
-                    android:id="@+id/dob"
+                    android:id="@+id/dobDatepicker"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:clickable="true"
@@ -125,11 +93,18 @@
 
             </android.support.design.widget.TextInputLayout>
 
-            <AutoCompleteTextView
-                android:id="@+id/city"
+            <fr.ganfra.materialspinner.MaterialSpinner
+                android:id="@+id/gender"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
+                app:ms_hint="Select Gender"
+                android:entries="@array/gender"/>
+
+
+            <AutoCompleteTextView
+                android:id="@+id/cityAutoCompleteTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:hint="@string/hint_city" />
 
             <android.support.design.widget.TextInputLayout
@@ -137,10 +112,26 @@
                 android:layout_height="wrap_content">
 
                 <EditText
-                    android:id="@+id/street"
+                    android:id="@+id/phoneNumber"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/hint_street"
+                    android:hint="@string/hint_cp"
+                    android:inputType="phone"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:textColor="@android:color/white" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/hint_address"
                     android:inputType="text"
                     android:maxLines="1"
                     android:singleLine="true"
