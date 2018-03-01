@@ -1,14 +1,19 @@
 package clouwiko.dev.prasiku.activity.activity;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -24,6 +29,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Calendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -32,7 +38,8 @@ import fr.ganfra.materialspinner.MaterialSpinner;
 
 public class SignUpActivity extends AppCompatActivity {
 
-    private EditText inputEmail, inputPassword, inputFullName, inputPhone, inputAddress;
+    private EditText inputEmail, inputPassword, inputFullName, inputDob, inputPhone, inputAddress;
+    private DatePickerDialog.OnDateSetListener dobSetListener;
     private MaterialSpinner spinnerGender;
     private Button btnSignIn, btnSignUp;
     private ProgressBar progressBar;
@@ -54,6 +61,7 @@ public class SignUpActivity extends AppCompatActivity {
         inputEmail = (EditText)findViewById(R.id.email);
         inputPassword = (EditText)findViewById(R.id.password);
         inputFullName = (EditText)findViewById(R.id.full_name);
+        inputDob = (EditText)findViewById(R.id.dobDatepicker);
         inputPhone = (EditText)findViewById(R.id.phoneNumber);
         inputAddress = (EditText)findViewById(R.id.address);
         spinnerGender = (MaterialSpinner)findViewById(R.id.gender);
@@ -85,6 +93,35 @@ public class SignUpActivity extends AppCompatActivity {
                 startActivity(new Intent(SignUpActivity.this, SignInActivity.class));
             }
         });
+
+        inputDob.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar cal = Calendar.getInstance();
+                int day = cal.get(Calendar.DAY_OF_MONTH);
+                int month = cal.get(Calendar.MONTH);
+                int year = cal.get(Calendar.YEAR);
+
+                DatePickerDialog dialog = new DatePickerDialog(
+                        SignUpActivity.this,
+                        android.R.style.Theme_Holo_Light_Dialog_MinWidth,
+                        dobSetListener,
+                        day,month,year);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.show();
+            }
+        });
+
+        dobSetListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int dayOfMonth, int month, int year) {
+                month = month + 1;
+                Log.d("onDateSet: date: " + dayOfMonth + "/" + month + "/" + year, dobSetListener.toString());
+
+                String date = dayOfMonth + "/" + month + "/" + year;
+                inputDob.setText(date);
+            }
+        };
 
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -133,6 +170,12 @@ public class SignUpActivity extends AppCompatActivity {
                 String fname = inputFullName.getText().toString().trim();
                 if (TextUtils.isEmpty(fname)) {
                     Toast.makeText(getApplicationContext(), "Enter Your Full Name", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                String dobDate = inputDob.getText().toString().trim();
+                if (TextUtils.isEmpty(dobDate)) {
+                    Toast.makeText(getApplicationContext(), "Enter Your Birth Date", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
