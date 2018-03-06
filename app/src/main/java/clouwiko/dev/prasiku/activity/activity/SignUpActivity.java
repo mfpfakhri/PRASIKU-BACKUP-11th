@@ -52,6 +52,8 @@ public class SignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
+
+
         //Get Firebase auth instance
         auth = FirebaseAuth.getInstance();
 
@@ -69,7 +71,7 @@ public class SignUpActivity extends AppCompatActivity {
         autoCompleteTextViewCity = (AutoCompleteTextView)findViewById(R.id.cityAutoCompleteTextView);
 
         databaseCities = FirebaseDatabase.getInstance().getReference().child("cities");
-        final ArrayAdapter<String> citiesAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item);
+        final ArrayAdapter<String> citiesAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item);
         databaseCities.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -173,6 +175,7 @@ public class SignUpActivity extends AppCompatActivity {
                     return;
                 }
 
+                //DOB Validation
                 String dobDate = inputDob.getText().toString().trim();
                 if (TextUtils.isEmpty(dobDate)) {
                     Toast.makeText(getApplicationContext(), "Enter Your Birth Date", Toast.LENGTH_SHORT).show();

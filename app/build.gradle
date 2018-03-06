@@ -47,5 +47,8 @@ dependencies {
     compile ('com.github.ganfra:material-spinner:2.0.0'){
         exclude group: 'com.android.support', module: 'appcompat-v7'
     }
+
+    //Rounded Corner
+    compile 'com.jcminarro:RoundKornerLayouts:0.3.1'
 }
 apply plugin: 'com.google.gms.google-services'
