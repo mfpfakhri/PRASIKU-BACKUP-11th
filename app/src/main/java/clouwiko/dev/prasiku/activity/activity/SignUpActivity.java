@@ -1,6 +1,7 @@
 package clouwiko.dev.prasiku.activity.activity;
 
 import android.app.DatePickerDialog;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -32,10 +33,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.theartofdev.edmodo.cropper.CropImage;
-import com.theartofdev.edmodo.cropper.CropImageView;
 
-import java.io.IOException;
 import java.util.Calendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -53,8 +51,8 @@ public class SignUpActivity extends AppCompatActivity {
     private FirebaseAuth auth;
     private DatabaseReference databaseCities, databaseUsers;
     private AutoCompleteTextView autoCompleteTextViewCity;
-    private ImageView userPhotosIv, idCardPhotosIv;
-    final static int REQUEST_FILE = 1;
+    private ImageView userPhotoIv;
+    Uri uri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,8 +74,7 @@ public class SignUpActivity extends AppCompatActivity {
         spinnerGender = (MaterialSpinner) findViewById(R.id.gender);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         autoCompleteTextViewCity = (AutoCompleteTextView) findViewById(R.id.cityAutoCompleteTextView);
-        userPhotosIv = (ImageView) findViewById(R.id.userPhotos);
-        idCardPhotosIv = (ImageView) findViewById(R.id.idCardPhotos);
+        userPhotoIv = (ImageView) findViewById(R.id.userPhotos);
 
         databaseCities = FirebaseDatabase.getInstance().getReference().child("cities");
         final ArrayAdapter<String> citiesAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item);
@@ -134,17 +131,10 @@ public class SignUpActivity extends AppCompatActivity {
             }
         };
 
-        userPhotosIv.setOnClickListener(new View.OnClickListener() {
+        userPhotoIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 userPhotosMediaOpen();
-            }
-        });
-
-        idCardPhotosIv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                idCardPhotosMediaOpen();
             }
         });
 
@@ -268,38 +258,46 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void userPhotosMediaOpen() {
-        Intent galleryIntent = new Intent (Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(Intent.createChooser(galleryIntent, "Select Image from Gallery"),2);
+        Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(Intent.createChooser(galleryIntent, "Select Image from Gallery"), 2);
     }
 
-    private void idCardPhotosMediaOpen() {
-        Intent galleryIntent = new Intent (Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(Intent.createChooser(galleryIntent, "Select Image from Gallery"),2);
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 0 && resultCode == RESULT_OK) {
+            cropUserImage();
+        } else if (requestCode == 2) {
+            if (data != null){
+                uri = data.getData();
+                cropUserImage();
+            }
+        } else if (requestCode == 1) {
+            if (data != null) {
+                Bundle bundle = data.getExtras();
+                Bitmap bitmap = bundle.getParcelable("data");
+                userPhotoIv.setImageBitmap(bitmap);
+            }
+        }
     }
 
-//    @Override
-//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        if (requestCode == REQUEST_FILE && resultCode == RESULT_OK && data != null && data.getData() != null) {
-//            Uri imageUri = data.getData();
-//            CropImage.activity()
-//                    .setGuidelines(CropImageView.Guidelines.ON)
-//                    .setAspectRatio(1,1)
-//                    .start(this);
-////            try {
-////                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
-////                userPhotosIv.setImageBitmap(bitmap);
-////            } catch (IOException e) {
-////                e.printStackTrace();
-////            }
-//        }
-//        if (requestCode==CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
-//            CropImage.ActivityResult result = CropImage.getActivityResult(data);
-//            if (requestCode==RESULT_OK) {
-//                Uri resultUri = result.getUri();
-//            }
-//        }
-//    }
+    private void cropUserImage() {
+        try {
+            Intent cropIntent = new Intent("com.android.camera.action.CROP");
+            cropIntent.setDataAndType(uri,"image/*");
+
+            cropIntent.putExtra("crop","true");
+            cropIntent.putExtra("outputX", 180);
+            cropIntent.putExtra("outputY", 180);
+            cropIntent.putExtra("aspectX", 3);
+            cropIntent.putExtra("aspectY", 4);
+            cropIntent.putExtra("scaleUpIfNeeded", true);
+            cropIntent.putExtra("return-data", true);
+
+            startActivityForResult(cropIntent, 1);
+        } catch (ActivityNotFoundException ex){
+
+        }
+    }
 
     private void userProfile() {
         FirebaseUser user = auth.getCurrentUser();
