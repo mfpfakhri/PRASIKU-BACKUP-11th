@@ -288,7 +288,7 @@ public class SignUpActivity extends AppCompatActivity {
             cropIntent.putExtra("crop","true");
             cropIntent.putExtra("outputX", 180);
             cropIntent.putExtra("outputY", 180);
-            cropIntent.putExtra("aspectX", 4);
+            cropIntent.putExtra("aspectX", 3);
             cropIntent.putExtra("aspectY", 4);
             cropIntent.putExtra("scaleUpIfNeeded", true);
             cropIntent.putExtra("return-data", true);
