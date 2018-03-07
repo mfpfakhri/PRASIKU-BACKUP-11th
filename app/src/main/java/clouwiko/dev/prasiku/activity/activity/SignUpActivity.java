@@ -2,8 +2,11 @@ package clouwiko.dev.prasiku.activity.activity;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,6 +18,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -28,7 +32,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -46,29 +53,31 @@ public class SignUpActivity extends AppCompatActivity {
     private FirebaseAuth auth;
     private DatabaseReference databaseCities, databaseUsers;
     private AutoCompleteTextView autoCompleteTextViewCity;
+    private ImageView userPhotosIv, idCardPhotosIv;
+    final static int REQUEST_FILE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
-
-
         //Get Firebase auth instance
         auth = FirebaseAuth.getInstance();
 
         // Action on Click
-        btnSignUp = (Button)findViewById(R.id.action_sign_up_button);
-        btnSignIn = (Button)findViewById(R.id.intent_sign_in_button);
-        inputEmail = (EditText)findViewById(R.id.email);
-        inputPassword = (EditText)findViewById(R.id.password);
-        inputFullName = (EditText)findViewById(R.id.full_name);
-        inputDob = (EditText)findViewById(R.id.dobDatepicker);
-        inputPhone = (EditText)findViewById(R.id.phoneNumber);
-        inputAddress = (EditText)findViewById(R.id.address);
-        spinnerGender = (MaterialSpinner)findViewById(R.id.gender);
-        progressBar = (ProgressBar)findViewById(R.id.progressBar);
-        autoCompleteTextViewCity = (AutoCompleteTextView)findViewById(R.id.cityAutoCompleteTextView);
+        btnSignUp = (Button) findViewById(R.id.action_sign_up_button);
+        btnSignIn = (Button) findViewById(R.id.intent_sign_in_button);
+        inputEmail = (EditText) findViewById(R.id.email);
+        inputPassword = (EditText) findViewById(R.id.password);
+        inputFullName = (EditText) findViewById(R.id.full_name);
+        inputDob = (EditText) findViewById(R.id.dobDatepicker);
+        inputPhone = (EditText) findViewById(R.id.phoneNumber);
+        inputAddress = (EditText) findViewById(R.id.address);
+        spinnerGender = (MaterialSpinner) findViewById(R.id.gender);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        autoCompleteTextViewCity = (AutoCompleteTextView) findViewById(R.id.cityAutoCompleteTextView);
+        userPhotosIv = (ImageView) findViewById(R.id.userPhotos);
+        idCardPhotosIv = (ImageView) findViewById(R.id.idCardPhotos);
 
         databaseCities = FirebaseDatabase.getInstance().getReference().child("cities");
         final ArrayAdapter<String> citiesAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item);
@@ -76,7 +85,7 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 autoCompleteTextViewCity.setThreshold(1);
-                for (DataSnapshot citySnapshot : dataSnapshot.getChildren()){
+                for (DataSnapshot citySnapshot : dataSnapshot.getChildren()) {
                     String cityName = citySnapshot.child("cityName").getValue(String.class);
                     citiesAdapter.add(cityName);
                 }
@@ -108,7 +117,7 @@ public class SignUpActivity extends AppCompatActivity {
                         SignUpActivity.this,
                         android.R.style.Theme_Holo_Light_Dialog_MinWidth,
                         dobSetListener,
-                        day,month,year);
+                        day, month, year);
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 dialog.show();
             }
@@ -124,6 +133,20 @@ public class SignUpActivity extends AppCompatActivity {
                 inputDob.setText(date);
             }
         };
+
+        userPhotosIv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                userPhotosMediaOpen();
+            }
+        });
+
+        idCardPhotosIv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                idCardPhotosMediaOpen();
+            }
+        });
 
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -184,7 +207,7 @@ public class SignUpActivity extends AppCompatActivity {
 
                 //Gender Validation
                 int spinnerPosition = spinnerGender.getSelectedItemPosition();
-                if (spinnerPosition!=0) {
+                if (spinnerPosition != 0) {
 
                 } else {
                     Toast.makeText(SignUpActivity.this, "Pick Your Gender", Toast.LENGTH_SHORT).show();
@@ -244,9 +267,43 @@ public class SignUpActivity extends AppCompatActivity {
         });
     }
 
+    private void userPhotosMediaOpen() {
+        Intent galleryIntent = new Intent (Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(Intent.createChooser(galleryIntent, "Select Image from Gallery"),2);
+    }
+
+    private void idCardPhotosMediaOpen() {
+        Intent galleryIntent = new Intent (Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(Intent.createChooser(galleryIntent, "Select Image from Gallery"),2);
+    }
+
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if (requestCode == REQUEST_FILE && resultCode == RESULT_OK && data != null && data.getData() != null) {
+//            Uri imageUri = data.getData();
+//            CropImage.activity()
+//                    .setGuidelines(CropImageView.Guidelines.ON)
+//                    .setAspectRatio(1,1)
+//                    .start(this);
+////            try {
+////                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+////                userPhotosIv.setImageBitmap(bitmap);
+////            } catch (IOException e) {
+////                e.printStackTrace();
+////            }
+//        }
+//        if (requestCode==CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+//            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+//            if (requestCode==RESULT_OK) {
+//                Uri resultUri = result.getUri();
+//            }
+//        }
+//    }
+
     private void userProfile() {
         FirebaseUser user = auth.getCurrentUser();
-        if(user!=null) {
+        if (user != null) {
 
         }
     }

@@ -4,10 +4,11 @@ android {
     compileSdkVersion 26
     defaultConfig {
         applicationId "clouwiko.dev.prasiku"
-        minSdkVersion 17
+        minSdkVersion 21
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -50,5 +51,10 @@ dependencies {
 
     //Rounded Corner
     compile 'com.jcminarro:RoundKornerLayouts:0.3.1'
+
+    //Image Cropper
+    compile ('com.theartofdev.edmodo:android-image-cropper:2.6.+'){
+        exclude group: 'com.android.support', module: 'appcompat-v7'
+    }
 }
 apply plugin: 'com.google.gms.google-services'
