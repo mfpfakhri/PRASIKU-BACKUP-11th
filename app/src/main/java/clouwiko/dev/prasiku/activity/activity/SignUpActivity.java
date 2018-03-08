@@ -34,6 +34,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.ProviderQueryResult;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -154,6 +155,8 @@ public class SignUpActivity extends AppCompatActivity {
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                emailExistFirebase();
+
                 //Photos Validation
                 if (userPhotoIv.getDrawable() != null) {
 
@@ -259,7 +262,6 @@ public class SignUpActivity extends AppCompatActivity {
                         .addOnCompleteListener(SignUpActivity.this, new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
-                                Toast.makeText(SignUpActivity.this, "Your Account has been Created", Toast.LENGTH_SHORT).show();
                                 // If sign in fails, display a message to the user. If sign in succeeds
                                 // the auth state listener will be notified and logic to handle the
                                 // signed in user can be handled in the listener.
@@ -267,12 +269,12 @@ public class SignUpActivity extends AppCompatActivity {
                                     Toast.makeText(SignUpActivity.this, "Authentication Failed" + task.getException(), Toast.LENGTH_SHORT).show();
                                 } else {
                                     userProfile();
+                                    Toast.makeText(SignUpActivity.this, "Your Account has been Created", Toast.LENGTH_SHORT).show();
                                     startActivity(new Intent(SignUpActivity.this, LandingActivity.class));
                                     finish();
                                 }
                             }
                         });
-                addUser();
             }
         });
     }
@@ -386,6 +388,23 @@ public class SignUpActivity extends AppCompatActivity {
         if (user != null) {
             auth.signOut();
         }
+    }
+
+    private void emailExistFirebase() {
+        //Email Check on Firebase
+        String email = inputEmail.getText().toString();
+        auth.fetchProvidersForEmail(email)
+                .addOnCompleteListener(new OnCompleteListener<ProviderQueryResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<ProviderQueryResult> task) {
+                        boolean checkEmail = !task.getResult().getProviders().isEmpty();
+                        if (!checkEmail) {
+                            addUser();
+                        } else {
+                            Toast.makeText(getApplicationContext(),"Email Already Used", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
     }
 
     @Override
