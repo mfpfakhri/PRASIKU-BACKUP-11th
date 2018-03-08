@@ -256,6 +256,7 @@ public class SignUpActivity extends AppCompatActivity {
                         .addOnCompleteListener(SignUpActivity.this, new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
+                                Toast.makeText(SignUpActivity.this, "Your Account has been Created", Toast.LENGTH_SHORT).show();
                                 // If sign in fails, display a message to the user. If sign in succeeds
                                 // the auth state listener will be notified and logic to handle the
                                 // signed in user can be handled in the listener.
@@ -287,7 +288,6 @@ public class SignUpActivity extends AppCompatActivity {
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 String pPhotoUrl = taskSnapshot.getDownloadUrl().toString();
                 String email = inputEmail.getText().toString().trim();
-//                String password = inputPassword.getText().toString().trim();
                 String fName = inputFullName.getText().toString().trim();
                 String dobDate = inputDob.getText().toString().trim();
                 String spinnerValue = spinnerGender.getSelectedItem().toString().trim();
@@ -302,7 +302,6 @@ public class SignUpActivity extends AppCompatActivity {
                 databaseUsers.child(id).setValue(user);
 
                 progressDialog.dismiss();
-                Toast.makeText(SignUpActivity.this, "Your Account has been Created", Toast.LENGTH_SHORT).show();
             }
         })
                 .addOnFailureListener(new OnFailureListener() {
@@ -367,7 +366,7 @@ public class SignUpActivity extends AppCompatActivity {
     private void userProfile() {
         FirebaseUser user = auth.getCurrentUser();
         if (user != null) {
-
+            auth.signOut();
         }
     }
 
