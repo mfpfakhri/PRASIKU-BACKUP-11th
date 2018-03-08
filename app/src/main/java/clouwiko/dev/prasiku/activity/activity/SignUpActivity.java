@@ -141,6 +141,14 @@ public class SignUpActivity extends AppCompatActivity {
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //Photos Validation
+                if (userPhotoIv.getDrawable() != null) {
+
+                } else {
+                    Toast.makeText(getApplicationContext(), "Choose Your Profile Photo", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 //Email Validation
                 final String validEmail = "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}" +
                         "\\@" +
@@ -233,8 +241,8 @@ public class SignUpActivity extends AppCompatActivity {
                     return;
                 }
 
-                progressBar.setVisibility(View.VISIBLE);
                 //Create User
+                progressBar.setVisibility(View.VISIBLE);
                 auth.createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener(SignUpActivity.this, new OnCompleteListener<AuthResult>() {
                             @Override
@@ -253,9 +261,14 @@ public class SignUpActivity extends AppCompatActivity {
                                 }
                             }
                         });
+//                addUser();
             }
         });
     }
+
+//    private void addUser() {
+//
+//    }
 
     private void userPhotosMediaOpen() {
         Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
@@ -267,7 +280,7 @@ public class SignUpActivity extends AppCompatActivity {
         if (requestCode == 0 && resultCode == RESULT_OK) {
             cropUserImage();
         } else if (requestCode == 2) {
-            if (data != null){
+            if (data != null) {
                 uri = data.getData();
                 cropUserImage();
             }
@@ -283,9 +296,9 @@ public class SignUpActivity extends AppCompatActivity {
     private void cropUserImage() {
         try {
             Intent cropIntent = new Intent("com.android.camera.action.CROP");
-            cropIntent.setDataAndType(uri,"image/*");
+            cropIntent.setDataAndType(uri, "image/*");
 
-            cropIntent.putExtra("crop","true");
+            cropIntent.putExtra("crop", "true");
             cropIntent.putExtra("outputX", 180);
             cropIntent.putExtra("outputY", 180);
             cropIntent.putExtra("aspectX", 4);
@@ -294,7 +307,7 @@ public class SignUpActivity extends AppCompatActivity {
             cropIntent.putExtra("return-data", true);
 
             startActivityForResult(cropIntent, 1);
-        } catch (ActivityNotFoundException ex){
+        } catch (ActivityNotFoundException ex) {
 
         }
     }
