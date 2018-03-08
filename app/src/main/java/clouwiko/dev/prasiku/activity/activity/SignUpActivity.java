@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -39,6 +40,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnPausedListener;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -278,7 +280,16 @@ public class SignUpActivity extends AppCompatActivity {
 
     private void addUser() {
         final ProgressDialog progressDialog = new ProgressDialog(SignUpActivity.this);
-        progressDialog. setTitle("Uploading");
+        final Handler handler = new Handler();
+        final Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                if (progressDialog!=null){
+                    progressDialog.dismiss();
+                }
+            }
+        };
+        progressDialog.setTitle("Uploading");
         progressDialog.show();
 
         databaseUsers = FirebaseDatabase.getInstance().getReference("users");
@@ -299,7 +310,7 @@ public class SignUpActivity extends AppCompatActivity {
 
                 String id = databaseUsers.push().getKey();
 
-                User user = new User(email,fName, dobDate, spinnerValue, pPhotoUrl, city, phone, address);
+                User user = new User(email, fName, dobDate, spinnerValue, pPhotoUrl, city, phone, address);
 
                 databaseUsers.child(id).setValue(user);
 
@@ -310,15 +321,15 @@ public class SignUpActivity extends AppCompatActivity {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         progressDialog.dismiss();
-                        Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 })
                 .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                        double totalProgress = (100*taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
-                        progressDialog.setMessage("Uploading " + (int)totalProgress + "%");
-                        progressDialog.dismiss();
+                        double totalProgress = (100 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
+                        progressDialog.setMessage("Uploading " + (int) totalProgress + "%");
+                        handler.postDelayed(runnable, 2000);
                     }
                 });
     }

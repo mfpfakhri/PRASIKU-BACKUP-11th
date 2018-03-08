@@ -36,7 +36,7 @@
     <string name="home">Home</string>
     <string name="hint_username">Username</string>
     <string name="hint_cp">Phone Number</string>
-    <string name="hint_full_name">Full Name (according to id card)</string>
+    <string name="hint_full_name">Full Name (according to KTP)</string>
     <string name="hint_dob">Date of Birth</string>
     <string name="user_registration_header">User Registration</string>
     <string name="hint_province">Province</string>
