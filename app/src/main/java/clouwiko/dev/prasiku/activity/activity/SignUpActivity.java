@@ -59,7 +59,7 @@ public class SignUpActivity extends AppCompatActivity {
     private FirebaseAuth auth;
     private DatabaseReference databaseCities, databaseUsers;
     private StorageReference storageUsers;
-    private static final String STORAGE_PATH = "userProfilePhoto/";
+    private static final String STORAGE_PATH = "userProfilePhoto/*";
     private AutoCompleteTextView autoCompleteTextViewCity;
     private ImageView userPhotoIv;
     Uri uriUserPhoto;
@@ -252,12 +252,10 @@ public class SignUpActivity extends AppCompatActivity {
                 }
 
                 //Create User
-                progressBar.setVisibility(View.VISIBLE);
                 auth.createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener(SignUpActivity.this, new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
-                                progressBar.setVisibility(View.GONE);
                                 // If sign in fails, display a message to the user. If sign in succeeds
                                 // the auth state listener will be notified and logic to handle the
                                 // signed in user can be handled in the listener.
@@ -319,6 +317,7 @@ public class SignUpActivity extends AppCompatActivity {
                     public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
                         double totalProgress = (100*taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
                         progressDialog.setMessage("Uploading " + (int)totalProgress + "%");
+                        progressDialog.dismiss();
                     }
                 });
     }
