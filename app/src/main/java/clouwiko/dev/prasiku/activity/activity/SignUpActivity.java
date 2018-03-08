@@ -3,6 +3,7 @@ package clouwiko.dev.prasiku.activity.activity;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -15,6 +16,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.webkit.MimeTypeMap;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -59,7 +61,7 @@ public class SignUpActivity extends AppCompatActivity {
     private FirebaseAuth auth;
     private DatabaseReference databaseCities, databaseUsers;
     private StorageReference storageUsers;
-    private static final String STORAGE_PATH = "userProfilePhoto/*";
+    private static final String STORAGE_PATH = "userProfilePhoto/";
     private AutoCompleteTextView autoCompleteTextViewCity;
     private ImageView userPhotoIv;
     Uri uriUserPhoto;
@@ -282,7 +284,7 @@ public class SignUpActivity extends AppCompatActivity {
         databaseUsers = FirebaseDatabase.getInstance().getReference("users");
         storageUsers = FirebaseStorage.getInstance().getReference();
 
-        StorageReference reference = storageUsers.child(STORAGE_PATH + System.currentTimeMillis() + "." + uriUserPhoto);
+        StorageReference reference = storageUsers.child(STORAGE_PATH + System.currentTimeMillis() + "." + getActualImage(uriUserPhoto));
         reference.putFile(uriUserPhoto).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -342,6 +344,12 @@ public class SignUpActivity extends AppCompatActivity {
                 userPhotoIv.setImageBitmap(bitmap);
             }
         }
+    }
+
+    private String getActualImage(Uri uriUserPhoto) {
+        ContentResolver contentResolver = getContentResolver();
+        MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
+        return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uriUserPhoto));
     }
 
     private void cropUserImage() {
