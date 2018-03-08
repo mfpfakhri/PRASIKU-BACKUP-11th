@@ -6,48 +6,89 @@ package clouwiko.dev.prasiku.activity.model;
 
 public class User {
     private String userEmail;
-    private String userPassword;
-    private String userPhone;
     private String userFname;
-    private String userProvince;
+    private String userDob;
+    private String userGender;
+    private String userProfilePhoto;
     private String userCity;
+    private String userPhone;
     private String userAddress;
 
-    public User(String userEmail, String userPassword, String userPhone, String userFname, String userProvince, String userCity, String userAddress) {
+    public User(String userEmail, String userFname, String userDob, String userGender, String userProfilePhoto, String userCity, String userPhone, String userAddress) {
         this.userEmail = userEmail;
-        this.userPassword = userPassword;
-        this.userPhone = userPhone;
         this.userFname = userFname;
-        this.userProvince = userProvince;
+        this.userDob = userDob;
+        this.userGender = userGender;
+        this.userProfilePhoto = userProfilePhoto;
         this.userCity = userCity;
+        this.userPhone = userPhone;
         this.userAddress = userAddress;
+    }
+
+    public User() {
     }
 
     public String getUserEmail() {
         return userEmail;
     }
 
-    public String getUserPassword() {
-        return userPassword;
-    }
-
-    public String getUserPhone() {
-        return userPhone;
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
     }
 
     public String getUserFname() {
         return userFname;
     }
 
-    public String getUserProvince() {
-        return userProvince;
+    public void setUserFname(String userFname) {
+        this.userFname = userFname;
+    }
+
+    public String getUserDob() {
+        return userDob;
+    }
+
+    public void setUserDob(String userDob) {
+        this.userDob = userDob;
+    }
+
+    public String getUserGender() {
+        return userGender;
+    }
+
+    public void setUserGender(String userGender) {
+        this.userGender = userGender;
+    }
+
+    public String getUserProfilePhoto() {
+        return userProfilePhoto;
+    }
+
+    public void setUserProfilePhoto(String userProfilePhoto) {
+        this.userProfilePhoto = userProfilePhoto;
     }
 
     public String getUserCity() {
         return userCity;
     }
 
+    public void setUserCity(String userCity) {
+        this.userCity = userCity;
+    }
+
+    public String getUserPhone() {
+        return userPhone;
+    }
+
+    public void setUserPhone(String userPhone) {
+        this.userPhone = userPhone;
+    }
+
     public String getUserAddress() {
         return userAddress;
+    }
+
+    public void setUserAddress(String userAddress) {
+        this.userAddress = userAddress;
     }
 }

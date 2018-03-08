@@ -1,6 +1,7 @@
 package clouwiko.dev.prasiku.activity.activity;
 
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -24,6 +25,8 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -33,12 +36,17 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.util.Calendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import clouwiko.dev.prasiku.R;
+import clouwiko.dev.prasiku.activity.model.User;
 import fr.ganfra.materialspinner.MaterialSpinner;
 
 public class SignUpActivity extends AppCompatActivity {
@@ -50,9 +58,11 @@ public class SignUpActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private FirebaseAuth auth;
     private DatabaseReference databaseCities, databaseUsers;
+    private StorageReference storageUsers;
+    private static final String STORAGE_PATH = "userProfilePhoto/";
     private AutoCompleteTextView autoCompleteTextViewCity;
     private ImageView userPhotoIv;
-    Uri uri;
+    Uri uriUserPhoto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -190,8 +200,8 @@ public class SignUpActivity extends AppCompatActivity {
                 }
 
                 //Full Name Validation
-                String fname = inputFullName.getText().toString().trim();
-                if (TextUtils.isEmpty(fname)) {
+                String fName = inputFullName.getText().toString().trim();
+                if (TextUtils.isEmpty(fName)) {
                     Toast.makeText(getApplicationContext(), "Enter Your Full Name", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -247,7 +257,6 @@ public class SignUpActivity extends AppCompatActivity {
                         .addOnCompleteListener(SignUpActivity.this, new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
-                                Toast.makeText(SignUpActivity.this, "Your Account has been Created", Toast.LENGTH_SHORT).show();
                                 progressBar.setVisibility(View.GONE);
                                 // If sign in fails, display a message to the user. If sign in succeeds
                                 // the auth state listener will be notified and logic to handle the
@@ -261,14 +270,58 @@ public class SignUpActivity extends AppCompatActivity {
                                 }
                             }
                         });
-//                addUser();
+                addUser();
             }
         });
     }
 
-//    private void addUser() {
-//
-//    }
+    private void addUser() {
+        final ProgressDialog progressDialog = new ProgressDialog(SignUpActivity.this);
+        progressDialog. setTitle("Uploading");
+        progressDialog.show();
+
+        databaseUsers = FirebaseDatabase.getInstance().getReference("users");
+        storageUsers = FirebaseStorage.getInstance().getReference();
+
+        StorageReference reference = storageUsers.child(STORAGE_PATH + System.currentTimeMillis() + "." + uriUserPhoto);
+        reference.putFile(uriUserPhoto).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                String pPhotoUrl = taskSnapshot.getDownloadUrl().toString();
+                String email = inputEmail.getText().toString().trim();
+//                String password = inputPassword.getText().toString().trim();
+                String fName = inputFullName.getText().toString().trim();
+                String dobDate = inputDob.getText().toString().trim();
+                String spinnerValue = spinnerGender.getSelectedItem().toString().trim();
+                String city = autoCompleteTextViewCity.getText().toString().trim();
+                String phone = inputPhone.getText().toString().trim();
+                String address = inputAddress.getText().toString().trim();
+
+                String id = databaseUsers.push().getKey();
+
+                User user = new User(email,fName, dobDate, spinnerValue, pPhotoUrl, city, phone, address);
+
+                databaseUsers.child(id).setValue(user);
+
+                progressDialog.dismiss();
+                Toast.makeText(SignUpActivity.this, "Your Account has been Created", Toast.LENGTH_SHORT).show();
+            }
+        })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        progressDialog.dismiss();
+                        Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                        double totalProgress = (100*taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
+                        progressDialog.setMessage("Uploading " + (int)totalProgress + "%");
+                    }
+                });
+    }
 
     private void userPhotosMediaOpen() {
         Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
@@ -281,7 +334,7 @@ public class SignUpActivity extends AppCompatActivity {
             cropUserImage();
         } else if (requestCode == 2) {
             if (data != null) {
-                uri = data.getData();
+                uriUserPhoto = data.getData();
                 cropUserImage();
             }
         } else if (requestCode == 1) {
@@ -296,7 +349,7 @@ public class SignUpActivity extends AppCompatActivity {
     private void cropUserImage() {
         try {
             Intent cropIntent = new Intent("com.android.camera.action.CROP");
-            cropIntent.setDataAndType(uri, "image/*");
+            cropIntent.setDataAndType(uriUserPhoto, "image/*");
 
             cropIntent.putExtra("crop", "true");
             cropIntent.putExtra("outputX", 180);
