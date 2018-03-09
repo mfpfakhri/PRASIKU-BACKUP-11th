@@ -99,20 +99,38 @@ public class AddCityActivity extends AppCompatActivity {
     }
 
     private void addCity() {
-        String name = inputCity.getText().toString().trim();
-        String province = spinnerProvinces.getSelectedItem().toString().trim();
-        databaseCities = FirebaseDatabase.getInstance().getReference("cities");
-        if (!TextUtils.isEmpty(name)) {
-            String id = databaseCities.push().getKey();
+        databaseProvinces = FirebaseDatabase.getInstance().getReference().child("provinces");
+        databaseProvinces.orderByChild("provinceName").equalTo(spinnerProvinces.getSelectedItem().toString().trim()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                final List<String> provincesId = new ArrayList<String>();
 
-            City city = new City(id, name, province);
+                for (DataSnapshot provinceValSnapshot : dataSnapshot.getChildren()) {
+                    String provinceKey = provinceValSnapshot.getKey();
+                    provincesId.add(provinceKey);
 
-            databaseCities.child(id).setValue(city);
+                    String name = inputCity.getText().toString().trim();
+                    String province = spinnerProvinces.getSelectedItem().toString().trim();
+                    databaseCities = FirebaseDatabase.getInstance().getReference("cities");
+                    if (!TextUtils.isEmpty(name)) {
+                        String id = databaseCities.push().getKey();
 
-            Toast.makeText(this, "City or Regency Added", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(this, "Enter City Name", Toast.LENGTH_SHORT).show();
-        }
+                        City city = new City(id, name, province);
+
+                        databaseCities.child(provinceKey).child(id).setValue(city);
+
+                        Toast.makeText(getApplicationContext(), "City or Regency Added", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Enter City Name", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     @Override
