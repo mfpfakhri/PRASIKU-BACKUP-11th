@@ -96,9 +96,11 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 autoCompleteTextViewCity.setThreshold(1);
-                for (DataSnapshot citySnapshot : dataSnapshot.getChildren()) {
-                    String cityName = citySnapshot.child("cityName").getValue(String.class);
-                    citiesAdapter.add(cityName);
+                for (DataSnapshot provinceIdSnapshot : dataSnapshot.getChildren()) {
+                    for (DataSnapshot cityIdSnapshot : provinceIdSnapshot.getChildren()) {
+                        String cityName = cityIdSnapshot.child("cityName").getValue(String.class);
+                        citiesAdapter.add(cityName);
+                    }
                 }
             }
 
