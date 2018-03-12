@@ -8,11 +8,13 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -22,11 +24,12 @@ import com.google.firebase.auth.FirebaseUser;
 import clouwiko.dev.prasiku.R;
 
 public class MainMenuActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
     private FirebaseAuth auth;
     private FirebaseAuth.AuthStateListener authStateListener;
     private ProgressBar progressBar;
+    private CardView uploadCard, findCatCard, breedsStandardsCard;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +48,16 @@ public class MainMenuActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
+
+        //Defining CardView
+        uploadCard = (CardView) findViewById(R.id.upload_cat_data);
+        findCatCard = (CardView) findViewById(R.id.find_cat_for_adopt);
+        breedsStandardsCard = (CardView) findViewById(R.id.cat_breeds_standards);
+
+        //CardView Click Listener
+        uploadCard.setOnClickListener(this);
+        findCatCard.setOnClickListener(this);
+        breedsStandardsCard.setOnClickListener(this);
 
         //Get Firebase Auth Instance
         auth = FirebaseAuth.getInstance();
@@ -129,6 +142,27 @@ public class MainMenuActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onClick(View v) {
+        Intent intent;
+        switch (v.getId()) {
+            case R.id.upload_cat_data:
+                intent = new Intent(getApplicationContext(), UploadCatDataActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.find_cat_for_adopt:
+                intent = new Intent(getApplicationContext(), FindCatForAdoptActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.cat_breeds_standards:
+                intent = new Intent(getApplicationContext(), CatBreedsStandardsActivity.class);
+                startActivity(intent);
+                break;
+            default:
+                break;
+        }
     }
 }
 

@@ -45,7 +45,10 @@
 
         <activity android:name=".activity.activity.AddProvinceActivity" />
         <activity android:name=".activity.activity.AddCityActivity" />
-        <activity android:name=".activity.activity.UserHomeActivity"></activity>
+        <activity android:name=".activity.activity.UserHomeActivity" />
+        <activity android:name=".activity.activity.UploadCatDataActivity" />
+        <activity android:name=".activity.activity.FindCatForAdoptActivity" />
+        <activity android:name=".activity.activity.CatBreedsStandardsActivity"></activity>
     </application>
 
 </manifest>
