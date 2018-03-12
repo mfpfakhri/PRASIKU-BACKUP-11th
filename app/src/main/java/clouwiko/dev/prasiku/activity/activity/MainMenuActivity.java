@@ -21,7 +21,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 import clouwiko.dev.prasiku.R;
 
-public class HomeActivity extends AppCompatActivity
+public class MainMenuActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private FirebaseAuth auth;
@@ -33,7 +33,7 @@ public class HomeActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.activity_main_menu);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -60,7 +60,7 @@ public class HomeActivity extends AppCompatActivity
                 if (user == null) {
                     //User Auth State is Changed - User is Null
                     //Launch Login Activity
-                    startActivity(new Intent(HomeActivity.this, LandingActivity.class));
+                    startActivity(new Intent(MainMenuActivity.this, LandingActivity.class));
                     finish();
                 }
             }
@@ -94,7 +94,7 @@ public class HomeActivity extends AppCompatActivity
         progressBar.setVisibility(View.VISIBLE);
         switch (id) {
             case R.id.action_edit_password:
-                startActivity(new Intent(HomeActivity.this, ChangePasswordActivity.class));
+                startActivity(new Intent(MainMenuActivity.this, ChangePasswordActivity.class));
                 progressBar.setVisibility(View.GONE);
                 break;
             case R.id.action_sign_out:
@@ -102,7 +102,7 @@ public class HomeActivity extends AppCompatActivity
                 progressBar.setVisibility(View.GONE);
                 Toast.makeText(this, "Signed Out", Toast.LENGTH_SHORT).show();
                 finish();
-                startActivity(new Intent(HomeActivity.this, LandingActivity.class));
+                startActivity(new Intent(MainMenuActivity.this, LandingActivity.class));
         }
         return super.onOptionsItemSelected(menuItem);
     }
@@ -115,15 +115,17 @@ public class HomeActivity extends AppCompatActivity
 
         if (id == R.id.nav_home) {
             auth.getCurrentUser();
-            startActivity(new Intent(HomeActivity.this, HomeActivity.class));
+            startActivity(new Intent(getApplicationContext(), UserHomeActivity.class));
+        } else if (id == R.id.nav_menu) {
+            startActivity(new Intent(getApplicationContext(), MainMenuActivity.class));
         } else if (id == R.id.nav_app_received) {
-            startActivity(new Intent(HomeActivity.this, AppReceivedActivity.class));
+            startActivity(new Intent(getApplicationContext(), AppReceivedActivity.class));
         } else if (id == R.id.nav_app_submitted) {
-            startActivity(new Intent(HomeActivity.this, AppSubmittedActivity.class));
+            startActivity(new Intent(getApplicationContext(), AppSubmittedActivity.class));
         } else if (id == R.id.nav_tutorial) {
-            startActivity(new Intent(HomeActivity.this, TutorialActivity.class));
+            startActivity(new Intent(getApplicationContext(), TutorialActivity.class));
         } else if (id == R.id.nav_about_us) {
-            startActivity(new Intent(HomeActivity.this, AboutUsActivity.class));
+            startActivity(new Intent(getApplicationContext(), AboutUsActivity.class));
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

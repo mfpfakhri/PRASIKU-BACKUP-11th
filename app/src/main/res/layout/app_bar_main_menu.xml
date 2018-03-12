@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".activity.activity.HomeActivity">
+    tools:context=".activity.activity.MainMenuActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -22,7 +22,7 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_home"/>
+    <include layout="@layout/content_main_menu"/>
 
     <LinearLayout
         android:layout_width="match_parent"

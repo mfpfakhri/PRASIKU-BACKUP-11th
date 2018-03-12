@@ -28,7 +28,7 @@
         <activity android:name=".activity.activity.SignUpActivity" />
         <activity android:name=".activity.activity.ResetPasswordActivity" />
         <activity
-            android:name=".activity.activity.HomeActivity"
+            android:name=".activity.activity.MainMenuActivity"
             android:clearTaskOnLaunch="true" />
         <activity android:name=".activity.activity.ChangePasswordActivity" />
         <activity android:name=".activity.activity.TutorialActivity" />
@@ -45,6 +45,7 @@
 
         <activity android:name=".activity.activity.AddProvinceActivity" />
         <activity android:name=".activity.activity.AddCityActivity" />
+        <activity android:name=".activity.activity.UserHomeActivity"></activity>
     </application>
 
 </manifest>

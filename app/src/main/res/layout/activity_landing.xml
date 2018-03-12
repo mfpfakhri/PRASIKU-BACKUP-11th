@@ -28,41 +28,41 @@
             android:textColor="@android:color/black" />
     </LinearLayout>
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_alignParentTop="true"
-        android:weightSum="2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+    <!--<LinearLayout-->
+        <!--android:orientation="horizontal"-->
+        <!--android:layout_alignParentTop="true"-->
+        <!--android:weightSum="2"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content">-->
 
-        <info.hoang8f.widget.FButton
-            android:id="@+id/main_province_intent_button"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:layout_weight="1"
-            android:text="Add Province"
-            android:textColor="@android:color/black"
-            app:cornerRadius="4dp"
-            app:fButtonColor="@color/btnSignUpMain"
-            app:shadowColor="@android:color/black"
-            app:shadowEnabled="true"
-            app:shadowHeight="5dp" />
+        <!--<info.hoang8f.widget.FButton-->
+            <!--android:id="@+id/main_province_intent_button"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_margin="8dp"-->
+            <!--android:layout_weight="1"-->
+            <!--android:text="Add Province"-->
+            <!--android:textColor="@android:color/black"-->
+            <!--app:cornerRadius="4dp"-->
+            <!--app:fButtonColor="@color/btnSignUpMain"-->
+            <!--app:shadowColor="@android:color/black"-->
+            <!--app:shadowEnabled="true"-->
+            <!--app:shadowHeight="5dp" />-->
 
-        <info.hoang8f.widget.FButton
-            android:id="@+id/main_city_intent_button"
-            android:text="Add City"
-            android:textColor="@android:color/black"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            app:fButtonColor="@color/btnSignInMain"
-            app:shadowColor="@android:color/black"
-            app:shadowEnabled="true"
-            app:shadowHeight="5dp"
-            app:cornerRadius="4dp"/>
-    </LinearLayout>
+        <!--<info.hoang8f.widget.FButton-->
+            <!--android:id="@+id/main_city_intent_button"-->
+            <!--android:text="Add City"-->
+            <!--android:textColor="@android:color/black"-->
+            <!--android:layout_weight="1"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_margin="8dp"-->
+            <!--app:fButtonColor="@color/btnSignInMain"-->
+            <!--app:shadowColor="@android:color/black"-->
+            <!--app:shadowEnabled="true"-->
+            <!--app:shadowHeight="5dp"-->
+            <!--app:cornerRadius="4dp"/>-->
+    <!--</LinearLayout>-->
 
     <LinearLayout
         android:id="@+id/main_button"

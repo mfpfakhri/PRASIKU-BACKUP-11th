@@ -17,7 +17,7 @@ public class LandingActivity extends AppCompatActivity {
 
     private FirebaseAuth auth;
     private Button btnSignIn, btnSignUp;
-    private Button btnInputProvinces, btnInputCities;
+//    private Button btnInputProvinces, btnInputCities;
     TextView textSlogan;
 
     @Override
@@ -30,7 +30,7 @@ public class LandingActivity extends AppCompatActivity {
 
         //Check if Already Session
         if (auth.getCurrentUser() != null){
-            startActivity(new Intent(LandingActivity.this, HomeActivity.class));
+            startActivity(new Intent(LandingActivity.this, MainMenuActivity.class));
         }
 
         textSlogan = (TextView)findViewById(R.id.textSlogan);
@@ -40,8 +40,8 @@ public class LandingActivity extends AppCompatActivity {
         btnSignIn = (Button)findViewById(R.id.main_sign_in_button);
         btnSignUp = (Button)findViewById(R.id.main_sign_up_button);
 
-        btnInputProvinces = (Button)findViewById(R.id.main_province_intent_button);
-        btnInputCities = (Button)findViewById(R.id.main_city_intent_button);
+//        btnInputProvinces = (Button)findViewById(R.id.main_province_intent_button);
+//        btnInputCities = (Button)findViewById(R.id.main_city_intent_button);
 
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,21 +59,21 @@ public class LandingActivity extends AppCompatActivity {
             }
         });
 
-        btnInputProvinces.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(LandingActivity.this, AddProvinceActivity.class));
-                finish();
-            }
-        });
-
-        btnInputCities.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(LandingActivity.this, AddCityActivity.class));
-                finish();
-            }
-        });
+//        btnInputProvinces.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                startActivity(new Intent(LandingActivity.this, AddProvinceActivity.class));
+//                finish();
+//            }
+//        });
+//
+//        btnInputCities.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                startActivity(new Intent(LandingActivity.this, AddCityActivity.class));
+//                finish();
+//            }
+//        });
     }
 
     @Override
