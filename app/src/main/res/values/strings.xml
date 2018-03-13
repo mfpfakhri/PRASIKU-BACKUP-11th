@@ -45,7 +45,6 @@
     <string name="hint_city">City</string>
     <string name="hint_address">Address</string>
     <string name="userPhotosText">Tap \nto choose \nYour photo</string>
-    <string name="idCardPhotosText">Tap to choose Your ID Card Photos</string>
     <string name="main_menu">Main Menu</string>
     <string name="cat_breeds_standards">Cat Breeds Standards</string>
     <string name="upload_cat_data">Upload Cat Data</string>
@@ -55,9 +54,39 @@
     <string name="find_cat_for_adopt_desc">Find a cat to become your new family</string>
     <string name="cat_breeds_standards_desc">Find out information of cats breed</string>
     <string name="applications_desc">See your cat adoption application</string>
+    <string name="upload_cat_data_header">Upload Cat Data</string>
+    <string name="catPhotosText">Tap \nto choose \nYour cat \nphoto</string>
+    <string name="hint_cat_name">Cat Name</string>
+    <string name="hint_catDesc">Description</string>
+    <string name="hint_catMedicalNote">Medical Note</string>
+    <string name="stat_vaccine">Vaccine Status</string>
+    <string name="stat_spay_neuter">Spay/ Neuter Status</string>
+    <string name="yes_vaccine_textview">Yes, Already Vaccinated</string>
+    <string name="no_vaccine_textview">Not Yet</string>
+    <string name="yes_spayneuter_textview">Yes, Already Spayed/ Neutered</string>
+    <string name="no_spayneuter_textview">Not Yet</string>
+    <string name="action_upload_cat">Insert Cat Data</string>
+    <string name="hint_catGender">Select Cat Gender</string>
+    <string name="hint_catReasonOpenAdoption">Select Reason for Open Adopt</string>
 
     <string-array name="gender">
         <item>Male</item>
         <item>Female</item>
+    </string-array>
+    <string-array name="catGender">
+        <item>Male</item>
+        <item>Female</item>
+        <item>Unknown</item>
+    </string-array>
+    <string-array name="catReasonOpenAdoption">
+        <item>Stray</item>
+        <item>Abandoned</item>
+        <item>Abused</item>
+        <item>Owner Dead</item>
+        <item>Owner Give Up</item>
+        <item>House Moving</item>
+        <item>Financial</item>
+        <item>Medical Problem</item>
+        <item>Others</item>
     </string-array>
 </resources>

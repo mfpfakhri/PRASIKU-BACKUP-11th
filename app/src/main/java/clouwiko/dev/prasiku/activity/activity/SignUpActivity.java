@@ -313,7 +313,7 @@ public class SignUpActivity extends AppCompatActivity {
 
                 String id = databaseUsers.push().getKey();
 
-                User user = new User(email, fName, dobDate, spinnerValue, pPhotoUrl, city, phone, address);
+                User user = new User(email, id, fName, dobDate, spinnerValue, pPhotoUrl, city, phone, address);
 
                 databaseUsers.child(id).setValue(user);
 

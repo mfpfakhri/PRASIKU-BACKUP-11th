@@ -153,21 +153,26 @@ public class MainMenuActivity extends AppCompatActivity
 
     @Override
     public void onClick(View v) {
+        progressBar.setVisibility(View.VISIBLE);
         Intent intent;
         switch (v.getId()) {
             case R.id.upload_cat_data:
                 intent = new Intent(getApplicationContext(), UploadCatDataActivity.class);
                 startActivity(intent);
+                progressBar.setVisibility(View.GONE);
                 break;
             case R.id.find_cat_for_adopt:
                 intent = new Intent(getApplicationContext(), FindCatForAdoptActivity.class);
                 startActivity(intent);
+                progressBar.setVisibility(View.GONE);
                 break;
             case R.id.cat_breeds_standards:
                 intent = new Intent(getApplicationContext(), CatBreedsStandardsActivity.class);
                 startActivity(intent);
+                progressBar.setVisibility(View.GONE);
                 break;
             default:
+                progressBar.setVisibility(View.GONE);
                 break;
         }
     }
