@@ -286,57 +286,40 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void addUser() {
-        final ProgressDialog progressDialog = new ProgressDialog(SignUpActivity.this);
-        final Handler handler = new Handler();
-        final Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                if (progressDialog!=null){
-                    progressDialog.dismiss();
-                }
-            }
-        };
-        progressDialog.setTitle("Uploading");
-        progressDialog.show();
-
         databaseUsers = FirebaseDatabase.getInstance().getReference("users");
         storageUsers = FirebaseStorage.getInstance().getReference();
-
         StorageReference reference = storageUsers.child(STORAGE_PATH + System.currentTimeMillis() + "." + getActualImage(uriUserPhoto));
-        reference.putFile(uriUserPhoto).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                String pPhotoUrl = taskSnapshot.getDownloadUrl().toString();
-                String email = inputEmail.getText().toString().trim();
-                String fName = inputFullName.getText().toString().trim();
-                String dobDate = inputDob.getText().toString().trim();
-                String spinnerValue = spinnerGender.getSelectedItem().toString().trim();
-                String city = autoCompleteTextViewCity.getText().toString().trim();
-                String phone = inputPhone.getText().toString().trim();
-                String address = inputAddress.getText().toString().trim();
 
-                String id = databaseUsers.push().getKey();
+        reference.putFile(uriUserPhoto)
+                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        String pPhotoUrl = taskSnapshot.getDownloadUrl().toString();
+                        String email = inputEmail.getText().toString().trim();
+                        String fName = inputFullName.getText().toString().trim();
+                        String dobDate = inputDob.getText().toString().trim();
+                        String spinnerValue = spinnerGender.getSelectedItem().toString().trim();
+                        String city = autoCompleteTextViewCity.getText().toString().trim();
+                        String phone = inputPhone.getText().toString().trim();
+                        String address = inputAddress.getText().toString().trim();
 
-                User user = new User(email, id, fName, dobDate, spinnerValue, pPhotoUrl, city, phone, address);
+                        String id = databaseUsers.push().getKey();
 
-                databaseUsers.child(id).setValue(user);
+                        User user = new User(email, id, fName, dobDate, spinnerValue, pPhotoUrl, city, phone, address);
 
-                progressDialog.dismiss();
-            }
-        })
+                        databaseUsers.child(id).setValue(user);
+                    }
+                })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        progressDialog.dismiss();
                         Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 })
                 .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                        double totalProgress = (100 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
-                        progressDialog.setMessage("Uploading " + (int) totalProgress + "%");
-                        handler.postDelayed(runnable, 2000);
+
                     }
                 });
     }
@@ -407,7 +390,7 @@ public class SignUpActivity extends AppCompatActivity {
                         if (!checkEmail) {
                             addUser();
                         } else {
-                            Toast.makeText(getApplicationContext(),"Email Already Used", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Email Already Used", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
