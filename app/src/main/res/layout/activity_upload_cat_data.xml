@@ -74,13 +74,13 @@
                 android:layout_height="wrap_content">
 
                 <EditText
-                    android:id="@+id/dobDatepicker"
+                    android:id="@+id/catDobDatepicker"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:clickable="true"
                     android:editable="false"
                     android:focusable="false"
-                    android:hint="@string/hint_dob" />
+                    android:hint="@string/hint_catDob" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -94,59 +94,66 @@
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <EditText
+                    android:id="@+id/catDesc"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textMultiLine"
                     android:ems="10"
-                    android:lines="5"
                     android:gravity="top"
                     android:hint="@string/hint_catDesc"
-                    android:id="@+id/catDesc" />
+                    android:inputType="textMultiLine"
+                    android:lines="5" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <EditText
+                    android:id="@+id/catMedicalNote"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textMultiLine"
                     android:ems="10"
-                    android:lines="3"
                     android:gravity="top"
                     android:hint="@string/hint_catMedicalNote"
-                    android:id="@+id/catMedicalNote" />
+                    android:inputType="textMultiLine"
+                    android:lines="3" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:layout_marginBottom="8dp">
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="4dp">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/stat_vaccine"
-                    android:textSize="18sp"
                     android:layout_marginLeft="4dp"
-                    android:layout_marginTop="4dp"/>
+                    android:layout_marginTop="4dp"
+                    android:text="@string/stat_vaccine"
+                    android:textSize="18sp" />
+
                 <RadioGroup
+                    android:id="@+id/radioGroupVaccine"
                     android:layout_width="match_parent"
-                    android:orientation="vertical"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
                     <RadioButton
                         android:id="@+id/yes_vaccine"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:text="@string/yes_vaccine_textview"/>
+                        android:text="@string/yes_vaccine_textview" />
+
                     <RadioButton
                         android:id="@+id/no_vaccine"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:text="@string/no_vaccine_textview"/>
+                        android:text="@string/no_vaccine_textview" />
                 </RadioGroup>
             </android.support.design.widget.TextInputLayout>
 
@@ -154,29 +161,34 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/stat_spay_neuter"
-                    android:textSize="18sp"
                     android:layout_marginLeft="4dp"
-                    android:layout_marginTop="4dp"/>
+                    android:layout_marginTop="4dp"
+                    android:text="@string/stat_spay_neuter"
+                    android:textSize="18sp" />
+
                 <RadioGroup
+                    android:id="@+id/radioGroupSpayNeuter"
                     android:layout_width="match_parent"
-                    android:orientation="vertical"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
                     <RadioButton
                         android:id="@+id/yes_spayneuter"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:text="@string/yes_spayneuter_textview"/>
+                        android:text="@string/yes_spayneuter_textview" />
+
                     <RadioButton
                         android:id="@+id/no_spayneuter"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:text="@string/no_spayneuter_textview"/>
+                        android:text="@string/no_spayneuter_textview" />
                 </RadioGroup>
             </android.support.design.widget.TextInputLayout>
 
@@ -196,7 +208,7 @@
                 android:padding="@dimen/activity_horizontal_margin">
 
                 <Button
-                    android:id="@+id/action_sign_up_button"
+                    android:id="@+id/action_upload_cat_data"
                     style="?android:textAppearanceSmall"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

@@ -55,8 +55,8 @@
     <string name="cat_breeds_standards_desc">Find out information of cats breed</string>
     <string name="applications_desc">See your cat adoption application</string>
     <string name="upload_cat_data_header">Upload Cat Data</string>
-    <string name="catPhotosText">Tap \nto choose \nYour cat \nphoto</string>
-    <string name="hint_cat_name">Cat Name</string>
+    <string name="catPhotosText">Tap \nto select \nYour cat \nphoto</string>
+    <string name="hint_cat_name">Cat"'"s Name</string>
     <string name="hint_catDesc">Description</string>
     <string name="hint_catMedicalNote">Medical Note</string>
     <string name="stat_vaccine">Vaccine Status</string>
@@ -65,9 +65,10 @@
     <string name="no_vaccine_textview">Not Yet</string>
     <string name="yes_spayneuter_textview">Yes, Already Spayed/ Neutered</string>
     <string name="no_spayneuter_textview">Not Yet</string>
-    <string name="action_upload_cat">Insert Cat Data</string>
-    <string name="hint_catGender">Select Cat Gender</string>
+    <string name="action_upload_cat">Upload</string>
+    <string name="hint_catGender">Choose Cat"'"s Gender</string>
     <string name="hint_catReasonOpenAdoption">Select Reason for Open Adopt</string>
+    <string name="hint_catDob">Cat"'"s Date of Birth</string>
 
     <string-array name="gender">
         <item>Male</item>

@@ -51,6 +51,10 @@ public class MainMenuActivity extends AppCompatActivity
 
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
+        if (progressBar != null) {
+            progressBar.setVisibility(View.GONE);
+        }
+
         //Defining CardView
         uploadCard = (CardView) findViewById(R.id.upload_cat_data);
         findCatCard = (CardView) findViewById(R.id.find_cat_for_adopt);

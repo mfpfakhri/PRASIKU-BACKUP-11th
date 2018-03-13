@@ -90,6 +90,10 @@ public class SignUpActivity extends AppCompatActivity {
         autoCompleteTextViewCity = (AutoCompleteTextView) findViewById(R.id.cityAutoCompleteTextView);
         userPhotoIv = (ImageView) findViewById(R.id.userPhotos);
 
+        if (progressBar != null) {
+            progressBar.setVisibility(View.GONE);
+        }
+
         databaseCities = FirebaseDatabase.getInstance().getReference().child("cities");
         final ArrayAdapter<String> citiesAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item);
         databaseCities.addValueEventListener(new ValueEventListener() {
