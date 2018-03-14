@@ -22,9 +22,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import clouwiko.dev.prasiku.R;
+import clouwiko.dev.prasiku.activity.model.User;
 
 public class MainMenuActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
+        implements NavigationView.OnNavigationItemSelectedListener {
 
     private FirebaseAuth auth;
     private FirebaseAuth.AuthStateListener authStateListener;
@@ -32,6 +33,8 @@ public class MainMenuActivity extends AppCompatActivity
     private CardView uploadCard, findCatCard, breedsStandardsCard;
     private long backPressedTime;
     private Toast backToast;
+    public static final String USER_ID = "userId";
+    public static final String USER_NAME = "userFName";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,16 +63,12 @@ public class MainMenuActivity extends AppCompatActivity
         findCatCard = (CardView) findViewById(R.id.find_cat_for_adopt);
         breedsStandardsCard = (CardView) findViewById(R.id.cat_breeds_standards);
 
-        //CardView Click Listener
-        uploadCard.setOnClickListener(this);
-        findCatCard.setOnClickListener(this);
-        breedsStandardsCard.setOnClickListener(this);
-
         //Get Firebase Auth Instance
         auth = FirebaseAuth.getInstance();
 
         //Get Current User
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        final String userKey = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         authStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -79,10 +78,35 @@ public class MainMenuActivity extends AppCompatActivity
                     //Launch Login Activity
                     startActivity(new Intent(MainMenuActivity.this, LandingActivity.class));
                     finish();
+                } else if (user != null) {
+                    String userId = user.getUid();
                 }
             }
         };
 
+        //CardView Click Listener
+        uploadCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), UploadCatDataActivity.class);
+                intent.putExtra(USER_ID, userKey);
+                startActivity(intent);
+            }
+        });
+        findCatCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), FindCatForAdoptActivity.class);
+                startActivity(intent);
+            }
+        });
+        breedsStandardsCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), CatBreedsStandardsActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -155,30 +179,31 @@ public class MainMenuActivity extends AppCompatActivity
         return true;
     }
 
-    @Override
-    public void onClick(View v) {
-        progressBar.setVisibility(View.VISIBLE);
-        Intent intent;
-        switch (v.getId()) {
-            case R.id.upload_cat_data:
-                intent = new Intent(getApplicationContext(), UploadCatDataActivity.class);
-                startActivity(intent);
-                progressBar.setVisibility(View.GONE);
-                break;
-            case R.id.find_cat_for_adopt:
-                intent = new Intent(getApplicationContext(), FindCatForAdoptActivity.class);
-                startActivity(intent);
-                progressBar.setVisibility(View.GONE);
-                break;
-            case R.id.cat_breeds_standards:
-                intent = new Intent(getApplicationContext(), CatBreedsStandardsActivity.class);
-                startActivity(intent);
-                progressBar.setVisibility(View.GONE);
-                break;
-            default:
-                progressBar.setVisibility(View.GONE);
-                break;
-        }
-    }
+//    @Override
+//    public void onClick(View v) {
+//        progressBar.setVisibility(View.VISIBLE);
+//        Intent intent;
+//        switch (v.getId()) {
+//            case R.id.upload_cat_data:
+//                intent = new Intent(getApplicationContext(), UploadCatDataActivity.class);
+//                intent.putExtra(USER_ID)
+//                startActivity(intent);
+//                progressBar.setVisibility(View.GONE);
+//                break;
+//            case R.id.find_cat_for_adopt:
+//                intent = new Intent(getApplicationContext(), FindCatForAdoptActivity.class);
+//                startActivity(intent);
+//                progressBar.setVisibility(View.GONE);
+//                break;
+//            case R.id.cat_breeds_standards:
+//                intent = new Intent(getApplicationContext(), CatBreedsStandardsActivity.class);
+//                startActivity(intent);
+//                progressBar.setVisibility(View.GONE);
+//                break;
+//            default:
+//                progressBar.setVisibility(View.GONE);
+//                break;
+//        }
+//    }
 }
 

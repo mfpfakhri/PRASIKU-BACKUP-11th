@@ -69,6 +69,7 @@
     <string name="hint_catGender">Choose Cat"'"s Gender</string>
     <string name="hint_catReasonOpenAdoption">Select Reason for Open Adopt</string>
     <string name="hint_catDob">Cat"'"s Date of Birth</string>
+    <string name="action_sign_up_next"><![CDATA[Next>>]]></string>
 
     <string-array name="gender">
         <item>Male</item>

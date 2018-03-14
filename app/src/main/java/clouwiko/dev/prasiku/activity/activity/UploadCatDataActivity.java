@@ -22,18 +22,23 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.util.Calendar;
 
 import clouwiko.dev.prasiku.R;
+import clouwiko.dev.prasiku.activity.model.Cat;
 import fr.ganfra.materialspinner.MaterialSpinner;
 
 public class UploadCatDataActivity extends AppCompatActivity {
@@ -51,6 +56,7 @@ public class UploadCatDataActivity extends AppCompatActivity {
     private EditText inputCatName, inputCatDob, inputCatDesc, inputCatMedNote;
     private MaterialSpinner spinnerCatGender, spinnerCatReasonOpenAdoption;
     private RadioGroup radioGroupVaccine, radioGroupSpayNeuter;
+    private RadioButton radioButtonVacc, radioButtonSpayNeuter;
     private ImageView catPhotoIv;
     private Button btnUploadCatData;
     Uri uriCatPhoto;
@@ -64,18 +70,18 @@ public class UploadCatDataActivity extends AppCompatActivity {
 
         catPhotoIv = (ImageView) findViewById(R.id.userPhotos);
 
-        inputCatName = (EditText)findViewById(R.id.cat_name);
-        inputCatDob = (EditText)findViewById(R.id.catDobDatepicker);
-        inputCatDesc = (EditText)findViewById(R.id.catDesc);
-        inputCatMedNote = (EditText)findViewById(R.id.catMedicalNote);
+        inputCatName = (EditText) findViewById(R.id.cat_name);
+        inputCatDob = (EditText) findViewById(R.id.catDobDatepicker);
+        inputCatDesc = (EditText) findViewById(R.id.catDesc);
+        inputCatMedNote = (EditText) findViewById(R.id.catMedicalNote);
 
-        spinnerCatGender = (MaterialSpinner)findViewById(R.id.catGender);
-        spinnerCatReasonOpenAdoption = (MaterialSpinner)findViewById(R.id.catReasonOpenAdoption);
+        spinnerCatGender = (MaterialSpinner) findViewById(R.id.catGender);
+        spinnerCatReasonOpenAdoption = (MaterialSpinner) findViewById(R.id.catReasonOpenAdoption);
 
-        radioGroupVaccine = (RadioGroup)findViewById(R.id.radioGroupVaccine);
-        radioGroupSpayNeuter = (RadioGroup)findViewById(R.id.radioGroupSpayNeuter);
+        radioGroupVaccine = (RadioGroup) findViewById(R.id.radioGroupVaccine);
+        radioGroupSpayNeuter = (RadioGroup) findViewById(R.id.radioGroupSpayNeuter);
 
-        btnUploadCatData = (Button)findViewById(R.id.action_upload_cat_data);
+        btnUploadCatData = (Button) findViewById(R.id.action_upload_cat_data);
 
         //Get Firebase Auth Instance
         auth = FirebaseAuth.getInstance();
@@ -86,11 +92,10 @@ public class UploadCatDataActivity extends AppCompatActivity {
         authStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user == null) {
-                    // user auth state is changed - user is null
-                    // launch login activity
-                    startActivity(new Intent(UploadCatDataActivity.this, SignInActivity.class));
+                    //User Auth State is Changed - User is Null
+                    //Launch Login Activity
+                    startActivity(new Intent(UploadCatDataActivity.this, LandingActivity.class));
                     finish();
                 }
             }
@@ -140,7 +145,36 @@ public class UploadCatDataActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 uploadCatDataValidation();
-                addCat();
+                databaseCats = FirebaseDatabase.getInstance().getReference("cats");
+                storageCats = FirebaseStorage.getInstance().getReference();
+                StorageReference reference = storageCats.child(STORAGE_PATH + System.currentTimeMillis() + "." + getActualImage(uriCatPhoto));
+
+                reference.putFile(uriCatPhoto)
+                        .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                                int selectedVacc = radioGroupVaccine.getCheckedRadioButtonId();
+                                radioButtonVacc = (RadioButton)findViewById(selectedVacc);
+                                int selectedSpayNeuter = radioGroupSpayNeuter.getCheckedRadioButtonId();
+                                radioButtonSpayNeuter = (RadioButton)findViewById(selectedSpayNeuter);
+
+                                String id = databaseCats.push().getKey();
+                                String cPhotoUrl = taskSnapshot.getDownloadUrl().toString();
+                                String name = inputCatName.getText().toString().trim();
+                                String dob = inputCatDob.getText().toString().trim();
+                                String spinnerGender = spinnerCatGender.getSelectedItem().toString().trim();
+                                String desc = inputCatDesc.getText().toString().trim();
+                                String medNote = inputCatMedNote.getText().toString().trim();
+                                String vacc = radioButtonVacc.getText().toString().trim();
+                                String spayNeuter = radioButtonSpayNeuter.getText().toString().trim();
+                                String spinnerReason = spinnerCatReasonOpenAdoption.getSelectedItem().toString().trim();
+
+                                Cat cat = new Cat(id, cPhotoUrl, name, dob, spinnerGender, desc, medNote, vacc, spayNeuter, spinnerReason);
+
+                                databaseCats.child(id).setValue(cat);
+                            }
+                        });
             }
         });
     }
@@ -204,7 +238,7 @@ public class UploadCatDataActivity extends AppCompatActivity {
 
         //Cat's Name Validation
         String cName = inputCatName.getText().toString();
-        if (TextUtils.isEmpty(cName)){
+        if (TextUtils.isEmpty(cName)) {
             Toast.makeText(getApplicationContext(), "Enter Your Cat Name", Toast.LENGTH_SHORT).show();
         }
 
@@ -232,7 +266,7 @@ public class UploadCatDataActivity extends AppCompatActivity {
         }
 
         //Vaccine Status Validation
-        if (radioGroupVaccine.getCheckedRadioButtonId() == -1){
+        if (radioGroupVaccine.getCheckedRadioButtonId() == -1) {
             Toast.makeText(getApplicationContext(), "Choose Cat's Vaccine Status", Toast.LENGTH_SHORT).show();
             return;
         } else {
@@ -256,15 +290,4 @@ public class UploadCatDataActivity extends AppCompatActivity {
             return;
         }
     }
-
-    private void addCat() {
-//        databaseUsers = FirebaseDatabase.getInstance().getReference().child("users");
-    }
-
-//    private void userProfile() {
-//        FirebaseUser user = auth.getCurrentUser();
-//        if (user != null) {
-//            auth.signOut();
-//        }
-//    }
 }

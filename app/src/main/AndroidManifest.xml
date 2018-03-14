@@ -48,7 +48,7 @@
         <activity android:name=".activity.activity.UserHomeActivity" />
         <activity android:name=".activity.activity.UploadCatDataActivity" />
         <activity android:name=".activity.activity.FindCatForAdoptActivity" />
-        <activity android:name=".activity.activity.CatBreedsStandardsActivity"></activity>
+        <activity android:name=".activity.activity.CatBreedsStandardsActivity" />
     </application>
 
 </manifest>
