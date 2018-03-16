@@ -20,6 +20,11 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import clouwiko.dev.prasiku.R;
 
@@ -32,7 +37,8 @@ public class MainMenuActivity extends AppCompatActivity
     private CardView uploadCard, findCatCard, breedsStandardsCard;
     private long backPressedTime;
     private Toast backToast;
-    private TextView userIdTv;
+//    private TextView userName, userEmail;
+//    private DatabaseReference databaseUsers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,17 +62,19 @@ public class MainMenuActivity extends AppCompatActivity
             progressBar.setVisibility(View.GONE);
         }
 
-        //Defining CardView
+        //Defining Object
         uploadCard = (CardView) findViewById(R.id.upload_cat_data);
         findCatCard = (CardView) findViewById(R.id.find_cat_for_adopt);
         breedsStandardsCard = (CardView) findViewById(R.id.cat_breeds_standards);
+//        userName = (TextView)findViewById(R.id.userFNameND);
+//        userEmail = (TextView)findViewById(R.id.userEmailND);
 
         //Get Firebase Auth Instance
         auth = FirebaseAuth.getInstance();
 
         //Get Current User
         final FirebaseUser user = auth.getCurrentUser();
-//        final String userUID = user.getUid();
+        final String userUID = user.getUid();
 
         authStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -76,11 +84,25 @@ public class MainMenuActivity extends AppCompatActivity
                     //Launch Login Activity
                     startActivity(new Intent(MainMenuActivity.this, LandingActivity.class));
                     finish();
-                } else if (user != null) {
-                    String userId = user.getUid();
                 }
             }
         };
+
+//        databaseUsers = FirebaseDatabase.getInstance().getReference().child("users").child(userUID);
+//        databaseUsers.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                String userNameStr = dataSnapshot.child("userFname").getValue(String.class);
+//                String userEmailStr = dataSnapshot.child("userEmail").getValue(String.class);
+//                userName.setText(userNameStr);
+//                userEmail.setText(userEmailStr);
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
 
         //CardView Click Listener
         uploadCard.setOnClickListener(new View.OnClickListener() {

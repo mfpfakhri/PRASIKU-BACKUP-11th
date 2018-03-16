@@ -50,7 +50,7 @@
     <string name="upload_cat_data">Upload Cat Data</string>
     <string name="find_cat_for_adopt">Find Cat for Adopt</string>
     <string name="applications">Applications</string>
-    <string name="upload_cat_data_desc">Upload your cat data to find new owners</string>
+    <string name="upload_cat_data_desc">Upload your cat data \nto find new owners</string>
     <string name="find_cat_for_adopt_desc">Find a cat to become your new family</string>
     <string name="cat_breeds_standards_desc">Find out information of cats breed</string>
     <string name="applications_desc">See your cat adoption application</string>
