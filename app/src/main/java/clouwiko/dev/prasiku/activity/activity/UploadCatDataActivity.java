@@ -67,20 +67,15 @@ public class UploadCatDataActivity extends AppCompatActivity {
         setContentView(R.layout.activity_upload_cat_data);
 
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
-
         catPhotoIv = (ImageView) findViewById(R.id.userPhotos);
-
         inputCatName = (EditText) findViewById(R.id.cat_name);
         inputCatDob = (EditText) findViewById(R.id.catDobDatepicker);
         inputCatDesc = (EditText) findViewById(R.id.catDesc);
         inputCatMedNote = (EditText) findViewById(R.id.catMedicalNote);
-
         spinnerCatGender = (MaterialSpinner) findViewById(R.id.catGender);
         spinnerCatReasonOpenAdoption = (MaterialSpinner) findViewById(R.id.catReasonOpenAdoption);
-
         radioGroupVaccine = (RadioGroup) findViewById(R.id.radioGroupVaccine);
         radioGroupSpayNeuter = (RadioGroup) findViewById(R.id.radioGroupSpayNeuter);
-
         btnUploadCatData = (Button) findViewById(R.id.action_upload_cat_data);
 
         //Get Firebase Auth Instance
@@ -145,38 +140,46 @@ public class UploadCatDataActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 uploadCatDataValidation();
-                databaseCats = FirebaseDatabase.getInstance().getReference("cats");
-                storageCats = FirebaseStorage.getInstance().getReference();
-                StorageReference reference = storageCats.child(STORAGE_PATH + System.currentTimeMillis() + "." + getActualImage(uriCatPhoto));
-
-                reference.putFile(uriCatPhoto)
-                        .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                            @Override
-                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-
-                                int selectedVacc = radioGroupVaccine.getCheckedRadioButtonId();
-                                radioButtonVacc = (RadioButton)findViewById(selectedVacc);
-                                int selectedSpayNeuter = radioGroupSpayNeuter.getCheckedRadioButtonId();
-                                radioButtonSpayNeuter = (RadioButton)findViewById(selectedSpayNeuter);
-
-                                String id = databaseCats.push().getKey();
-                                String cPhotoUrl = taskSnapshot.getDownloadUrl().toString();
-                                String name = inputCatName.getText().toString().trim();
-                                String dob = inputCatDob.getText().toString().trim();
-                                String spinnerGender = spinnerCatGender.getSelectedItem().toString().trim();
-                                String desc = inputCatDesc.getText().toString().trim();
-                                String medNote = inputCatMedNote.getText().toString().trim();
-                                String vacc = radioButtonVacc.getText().toString().trim();
-                                String spayNeuter = radioButtonSpayNeuter.getText().toString().trim();
-                                String spinnerReason = spinnerCatReasonOpenAdoption.getSelectedItem().toString().trim();
-
-                                Cat cat = new Cat(id, cPhotoUrl, name, dob, spinnerGender, desc, medNote, vacc, spayNeuter, spinnerReason);
-
-                                databaseCats.child(id).setValue(cat);
-                            }
-                        });
+                addCatData();
+                Toast.makeText(UploadCatDataActivity.this, "Successfully Added Cats Data for Adopt", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(UploadCatDataActivity.this, LandingActivity.class));
             }
         });
+    }
+
+    private void addCatData() {
+        //Get Current User UID
+        final String userUID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        databaseCats = FirebaseDatabase.getInstance().getReference("cats");
+        storageCats = FirebaseStorage.getInstance().getReference();
+        StorageReference reference = storageCats.child(STORAGE_PATH + System.currentTimeMillis() + "." + getActualImage(uriCatPhoto));
+
+        reference.putFile(uriCatPhoto)
+                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                        int selectedVacc = radioGroupVaccine.getCheckedRadioButtonId();
+                        radioButtonVacc = (RadioButton) findViewById(selectedVacc);
+                        int selectedSpayNeuter = radioGroupSpayNeuter.getCheckedRadioButtonId();
+                        radioButtonSpayNeuter = (RadioButton) findViewById(selectedSpayNeuter);
+
+                        String id = databaseCats.push().getKey();
+                        String cPhotoUrl = taskSnapshot.getDownloadUrl().toString();
+                        String name = inputCatName.getText().toString().trim();
+                        String dob = inputCatDob.getText().toString().trim();
+                        String spinnerGender = spinnerCatGender.getSelectedItem().toString().trim();
+                        String desc = inputCatDesc.getText().toString().trim();
+                        String medNote = inputCatMedNote.getText().toString().trim();
+                        String vacc = radioButtonVacc.getText().toString().trim();
+                        String spayNeuter = radioButtonSpayNeuter.getText().toString().trim();
+                        String spinnerReason = spinnerCatReasonOpenAdoption.getSelectedItem().toString().trim();
+
+                        Cat cat = new Cat(id, cPhotoUrl, name, dob, spinnerGender, desc, medNote, vacc, spayNeuter, spinnerReason);
+
+                        databaseCats.child(userUID).child(id).setValue(cat);
+                    }
+                });
     }
 
     private void catPhotosMediaOpen() {

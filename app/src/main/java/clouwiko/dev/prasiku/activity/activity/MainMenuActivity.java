@@ -32,8 +32,6 @@ public class MainMenuActivity extends AppCompatActivity
     private CardView uploadCard, findCatCard, breedsStandardsCard;
     private long backPressedTime;
     private Toast backToast;
-    public static final String USER_ID = "userId";
-    public static final String USER_NAME = "userFName";
     private TextView userIdTv;
 
     @Override
@@ -62,15 +60,13 @@ public class MainMenuActivity extends AppCompatActivity
         uploadCard = (CardView) findViewById(R.id.upload_cat_data);
         findCatCard = (CardView) findViewById(R.id.find_cat_for_adopt);
         breedsStandardsCard = (CardView) findViewById(R.id.cat_breeds_standards);
-        userIdTv = (TextView)findViewById(R.id.uIdShared);
 
         //Get Firebase Auth Instance
         auth = FirebaseAuth.getInstance();
 
         //Get Current User
         final FirebaseUser user = auth.getCurrentUser();
-        final String userKey = user.getUid();
-        userIdTv.setText(userKey);
+//        final String userUID = user.getUid();
 
         authStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -91,7 +87,6 @@ public class MainMenuActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), UploadCatDataActivity.class);
-                intent.putExtra(USER_ID, userKey);
                 startActivity(intent);
             }
         });
@@ -180,31 +175,4 @@ public class MainMenuActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
-//    @Override
-//    public void onClick(View v) {
-//        progressBar.setVisibility(View.VISIBLE);
-//        Intent intent;
-//        switch (v.getId()) {
-//            case R.id.upload_cat_data:
-//                intent = new Intent(getApplicationContext(), UploadCatDataActivity.class);
-//                intent.putExtra(USER_ID)
-//                startActivity(intent);
-//                progressBar.setVisibility(View.GONE);
-//                break;
-//            case R.id.find_cat_for_adopt:
-//                intent = new Intent(getApplicationContext(), FindCatForAdoptActivity.class);
-//                startActivity(intent);
-//                progressBar.setVisibility(View.GONE);
-//                break;
-//            case R.id.cat_breeds_standards:
-//                intent = new Intent(getApplicationContext(), CatBreedsStandardsActivity.class);
-//                startActivity(intent);
-//                progressBar.setVisibility(View.GONE);
-//                break;
-//            default:
-//                progressBar.setVisibility(View.GONE);
-//                break;
-//        }
-//    }
 }

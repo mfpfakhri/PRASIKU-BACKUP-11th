@@ -154,11 +154,6 @@
                     android:text="@string/cat_breeds_standards"
                     android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/uIdShared"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
@@ -173,44 +168,5 @@
             </LinearLayout>
         </android.support.v7.widget.CardView>
     </LinearLayout>
-
-    <!--&lt;!&ndash;Column 2&ndash;&gt;-->
-    <!--<android.support.v7.widget.CardView-->
-    <!--android:id="@+id/applications"-->
-    <!--android:layout_width="0dp"-->
-    <!--android:layout_height="0dp"-->
-    <!--android:layout_columnWeight="1"-->
-    <!--android:layout_marginBottom="16dp"-->
-    <!--android:layout_marginLeft="16dp"-->
-    <!--android:layout_marginRight="16dp"-->
-    <!--android:layout_rowWeight="1"-->
-    <!--app:cardCornerRadius="8dp"-->
-    <!--app:cardElevation="8dp">-->
-
-    <!--<LinearLayout-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_gravity="center_horizontal|center_vertical"-->
-    <!--android:layout_margin="16dp"-->
-    <!--android:orientation="vertical">-->
-
-    <!--<ImageView-->
-    <!--android:layout_width="64dp"-->
-    <!--android:layout_height="64dp"-->
-    <!--android:layout_gravity="center_horizontal"-->
-    <!--android:src="@drawable/ic_chrome_reader_mode_black_24dp" />-->
-
-    <!--<TextView-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:text="@string/applications"-->
-    <!--android:textAlignment="center"-->
-    <!--android:textColor="@color/black"-->
-    <!--android:textSize="18sp"-->
-    <!--android:textStyle="bold" />-->
-    <!--</LinearLayout>-->
-
-    <!--</android.support.v7.widget.CardView>-->
-    <!--</GridLayout>-->
 
 </LinearLayout>
