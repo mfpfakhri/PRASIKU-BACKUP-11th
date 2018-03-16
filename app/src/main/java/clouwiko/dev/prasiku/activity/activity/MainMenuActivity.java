@@ -14,15 +14,14 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import clouwiko.dev.prasiku.R;
-import clouwiko.dev.prasiku.activity.model.User;
 
 public class MainMenuActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -35,6 +34,7 @@ public class MainMenuActivity extends AppCompatActivity
     private Toast backToast;
     public static final String USER_ID = "userId";
     public static final String USER_NAME = "userFName";
+    private TextView userIdTv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,13 +62,15 @@ public class MainMenuActivity extends AppCompatActivity
         uploadCard = (CardView) findViewById(R.id.upload_cat_data);
         findCatCard = (CardView) findViewById(R.id.find_cat_for_adopt);
         breedsStandardsCard = (CardView) findViewById(R.id.cat_breeds_standards);
+        userIdTv = (TextView)findViewById(R.id.uIdShared);
 
         //Get Firebase Auth Instance
         auth = FirebaseAuth.getInstance();
 
         //Get Current User
-        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        final String userKey = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        final FirebaseUser user = auth.getCurrentUser();
+        final String userKey = user.getUid();
+        userIdTv.setText(userKey);
 
         authStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -206,4 +208,3 @@ public class MainMenuActivity extends AppCompatActivity
 //        }
 //    }
 }
-

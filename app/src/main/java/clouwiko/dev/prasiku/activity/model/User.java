@@ -6,6 +6,7 @@ package clouwiko.dev.prasiku.activity.model;
 
 public class User {
     private String userEmail;
+    private String userAuthStatus;
     private String userId;
     private String userFname;
     private String userDob;
@@ -15,8 +16,12 @@ public class User {
     private String userPhone;
     private String userAddress;
 
-    public User(String userEmail, String userId, String userFname, String userDob, String userGender, String userProfilePhoto, String userCity, String userPhone, String userAddress) {
+    public User() {
+    }
+
+    public User(String userEmail, String userAuthStatus, String userId, String userFname, String userDob, String userGender, String userProfilePhoto, String userCity, String userPhone, String userAddress) {
         this.userEmail = userEmail;
+        this.userAuthStatus = userAuthStatus;
         this.userId = userId;
         this.userFname = userFname;
         this.userDob = userDob;
@@ -27,15 +32,20 @@ public class User {
         this.userAddress = userAddress;
     }
 
-    public User() {
-    }
-
     public String getUserEmail() {
         return userEmail;
     }
 
     public void setUserEmail(String userEmail) {
         this.userEmail = userEmail;
+    }
+
+    public String getUserAuthStatus() {
+        return userAuthStatus;
+    }
+
+    public void setUserAuthStatus(String userAuthStatus) {
+        this.userAuthStatus = userAuthStatus;
     }
 
     public String getUserId() {

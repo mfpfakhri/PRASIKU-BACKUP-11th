@@ -25,7 +25,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.activity.SignInActivity" />
-        <activity android:name=".activity.activity.SignUpActivity" />
+        <activity android:name=".activity.activity.SignUpOneActivity" />
         <activity android:name=".activity.activity.ResetPasswordActivity" />
         <activity
             android:name=".activity.activity.MainMenuActivity"
@@ -49,6 +49,7 @@
         <activity android:name=".activity.activity.UploadCatDataActivity" />
         <activity android:name=".activity.activity.FindCatForAdoptActivity" />
         <activity android:name=".activity.activity.CatBreedsStandardsActivity" />
+        <activity android:name=".activity.activity.SignUpTwoActivity"></activity>
     </application>
 
 </manifest>

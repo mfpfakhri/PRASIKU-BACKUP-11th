@@ -154,6 +154,11 @@
                     android:text="@string/cat_breeds_standards"
                     android:textStyle="bold" />
 
+                <TextView
+                    android:id="@+id/uIdShared"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
