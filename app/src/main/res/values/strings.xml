@@ -72,6 +72,8 @@
     <string name="action_sign_up_next"><![CDATA[Next >>]]></string>
 
     <string name="iduser">clouwiko.dev.prasiku.activity.activity.iduser</string>
+    <string name="user_cats_tab">Cats</string>
+    <string name="user_profile_tab">Profile</string>
 
     <string-array name="gender">
         <item>Male</item>
