@@ -1,9 +1,7 @@
 package clouwiko.dev.prasiku.activity.activity;
 
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,6 +11,8 @@ import clouwiko.dev.prasiku.R;
 
 public class UserHomeActivity extends AppCompatActivity {
 
+    private TabLayout tabLayout;
+    private AppBarLayout appBarLayout;
     private UserHomePagerAdapter userHomePagerAdapter;
     private ViewPager userHomeViewPager;
 
@@ -21,23 +21,15 @@ public class UserHomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_home);
 
+        tabLayout = (TabLayout)findViewById(R.id.userhome_tablayout);
+        appBarLayout = (AppBarLayout)findViewById(R.id.userhome_appbar);
+        userHomeViewPager = (ViewPager)findViewById(R.id.userhome_viewpager);
+
         userHomePagerAdapter = new UserHomePagerAdapter(getSupportFragmentManager());
-        userHomeViewPager = (ViewPager)findViewById(R.id.userhome_container);
-        setupUserHomeViewPager(userHomeViewPager);
+        userHomePagerAdapter.addFragment(new UserHomeCatFragment(), "Cats");
+        userHomePagerAdapter.addFragment(new UserHomeProfileFragment(), "Profile");
 
-        TabLayout tabLayout = (TabLayout)findViewById(R.id.tabs);
+        userHomeViewPager.setAdapter(userHomePagerAdapter);
         tabLayout.setupWithViewPager(userHomeViewPager);
-
-        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Home");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-    }
-
-    private void setupUserHomeViewPager(ViewPager viewPager) {
-        UserHomePagerAdapter userHomeAdapter = new UserHomePagerAdapter(getSupportFragmentManager());
-        userHomeAdapter.addFragment(new UserHomeCatFragment());
-        userHomeAdapter.addFragment(new UserHomeProfileFragment());
-        viewPager.setAdapter(userHomeAdapter);
     }
 }

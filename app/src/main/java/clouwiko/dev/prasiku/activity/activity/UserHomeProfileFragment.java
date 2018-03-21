@@ -12,6 +12,9 @@ import android.view.ViewGroup;
 import clouwiko.dev.prasiku.R;
 
 public class UserHomeProfileFragment extends Fragment {
+    public UserHomeProfileFragment() {
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

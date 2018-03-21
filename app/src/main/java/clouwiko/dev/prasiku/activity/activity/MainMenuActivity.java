@@ -168,6 +168,7 @@ public class MainMenuActivity extends AppCompatActivity
                 Toast.makeText(this, "Signed Out", Toast.LENGTH_SHORT).show();
                 finish();
                 startActivity(new Intent(MainMenuActivity.this, LandingActivity.class));
+                break;
         }
         return super.onOptionsItemSelected(menuItem);
     }

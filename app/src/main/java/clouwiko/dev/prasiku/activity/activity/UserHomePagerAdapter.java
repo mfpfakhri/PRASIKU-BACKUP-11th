@@ -13,10 +13,7 @@ import java.util.List;
 
 public class UserHomePagerAdapter extends FragmentPagerAdapter {
     private final List<Fragment> mFragmentList = new ArrayList<>();
-
-    public void addFragment(Fragment fragment) {
-        mFragmentList.add(fragment);
-    }
+    private final List<String> mFragmentTitleList = new ArrayList<>();
 
     public UserHomePagerAdapter(FragmentManager fm) {
         super(fm);
@@ -30,5 +27,15 @@ public class UserHomePagerAdapter extends FragmentPagerAdapter {
     @Override
     public int getCount() {
         return mFragmentList.size();
+    }
+
+    @Override
+    public CharSequence getPageTitle(int position) {
+        return mFragmentTitleList.get(position);
+    }
+
+    public void addFragment(Fragment fragment, String title) {
+        mFragmentList.add(fragment);
+        mFragmentTitleList.add(title);
     }
 }
