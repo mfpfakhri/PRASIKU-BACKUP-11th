@@ -11,12 +11,12 @@
         android:id="@+id/userhome_appbar"
         android:layout_width="match_parent"
         android:layout_height="256dp"
+        android:background="@drawable/home_background_two"
         android:elevation="0dp"
-        android:gravity="center"
-        android:background="@drawable/home_background_two">
+        android:gravity="center">
 
         <ImageView
-            android:id="@+id/userPhotos"
+            android:id="@+id/userPhoto_home"
             android:layout_width="96dp"
             android:layout_height="96dp"
             android:layout_alignParentStart="true"
@@ -26,6 +26,26 @@
             android:clickable="false"
             android:padding="1dp"
             android:scaleType="fitXY" />
+
+        <TextView
+            android:id="@+id/userName_home"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:textSize="18dp"
+            android:text="User Name"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/userCity_home"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:textSize="16dp"
+            android:text="User City"
+            android:textStyle="bold" />
     </android.support.design.widget.AppBarLayout>
 
     <android.support.design.widget.TabLayout
