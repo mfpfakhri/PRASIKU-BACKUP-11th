@@ -37,8 +37,8 @@ public class MainMenuActivity extends AppCompatActivity
     private CardView uploadCard, findCatCard, breedsStandardsCard;
     private long backPressedTime;
     private Toast backToast;
-//    private TextView userName, userEmail;
-//    private DatabaseReference databaseUsers;
+    private TextView userName, userEmail;
+    private DatabaseReference databaseUsers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,8 +66,8 @@ public class MainMenuActivity extends AppCompatActivity
         uploadCard = (CardView) findViewById(R.id.upload_cat_data);
         findCatCard = (CardView) findViewById(R.id.find_cat_for_adopt);
         breedsStandardsCard = (CardView) findViewById(R.id.cat_breeds_standards);
-//        userName = (TextView)findViewById(R.id.userFNameND);
-//        userEmail = (TextView)findViewById(R.id.userEmailND);
+        userName = (TextView)navigationView.getHeaderView(0).findViewById(R.id.userFNameND);
+        userEmail = (TextView)navigationView.getHeaderView(0).findViewById(R.id.userEmailND);
 
         //Get Firebase Auth Instance
         auth = FirebaseAuth.getInstance();
@@ -88,21 +88,21 @@ public class MainMenuActivity extends AppCompatActivity
             }
         };
 
-//        databaseUsers = FirebaseDatabase.getInstance().getReference().child("users").child(userUID);
-//        databaseUsers.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                String userNameStr = dataSnapshot.child("userFname").getValue(String.class);
-//                String userEmailStr = dataSnapshot.child("userEmail").getValue(String.class);
-//                userName.setText(userNameStr);
-//                userEmail.setText(userEmailStr);
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
+        databaseUsers = FirebaseDatabase.getInstance().getReference().child("users").child(userUID);
+        databaseUsers.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String userNameStr = dataSnapshot.child("userFname").getValue(String.class);
+                String userEmailStr = dataSnapshot.child("userEmail").getValue(String.class);
+                userName.setText(userNameStr);
+                userEmail.setText(userEmailStr);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
         //CardView Click Listener
         uploadCard.setOnClickListener(new View.OnClickListener() {
