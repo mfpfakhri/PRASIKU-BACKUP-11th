@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,8 +26,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import clouwiko.dev.prasiku.R;
+import clouwiko.dev.prasiku.activity.other.PicassoTransform;
 
 public class MainMenuActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -37,6 +40,7 @@ public class MainMenuActivity extends AppCompatActivity
     private CardView uploadCard, findCatCard, breedsStandardsCard;
     private long backPressedTime;
     private Toast backToast;
+    private ImageView userPhoto;
     private TextView userName, userEmail;
     private DatabaseReference databaseUsers;
 
@@ -66,6 +70,7 @@ public class MainMenuActivity extends AppCompatActivity
         uploadCard = (CardView) findViewById(R.id.upload_cat_data);
         findCatCard = (CardView) findViewById(R.id.find_cat_for_adopt);
         breedsStandardsCard = (CardView) findViewById(R.id.cat_breeds_standards);
+        userPhoto = (ImageView)navigationView.getHeaderView(0).findViewById(R.id.userProfilePhotoND);
         userName = (TextView)navigationView.getHeaderView(0).findViewById(R.id.userFNameND);
         userEmail = (TextView)navigationView.getHeaderView(0).findViewById(R.id.userEmailND);
 
@@ -94,8 +99,10 @@ public class MainMenuActivity extends AppCompatActivity
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String userNameStr = dataSnapshot.child("userFname").getValue(String.class);
                 String userEmailStr = dataSnapshot.child("userEmail").getValue(String.class);
+                String userPhotoUri = dataSnapshot.child("userProfilePhoto").getValue(String.class);
                 userName.setText(userNameStr);
                 userEmail.setText(userEmailStr);
+                Picasso.get().load(userPhotoUri).transform(new PicassoTransform()).resize(192,192).into(userPhoto);
             }
 
             @Override

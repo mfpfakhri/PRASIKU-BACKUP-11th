@@ -57,5 +57,8 @@ dependencies {
     compile('com.theartofdev.edmodo:android-image-cropper:2.6.+') {
         exclude group: 'com.android.support', module: 'appcompat-v7'
     }
+
+    //Picasso
+    compile 'com.squareup.picasso:picasso:2.71828'
 }
 apply plugin: 'com.google.gms.google-services'
