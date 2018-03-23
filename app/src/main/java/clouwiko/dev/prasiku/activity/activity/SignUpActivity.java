@@ -118,46 +118,10 @@ public class SignUpActivity extends AppCompatActivity {
                     String provinceName = provinceSnapshot.child("provinceName").getValue(String.class);
                     provinces.add(provinceName);
                 }
-                final MaterialSpinner provincesSpinner = (MaterialSpinner) findViewById(R.id.provinceSpinner_signup);
+                MaterialSpinner provincesSpinner = (MaterialSpinner) findViewById(R.id.provinceSpinner_signup);
                 ArrayAdapter<String> provincesAdapter = new ArrayAdapter<String>(SignUpActivity.this, android.R.layout.simple_spinner_item, provinces);
                 provincesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 provincesSpinner.setAdapter(provincesAdapter);
-                provincesSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        String spinnerProvinceValue = spinnerProvinces.getSelectedItem().toString();
-                        if (spinnerProvinceValue != null) {
-                            databaseCities = FirebaseDatabase.getInstance().getReference().child("cities");
-                            databaseCities.orderByChild("cityProvince").equalTo(spinnerProvinceValue).addValueEventListener(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(DataSnapshot dataSnapshot) {
-                                    final List<String> cities = new ArrayList<String>();
-                                    for (DataSnapshot citySnapshot : dataSnapshot.getChildren()) {
-                                        String cityName = citySnapshot.child("cityName").getValue(String.class);
-                                        cities.add(cityName);
-                                    }
-                                    MaterialSpinner citiesSpinner = (MaterialSpinner) findViewById(R.id.citySpinner_signup);
-                                    ArrayAdapter<String> citiesAdapter = new ArrayAdapter<String>(SignUpActivity.this, android.R.layout.simple_spinner_item, cities);
-                                    citiesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                                    citiesSpinner.setAdapter(citiesAdapter);
-                                }
-
-                                @Override
-                                public void onCancelled(DatabaseError databaseError) {
-
-                                }
-                            });
-                        } else {
-                            Toast.makeText(getApplicationContext(), "Enter Your Province", Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> parent) {
-
-                    }
-                });
             }
 
             @Override
@@ -166,26 +130,44 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
 
-//        databaseCities = FirebaseDatabase.getInstance().getReference().child("cities");
-//        databaseCities.orderByChild("cityProvince").equalTo(spinnerProvinces.getSelectedItem().toString()).addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                final List<String> cities = new ArrayList<String>();
-//                for (DataSnapshot citySnapshot : dataSnapshot.getChildren()) {
-//                    String cityName = citySnapshot.child("cityName").getValue(String.class);
-//                    cities.add(cityName);
-//                }
-//                MaterialSpinner citiesSpinner = (MaterialSpinner) findViewById(R.id.citySpinner_signup);
-//                ArrayAdapter<String> citiesAdapter = new ArrayAdapter<String>(SignUpActivity.this, android.R.layout.simple_spinner_item, cities);
-//                citiesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//                citiesSpinner.setAdapter(citiesAdapter);
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
+        spinnerProvinces.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                int spinnerProvincesPosition = spinnerProvinces.getSelectedItemPosition();
+                if (spinnerProvincesPosition != 0) {
+                    String spinnerProvincesValue = spinnerProvinces.getSelectedItem().toString().trim();
+                    databaseCities = FirebaseDatabase.getInstance().getReference().child("cities");
+                    databaseCities.orderByChild("cityProvince").equalTo(spinnerProvincesValue).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            final List<String> cities = new ArrayList<String>();
+                            for (DataSnapshot cityPSnapshot : dataSnapshot.getChildren()) {
+                                for (DataSnapshot cityCSnapshot : cityPSnapshot.getChildren()){
+                                    String cityName = cityCSnapshot.child("cityName").getValue(String.class);
+                                    cities.add(cityName);
+                                }
+                            }
+                            MaterialSpinner citiesSpinner = (MaterialSpinner) findViewById(R.id.citySpinner_signup);
+                            ArrayAdapter<String> citiesAdapter = new ArrayAdapter<String>(SignUpActivity.this, android.R.layout.simple_spinner_item, cities);
+                            citiesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                            citiesSpinner.setAdapter(citiesAdapter);
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+                } else {
+
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
 //        databaseCities = FirebaseDatabase.getInstance().getReference().child("cities");
 //        final ArrayAdapter<String> citiesAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item);
@@ -319,8 +301,8 @@ public class SignUpActivity extends AppCompatActivity {
                 }
 
                 //City Validation
-                String spinnerCityValue = spinnerCities.getSelectedItem().toString();
-                if (spinnerCityValue != null) {
+                int spinnerCityPosition = spinnerCities.getSelectedItemPosition();
+                if (spinnerCityPosition != 0) {
 
                 } else {
                     Toast.makeText(getApplicationContext(), "Enter Your City", Toast.LENGTH_SHORT).show();
