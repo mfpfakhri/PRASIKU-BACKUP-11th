@@ -71,6 +71,12 @@ public class SignUpActivity extends AppCompatActivity {
     private ImageView userPhotoIv;
     Uri uriUserPhoto;
 
+    //TODO:RWP Initial cities Adapter
+    ArrayAdapter<String> citiesAdapter;
+    List<String> cities;
+    List<String> provincesKey;
+    //--
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -122,39 +128,56 @@ public class SignUpActivity extends AppCompatActivity {
 //            }
 //        });
 
+        //TODO:RWP Initial Spinner for cities
+        cities = new ArrayList<String>();
+        final MaterialSpinner citiesSpinner = (MaterialSpinner) findViewById(R.id.citySpinner_signup);
+        citiesAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, cities);
+        citiesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        citiesSpinner.setAdapter(citiesAdapter);
+        provincesKey = new ArrayList<>();
+        //
+
         databaseProvinces = FirebaseDatabase.getInstance().getReference().child("provinces");
-        databaseProvinces.addValueEventListener(new ValueEventListener() {
+        //TODO:RWP change addEventListener to addListenerForSingleValueEvent
+        databaseProvinces.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // Is better to use a List, because you don't know the size
                 // of the iterator returned by dataSnapshot.getChildren() to
                 // initialize the array
                 final List<String> provinces = new ArrayList<String>();
-                for (final DataSnapshot provinceSnapshot : dataSnapshot.getChildren()) {
+                for (DataSnapshot provinceSnapshot : dataSnapshot.getChildren()) {
                     final String provinceName = provinceSnapshot.child("provinceName").getValue(String.class);
                     provinces.add(provinceName);
-
+                    //TODO:RWP add key to array
+                    String key = provinceSnapshot.getKey();
+                    provincesKey.add(key);
+                    //--
                     spinnerProvinces.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                            String provinceKey = provinceSnapshot.getKey().toString();
                             int spinnerProvincesPosition = spinnerProvinces.getSelectedItemPosition();
+                            //TODO:RWP remove all cities and clear selection city
+                            cities.clear();
+                            citiesSpinner.setSelection(0);
+                            //--
                             if (spinnerProvincesPosition != 0) {
+                                //TODO:RWP get key by its position
+                                String provinceKey = provincesKey.get(position);
+                                //
                                 databaseCities = FirebaseDatabase.getInstance().getReference().child("cities");
-                                databaseCities.orderByKey().equalTo(provinceKey).addValueEventListener(new ValueEventListener() {
+                                //TODO:RWP change orderBy and equalTo with child and change addEventListener to addListenerForSingleValueEvent
+                                databaseCities.child(provinceKey).addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(DataSnapshot dataSnapshot) {
-                                        final List<String> cities = new ArrayList<String>();
                                         for (DataSnapshot cityPSnapshot : dataSnapshot.getChildren()) {
-                                            for (DataSnapshot cityCSnapshot : cityPSnapshot.getChildren()) {
-                                                String cityName = cityCSnapshot.child("cityName").getValue(String.class);
-                                                cities.add(cityName);
-                                            }
+                                            //TODO:RWP delete multiple loop for cities
+                                            String cityName = cityPSnapshot.child("cityName").getValue(String.class);
+                                            cities.add(cityName);
                                         }
-                                        MaterialSpinner citiesSpinner = (MaterialSpinner) findViewById(R.id.citySpinner_signup);
-                                        ArrayAdapter<String> citiesAdapter = new ArrayAdapter<String>(SignUpActivity.this, android.R.layout.simple_spinner_item, cities);
-                                        citiesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                                        citiesSpinner.setAdapter(citiesAdapter);
+                                        //TODO:RWP notify all new cities
+                                        citiesAdapter.notifyDataSetChanged();
+                                        //--
                                     }
 
                                     @Override

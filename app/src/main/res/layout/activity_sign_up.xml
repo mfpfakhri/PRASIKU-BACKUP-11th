@@ -137,6 +137,7 @@
                 android:id="@+id/citySpinner_signup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:ms_baseColor="@color/black"
                 app:ms_hint="@string/hint_city" />
 
             <!--<AutoCompleteTextView-->
