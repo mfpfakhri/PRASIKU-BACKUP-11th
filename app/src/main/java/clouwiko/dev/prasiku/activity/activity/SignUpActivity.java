@@ -37,6 +37,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -49,11 +50,13 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import clouwiko.dev.prasiku.R;
+import clouwiko.dev.prasiku.activity.model.Province;
 import clouwiko.dev.prasiku.activity.model.User;
 import fr.ganfra.materialspinner.MaterialSpinner;
 
 public class SignUpActivity extends AppCompatActivity {
 
+    private String TAG = "SignUpActivity";
     private EditText inputEmail, inputPassword, inputFullName, inputDob, inputPhone, inputAddress;
     private DatePickerDialog.OnDateSetListener dobSetListener;
     private MaterialSpinner spinnerGender;
@@ -106,6 +109,19 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
 
+//        databaseProvinces = FirebaseDatabase.getInstance().getReference().child("provinces");
+//        databaseProvinces.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
+
         databaseProvinces = FirebaseDatabase.getInstance().getReference().child("provinces");
         databaseProvinces.addValueEventListener(new ValueEventListener() {
             @Override
@@ -114,9 +130,46 @@ public class SignUpActivity extends AppCompatActivity {
                 // of the iterator returned by dataSnapshot.getChildren() to
                 // initialize the array
                 final List<String> provinces = new ArrayList<String>();
-                for (DataSnapshot provinceSnapshot : dataSnapshot.getChildren()) {
-                    String provinceName = provinceSnapshot.child("provinceName").getValue(String.class);
+                for (final DataSnapshot provinceSnapshot : dataSnapshot.getChildren()) {
+                    final String provinceName = provinceSnapshot.child("provinceName").getValue(String.class);
                     provinces.add(provinceName);
+
+                    spinnerProvinces.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                            String provinceKey = provinceSnapshot.getKey().toString();
+                            int spinnerProvincesPosition = spinnerProvinces.getSelectedItemPosition();
+                            if (spinnerProvincesPosition != 0) {
+                                databaseCities = FirebaseDatabase.getInstance().getReference().child("cities");
+                                databaseCities.orderByKey().equalTo(provinceKey).addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        final List<String> cities = new ArrayList<String>();
+                                        for (DataSnapshot cityPSnapshot : dataSnapshot.getChildren()) {
+                                            for (DataSnapshot cityCSnapshot : cityPSnapshot.getChildren()) {
+                                                String cityName = cityCSnapshot.child("cityName").getValue(String.class);
+                                                cities.add(cityName);
+                                            }
+                                        }
+                                        MaterialSpinner citiesSpinner = (MaterialSpinner) findViewById(R.id.citySpinner_signup);
+                                        ArrayAdapter<String> citiesAdapter = new ArrayAdapter<String>(SignUpActivity.this, android.R.layout.simple_spinner_item, cities);
+                                        citiesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                                        citiesSpinner.setAdapter(citiesAdapter);
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+
+                                    }
+                                });
+                            }
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {
+
+                        }
+                    });
                 }
                 MaterialSpinner provincesSpinner = (MaterialSpinner) findViewById(R.id.provinceSpinner_signup);
                 ArrayAdapter<String> provincesAdapter = new ArrayAdapter<String>(SignUpActivity.this, android.R.layout.simple_spinner_item, provinces);
@@ -130,44 +183,95 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
 
-        spinnerProvinces.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                int spinnerProvincesPosition = spinnerProvinces.getSelectedItemPosition();
-                if (spinnerProvincesPosition != 0) {
-                    String spinnerProvincesValue = spinnerProvinces.getSelectedItem().toString().trim();
-                    databaseCities = FirebaseDatabase.getInstance().getReference().child("cities");
-                    databaseCities.orderByChild("cityProvince").equalTo(spinnerProvincesValue).addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            final List<String> cities = new ArrayList<String>();
-                            for (DataSnapshot cityPSnapshot : dataSnapshot.getChildren()) {
-                                for (DataSnapshot cityCSnapshot : cityPSnapshot.getChildren()){
-                                    String cityName = cityCSnapshot.child("cityName").getValue(String.class);
-                                    cities.add(cityName);
-                                }
-                            }
-                            MaterialSpinner citiesSpinner = (MaterialSpinner) findViewById(R.id.citySpinner_signup);
-                            ArrayAdapter<String> citiesAdapter = new ArrayAdapter<String>(SignUpActivity.this, android.R.layout.simple_spinner_item, cities);
-                            citiesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                            citiesSpinner.setAdapter(citiesAdapter);
-                        }
+//        spinnerProvinces.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                int spinnerProvincesPosition = spinnerProvinces.getSelectedItemPosition();
+//                if (spinnerProvincesPosition != 0) {
+//                    String spinnerProvincesValue = spinnerProvinces.getSelectedItem().toString().trim();
+//                    databaseCities = FirebaseDatabase.getInstance().getReference().child("cities");
+//                    databaseCities.orderByChild("cityProvince").equalTo(spinnerProvincesValue).addValueEventListener(new ValueEventListener() {
+//                        @Override
+//                        public void onDataChange(DataSnapshot dataSnapshot) {
+//                            final List<String> cities = new ArrayList<String>();
+//                            for (DataSnapshot cityPSnapshot : dataSnapshot.getChildren()) {
+//                                for (DataSnapshot cityCSnapshot : cityPSnapshot.getChildren()) {
+//                                    String cityName = cityCSnapshot.child("cityName").getValue(String.class);
+//                                    cities.add(cityName);
+//                                }
+//                            }
+//                            MaterialSpinner citiesSpinner = (MaterialSpinner) findViewById(R.id.citySpinner_signup);
+//                            ArrayAdapter<String> citiesAdapter = new ArrayAdapter<String>(SignUpActivity.this, android.R.layout.simple_spinner_item, cities);
+//                            citiesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//                            citiesSpinner.setAdapter(citiesAdapter);
+//                        }
+//
+//                        @Override
+//                        public void onCancelled(DatabaseError databaseError) {
+//
+//                        }
+//                    });
+//                } else {
+//
+//                }
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//
+//            }
+//        });
 
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
-                        }
-                    });
-                } else {
-
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
+//        databaseProvinces = FirebaseDatabase.getInstance().getReference().child("provinces");
+//        final ArrayAdapter<String> provincesAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item);
+//        databaseProvinces.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                autoCompleteTextViewCity.setThreshold(1);
+//                for (DataSnapshot provinceIdSnapshot : dataSnapshot.getChildren()) {
+//                        String cityName = provinceIdSnapshot.child("provinceName").getValue(String.class);
+//                        provincesAdapter.add(cityName);
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
+//        autoCompleteTextViewProvince.setAdapter(provincesAdapter);
+//
+//        autoCompleteTextViewProvince.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                if (autoCompleteTextViewProvince != null) {
+//                    final ArrayAdapter<String> citiesAdapter = new ArrayAdapter<String>(SignUpActivity.this, android.R.layout.simple_spinner_dropdown_item);
+//                    String provinceValue = autoCompleteTextViewProvince.getText().toString().trim();
+//                    databaseCities = FirebaseDatabase.getInstance().getReference().child("cities");
+//                    Query query = databaseCities
+//                            .orderByChild("cityName")
+//                            .equalTo(provinceValue);
+//                    query.addValueEventListener(new ValueEventListener() {
+//                        @Override
+//                        public void onDataChange(DataSnapshot dataSnapshot) {
+//                            autoCompleteTextViewCity.setThreshold(1);
+//                            for (DataSnapshot provinceIdSnapshot : dataSnapshot.getChildren()) {
+//                                for (DataSnapshot cityIdSnapshot : provinceIdSnapshot.getChildren()) {
+//                                    String cityName = cityIdSnapshot.child("cityName").getValue(String.class);
+//                                    citiesAdapter.add(cityName);
+//                                }
+//                            }
+//                        }
+//
+//                        @Override
+//                        public void onCancelled(DatabaseError databaseError) {
+//
+//                        }
+//                    });
+//                    autoCompleteTextViewCity.setAdapter(citiesAdapter);
+//                }
+//            }
+//        });
 
 //        databaseCities = FirebaseDatabase.getInstance().getReference().child("cities");
 //        final ArrayAdapter<String> citiesAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item);
@@ -300,14 +404,19 @@ public class SignUpActivity extends AppCompatActivity {
                     return;
                 }
 
-                //City Validation
-                int spinnerCityPosition = spinnerCities.getSelectedItemPosition();
-                if (spinnerCityPosition != 0) {
-
-                } else {
-                    Toast.makeText(getApplicationContext(), "Enter Your City", Toast.LENGTH_SHORT).show();
-                    return;
-                }
+//                //Province Validation
+//                String spinnerProvinceValue = spinnerProvinces.getSelectedItem().toString().trim();
+//                if (TextUtils.isEmpty(spinnerProvinceValue)) {
+//                    Toast.makeText(getApplicationContext(), "Enter Your Province", Toast.LENGTH_SHORT).show();
+//                    return;
+//                }
+//
+//                //City Validation
+//                String spinnerCityValue = spinnerCities.getSelectedItem().toString().trim();
+//                if (TextUtils.isEmpty(spinnerCityValue)) {
+//                    Toast.makeText(getApplicationContext(), "Enter Your City", Toast.LENGTH_SHORT).show();
+//                    return;
+//                }
 
                 //Phone Number Validation
                 final String validPhone = "^[+]?[0-9]{10,13}$";
@@ -423,24 +532,23 @@ public class SignUpActivity extends AppCompatActivity {
         databaseUsers = FirebaseDatabase.getInstance().getReference("users");
         storageUsers = FirebaseStorage.getInstance().getReference();
         StorageReference reference = storageUsers.child(STORAGE_PATH + System.currentTimeMillis() + "." + getActualImage(uriUserPhoto));
-
         reference.putFile(uriUserPhoto)
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        String email = auth.getCurrentUser().getEmail();
-                        String userUid = auth.getCurrentUser().getUid();
-                        String fName = inputFullName.getText().toString().trim();
-                        String dobDate = inputDob.getText().toString().trim();
-                        String spinnerValue = spinnerGender.getSelectedItem().toString().trim();
-                        String pPhotoUrl = taskSnapshot.getDownloadUrl().toString();
-                        String city = spinnerCities.getSelectedItem().toString().trim();
-                        String phone = inputPhone.getText().toString().trim();
-                        String address = inputAddress.getText().toString().trim();
-
-                        User user = new User(email, userUid, fName, dobDate, spinnerValue, pPhotoUrl, city, phone, address);
-
-                        databaseUsers.child(userUid).setValue(user);
+//                        String email = auth.getCurrentUser().getEmail();
+//                        String userUid = auth.getCurrentUser().getUid();
+//                        String fName = inputFullName.getText().toString().trim();
+//                        String dobDate = inputDob.getText().toString().trim();
+//                        String spinnerValue = spinnerGender.getSelectedItem().toString().trim();
+//                        String pPhotoUrl = taskSnapshot.getDownloadUrl().toString();
+//                        String city = spinnerCities.getSelectedItem().toString().trim();
+//                        String phone = inputPhone.getText().toString().trim();
+//                        String address = inputAddress.getText().toString().trim();
+//
+//                        User user = new User(email, userUid, fName, dobDate, spinnerValue, pPhotoUrl, city, phone, address);
+//
+//                        databaseUsers.child(userUid).setValue(user);
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {

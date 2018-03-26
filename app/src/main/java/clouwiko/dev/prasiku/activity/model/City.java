@@ -23,11 +23,23 @@ public class City {
         return cityId;
     }
 
+    public void setCityId(String cityId) {
+        this.cityId = cityId;
+    }
+
     public String getCityName() {
         return cityName;
     }
 
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
+    }
+
     public String getCityProvince() {
         return cityProvince;
+    }
+
+    public void setCityProvince(String cityProvince) {
+        this.cityProvince = cityProvince;
     }
 }
