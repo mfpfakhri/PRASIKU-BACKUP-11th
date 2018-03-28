@@ -66,7 +66,6 @@ public class SignUpActivity extends AppCompatActivity {
     private DatabaseReference databaseProvinces, databaseCities, databaseUsers;
     private StorageReference storageUsers;
     private static final String STORAGE_PATH = "userProfilePhoto/";
-    //    private AutoCompleteTextView autoCompleteTextViewProvince, autoCompleteTextViewCity;
     private MaterialSpinner spinnerProvinces, spinnerCities;
     private ImageView userPhotoIv;
     Uri uriUserPhoto;
@@ -94,8 +93,6 @@ public class SignUpActivity extends AppCompatActivity {
         inputAddress = (EditText) findViewById(R.id.address);
         spinnerGender = (MaterialSpinner) findViewById(R.id.gender);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
-//        autoCompleteTextViewProvince = (AutoCompleteTextView) findViewById(R.id.provinceAutoCompleteTextView);
-//        autoCompleteTextViewCity = (AutoCompleteTextView) findViewById(R.id.cityAutoCompleteTextView);
         spinnerProvinces = (MaterialSpinner) findViewById(R.id.provinceSpinner_signup);
         spinnerCities = (MaterialSpinner) findViewById(R.id.citySpinner_signup);
         userPhotoIv = (ImageView) findViewById(R.id.userPhotos);
@@ -441,8 +438,8 @@ public class SignUpActivity extends AppCompatActivity {
                         String dobDate = inputDob.getText().toString().trim();
                         String spinnerValue = spinnerGender.getSelectedItem().toString().trim();
                         String pPhotoUrl = taskSnapshot.getDownloadUrl().toString();
-                        String city = spinnerCities.getSelectedItem().toString().trim();
                         String province = spinnerProvinces.getSelectedItem().toString().trim();
+                        String city = spinnerCities.getSelectedItem().toString().trim();
                         String phone = inputPhone.getText().toString().trim();
                         String address = inputAddress.getText().toString().trim();
 

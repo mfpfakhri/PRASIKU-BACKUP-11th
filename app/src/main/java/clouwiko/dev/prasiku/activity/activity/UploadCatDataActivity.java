@@ -16,6 +16,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
+import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -29,13 +30,18 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import clouwiko.dev.prasiku.R;
 import clouwiko.dev.prasiku.activity.model.Cat;
@@ -148,12 +154,39 @@ public class UploadCatDataActivity extends AppCompatActivity {
     }
 
     private void addCatData() {
+        //TODO: Initial cities Adapter
+        final List<String> provincesNameArray;
+        final List<String> citiesNameArray;
+        //--
+
         //Get Current User UID
         final String userUID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        //TODO: Array List for userProvince and userCity
+        provincesNameArray = new ArrayList<>();
+        citiesNameArray = new ArrayList<>();
+
+        databaseUsers = FirebaseDatabase.getInstance().getReference("users");
+        databaseUsers.orderByKey().equalTo(userUID).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
+                    final String userProvinceValue = userSnapshot.child("userProvince").getValue(String.class);
+                    final String userCityValue = userSnapshot.child("userCity").getValue(String.class);
+                    provincesNameArray.add(userProvinceValue);
+                    citiesNameArray.add(userCityValue);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        //TODO:MFP
         databaseCats = FirebaseDatabase.getInstance().getReference("cats");
         storageCats = FirebaseStorage.getInstance().getReference();
         StorageReference reference = storageCats.child(STORAGE_PATH + System.currentTimeMillis() + "." + getActualImage(uriCatPhoto));
-
         reference.putFile(uriCatPhoto)
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
@@ -165,6 +198,7 @@ public class UploadCatDataActivity extends AppCompatActivity {
                         radioButtonSpayNeuter = (RadioButton) findViewById(selectedSpayNeuter);
 
                         String id = databaseCats.push().getKey();
+                        String ownerId = userUID;
                         String cPhotoUrl = taskSnapshot.getDownloadUrl().toString();
                         String name = inputCatName.getText().toString().trim();
                         String dob = inputCatDob.getText().toString().trim();
@@ -174,8 +208,10 @@ public class UploadCatDataActivity extends AppCompatActivity {
                         String vacc = radioButtonVacc.getText().toString().trim();
                         String spayNeuter = radioButtonSpayNeuter.getText().toString().trim();
                         String spinnerReason = spinnerCatReasonOpenAdoption.getSelectedItem().toString().trim();
+                        String province = provincesNameArray.toString().trim();
+                        String city = citiesNameArray.toString().trim();
 
-                        Cat cat = new Cat(id, cPhotoUrl, name, dob, spinnerGender, desc, medNote, vacc, spayNeuter, spinnerReason);
+                        Cat cat = new Cat(id, ownerId, cPhotoUrl, name, dob, spinnerGender, desc, medNote, vacc, spayNeuter, spinnerReason, province, city);
 
                         databaseCats.child(userUID).child(id).setValue(cat);
                     }
