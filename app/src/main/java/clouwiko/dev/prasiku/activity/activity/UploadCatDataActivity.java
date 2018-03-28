@@ -208,8 +208,8 @@ public class UploadCatDataActivity extends AppCompatActivity {
                         String vacc = radioButtonVacc.getText().toString().trim();
                         String spayNeuter = radioButtonSpayNeuter.getText().toString().trim();
                         String spinnerReason = spinnerCatReasonOpenAdoption.getSelectedItem().toString().trim();
-                        String province = provincesNameArray.toString().trim();
-                        String city = citiesNameArray.toString().trim();
+                        String province = provincesNameArray.get(0).toString().trim();
+                        String city = citiesNameArray.get(0).toString().trim();
 
                         Cat cat = new Cat(id, ownerId, cPhotoUrl, name, dob, spinnerGender, desc, medNote, vacc, spayNeuter, spinnerReason, province, city);
 
