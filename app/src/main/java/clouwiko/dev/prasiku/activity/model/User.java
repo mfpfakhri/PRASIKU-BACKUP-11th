@@ -11,6 +11,7 @@ public class User {
     private String userDob;
     private String userGender;
     private String userProfilePhoto;
+    private String userProvince;
     private String userCity;
     private String userPhone;
     private String userAddress;
@@ -18,13 +19,14 @@ public class User {
     public User() {
     }
 
-    public User(String userEmail, String userUid, String userFname, String userDob, String userGender, String userProfilePhoto, String userCity, String userPhone, String userAddress) {
+    public User(String userEmail, String userUid, String userFname, String userDob, String userGender, String userProfilePhoto, String userProvince, String userCity, String userPhone, String userAddress) {
         this.userEmail = userEmail;
         this.userUid = userUid;
         this.userFname = userFname;
         this.userDob = userDob;
         this.userGender = userGender;
         this.userProfilePhoto = userProfilePhoto;
+        this.userProvince = userProvince;
         this.userCity = userCity;
         this.userPhone = userPhone;
         this.userAddress = userAddress;
@@ -76,6 +78,14 @@ public class User {
 
     public void setUserProfilePhoto(String userProfilePhoto) {
         this.userProfilePhoto = userProfilePhoto;
+    }
+
+    public String getUserProvince() {
+        return userProvince;
+    }
+
+    public void setUserProvince(String userProvince) {
+        this.userProvince = userProvince;
     }
 
     public String getUserCity() {

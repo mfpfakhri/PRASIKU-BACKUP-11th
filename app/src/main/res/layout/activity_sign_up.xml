@@ -140,19 +140,6 @@
                 app:ms_baseColor="@color/black"
                 app:ms_hint="@string/hint_city" />
 
-            <!--<AutoCompleteTextView-->
-                <!--android:id="@+id/provinceAutoCompleteTextView"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:hint="@string/hint_province" />-->
-
-            <!--<AutoCompleteTextView-->
-                <!--android:id="@+id/cityAutoCompleteTextView"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_marginTop="8dp"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:hint="@string/hint_city" />-->
-
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">

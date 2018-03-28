@@ -115,19 +115,6 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
 
-//        databaseProvinces = FirebaseDatabase.getInstance().getReference().child("provinces");
-//        databaseProvinces.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
-
         //TODO:RWP Initial Spinner for cities
         cities = new ArrayList<String>();
         final MaterialSpinner citiesSpinner = (MaterialSpinner) findViewById(R.id.citySpinner_signup);
@@ -205,117 +192,6 @@ public class SignUpActivity extends AppCompatActivity {
 
             }
         });
-
-//        spinnerProvinces.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                int spinnerProvincesPosition = spinnerProvinces.getSelectedItemPosition();
-//                if (spinnerProvincesPosition != 0) {
-//                    String spinnerProvincesValue = spinnerProvinces.getSelectedItem().toString().trim();
-//                    databaseCities = FirebaseDatabase.getInstance().getReference().child("cities");
-//                    databaseCities.orderByChild("cityProvince").equalTo(spinnerProvincesValue).addValueEventListener(new ValueEventListener() {
-//                        @Override
-//                        public void onDataChange(DataSnapshot dataSnapshot) {
-//                            final List<String> cities = new ArrayList<String>();
-//                            for (DataSnapshot cityPSnapshot : dataSnapshot.getChildren()) {
-//                                for (DataSnapshot cityCSnapshot : cityPSnapshot.getChildren()) {
-//                                    String cityName = cityCSnapshot.child("cityName").getValue(String.class);
-//                                    cities.add(cityName);
-//                                }
-//                            }
-//                            MaterialSpinner citiesSpinner = (MaterialSpinner) findViewById(R.id.citySpinner_signup);
-//                            ArrayAdapter<String> citiesAdapter = new ArrayAdapter<String>(SignUpActivity.this, android.R.layout.simple_spinner_item, cities);
-//                            citiesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//                            citiesSpinner.setAdapter(citiesAdapter);
-//                        }
-//
-//                        @Override
-//                        public void onCancelled(DatabaseError databaseError) {
-//
-//                        }
-//                    });
-//                } else {
-//
-//                }
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> parent) {
-//
-//            }
-//        });
-
-//        databaseProvinces = FirebaseDatabase.getInstance().getReference().child("provinces");
-//        final ArrayAdapter<String> provincesAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item);
-//        databaseProvinces.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                autoCompleteTextViewCity.setThreshold(1);
-//                for (DataSnapshot provinceIdSnapshot : dataSnapshot.getChildren()) {
-//                        String cityName = provinceIdSnapshot.child("provinceName").getValue(String.class);
-//                        provincesAdapter.add(cityName);
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
-//        autoCompleteTextViewProvince.setAdapter(provincesAdapter);
-//
-//        autoCompleteTextViewProvince.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                if (autoCompleteTextViewProvince != null) {
-//                    final ArrayAdapter<String> citiesAdapter = new ArrayAdapter<String>(SignUpActivity.this, android.R.layout.simple_spinner_dropdown_item);
-//                    String provinceValue = autoCompleteTextViewProvince.getText().toString().trim();
-//                    databaseCities = FirebaseDatabase.getInstance().getReference().child("cities");
-//                    Query query = databaseCities
-//                            .orderByChild("cityName")
-//                            .equalTo(provinceValue);
-//                    query.addValueEventListener(new ValueEventListener() {
-//                        @Override
-//                        public void onDataChange(DataSnapshot dataSnapshot) {
-//                            autoCompleteTextViewCity.setThreshold(1);
-//                            for (DataSnapshot provinceIdSnapshot : dataSnapshot.getChildren()) {
-//                                for (DataSnapshot cityIdSnapshot : provinceIdSnapshot.getChildren()) {
-//                                    String cityName = cityIdSnapshot.child("cityName").getValue(String.class);
-//                                    citiesAdapter.add(cityName);
-//                                }
-//                            }
-//                        }
-//
-//                        @Override
-//                        public void onCancelled(DatabaseError databaseError) {
-//
-//                        }
-//                    });
-//                    autoCompleteTextViewCity.setAdapter(citiesAdapter);
-//                }
-//            }
-//        });
-
-//        databaseCities = FirebaseDatabase.getInstance().getReference().child("cities");
-//        final ArrayAdapter<String> citiesAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item);
-//        databaseCities.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                autoCompleteTextViewCity.setThreshold(1);
-//                for (DataSnapshot provinceIdSnapshot : dataSnapshot.getChildren()) {
-//                    for (DataSnapshot cityIdSnapshot : provinceIdSnapshot.getChildren()) {
-//                        String cityName = cityIdSnapshot.child("cityName").getValue(String.class);
-//                        citiesAdapter.add(cityName);
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
-//        autoCompleteTextViewCity.setAdapter(citiesAdapter);
 
         inputDob.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -427,19 +303,19 @@ public class SignUpActivity extends AppCompatActivity {
                     return;
                 }
 
-//                //Province Validation
-//                String spinnerProvinceValue = spinnerProvinces.getSelectedItem().toString().trim();
-//                if (TextUtils.isEmpty(spinnerProvinceValue)) {
-//                    Toast.makeText(getApplicationContext(), "Enter Your Province", Toast.LENGTH_SHORT).show();
-//                    return;
-//                }
-//
-//                //City Validation
-//                String spinnerCityValue = spinnerCities.getSelectedItem().toString().trim();
-//                if (TextUtils.isEmpty(spinnerCityValue)) {
-//                    Toast.makeText(getApplicationContext(), "Enter Your City", Toast.LENGTH_SHORT).show();
-//                    return;
-//                }
+                //Province Validation
+                String spinnerProvinceValue = spinnerProvinces.getSelectedItem().toString().trim();
+                if (TextUtils.isEmpty(spinnerProvinceValue)) {
+                    Toast.makeText(getApplicationContext(), "Enter Your Province", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                //City Validation
+                String spinnerCityValue = spinnerCities.getSelectedItem().toString().trim();
+                if (TextUtils.isEmpty(spinnerCityValue)) {
+                    Toast.makeText(getApplicationContext(), "Enter Your City", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
                 //Phone Number Validation
                 final String validPhone = "^[+]?[0-9]{10,13}$";
@@ -559,19 +435,20 @@ public class SignUpActivity extends AppCompatActivity {
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//                        String email = auth.getCurrentUser().getEmail();
-//                        String userUid = auth.getCurrentUser().getUid();
-//                        String fName = inputFullName.getText().toString().trim();
-//                        String dobDate = inputDob.getText().toString().trim();
-//                        String spinnerValue = spinnerGender.getSelectedItem().toString().trim();
-//                        String pPhotoUrl = taskSnapshot.getDownloadUrl().toString();
-//                        String city = spinnerCities.getSelectedItem().toString().trim();
-//                        String phone = inputPhone.getText().toString().trim();
-//                        String address = inputAddress.getText().toString().trim();
-//
-//                        User user = new User(email, userUid, fName, dobDate, spinnerValue, pPhotoUrl, city, phone, address);
-//
-//                        databaseUsers.child(userUid).setValue(user);
+                        String email = auth.getCurrentUser().getEmail();
+                        String userUid = auth.getCurrentUser().getUid();
+                        String fName = inputFullName.getText().toString().trim();
+                        String dobDate = inputDob.getText().toString().trim();
+                        String spinnerValue = spinnerGender.getSelectedItem().toString().trim();
+                        String pPhotoUrl = taskSnapshot.getDownloadUrl().toString();
+                        String city = spinnerCities.getSelectedItem().toString().trim();
+                        String province = spinnerProvinces.getSelectedItem().toString().trim();
+                        String phone = inputPhone.getText().toString().trim();
+                        String address = inputAddress.getText().toString().trim();
+
+                        User user = new User(email, userUid, fName, dobDate, spinnerValue, pPhotoUrl, province, city, phone, address);
+
+                        databaseUsers.child(userUid).setValue(user);
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {

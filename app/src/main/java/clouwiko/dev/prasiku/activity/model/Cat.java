@@ -6,6 +6,7 @@ package clouwiko.dev.prasiku.activity.model;
 
 public class Cat {
     private String catId;
+    private String catOwnerId;
     private String catProfilePhoto;
     private String catName;
     private String catDob;
@@ -15,12 +16,15 @@ public class Cat {
     private String catVaccStat;
     private String catSpayNeuterStat;
     private String catReason;
+    private String catProvince;
+    private String catCity;
 
     public Cat() {
     }
 
-    public Cat(String catId, String catProfilePhoto, String catName, String catDob, String catGender, String catDescription, String catMedNote, String catVaccStat, String catSpayNeuterStat, String catReason) {
+    public Cat(String catId, String catOwnerId, String catProfilePhoto, String catName, String catDob, String catGender, String catDescription, String catMedNote, String catVaccStat, String catSpayNeuterStat, String catReason, String catProvince, String catCity) {
         this.catId = catId;
+        this.catOwnerId = catOwnerId;
         this.catProfilePhoto = catProfilePhoto;
         this.catName = catName;
         this.catDob = catDob;
@@ -30,6 +34,8 @@ public class Cat {
         this.catVaccStat = catVaccStat;
         this.catSpayNeuterStat = catSpayNeuterStat;
         this.catReason = catReason;
+        this.catProvince = catProvince;
+        this.catCity = catCity;
     }
 
     public String getCatId() {
@@ -38,6 +44,14 @@ public class Cat {
 
     public void setCatId(String catId) {
         this.catId = catId;
+    }
+
+    public String getCatOwnerId() {
+        return catOwnerId;
+    }
+
+    public void setCatOwnerId(String catOwnerId) {
+        this.catOwnerId = catOwnerId;
     }
 
     public String getCatProfilePhoto() {
@@ -110,5 +124,21 @@ public class Cat {
 
     public void setCatReason(String catReason) {
         this.catReason = catReason;
+    }
+
+    public String getCatProvince() {
+        return catProvince;
+    }
+
+    public void setCatProvince(String catProvince) {
+        this.catProvince = catProvince;
+    }
+
+    public String getCatCity() {
+        return catCity;
+    }
+
+    public void setCatCity(String catCity) {
+        this.catCity = catCity;
     }
 }
