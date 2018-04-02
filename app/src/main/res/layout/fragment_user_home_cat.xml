@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
-    tools:context="clouwiko.dev.prasiku.activity.activity.UserHomeCatFragment">
+    tools:context="clouwiko.dev.prasiku.activity.fragment.UserHomeCatFragment">
 
     <TextView
         android:layout_width="wrap_content"

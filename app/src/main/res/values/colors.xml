@@ -27,4 +27,5 @@
     <color name="gold">#debf46</color>
     <color name="violet">#e254f2</color>
     <color name="colorPrimaryDarkTransparant">#80049368</color>
+    <color name="darkTransparant">#999999</color>
 </resources>

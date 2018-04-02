@@ -154,7 +154,7 @@ public class UploadCatDataActivity extends AppCompatActivity {
     }
 
     private void addCatData() {
-        //TODO: Initial cities Adapter
+        //TODO: Initial cities adapter
         final List<String> provincesNameArray;
         final List<String> citiesNameArray;
         //--

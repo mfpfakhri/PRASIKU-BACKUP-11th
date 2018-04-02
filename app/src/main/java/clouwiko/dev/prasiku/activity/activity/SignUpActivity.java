@@ -91,8 +91,7 @@ public class SignUpActivity extends AppCompatActivity {
         inputDob = (EditText) findViewById(R.id.dobDatepicker);
         inputPhone = (EditText) findViewById(R.id.phoneNumber);
         inputAddress = (EditText) findViewById(R.id.address);
-        spinnerGender = (MaterialSpinner) findViewById(R.id.gender);
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        spinnerGender = (MaterialSpinner) findViewById(R.id.genderSpinner_signup);
         spinnerProvinces = (MaterialSpinner) findViewById(R.id.provinceSpinner_signup);
         spinnerCities = (MaterialSpinner) findViewById(R.id.citySpinner_signup);
         userPhotoIv = (ImageView) findViewById(R.id.userPhotos);

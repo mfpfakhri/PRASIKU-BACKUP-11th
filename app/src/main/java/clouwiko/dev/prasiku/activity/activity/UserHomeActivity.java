@@ -7,7 +7,6 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,6 +20,9 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import clouwiko.dev.prasiku.R;
+import clouwiko.dev.prasiku.activity.adapter.UserHomePagerAdapter;
+import clouwiko.dev.prasiku.activity.fragment.UserHomeCatFragment;
+import clouwiko.dev.prasiku.activity.fragment.UserHomeProfileFragment;
 import clouwiko.dev.prasiku.activity.other.PicassoTransform;
 
 public class UserHomeActivity extends AppCompatActivity {
@@ -32,7 +34,7 @@ public class UserHomeActivity extends AppCompatActivity {
     private UserHomePagerAdapter userHomePagerAdapter;
     private ViewPager userHomeViewPager;
     private ImageView userPhotoHome;
-    private TextView userNameHome, userCityHome;
+    private TextView userNameHome, userProvinceHome;
     private DatabaseReference databaseUsers;
 
     @Override
@@ -53,7 +55,7 @@ public class UserHomeActivity extends AppCompatActivity {
 
         userPhotoHome = (ImageView)findViewById(R.id.userPhoto_home);
         userNameHome = (TextView)findViewById(R.id.userName_home);
-        userCityHome = (TextView)findViewById(R.id.userCity_home);
+        userProvinceHome = (TextView)findViewById(R.id.userProvince_home);
 
         //Get Firebase Auth Instance
         auth = FirebaseAuth.getInstance();
@@ -79,10 +81,10 @@ public class UserHomeActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String userNameStr = dataSnapshot.child("userFname").getValue(String.class);
-                String userCityStr = dataSnapshot.child("userCity").getValue(String.class);
+                String userProvinceStr = dataSnapshot.child("userProvince").getValue(String.class);
                 String userPhotoUri = dataSnapshot.child("userProfilePhoto").getValue(String.class);
                 userNameHome.setText(userNameStr);
-                userCityHome.setText(userCityStr);
+                userProvinceHome.setText("Provinsi "+userProvinceStr);
                 Picasso.get().load(userPhotoUri).transform(new PicassoTransform()).resize(192,192).into(userPhotoHome);
             }
 

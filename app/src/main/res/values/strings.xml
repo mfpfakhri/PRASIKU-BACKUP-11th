@@ -74,6 +74,12 @@
     <string name="iduser">clouwiko.dev.prasiku.activity.activity.iduser</string>
     <string name="user_cats_tab">Cats</string>
     <string name="user_profile_tab">Profile</string>
+    <string name="userhomeprofile_citylabel">City</string>
+    <string name="userhomeprofile_phonelabel">Phone</string>
+    <string name="userhomeprofile_emaillabel">Email</string>
+    <string name="hint_gender">Select Gender</string>
+    <string name="hint_usertype">Type</string>
+    <string name="userhomeprofile_addresslabel">Address</string>
 
     <string-array name="gender">
         <item>Male</item>
@@ -93,6 +99,13 @@
         <item>House Moving</item>
         <item>Financial</item>
         <item>Medical Problem</item>
+        <item>Others</item>
+    </string-array>
+    <string-array name="userType">
+        <item>Individual</item>
+        <item>Government</item>
+        <item>Organization</item>
+        <item>Shelter</item>
         <item>Others</item>
     </string-array>
 </resources>

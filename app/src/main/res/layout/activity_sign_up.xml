@@ -121,11 +121,11 @@
             </android.support.design.widget.TextInputLayout>
 
             <fr.ganfra.materialspinner.MaterialSpinner
-                android:id="@+id/gender"
+                android:id="@+id/genderSpinner_signup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:entries="@array/gender"
-                app:ms_hint="Select Gender" />
+                app:ms_hint="@string/hint_gender" />
 
             <fr.ganfra.materialspinner.MaterialSpinner
                 android:id="@+id/provinceSpinner_signup"
