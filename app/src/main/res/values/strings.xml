@@ -80,6 +80,8 @@
     <string name="hint_gender">Select Gender</string>
     <string name="hint_usertype">Type</string>
     <string name="userhomeprofile_addresslabel">Address</string>
+    <string name="userhome_catname">Cat Name</string>
+    <string name="userhome_catreason">Reason for Open Adopt</string>
 
     <string-array name="gender">
         <item>Male</item>
