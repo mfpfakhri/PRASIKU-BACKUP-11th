@@ -29,7 +29,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import clouwiko.dev.prasiku.R;
-import clouwiko.dev.prasiku.activity.other.PicassoTransform;
+import clouwiko.dev.prasiku.activity.other.RoundedCornersTransform;
 
 public class MainMenuActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -102,7 +102,7 @@ public class MainMenuActivity extends AppCompatActivity
                 String userPhotoUri = dataSnapshot.child("userProfilePhoto").getValue(String.class);
                 userName.setText(userNameStr);
                 userEmail.setText(userEmailStr);
-                Picasso.get().load(userPhotoUri).transform(new PicassoTransform()).resize(192,192).into(userPhoto);
+                Picasso.get().load(userPhotoUri).transform(new RoundedCornersTransform()).centerCrop().resize(192,192).into(userPhoto);
             }
 
             @Override

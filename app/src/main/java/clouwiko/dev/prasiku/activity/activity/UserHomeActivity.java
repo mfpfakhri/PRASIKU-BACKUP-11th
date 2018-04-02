@@ -23,7 +23,7 @@ import clouwiko.dev.prasiku.R;
 import clouwiko.dev.prasiku.activity.adapter.UserHomePagerAdapter;
 import clouwiko.dev.prasiku.activity.fragment.UserHomeCatFragment;
 import clouwiko.dev.prasiku.activity.fragment.UserHomeProfileFragment;
-import clouwiko.dev.prasiku.activity.other.PicassoTransform;
+import clouwiko.dev.prasiku.activity.other.RoundedCornersTransform;
 
 public class UserHomeActivity extends AppCompatActivity {
 
@@ -85,7 +85,7 @@ public class UserHomeActivity extends AppCompatActivity {
                 String userPhotoUri = dataSnapshot.child("userProfilePhoto").getValue(String.class);
                 userNameHome.setText(userNameStr);
                 userProvinceHome.setText("Provinsi "+userProvinceStr);
-                Picasso.get().load(userPhotoUri).transform(new PicassoTransform()).resize(192,192).into(userPhotoHome);
+                Picasso.get().load(userPhotoUri).transform(new RoundedCornersTransform()).centerCrop().resize(184,184).into(userPhotoHome);
             }
 
             @Override
