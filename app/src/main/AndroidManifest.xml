@@ -56,8 +56,12 @@
         <activity
             android:name=".activity.activity.AboutUsActivity"
             android:parentActivityName=".activity.activity.MainMenuActivity" />
-        <activity android:name=".activity.activity.UploadCatDataActivity" />
-        <activity android:name=".activity.activity.FindCatForAdoptActivity" />
+        <activity
+            android:name=".activity.activity.UploadCatDataActivity"
+            android:parentActivityName=".activity.activity.MainMenuActivity" />
+        <activity
+            android:name=".activity.activity.FindCatForAdoptActivity"
+            android:parentActivityName=".activity.activity.MainMenuActivity" />
         <activity android:name=".activity.activity.CatBreedsStandardsActivity" />
         <activity
             android:name=".activity.activity.AdoptionListActivity"

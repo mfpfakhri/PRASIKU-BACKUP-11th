@@ -12,6 +12,7 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -71,6 +72,11 @@ public class UploadCatDataActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload_cat_data);
+
+        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar_uploadcat);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Upload Cat Data");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         catPhotoIv = (ImageView) findViewById(R.id.userPhotos);

@@ -48,7 +48,7 @@
     <string name="main_menu">Main Menu</string>
     <string name="cat_breeds_standards">Cat Breeds Standards</string>
     <string name="upload_cat_data">Upload Cat Data</string>
-    <string name="find_cat_for_adopt">Find Cat for Adopt</string>
+    <string name="find_cat_to_adopt">Find Cat to Adopt</string>
     <string name="applications">Applications</string>
     <string name="upload_cat_data_desc">Upload your cat data \nto find new owners</string>
     <string name="find_cat_for_adopt_desc">Find a cat to become your new family</string>
@@ -83,6 +83,8 @@
     <string name="userhome_catname">Cat Name</string>
     <string name="userhome_catreason">Reason for Open Adopt</string>
     <string name="my_adoption_list">My Adoption List</string>
+    <string name="findcat_province">Select Province</string>
+    <string name="findcat_city">Select City</string>
 
     <string-array name="gender">
         <item>Male</item>

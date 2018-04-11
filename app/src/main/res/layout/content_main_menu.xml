@@ -95,7 +95,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:text="@string/find_cat_for_adopt"
+                    android:text="@string/find_cat_to_adopt"
                     android:textStyle="bold" />
 
                 <View
