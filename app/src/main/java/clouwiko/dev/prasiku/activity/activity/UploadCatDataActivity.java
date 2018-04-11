@@ -165,7 +165,7 @@ public class UploadCatDataActivity extends AppCompatActivity {
         provincesNameArray = new ArrayList<>();
         citiesNameArray = new ArrayList<>();
 
-        databaseUsers = FirebaseDatabase.getInstance().getReference("users");
+        databaseUsers = FirebaseDatabase.getInstance().getReference().child("users");
         databaseUsers.orderByKey().equalTo(userUID).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -184,7 +184,7 @@ public class UploadCatDataActivity extends AppCompatActivity {
         });
 
         //TODO:MFP
-        databaseCats = FirebaseDatabase.getInstance().getReference("cats");
+        databaseCats = FirebaseDatabase.getInstance().getReference().child("cats");
         storageCats = FirebaseStorage.getInstance().getReference();
         StorageReference reference = storageCats.child(STORAGE_PATH + System.currentTimeMillis() + "." + getActualImage(uriCatPhoto));
         reference.putFile(uriCatPhoto)

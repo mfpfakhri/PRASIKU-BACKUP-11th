@@ -21,7 +21,6 @@ import com.squareup.picasso.Picasso;
 
 import clouwiko.dev.prasiku.R;
 import clouwiko.dev.prasiku.activity.adapter.UserHomePagerAdapter;
-import clouwiko.dev.prasiku.activity.fragment.UserHomeCatFragment;
 import clouwiko.dev.prasiku.activity.fragment.UserHomeProfileFragment;
 import clouwiko.dev.prasiku.activity.other.RoundedCornersTransform;
 
@@ -47,8 +46,7 @@ public class UserHomeActivity extends AppCompatActivity {
         userHomeViewPager = (ViewPager)findViewById(R.id.userhome_viewpager);
 
         userHomePagerAdapter = new UserHomePagerAdapter(getSupportFragmentManager());
-        userHomePagerAdapter.addFragment(new UserHomeCatFragment(), "Cats");
-        userHomePagerAdapter.addFragment(new UserHomeProfileFragment(), "Profile");
+        userHomePagerAdapter.addFragment(new UserHomeProfileFragment(), "User Information");
 
         userHomeViewPager.setAdapter(userHomePagerAdapter);
         tabLayout.setupWithViewPager(userHomeViewPager);

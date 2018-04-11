@@ -70,9 +70,9 @@ public class MainMenuActivity extends AppCompatActivity
         uploadCard = (CardView) findViewById(R.id.upload_cat_data);
         findCatCard = (CardView) findViewById(R.id.find_cat_for_adopt);
         breedsStandardsCard = (CardView) findViewById(R.id.cat_breeds_standards);
-        userPhoto = (ImageView)navigationView.getHeaderView(0).findViewById(R.id.userProfilePhotoND);
-        userName = (TextView)navigationView.getHeaderView(0).findViewById(R.id.userFNameND);
-        userEmail = (TextView)navigationView.getHeaderView(0).findViewById(R.id.userEmailND);
+        userPhoto = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.userProfilePhotoND);
+        userName = (TextView) navigationView.getHeaderView(0).findViewById(R.id.userFNameND);
+        userEmail = (TextView) navigationView.getHeaderView(0).findViewById(R.id.userEmailND);
 
         //Get Firebase Auth Instance
         auth = FirebaseAuth.getInstance();
@@ -102,7 +102,7 @@ public class MainMenuActivity extends AppCompatActivity
                 String userPhotoUri = dataSnapshot.child("userProfilePhoto").getValue(String.class);
                 userName.setText(userNameStr);
                 userEmail.setText(userEmailStr);
-                Picasso.get().load(userPhotoUri).transform(new RoundedCornersTransform()).centerCrop().resize(192,192).into(userPhoto);
+                Picasso.get().load(userPhotoUri).transform(new RoundedCornersTransform()).centerCrop().resize(192, 192).into(userPhoto);
             }
 
             @Override
@@ -191,6 +191,8 @@ public class MainMenuActivity extends AppCompatActivity
             startActivity(new Intent(getApplicationContext(), UserHomeActivity.class));
         } else if (id == R.id.nav_menu) {
             startActivity(new Intent(getApplicationContext(), MainMenuActivity.class));
+        } else if (id == R.id.nav_catlist) {
+            startActivity(new Intent(getApplicationContext(), AdoptionListActivity.class));
         } else if (id == R.id.nav_app_received) {
             startActivity(new Intent(getApplicationContext(), AppReceivedActivity.class));
         } else if (id == R.id.nav_app_submitted) {

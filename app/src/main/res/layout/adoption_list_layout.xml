@@ -2,29 +2,38 @@
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardElevation="10dp"
-    android:layout_margin="8dp">
+    android:layout_marginBottom="8dp"
+    android:layout_marginEnd="16dp"
+    android:layout_marginLeft="16dp"
+    android:layout_marginRight="16dp"
+    android:layout_marginStart="16dp"
+    android:layout_marginTop="8dp">
+
     <LinearLayout
+        android:id="@+id/adoptionlist_root"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:orientation="horizontal"
+        android:padding="16dp">
 
         <ImageView
-            android:id="@+id/userhome_catphotos"
+            android:id="@+id/adoptionlist_catphotos"
             android:layout_width="92sp"
             android:layout_height="92sp"
-            android:src="@drawable/ic_add_pet"
-            android:background="@color/darkTransparant"/>
+            android:background="@color/colorPrimaryDarkTransparant"
+            android:src="@drawable/ic_add_pet" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_marginLeft="12dp">
+            android:layout_marginLeft="16sp"
+            android:orientation="vertical">
 
             <TextView
-                android:id="@+id/userhome_catname"
+                android:id="@+id/adoptionlist_catname"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
@@ -34,7 +43,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/userhome_catreason"
+                android:id="@+id/adoptionlist_catreason"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
@@ -42,7 +51,5 @@
                 android:text="@string/userhome_catreason"
                 android:textSize="16sp" />
         </LinearLayout>
-
     </LinearLayout>
-
 </android.support.v7.widget.CardView>

@@ -13,6 +13,10 @@
             android:icon="@drawable/ic_dashboard_black_24dp"
             android:title="@string/main_menu" />
         <item
+            android:id="@+id/nav_catlist"
+            android:icon="@drawable/ic_assignment_black_24dp"
+            android:title="@string/my_adoption_list"/>
+        <item
             android:id="@+id/nav_app_received"
             android:icon="@drawable/ic_assignment_black_24dp"
             android:title="@string/app_received" />

@@ -424,7 +424,7 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void addUserData() {
-        databaseUsers = FirebaseDatabase.getInstance().getReference("users");
+        databaseUsers = FirebaseDatabase.getInstance().getReference().child("users");
         storageUsers = FirebaseStorage.getInstance().getReference();
         StorageReference reference = storageUsers.child(STORAGE_PATH + System.currentTimeMillis() + "." + getActualImage(uriUserPhoto));
         reference.putFile(uriUserPhoto)

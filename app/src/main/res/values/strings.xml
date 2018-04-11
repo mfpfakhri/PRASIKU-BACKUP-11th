@@ -82,6 +82,7 @@
     <string name="userhomeprofile_addresslabel">Address</string>
     <string name="userhome_catname">Cat Name</string>
     <string name="userhome_catreason">Reason for Open Adopt</string>
+    <string name="my_adoption_list">My Adoption List</string>
 
     <string-array name="gender">
         <item>Male</item>
