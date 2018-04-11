@@ -127,7 +127,7 @@ public class AdoptionListActivity extends AppCompatActivity {
 
             holder.name.setText(catListData.getCatName());
             holder.reason.setText(catListData.getCatReason());
-            Picasso.get().load(catListData.getCatProfilePhoto()).into(holder.photo);
+            Picasso.get().load(catListData.getCatProfilePhoto()).resize(128, 128).into(holder.photo);
         }
 
         @Override
