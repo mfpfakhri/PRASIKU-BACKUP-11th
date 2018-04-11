@@ -24,9 +24,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.activity.SignInActivity" />
-        <activity android:name=".activity.activity.SignUpActivity" />
-        <activity android:name=".activity.activity.ResetPasswordActivity" />
+        <activity
+            android:name=".activity.activity.SignInActivity"
+            android:parentActivityName=".activity.activity.LandingActivity" />
+        <activity
+            android:name=".activity.activity.SignUpActivity"
+            android:parentActivityName=".activity.activity.LandingActivity" />
+        <activity
+            android:name=".activity.activity.ResetPasswordActivity"
+            android:parentActivityName=".activity.activity.LandingActivity" />
         <activity
             android:name=".activity.activity.MainMenuActivity"
             android:clearTaskOnLaunch="true" />
