@@ -28,4 +28,5 @@
     <color name="violet">#e254f2</color>
     <color name="colorPrimaryDarkTransparant">#80049368</color>
     <color name="darkTransparant">#999999</color>
+    <color name="colorPrimaryText">#050505</color>
 </resources>

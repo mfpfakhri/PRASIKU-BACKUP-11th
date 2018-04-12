@@ -86,6 +86,17 @@
     <string name="findcat_province">Select Province</string>
     <string name="findcat_city">Select City</string>
 
+    <string name="catprofile_name">Cat Name</string>
+    <string name="catprofile_gender">Cat Gender</string>
+    <string name="catprofile_ownerlabel">Owner</string>
+    <string name="catprofile_citylabel">City</string>
+    <string name="catprofile_doblabel">Date of Birth</string>
+    <string name="catprofile_descriptionlabel">About Me</string>
+    <string name="catprofile_medicallabel">Medical Note</string>
+    <string name="catprofile_vaccinelabel">Vaccine Status</string>
+    <string name="catprofile_spayneuterlabel">Spayed/ Neutered Status</string>
+    <string name="catprofile_adoptreasonlabel">Reasons for Open Adoption</string>
+
     <string-array name="gender">
         <item>Male</item>
         <item>Female</item>

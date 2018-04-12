@@ -24,6 +24,10 @@
             android:id="@+id/nav_app_submitted"
             android:icon="@drawable/ic_assignment_black_24dp"
             android:title="@string/app_submitted" />
+        <item
+            android:id="@+id/nav_test_catprofile"
+            android:icon="@drawable/ic_add_pet"
+            android:title="Cat Profile Testing" />
     </group>
 
     <item android:title="Others">

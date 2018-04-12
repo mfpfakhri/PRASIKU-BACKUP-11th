@@ -72,6 +72,9 @@
         <activity
             android:name=".activity.activity.AdoptionListActivity"
             android:parentActivityName=".activity.activity.MainMenuActivity" />
+        <activity
+            android:name=".activity.activity.CatProfileActivity"
+            android:parentActivityName=".activity.activity.MainMenuActivity" />
     </application>
 
 </manifest>
