@@ -6,12 +6,12 @@ import android.support.v7.widget.Toolbar;
 
 import clouwiko.dev.prasiku.R;
 
-public class CatProfileActivity extends AppCompatActivity {
+public class CatProfileOwnerActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cat_profile);
+        setContentView(R.layout.activity_cat_profile_owner);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

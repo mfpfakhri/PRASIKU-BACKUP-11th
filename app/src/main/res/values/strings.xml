@@ -96,6 +96,8 @@
     <string name="catprofile_vaccinelabel">Vaccine Status</string>
     <string name="catprofile_spayneuterlabel">Spayed/ Neutered Status</string>
     <string name="catprofile_adoptreasonlabel">Reasons for Open Adoption</string>
+    <string name="adopted">ADOPTED</string>
+    <string name="userhome_catgender">Gender</string>
 
     <string-array name="gender">
         <item>Male</item>
