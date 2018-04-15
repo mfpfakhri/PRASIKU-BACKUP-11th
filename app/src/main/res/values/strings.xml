@@ -98,6 +98,7 @@
     <string name="catprofile_adoptreasonlabel">Reasons for Open Adoption</string>
     <string name="adopted">ADOPTED</string>
     <string name="userhome_catgender">Gender</string>
+    <string name="find_cat">Search Cat</string>
 
     <string-array name="gender">
         <item>Male</item>

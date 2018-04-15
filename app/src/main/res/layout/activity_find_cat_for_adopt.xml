@@ -42,15 +42,24 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:ms_hint="@string/findcat_city" />
+
+            <Button
+                android:id="@+id/findcat_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/find_cat"
+                android:textSize="16sp"
+                android:textAllCaps="false"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/main_findcat_result"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="8sp">
+                android:layout_margin="8sp">
 
             </android.support.v7.widget.RecyclerView>
         </LinearLayout>

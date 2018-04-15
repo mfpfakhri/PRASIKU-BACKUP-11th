@@ -113,10 +113,10 @@ public class SignUpActivity extends AppCompatActivity {
 
         //TODO:RWP Initial Spinner for cities
         cities = new ArrayList<String>();
-        final MaterialSpinner citiesSpinner = (MaterialSpinner) findViewById(R.id.citySpinner_signup);
+//        final MaterialSpinner citiesSpinner = (MaterialSpinner) findViewById(R.id.citySpinner_signup);
         citiesAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, cities);
         citiesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        citiesSpinner.setAdapter(citiesAdapter);
+        spinnerCities.setAdapter(citiesAdapter);
         provincesKey = new ArrayList<>();
         //
 
@@ -142,7 +142,7 @@ public class SignUpActivity extends AppCompatActivity {
                             int spinnerProvincesPosition = spinnerProvinces.getSelectedItemPosition();
                             //TODO:RWP remove all cities and clear selection city
                             cities.clear();
-                            citiesSpinner.setSelection(0);
+                            spinnerCities.setSelection(0);
                             //--
                             if (spinnerProvincesPosition != 0) {
                                 //TODO:RWP get key by its position
@@ -177,10 +177,10 @@ public class SignUpActivity extends AppCompatActivity {
                         }
                     });
                 }
-                MaterialSpinner provincesSpinner = (MaterialSpinner) findViewById(R.id.provinceSpinner_signup);
+//                MaterialSpinner provincesSpinner = (MaterialSpinner) findViewById(R.id.provinceSpinner_signup);
                 ArrayAdapter<String> provincesAdapter = new ArrayAdapter<String>(SignUpActivity.this, android.R.layout.simple_spinner_item, provinces);
                 provincesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                provincesSpinner.setAdapter(provincesAdapter);
+                spinnerProvinces.setAdapter(provincesAdapter);
             }
 
             @Override

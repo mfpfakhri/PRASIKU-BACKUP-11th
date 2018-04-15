@@ -219,7 +219,7 @@ public class UploadCatDataActivity extends AppCompatActivity {
 
                         Cat cat = new Cat(id, ownerId, cPhotoUrl, name, dob, spinnerGender, desc, medNote, vacc, spayNeuter, spinnerReason, province, city);
 
-                        databaseCats.child(userUID).child(id).setValue(cat);
+                        databaseCats.child(id).setValue(cat);
                     }
                 });
     }
