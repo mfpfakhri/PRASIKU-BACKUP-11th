@@ -18,11 +18,12 @@ public class Cat {
     private String catReason;
     private String catProvince;
     private String catCity;
+    private String catAdoptedStatus;
 
     public Cat() {
     }
 
-    public Cat(String catId, String catOwnerId, String catProfilePhoto, String catName, String catDob, String catGender, String catDescription, String catMedNote, String catVaccStat, String catSpayNeuterStat, String catReason, String catProvince, String catCity) {
+    public Cat(String catId, String catOwnerId, String catProfilePhoto, String catName, String catDob, String catGender, String catDescription, String catMedNote, String catVaccStat, String catSpayNeuterStat, String catReason, String catProvince, String catCity, String catAdoptedStatus) {
         this.catId = catId;
         this.catOwnerId = catOwnerId;
         this.catProfilePhoto = catProfilePhoto;
@@ -36,6 +37,7 @@ public class Cat {
         this.catReason = catReason;
         this.catProvince = catProvince;
         this.catCity = catCity;
+        this.catAdoptedStatus = catAdoptedStatus;
     }
 
     public String getCatId() {
@@ -140,5 +142,13 @@ public class Cat {
 
     public void setCatCity(String catCity) {
         this.catCity = catCity;
+    }
+
+    public String getCatAdoptedStatus() {
+        return catAdoptedStatus;
+    }
+
+    public void setCatAdoptedStatus(String catAdoptedStatus) {
+        this.catAdoptedStatus = catAdoptedStatus;
     }
 }

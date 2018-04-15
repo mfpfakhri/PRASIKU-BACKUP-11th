@@ -56,6 +56,7 @@ import fr.ganfra.materialspinner.MaterialSpinner;
 
 public class SignUpActivity extends AppCompatActivity {
 
+    //TODO: Object Declaration
     private String TAG = "SignUpActivity";
     private EditText inputEmail, inputPassword, inputFullName, inputDob, inputPhone, inputAddress;
     private DatePickerDialog.OnDateSetListener dobSetListener;
@@ -70,7 +71,7 @@ public class SignUpActivity extends AppCompatActivity {
     private ImageView userPhotoIv;
     Uri uriUserPhoto;
 
-    //TODO:RWP Initial cities Adapter
+    //TODO: Initial cities Adapter
     ArrayAdapter<String> citiesAdapter;
     List<String> cities;
     List<String> provincesKey;
@@ -81,28 +82,29 @@ public class SignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
-        //Get Firebase auth instance
+        //TODO: Get Firebase auth instance
         auth = FirebaseAuth.getInstance();
 
-        // Action on Click
-        inputEmail = (EditText) findViewById(R.id.email);
-        inputPassword = (EditText) findViewById(R.id.password);
-        inputFullName = (EditText) findViewById(R.id.full_name);
-        inputDob = (EditText) findViewById(R.id.dobDatepicker);
-        inputPhone = (EditText) findViewById(R.id.phoneNumber);
-        inputAddress = (EditText) findViewById(R.id.address);
-        spinnerGender = (MaterialSpinner) findViewById(R.id.genderSpinner_signup);
-        spinnerProvinces = (MaterialSpinner) findViewById(R.id.provinceSpinner_signup);
-        spinnerCities = (MaterialSpinner) findViewById(R.id.citySpinner_signup);
-        userPhotoIv = (ImageView) findViewById(R.id.userPhotos);
-        btnSignUp = (Button) findViewById(R.id.action_sign_up_button);
-        btnSignIn = (Button) findViewById(R.id.intent_sign_in_button);
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        //TODO: Initialize Object
+        inputEmail = findViewById(R.id.email);
+        inputPassword = findViewById(R.id.password);
+        inputFullName = findViewById(R.id.full_name);
+        inputDob = findViewById(R.id.dobDatepicker);
+        inputPhone = findViewById(R.id.phoneNumber);
+        inputAddress = findViewById(R.id.address);
+        spinnerGender = findViewById(R.id.genderSpinner_signup);
+        spinnerProvinces = findViewById(R.id.provinceSpinner_signup);
+        spinnerCities = findViewById(R.id.citySpinner_signup);
+        userPhotoIv = findViewById(R.id.userPhotos);
+        btnSignUp = findViewById(R.id.action_sign_up_button);
+        btnSignIn = findViewById(R.id.intent_sign_in_button);
+        progressBar = findViewById(R.id.progressBar);
 
         if (progressBar != null) {
             progressBar.setVisibility(View.GONE);
         }
 
+        //TODO: Sign In Button OnClickListener
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -111,28 +113,29 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
 
-        //TODO:RWP Initial Spinner for cities
+        //TODO: Initial Spinner for cities
         cities = new ArrayList<String>();
-//        final MaterialSpinner citiesSpinner = (MaterialSpinner) findViewById(R.id.citySpinner_signup);
         citiesAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, cities);
         citiesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerCities.setAdapter(citiesAdapter);
         provincesKey = new ArrayList<>();
         //
-
+        //TODO: Set Database Reference
         databaseProvinces = FirebaseDatabase.getInstance().getReference().child("provinces");
-        //TODO:RWP change addEventListener to addListenerForSingleValueEvent
+        //TODO: Change addEventListener to addListenerForSingleValueEvent
         databaseProvinces.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // Is better to use a List, because you don't know the size
                 // of the iterator returned by dataSnapshot.getChildren() to
                 // initialize the array
+                //TODO: Initialize List of provinces
                 final List<String> provinces = new ArrayList<String>();
                 for (DataSnapshot provinceSnapshot : dataSnapshot.getChildren()) {
+                    //TODO: Get Value of provinceName
                     final String provinceName = provinceSnapshot.child("provinceName").getValue(String.class);
                     provinces.add(provinceName);
-                    //TODO:RWP add key to array
+                    //TODO: Add key to array
                     String key = provinceSnapshot.getKey();
                     provincesKey.add(key);
                     //--
@@ -140,7 +143,7 @@ public class SignUpActivity extends AppCompatActivity {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             int spinnerProvincesPosition = spinnerProvinces.getSelectedItemPosition();
-                            //TODO:RWP remove all cities and clear selection city
+                            //TODO: Remove all cities and clear selection city
                             cities.clear();
                             spinnerCities.setSelection(0);
                             //--
@@ -441,8 +444,9 @@ public class SignUpActivity extends AppCompatActivity {
                         String city = spinnerCities.getSelectedItem().toString().trim();
                         String phone = inputPhone.getText().toString().trim();
                         String address = inputAddress.getText().toString().trim();
+                        String status = "0";
 
-                        User user = new User(email, userUid, fName, dobDate, spinnerValue, pPhotoUrl, province, city, phone, address);
+                        User user = new User(email, userUid, fName, dobDate, spinnerValue, pPhotoUrl, province, city, phone, address, status);
 
                         databaseUsers.child(userUid).setValue(user);
                     }

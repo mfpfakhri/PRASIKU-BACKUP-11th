@@ -33,12 +33,12 @@ public class LandingActivity extends AppCompatActivity {
             startActivity(new Intent(LandingActivity.this, MainMenuActivity.class));
         }
 
-        textSlogan = (TextView)findViewById(R.id.textSlogan);
+        textSlogan = findViewById(R.id.textSlogan);
         Typeface face = Typeface.createFromAsset(getAssets(),"fonts/NABILA.TTF");
         textSlogan.setTypeface(face);
 
-        btnSignIn = (Button)findViewById(R.id.main_sign_in_button);
-        btnSignUp = (Button)findViewById(R.id.main_sign_up_button);
+        btnSignIn = findViewById(R.id.main_sign_in_button);
+        btnSignUp = findViewById(R.id.main_sign_up_button);
 
 //        btnInputProvinces = (Button)findViewById(R.id.main_province_intent_button);
 //        btnInputCities = (Button)findViewById(R.id.main_city_intent_button);

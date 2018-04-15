@@ -40,6 +40,7 @@
                 <ImageView
                     android:layout_width="64dp"
                     android:layout_height="64dp"
+                    tools:ignore="ContentDescription"
                     android:layout_gravity="center_horizontal"
                     android:src="@drawable/ic_cloud_upload_black_24dp" />
 

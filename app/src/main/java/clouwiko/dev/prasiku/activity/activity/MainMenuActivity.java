@@ -198,7 +198,7 @@ public class MainMenuActivity extends AppCompatActivity
         } else if (id == R.id.nav_app_submitted) {
             startActivity(new Intent(getApplicationContext(), AppSubmittedActivity.class));
         } else if (id == R.id.nav_test_catprofile) {
-            startActivity(new Intent(getApplicationContext(), CatProfileAvailableActivity.class));
+            startActivity(new Intent(getApplicationContext(), CatProfileApplicantAvailableActivity.class));
         } else if (id == R.id.nav_tutorial) {
             startActivity(new Intent(getApplicationContext(), TutorialActivity.class));
         } else if (id == R.id.nav_about_us) {

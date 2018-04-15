@@ -15,11 +15,12 @@ public class User {
     private String userCity;
     private String userPhone;
     private String userAddress;
+    private String userStatus;
 
     public User() {
     }
 
-    public User(String userEmail, String userUid, String userFname, String userDob, String userGender, String userProfilePhoto, String userProvince, String userCity, String userPhone, String userAddress) {
+    public User(String userEmail, String userUid, String userFname, String userDob, String userGender, String userProfilePhoto, String userProvince, String userCity, String userPhone, String userAddress, String userStatus) {
         this.userEmail = userEmail;
         this.userUid = userUid;
         this.userFname = userFname;
@@ -30,6 +31,7 @@ public class User {
         this.userCity = userCity;
         this.userPhone = userPhone;
         this.userAddress = userAddress;
+        this.userStatus = userStatus;
     }
 
     public String getUserEmail() {
@@ -110,5 +112,13 @@ public class User {
 
     public void setUserAddress(String userAddress) {
         this.userAddress = userAddress;
+    }
+
+    public String getUserStatus() {
+        return userStatus;
+    }
+
+    public void setUserStatus(String userStatus) {
+        this.userStatus = userStatus;
     }
 }

@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="clouwiko.dev.prasiku.activity.activity.CatProfileApplicantAdoptedActivity">
-
+    tools:context="clouwiko.dev.prasiku.activity.activity.CatProfileOwnerAdoptedActivity">
     <android.support.design.widget.AppBarLayout
         android:id="@+id/catprofile_appbarlayout"
         android:layout_width="match_parent"
@@ -99,11 +98,10 @@
                         android:layout_height="32dp"
                         android:background="@drawable/rounded_corner_button"
                         android:gravity="center"
-                        android:text="@string/adopted"
+                        android:text="Adopted"
                         android:textAllCaps="false"
                         android:textColor="#ffffff"
-                        android:textSize="14dp"
-                        android:clickable="false"/>
+                        android:textSize="14dp" />
                     />
                 </LinearLayout>
 
@@ -329,4 +327,16 @@
             </LinearLayout>
         </android.support.v7.widget.CardView>
     </android.support.v4.widget.NestedScrollView>
+
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginRight="16dp"
+        android:background="@color/colorPrimaryDarkTransparant"
+        android:elevation="6dp"
+        android:src="@drawable/ic_mode_edit_white_24dp"
+        app:layout_anchor="@id/catprofile_cardview"
+        app:layout_anchorGravity="bottom|right|end"
+        app:pressedTranslationZ="12dp" />
 </android.support.design.widget.CoordinatorLayout>

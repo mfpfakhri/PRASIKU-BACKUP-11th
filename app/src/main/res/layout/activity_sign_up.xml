@@ -45,7 +45,8 @@
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:gravity="center"
-                    android:text="@string/userPhotosText" />
+                    android:text="@string/userPhotosText"
+                    android:textColor="@color/black"/>
 
                 <ImageView
                     android:id="@+id/userPhotos"
@@ -71,7 +72,7 @@
                     android:inputType="textEmailAddress"
                     android:maxLines="1"
                     android:singleLine="true"
-                    android:textColor="@android:color/white" />
+                    android:textColor="@color/black" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -90,7 +91,7 @@
                     android:inputType="textPassword"
                     android:maxLines="1"
                     android:singleLine="true"
-                    android:textColor="@android:color/white" />
+                    android:textColor="@color/black" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -106,7 +107,7 @@
                     android:inputType="textPersonName"
                     android:maxLines="1"
                     android:singleLine="true"
-                    android:textColor="@android:color/white" />
+                    android:textColor="@color/black" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -121,7 +122,8 @@
                     android:clickable="true"
                     android:editable="false"
                     android:focusable="false"
-                    android:hint="@string/hint_dob" />
+                    android:hint="@string/hint_dob"
+                    android:textColor="@color/black"/>
 
             </android.support.design.widget.TextInputLayout>
 
@@ -157,7 +159,7 @@
                     android:inputType="phone"
                     android:maxLines="1"
                     android:singleLine="true"
-                    android:textColor="@android:color/white" />
+                    android:textColor="@color/black" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -173,7 +175,7 @@
                     android:inputType="text"
                     android:maxLines="1"
                     android:singleLine="true"
-                    android:textColor="@android:color/white" />
+                    android:textColor="@color/black" />
 
             </android.support.design.widget.TextInputLayout>
 

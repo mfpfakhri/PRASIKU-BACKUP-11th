@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
@@ -36,7 +37,7 @@ public class AdoptionListActivity extends AppCompatActivity {
     private List<Cat> catLists;
     private AdoptCatAdapter adoptionAdapter;
     private FirebaseDatabase firebaseDatabase;
-    private DatabaseReference databaseCat, databaseCurrentUser;
+    private DatabaseReference databaseCats, databaseCurrentUser;
     private FirebaseAuth auth;
 
     @Override
@@ -74,12 +75,12 @@ public class AdoptionListActivity extends AppCompatActivity {
         String userUID = auth.getUid();
 
         //Database Reference
-        databaseCat = firebaseDatabase.getReference().child("cats");
+        databaseCats = firebaseDatabase.getReference().child("cats");
 
         //Current User Database
-        databaseCurrentUser = databaseCat.child(userUID);
+//        databaseCurrentUser = databaseCat.child(userUID);
 
-        databaseCurrentUser.addChildEventListener(new ChildEventListener() {
+        databaseCats.orderByChild("catOwnerId").equalTo(userUID).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Cat userCatData = dataSnapshot.getValue(Cat.class);
@@ -128,6 +129,7 @@ public class AdoptionListActivity extends AppCompatActivity {
             Cat catData = catListArray.get(position);
             final String oId = catData.getCatOwnerId().toString().trim();
             final String cId = catData.getCatId().toString().trim();
+            final String cStat = catData.getCatAdoptedStatus().toString().trim();
 
             holder.name.setText(catData.getCatName());
             holder.reason.setText(catData.getCatReason());
@@ -139,11 +141,23 @@ public class AdoptionListActivity extends AppCompatActivity {
             holder.layoutroot.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(getApplicationContext(), CatProfileAvailableActivity.class);
-                    intent.putExtra("owner_id", oId);
-                    intent.putExtra("cat_id", cId);
-                    startActivity(intent);
-
+                    if (cStat.equals("0")){
+                        Intent intent = new Intent(getApplicationContext(), CatProfileOwnerAvailableActivity.class);
+                        intent.putExtra("previousActivity", "adoptionlist");
+                        intent.putExtra("owner_id", oId);
+                        intent.putExtra("cat_id", cId);
+                        startActivity(intent);
+                        finish();
+                    } else if (cStat.equals("1")){
+                        Intent intent = new Intent(getApplicationContext(), CatProfileOwnerAdoptedActivity.class);
+                        intent.putExtra("previousActivity", "adoptionlist");
+                        intent.putExtra("owner_id", oId);
+                        intent.putExtra("cat_id", cId);
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "You have no right to choose this option", Toast.LENGTH_SHORT).show();
+                    }
                 }
             });
         }

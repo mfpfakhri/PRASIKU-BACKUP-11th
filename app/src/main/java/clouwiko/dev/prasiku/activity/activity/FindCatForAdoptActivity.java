@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
@@ -229,10 +230,12 @@ public class FindCatForAdoptActivity extends AppCompatActivity {
             Cat catData = catListArray.get(position);
             final String oId = catData.getCatOwnerId().toString().trim();
             final String cId = catData.getCatId().toString().trim();
+            final String cStat = catData.getCatAdoptedStatus().toString().trim();
 
             holder.name.setText(catData.getCatName());
             holder.reason.setText(catData.getCatReason());
             holder.gender.setText(catData.getCatGender());
+            //Dihapus kalo ga perlu
             holder.ownerid.setText(catData.getCatOwnerId());
             holder.catid.setText(catData.getCatId());
             Picasso.get().load(catData.getCatProfilePhoto()).resize(128, 128).into(holder.photo);
@@ -240,11 +243,46 @@ public class FindCatForAdoptActivity extends AppCompatActivity {
             holder.layoutroot.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(getApplicationContext(), CatProfileAvailableActivity.class);
-                    intent.putExtra("owner_id", oId);
-                    intent.putExtra("cat_id", cId);
-                    startActivity(intent);
+                    //Firebase Current User Logged In ID
+                    String userID = auth.getCurrentUser().getUid().toString().trim();
 
+                    if (userID.equals(oId)){
+                        if (cStat.equals("0")){
+                            Intent intent = new Intent(getApplicationContext(), CatProfileOwnerAvailableActivity.class);
+                            intent.putExtra("previousActivity", "findcat");
+                            intent.putExtra("owner_id", oId);
+                            intent.putExtra("cat_id", cId);
+                            startActivity(intent);
+                            finish();
+                        } else if (cStat.equals("1")){
+                            Intent intent = new Intent(getApplicationContext(), CatProfileOwnerAdoptedActivity.class);
+                            intent.putExtra("previousActivity", "findcat");
+                            intent.putExtra("owner_id", oId);
+                            intent.putExtra("cat_id", cId);
+                            startActivity(intent);
+                            finish();
+                        } else {
+                            Toast.makeText(getApplicationContext(), "You have no right to choose this option", Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        if (cStat.equals("0")){
+                            Intent intent = new Intent(getApplicationContext(), CatProfileApplicantAvailableActivity.class);
+                            intent.putExtra("previousActivity", "findcat");
+                            intent.putExtra("owner_id", oId);
+                            intent.putExtra("cat_id", cId);
+                            startActivity(intent);
+                            finish();
+                        } else if (cStat.equals("1")){
+                            Intent intent = new Intent(getApplicationContext(), CatProfileApplicantAdoptedActivity.class);
+                            intent.putExtra("previousActivity", "findcat");
+                            intent.putExtra("owner_id", oId);
+                            intent.putExtra("cat_id", cId);
+                            startActivity(intent);
+                            finish();
+                        } else {
+                            Toast.makeText(getApplicationContext(), "You have no right to choose this option", Toast.LENGTH_SHORT).show();
+                        }
+                    }
                 }
             });
         }
@@ -262,13 +300,13 @@ public class FindCatForAdoptActivity extends AppCompatActivity {
             public AdoptCatViewHolder(View itemView) {
                 super(itemView);
 
-                name = (TextView) itemView.findViewById(R.id.adoptionlist_catname);
-                reason = (TextView) itemView.findViewById(R.id.adoptionlist_catreason);
-                gender = (TextView) itemView.findViewById(R.id.userhome_catgender);
-                ownerid = (TextView) itemView.findViewById(R.id.userhome_catownerid);
-                catid = (TextView) itemView.findViewById(R.id.userhome_catid);
-                photo = (ImageView) itemView.findViewById(R.id.adoptionlist_catphotos);
-                layoutroot = (LinearLayout) itemView.findViewById(R.id.adoptionlist_root);
+                name = itemView.findViewById(R.id.adoptionlist_catname);
+                reason = itemView.findViewById(R.id.adoptionlist_catreason);
+                gender = itemView.findViewById(R.id.userhome_catgender);
+                ownerid = itemView.findViewById(R.id.userhome_catownerid);
+                catid = itemView.findViewById(R.id.userhome_catid);
+                photo = itemView.findViewById(R.id.adoptionlist_catphotos);
+                layoutroot = itemView.findViewById(R.id.adoptionlist_root);
             }
         }
     }
