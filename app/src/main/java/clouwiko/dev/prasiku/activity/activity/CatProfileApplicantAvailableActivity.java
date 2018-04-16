@@ -50,7 +50,9 @@ public class CatProfileApplicantAvailableActivity extends AppCompatActivity {
         btnAvailable.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "This cat has been adopted", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getApplicationContext(), AdoptionFormActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
 

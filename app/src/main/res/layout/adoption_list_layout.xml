@@ -55,20 +55,20 @@
                     android:gravity="center_vertical"
                     android:text="@string/userhome_catgender"
                     android:textSize="16sp" />
-                <TextView
-                    android:id="@+id/userhome_catownerid"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:textSize="12dp"
-                    android:textColor="@color/white"/>
-                <TextView
-                    android:id="@+id/userhome_catid"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:textSize="12dp"
-                    android:textColor="@color/white"/>
+                <!--<TextView-->
+                    <!--android:id="@+id/userhome_catownerid"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:gravity="center_vertical"-->
+                    <!--android:textSize="12dp"-->
+                    <!--android:textColor="@color/white"/>-->
+                <!--<TextView-->
+                    <!--android:id="@+id/userhome_catid"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:gravity="center_vertical"-->
+                    <!--android:textSize="12dp"-->
+                    <!--android:textColor="@color/white"/>-->
 
             </LinearLayout>
 

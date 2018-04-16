@@ -74,8 +74,11 @@
             android:parentActivityName=".activity.activity.MainMenuActivity" />
         <activity android:name=".activity.activity.CatProfileApplicantAdoptedActivity" />
         <activity android:name=".activity.activity.CatProfileApplicantAvailableActivity" />
-        <activity android:name=".activity.activity.CatProfileOwnerAdoptedActivity"/>
+        <activity android:name=".activity.activity.CatProfileOwnerAdoptedActivity" />
         <activity android:name=".activity.activity.CatProfileOwnerAvailableActivity" />
+        <activity android:name=".activity.activity.AdoptionFormActivity" />
+        <activity android:name=".activity.activity.EditCatDataAdoptedActivity" />
+        <activity android:name=".activity.activity.EditCatDataAvailableActivity"></activity>
     </application>
 
 </manifest>

@@ -236,8 +236,8 @@ public class FindCatForAdoptActivity extends AppCompatActivity {
             holder.reason.setText(catData.getCatReason());
             holder.gender.setText(catData.getCatGender());
             //Dihapus kalo ga perlu
-            holder.ownerid.setText(catData.getCatOwnerId());
-            holder.catid.setText(catData.getCatId());
+//            holder.ownerid.setText(catData.getCatOwnerId());
+//            holder.catid.setText(catData.getCatId());
             Picasso.get().load(catData.getCatProfilePhoto()).resize(128, 128).into(holder.photo);
 
             holder.layoutroot.setOnClickListener(new View.OnClickListener() {
@@ -303,8 +303,8 @@ public class FindCatForAdoptActivity extends AppCompatActivity {
                 name = itemView.findViewById(R.id.adoptionlist_catname);
                 reason = itemView.findViewById(R.id.adoptionlist_catreason);
                 gender = itemView.findViewById(R.id.userhome_catgender);
-                ownerid = itemView.findViewById(R.id.userhome_catownerid);
-                catid = itemView.findViewById(R.id.userhome_catid);
+//                ownerid = itemView.findViewById(R.id.userhome_catownerid);
+//                catid = itemView.findViewById(R.id.userhome_catid);
                 photo = itemView.findViewById(R.id.adoptionlist_catphotos);
                 layoutroot = itemView.findViewById(R.id.adoptionlist_root);
             }
