@@ -101,6 +101,23 @@
     <string name="find_cat">Search Cat</string>
     <string name="catprofile_genderlabel">Gender</string>
     <string name="available">Adopt Me!</string>
+    <string name="adoption_form">Adoption Form</string>
+    <string name="hint_adoptionform_phone">Your phone number</string>
+    <string name="hint_adoptionform_address">Your address</string>
+    <string name="hint_adoptionform_job">Your job</string>
+    <string name="hint_adoptionform_reasonwhy">Why You want to adopt?</string>
+    <string name="hint_adoptionform_animal">Number of Animal(s) You have?</string>
+    <string name="hint_housetype">Select Your house type</string>
+    <string name="hint_adoptionform_housesize">Your house size (in m2)</string>
+    <string name="hint_adoptionform_familynumber">Number of people in Your house</string>
+    <string name="hint_adoptionform_animallive">where the cat will stay?</string>
+    <string name="adoptionform_consideredthings">Before submitting the application, have You considered this conditions?</string>
+    <string name="adoptionform_housememberpermission">House member permission</string>
+    <string name="adoptionform_movingplan">Plan to move</string>
+    <string name="adoptionform_aftermarriage">After marriage plan</string>
+    <string name="adoptionform_kidsinhouse">Kids in Your house</string>
+    <string name="adoptionform_financialplan">Your financial plan</string>
+    <string name="adoptionform_submit">Submit</string>
 
     <string-array name="gender">
         <item>Male</item>
@@ -127,6 +144,14 @@
         <item>Government</item>
         <item>Organization</item>
         <item>Shelter</item>
+        <item>Others</item>
+    </string-array>
+    <string-array name="housetype">
+        <item>Home</item>
+        <item>Rent</item>
+        <item>Boarding House</item>
+        <item>Apartement/ Condotel</item>
+        <item>Warehouse</item>
         <item>Others</item>
     </string-array>
 </resources>
