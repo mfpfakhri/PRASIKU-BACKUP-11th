@@ -34,17 +34,17 @@ public class CatProfileApplicantAdoptedActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cat_profile_applicant_adopted);
 
-        imCatPhoto = findViewById(R.id.cpa__adopted__photovalue);
-        tvCatName = findViewById(R.id.cpa__adopted_catnamevalue);
+        imCatPhoto = findViewById(R.id.cpa_adopted_photovalue);
+        tvCatName = findViewById(R.id.cpa_adopted_catnamevalue);
         tvOwner = findViewById(R.id.cpa_adopted_ownervalue);
-        tvCity = findViewById(R.id.cpa__adopted__cityvalue);
-        tvGender = findViewById(R.id.cpa__adopted__gendervalue);
-        tvDesc = findViewById(R.id.cpa__adopted__descvalue);
-        tvDob = findViewById(R.id.cpa__adopted__dobvalue);
-        tvMed = findViewById(R.id.cpa__adopted__medvalue);
-        tvVacc = findViewById(R.id.cpa__adopted__vaccinevalue);
-        tvSpNeu = findViewById(R.id.cpa__adopted__spayneutervalue);
-        tvReason = findViewById(R.id.cpa__adopted__reasonvalue);
+        tvCity = findViewById(R.id.cpa_adopted_cityvalue);
+        tvGender = findViewById(R.id.cpa_adopted_gendervalue);
+        tvDesc = findViewById(R.id.cpa_adopted_descvalue);
+        tvDob = findViewById(R.id.cpa_adopted_dobvalue);
+        tvMed = findViewById(R.id.cpa_adopted_medvalue);
+        tvVacc = findViewById(R.id.cpa_adopted_vaccinevalue);
+        tvSpNeu = findViewById(R.id.cpa_adopted_spayneutervalue);
+        tvReason = findViewById(R.id.cpa_adopted_reasonvalue);
         btnAdopted = findViewById(R.id.cpa_adopted_button);
 
         btnAdopted.setOnClickListener(new View.OnClickListener() {
@@ -55,11 +55,6 @@ public class CatProfileApplicantAdoptedActivity extends AppCompatActivity {
         });
 
         String pActivity = getIntent().getStringExtra("previousActivity");
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        if (getSupportActionBar() != null)
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         getCatDataAppAdopt();
     }
@@ -116,25 +111,6 @@ public class CatProfileApplicantAdoptedActivity extends AppCompatActivity {
             }
         });
     }
-
-//    private void getOwnerDataAppAdopt() {
-//        String ownerId = getIntent().getStringExtra("owner_id");
-//
-//        databaseUsers = FirebaseDatabase.getInstance().getReference().child("users").child(ownerId);
-//        databaseUsers.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                String owner = dataSnapshot.child("userFName").getValue(String.class);
-//
-//                tvOwner.setText(owner);
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
-//    }
 
     @Override
     public void onBackPressed() {

@@ -22,7 +22,7 @@
             app:titleEnabled="false">
 
             <ImageView
-                android:id="@+id/cpa__adopted__photovalue"
+                android:id="@+id/cpa_adopted_photovalue"
                 android:layout_width="match_parent"
                 android:layout_height="256sp"
                 android:scaleType="centerCrop"
@@ -57,7 +57,7 @@
                     android:layout_height="wrap_content">
 
                     <TextView
-                        android:id="@+id/cpa__adopted_catnamevalue"
+                        android:id="@+id/cpa_adopted_catnamevalue"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
@@ -73,11 +73,11 @@
                         android:layout_width="1dp"
                         android:layout_height="match_parent"
                         android:layout_margin="10dp"
-                        android:layout_toRightOf="@id/cpa__adopted_catnamevalue"
+                        android:layout_toRightOf="@id/cpa_adopted_catnamevalue"
                         android:background="@color/dark_gray" />
 
                     <LinearLayout
-                        android:id="@+id/cpa__adopted__contactroot"
+                        android:id="@+id/cpa_adopted_contactroot"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_centerInParent="true"
@@ -85,14 +85,14 @@
                         android:orientation="horizontal">
 
                         <ImageView
-                            android:id="@+id/cpa__adopted__whatsapp"
+                            android:id="@+id/cpa_adopted_whatsapp"
                             android:layout_width="wrap_content"
                             android:layout_height="32sp"
                             android:layout_margin="8dp"
                             android:src="@drawable/message_text" />
 
                         <ImageView
-                            android:id="@+id/cpa__adopted__message"
+                            android:id="@+id/cpa_adopted_message"
                             android:layout_width="wrap_content"
                             android:layout_height="32sp"
                             android:layout_margin="8dp"
@@ -122,7 +122,7 @@
                 </RelativeLayout>
 
                 <TextView
-                    android:id="@+id/cpa__adopted_ownerlabel"
+                    android:id="@+id/cpa_adopted_ownerlabel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingBottom="12dp"
@@ -149,7 +149,7 @@
                     android:background="@color/light_gray" />
 
                 <TextView
-                    android:id="@+id/cpa__adopted__citylabel"
+                    android:id="@+id/cpa_adopted_citylabel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingBottom="12dp"
@@ -159,7 +159,7 @@
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/cpa__adopted__cityvalue"
+                    android:id="@+id/cpa_adopted_cityvalue"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingBottom="18dp"
@@ -176,7 +176,7 @@
                     android:background="@color/light_gray" />
 
                 <TextView
-                    android:id="@+id/cpa__adopted__genderlabel"
+                    android:id="@+id/cpa_adopted_genderlabel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingBottom="12dp"
@@ -186,7 +186,7 @@
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/cpa__adopted__gendervalue"
+                    android:id="@+id/cpa_adopted_gendervalue"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingBottom="18dp"
@@ -203,7 +203,7 @@
                     android:background="@color/light_gray" />
 
                 <TextView
-                    android:id="@+id/cpa__adopted__doblabel"
+                    android:id="@+id/cpa_adopted_doblabel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingBottom="12dp"
@@ -213,7 +213,7 @@
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/cpa__adopted__dobvalue"
+                    android:id="@+id/cpa_adopted_dobvalue"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingBottom="18dp"
@@ -230,7 +230,7 @@
                     android:background="@color/light_gray" />
 
                 <TextView
-                    android:id="@+id/cpa__adopted__desclabel"
+                    android:id="@+id/cpa_adopted_desclabel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingBottom="12dp"
@@ -240,7 +240,7 @@
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/cpa__adopted__descvalue"
+                    android:id="@+id/cpa_adopted_descvalue"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:lineSpacingMultiplier="1.5"
@@ -258,7 +258,7 @@
                     android:background="@color/light_gray" />
 
                 <TextView
-                    android:id="@+id/cpa__adopted__medlabel"
+                    android:id="@+id/cpa_adopted_medlabel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingBottom="12dp"
@@ -268,7 +268,7 @@
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/cpa__adopted__medvalue"
+                    android:id="@+id/cpa_adopted_medvalue"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:lineSpacingMultiplier="1.5"
@@ -286,7 +286,7 @@
                     android:background="@color/light_gray" />
 
                 <TextView
-                    android:id="@+id/cpa__adopted__vaccinelabel"
+                    android:id="@+id/cpa_adopted_vaccinelabel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingBottom="12dp"
@@ -296,7 +296,7 @@
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/cpa__adopted__vaccinevalue"
+                    android:id="@+id/cpa_adopted_vaccinevalue"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingBottom="18dp"
@@ -313,7 +313,7 @@
                     android:background="@color/light_gray" />
 
                 <TextView
-                    android:id="@+id/cpa__adopted__spayneuterlabel"
+                    android:id="@+id/cpa_adopted_spayneuterlabel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingBottom="12dp"
@@ -323,7 +323,7 @@
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/cpa__adopted__spayneutervalue"
+                    android:id="@+id/cpa_adopted_spayneutervalue"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingBottom="18dp"
@@ -340,7 +340,7 @@
                     android:background="@color/light_gray" />
 
                 <TextView
-                    android:id="@+id/cpa__adopted__reasonlabel"
+                    android:id="@+id/cpa_adopted_reasonlabel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingBottom="12dp"
@@ -350,7 +350,7 @@
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/cpa__adopted__reasonvalue"
+                    android:id="@+id/cpa_adopted_reasonvalue"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingBottom="18dp"
