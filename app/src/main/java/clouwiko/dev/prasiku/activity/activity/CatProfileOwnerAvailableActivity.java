@@ -63,7 +63,9 @@ public class CatProfileOwnerAvailableActivity extends AppCompatActivity {
         fabEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String catId = getIntent().getStringExtra("cat_id");
                 Intent intent = new Intent(getApplicationContext(), EditCatDataAvailableActivity.class);
+                intent.putExtra("cat_id", catId);
                 startActivity(intent);
                 finish();
             }

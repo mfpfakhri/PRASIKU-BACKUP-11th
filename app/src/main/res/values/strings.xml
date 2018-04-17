@@ -118,6 +118,8 @@
     <string name="adoptionform_kidsinhouse">Kids in Your house</string>
     <string name="adoptionform_financialplan">Your financial plan</string>
     <string name="adoptionform_submit">Submit</string>
+    <string name="editcatavailable_textphoto">Tap \nto change \nYour cat \nphoto</string>
+    <string name="editcatavailable_done_button">Done</string>
 
     <string-array name="gender">
         <item>Male</item>
