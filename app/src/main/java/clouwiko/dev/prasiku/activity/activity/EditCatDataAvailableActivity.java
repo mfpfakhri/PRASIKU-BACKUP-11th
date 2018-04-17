@@ -28,6 +28,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import clouwiko.dev.prasiku.R;
 import clouwiko.dev.prasiku.activity.other.RoundedCornersTransform;
 import fr.ganfra.materialspinner.MaterialSpinner;
@@ -60,6 +64,10 @@ public class EditCatDataAvailableActivity extends AppCompatActivity {
         inputCatDob = findViewById(R.id.editcatavailable_dob);
         inputCatDesc = findViewById(R.id.editcatavailable_desc);
         inputCatMedNote = findViewById(R.id.editcatavailable_mednote);
+        spinnerCatGender = findViewById(R.id.editcatavailable_gender);
+        spinnerCatReasonOpenAdoption = findViewById(R.id.editcatavailable_reason);
+        radioGroupVaccine = findViewById(R.id.editcatavailable_vacc);
+        radioGroupSpayNeuter = findViewById(R.id.editcatavailable_spayneuter);
         catPhotoIv = findViewById(R.id.editcatavailable_photo);
         btnDoneEditing = findViewById(R.id.editcatavailable_done_button);
 
@@ -72,12 +80,56 @@ public class EditCatDataAvailableActivity extends AppCompatActivity {
                 String dob = dataSnapshot.child("catDob").getValue(String.class);
                 String desc = dataSnapshot.child("catDescription").getValue(String.class);
                 String mednote = dataSnapshot.child("catMedNote").getValue(String.class);
+                String gender = dataSnapshot.child("catGender").getValue(String.class);
+                String vaccine = dataSnapshot.child("catVaccStat").getValue(String.class);
+                String spayneuter = dataSnapshot.child("catSpayNeuterStat").getValue(String.class);
+                String reason = dataSnapshot.child("catReason").getValue(String.class);
                 String photo = dataSnapshot.child("catProfilePhoto").getValue(String.class);
 
                 inputCatName.setText(name);
                 inputCatDob.setText(dob);
                 inputCatDesc.setText(desc);
                 inputCatMedNote.setText(mednote);
+                if (gender.equals("Male")){
+                    spinnerCatGender.setSelection(1);
+                } else if (gender.equals("Female")){
+                    spinnerCatGender.setSelection(2);
+                } else if (gender.equals("Unknown")){
+                    spinnerCatGender.setSelection(3);
+                } else {
+                    Toast.makeText(getApplicationContext(), "Choose Your Cat Gender", Toast.LENGTH_SHORT).show();
+                }
+                if (vaccine.equals("Yes, Already Vaccinated")){
+                    radioGroupVaccine.check(R.id.editcatavailable_yes_vaccine);
+                } else {
+                    radioGroupVaccine.check(R.id.editcatavailable_no_vaccine);
+                }
+                if (spayneuter.equals("Yes, Already Spayed/ Neutered")){
+                    radioGroupSpayNeuter.check(R.id.editcatavailable_yes_spayneuter);
+                } else {
+                    radioGroupSpayNeuter.check(R.id.editcatavailable_no_spayneuter);
+                }
+                if (reason.equals("Stray")){
+                    spinnerCatReasonOpenAdoption.setSelection(1);
+                } else if (reason.equals("Abandoned")){
+                    spinnerCatReasonOpenAdoption.setSelection(2);
+                } else if (reason.equals("Abused")){
+                    spinnerCatReasonOpenAdoption.setSelection(3);
+                } else if (reason.equals("Owner Dead")){
+                    spinnerCatReasonOpenAdoption.setSelection(4);
+                } else if (reason.equals("Owner Give Up")){
+                    spinnerCatReasonOpenAdoption.setSelection(5);
+                } else if (reason.equals("House Moving")){
+                    spinnerCatReasonOpenAdoption.setSelection(6);
+                } else if (reason.equals("Financial")){
+                    spinnerCatReasonOpenAdoption.setSelection(7);
+                } else if (reason.equals("Medical Problem")){
+                    spinnerCatReasonOpenAdoption.setSelection(8);
+                } else if (reason.equals("Others")){
+                    spinnerCatReasonOpenAdoption.setSelection(9);
+                } else {
+                    Toast.makeText(getApplicationContext(), "Choose The Reason for Open Adopt", Toast.LENGTH_SHORT).show();
+                }
                 Picasso.get().load(photo).transform(new RoundedCornersTransform()).centerCrop().resize(192, 192).into(catPhotoIv);
             }
 
