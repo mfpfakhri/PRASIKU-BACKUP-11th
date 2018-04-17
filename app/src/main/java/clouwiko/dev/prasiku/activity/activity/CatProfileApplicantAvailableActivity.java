@@ -50,7 +50,11 @@ public class CatProfileApplicantAvailableActivity extends AppCompatActivity {
         btnAvailable.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String ownerId = getIntent().getStringExtra("owner_id");
+                String catId = getIntent().getStringExtra("cat_id");
                 Intent intent = new Intent(getApplicationContext(), AdoptionFormActivity.class);
+                intent.putExtra("owner_id", ownerId);
+                intent.putExtra("cat_id", catId);
                 startActivity(intent);
                 finish();
             }
@@ -121,6 +125,7 @@ public class CatProfileApplicantAvailableActivity extends AppCompatActivity {
         Intent intentMainMenu = new Intent(getApplicationContext(), MainMenuActivity.class);
 
         if (pActivity.equals("findcat")){
+            intentFindCat.putExtra("previousActivity", "findcat");
             startActivity(intentFindCat);
             finish();
         } else {
