@@ -155,6 +155,12 @@ public class EditCatDataAvailableActivity extends AppCompatActivity {
         });
     }
 
+//    private boolean updateCatData(String){
+//        String catId = getIntent().getStringExtra("cat_id");
+//        databaseCats = FirebaseDatabase.getInstance().getReference().child("cats").child(catId);
+//        databaseCats.
+//    }
+
     private void catPhotosMediaOpen() {
         Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(Intent.createChooser(galleryIntent, "Select Image from Gallery"), 2);
