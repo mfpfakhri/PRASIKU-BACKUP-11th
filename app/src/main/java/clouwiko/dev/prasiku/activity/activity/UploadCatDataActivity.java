@@ -189,7 +189,7 @@ public class UploadCatDataActivity extends AppCompatActivity {
             }
         });
 
-        //TODO: Upl
+        //TODO: Upload Data
         databaseCats = FirebaseDatabase.getInstance().getReference().child("cats");
         storageCats = FirebaseStorage.getInstance().getReference();
         StorageReference reference = storageCats.child(STORAGE_PATH + System.currentTimeMillis() + "." + getActualImage(uriCatPhoto));
