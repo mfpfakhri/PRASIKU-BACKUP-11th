@@ -120,6 +120,9 @@
     <string name="adoptionform_submit">Submit</string>
     <string name="editcatavailable_textphoto">Tap \nto change \nYour cat \nphoto</string>
     <string name="editcatavailable_done_button">Done</string>
+    <string name="hint_adoptionstatus">Adoption Status</string>
+    <string name="editcatadopted_done_button">Change Adoption Status</string>
+    <string name="catprofile_adoptstatuslabel">Adoption Status</string>
 
     <string-array name="gender">
         <item>Male</item>
@@ -155,5 +158,9 @@
         <item>Apartement/ Condotel</item>
         <item>Warehouse</item>
         <item>Others</item>
+    </string-array>
+    <string-array name="adoptionstatus">
+        <item>Adopted</item>
+        <item>Available</item>
     </string-array>
 </resources>

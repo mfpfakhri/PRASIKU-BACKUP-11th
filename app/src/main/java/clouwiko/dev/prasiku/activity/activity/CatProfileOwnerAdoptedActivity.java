@@ -25,7 +25,7 @@ public class CatProfileOwnerAdoptedActivity extends AppCompatActivity {
 
     private String TAG = "CatProfileOwnerAdopted";
     private ImageView imCatPhoto;
-    private TextView tvCatName, tvOwner, tvCity, tvGender, tvDesc, tvDob, tvMed, tvVacc, tvSpNeu, tvReason;
+    private TextView tvCatName, tvOwner, tvCity, tvGender, tvDesc, tvDob, tvMed, tvVacc, tvSpNeu, tvReason, tvAdoptStatus;
     private Button btnAdopted;
     private FloatingActionButton fabEdit;
     private FirebaseAuth auth;
@@ -47,6 +47,7 @@ public class CatProfileOwnerAdoptedActivity extends AppCompatActivity {
         tvVacc = findViewById(R.id.cpo_adopted_vaccinevalue);
         tvSpNeu = findViewById(R.id.cpo_adopted_spayneutervalue);
         tvReason = findViewById(R.id.cpo_adopted_reasonvalue);
+        tvAdoptStatus = findViewById(R.id.cpo_adopted_adoptstatusvalue);
         btnAdopted = findViewById(R.id.cpo_adopted_button);
         fabEdit = findViewById(R.id.cpo_adopted_fab);
 
@@ -60,13 +61,17 @@ public class CatProfileOwnerAdoptedActivity extends AppCompatActivity {
         fabEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String pActivity = getIntent().getStringExtra("previousActivity");
+                String catId = getIntent().getStringExtra("cat_id");
+                String ownerId = getIntent().getStringExtra("owner_id");
                 Intent intent = new Intent(getApplicationContext(), EditCatDataAdoptedActivity.class);
+                intent.putExtra("previousActivity", pActivity);
+                intent.putExtra("cat_id", catId);
+                intent.putExtra("owner_id", ownerId);
                 startActivity(intent);
                 finish();
             }
         });
-
-        String pActivity = getIntent().getStringExtra("previousActivity");
 
         getCatDataOwnAdopt();
     }
@@ -90,6 +95,14 @@ public class CatProfileOwnerAdoptedActivity extends AppCompatActivity {
                 String spayneuter = dataSnapshot.child("catSpayNeuterStat").getValue(String.class);
                 String reason = dataSnapshot.child("catReason").getValue(String.class);
                 String catphotouri = dataSnapshot.child("catProfilePhoto").getValue(String.class);
+                String adoptionstatus = dataSnapshot.child("catAdoptedStatus").getValue(String.class);
+                String adoptionvalue = null;
+
+                if (adoptionstatus.equals("0")){
+                    adoptionstatus = "Available";
+                } else if (adoptionstatus.equals("1")){
+                    adoptionstatus = "Adopted";
+                }
 
                 tvCatName.setText(catname);
                 tvCity.setText(city);
@@ -100,6 +113,7 @@ public class CatProfileOwnerAdoptedActivity extends AppCompatActivity {
                 tvVacc.setText(vaccine);
                 tvSpNeu.setText(spayneuter);
                 tvReason.setText(reason);
+                tvAdoptStatus.setText(adoptionstatus);
                 Picasso.get().load(catphotouri).centerCrop().resize(192, 192).into(imCatPhoto);
 
                 databaseUsers.addValueEventListener(new ValueEventListener() {

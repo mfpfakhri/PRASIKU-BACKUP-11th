@@ -24,7 +24,7 @@ public class CatProfileOwnerAvailableActivity extends AppCompatActivity {
 
     private String TAG = "CatProfileOwnerAdopted";
     private ImageView imCatPhoto;
-    private TextView tvCatName, tvOwner, tvCity, tvGender, tvDesc, tvDob, tvMed, tvVacc, tvSpNeu, tvReason;
+    private TextView tvCatName, tvOwner, tvCity, tvGender, tvDesc, tvDob, tvMed, tvVacc, tvSpNeu, tvReason, tvAdoptStatus;
     private Button btnAdopted;
     private FloatingActionButton fab;
     private FirebaseAuth auth;
@@ -49,6 +49,7 @@ public class CatProfileOwnerAvailableActivity extends AppCompatActivity {
         tvVacc = findViewById(R.id.cpo_available_vaccinevalue);
         tvSpNeu = findViewById(R.id.cpo_available_spayneutervalue);
         tvReason = findViewById(R.id.cpo_available_reasonvalue);
+        tvAdoptStatus = findViewById(R.id.cpo_available_adoptstatusvalue);
         btnAdopted = findViewById(R.id.cpo_available_button);
         fab = findViewById(R.id.cpo_available_fab);
 
@@ -96,6 +97,14 @@ public class CatProfileOwnerAvailableActivity extends AppCompatActivity {
                 String spayneuter = dataSnapshot.child("catSpayNeuterStat").getValue(String.class);
                 String reason = dataSnapshot.child("catReason").getValue(String.class);
                 String catphotouri = dataSnapshot.child("catProfilePhoto").getValue(String.class);
+                String adoptionstatus = dataSnapshot.child("catAdoptedStatus").getValue(String.class);
+                String adoptionvalue = null;
+
+                if (adoptionstatus.equals("0")){
+                    adoptionstatus = "Available";
+                } else if (adoptionstatus.equals("1")){
+                    adoptionstatus = "Adopted";
+                }
 
                 tvCatName.setText(catname);
                 tvCity.setText(city);
@@ -106,6 +115,7 @@ public class CatProfileOwnerAvailableActivity extends AppCompatActivity {
                 tvVacc.setText(vaccine);
                 tvSpNeu.setText(spayneuter);
                 tvReason.setText(reason);
+                tvAdoptStatus.setText(adoptionstatus);
                 Picasso.get().load(catphotouri).centerCrop().resize(192, 192).into(imCatPhoto);
 
                 databaseUsers.addValueEventListener(new ValueEventListener() {

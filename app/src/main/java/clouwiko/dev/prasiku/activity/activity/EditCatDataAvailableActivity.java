@@ -48,7 +48,7 @@ import fr.ganfra.materialspinner.MaterialSpinner;
 public class EditCatDataAvailableActivity extends AppCompatActivity {
 
     private EditText inputCatName, inputCatDob, inputCatDesc, inputCatMedNote;
-    private MaterialSpinner spinnerCatGender, spinnerCatReasonOpenAdoption;
+    private MaterialSpinner spinnerCatGender, spinnerCatReasonOpenAdoption, spinnerAdoptionStatus;
     private RadioGroup radioGroupVaccine, radioGroupSpayNeuter;
     private RadioButton radioButtonVacc, radioButtonSpayNeuter;
     private DatePickerDialog.OnDateSetListener catDobSetListener;
@@ -74,6 +74,7 @@ public class EditCatDataAvailableActivity extends AppCompatActivity {
         inputCatMedNote = findViewById(R.id.editcatavailable_mednote);
         spinnerCatGender = findViewById(R.id.editcatavailable_gender);
         spinnerCatReasonOpenAdoption = findViewById(R.id.editcatavailable_reason);
+        spinnerAdoptionStatus = findViewById(R.id.editcatavailable_adoptionstatus);
         radioGroupVaccine = findViewById(R.id.editcatavailable_vacc);
         radioGroupSpayNeuter = findViewById(R.id.editcatavailable_spayneuter);
         btnDoneEditing = findViewById(R.id.editcatavailable_done_button);
@@ -91,6 +92,7 @@ public class EditCatDataAvailableActivity extends AppCompatActivity {
                 String vaccine = dataSnapshot.child("catVaccStat").getValue(String.class);
                 String spayneuter = dataSnapshot.child("catSpayNeuterStat").getValue(String.class);
                 String reason = dataSnapshot.child("catReason").getValue(String.class);
+                String catAdoptedStatus = dataSnapshot.child("catAdoptedStatus").getValue(String.class);
 
                 inputCatName.setText(name);
                 inputCatDob.setText(dob);
@@ -135,6 +137,13 @@ public class EditCatDataAvailableActivity extends AppCompatActivity {
                     spinnerCatReasonOpenAdoption.setSelection(9);
                 } else {
                     Toast.makeText(getApplicationContext(), "Choose The Reason for Open Adopt", Toast.LENGTH_SHORT).show();
+                }
+                if (catAdoptedStatus.equals("1")) {
+                    spinnerAdoptionStatus.setSelection(1);
+                } else if (catAdoptedStatus.equals("0")) {
+                    spinnerAdoptionStatus.setSelection(2);
+                } else {
+                    Toast.makeText(getApplicationContext(), "Choose " + name + " Adoption Status", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -193,13 +202,20 @@ public class EditCatDataAvailableActivity extends AppCompatActivity {
                         String catVaccStat = radioButtonVacc.getText().toString().trim();
                         String catSpayNeuterStat = radioButtonSpayNeuter.getText().toString().trim();
                         String catReason = spinnerCatReasonOpenAdoption.getSelectedItem().toString().trim();
+                        String adoptedValue = spinnerAdoptionStatus.getSelectedItem().toString().trim();
+                        String catAdoptedStatus = null;
+
+                        if (adoptedValue.equals("Available")) {
+                            catAdoptedStatus = "0";
+                        } else if (adoptedValue.equals("Adopted")) {
+                            catAdoptedStatus = "1";
+                        }
 
                         String catId = dataSnapshot.child("catId").getValue(String.class);
                         String catOwnerId = dataSnapshot.child("catOwnerId").getValue(String.class);
                         String catProfilePhoto = dataSnapshot.child("catProfilePhoto").getValue(String.class);
                         String catProvince = dataSnapshot.child("catProvince").getValue(String.class);
                         String catCity = dataSnapshot.child("catCity").getValue(String.class);
-                        String catAdoptedStatus = dataSnapshot.child("catAdoptedStatus").getValue(String.class);
 
                         catDataValidation();
                         updateCatData(catId, catOwnerId, catProfilePhoto, catName, catDob, catGender, catDescription, catMedNote, catVaccStat, catSpayNeuterStat, catReason, catProvince, catCity, catAdoptedStatus);
@@ -228,25 +244,31 @@ public class EditCatDataAvailableActivity extends AppCompatActivity {
     }
 
     private void backToPreviousActivity() {
-        String catId = getIntent().getStringExtra("cat_id");
-        String ownerId = getIntent().getStringExtra("owner_id");
-        String pActivity = getIntent().getStringExtra("previousActivity");
-        Intent intent = new Intent(getApplicationContext(), CatProfileOwnerAvailableActivity.class);
-        if (pActivity.equals("findcat")) {
-            intent.putExtra("previousActivity", pActivity);
-            intent.putExtra("cat_id", catId);
-            intent.putExtra("owner_id", ownerId);
-            Toast.makeText(getApplicationContext(), "Cat Data Successfully Edited", Toast.LENGTH_SHORT).show();
-            startActivity(intent);
-            finish();
-        } else if (pActivity.equals("adoptionlist")) {
-            intent.putExtra("previousActivity", pActivity);
-            intent.putExtra("cat_id", catId);
-            intent.putExtra("owner_id", ownerId);
-            Toast.makeText(getApplicationContext(), "Cat Data Successfully Edited", Toast.LENGTH_SHORT).show();
-            startActivity(intent);
-            finish();
-        }
+        Intent intent = new Intent(getApplicationContext(), MainMenuActivity.class);
+        Toast toast = Toast.makeText(getApplicationContext(), "Cat Data Successfully Edited", Toast.LENGTH_SHORT);
+        toast.show();
+        startActivity(intent);
+        toast.cancel();
+        finish();
+//        String catId = getIntent().getStringExtra("cat_id");
+//        String ownerId = getIntent().getStringExtra("owner_id");
+//        String pActivity = getIntent().getStringExtra("previousActivity");
+//        Intent intent = new Intent(getApplicationContext(), CatProfileOwnerAvailableActivity.class);
+//        if (pActivity.equals("findcat")) {
+//            intent.putExtra("previousActivity", pActivity);
+//            intent.putExtra("cat_id", catId);
+//            intent.putExtra("owner_id", ownerId);
+//            Toast.makeText(getApplicationContext(), "Cat Data Successfully Edited", Toast.LENGTH_SHORT).show();
+//            startActivity(intent);
+//            finish();
+//        } else if (pActivity.equals("adoptionlist")) {
+//            intent.putExtra("previousActivity", pActivity);
+//            intent.putExtra("cat_id", catId);
+//            intent.putExtra("owner_id", ownerId);
+//            Toast.makeText(getApplicationContext(), "Cat Data Successfully Edited", Toast.LENGTH_SHORT).show();
+//            startActivity(intent);
+//            finish();
+//        }
     }
 
     private void catDataValidation() {
