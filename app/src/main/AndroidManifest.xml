@@ -79,7 +79,6 @@
         <activity android:name=".activity.activity.AdoptionFormActivity" />
         <activity android:name=".activity.activity.EditCatDataAdoptedActivity" />
         <activity android:name=".activity.activity.EditCatDataAvailableActivity" />
-        <activity android:name=".activity.activity.EditCatPhotoActivity"></activity>
     </application>
 
 </manifest>
