@@ -332,16 +332,29 @@
         </android.support.v7.widget.CardView>
     </android.support.v4.widget.NestedScrollView>
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/cpo_available_fab"
+    <com.github.clans.fab.FloatingActionMenu
+        android:id="@+id/cpo_available_fam"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:layout_marginRight="16dp"
-        android:background="@color/colorPrimaryDarkTransparant"
-        android:elevation="6dp"
-        android:src="@drawable/ic_mode_edit_white_24dp"
+        android:layout_margin="8dp"
+        android:background="@android:color/transparent"
         app:layout_anchor="@id/cpo_available_cardview"
-        app:layout_anchorGravity="bottom|right|end"
-        app:pressedTranslationZ="12dp" />
+        app:layout_anchorGravity="right|bottom|end"
+        app:menu_openDirection="up"
+        app:menu_showShadow="true">
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/cpo_available_fabedit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_mode_edit_white_24dp"
+            app:fabSize="mini"
+            app:fab_label="Edit Cat Data"/>
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/cpo_available_fabphoto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_camera_alt_white_24dp"
+            app:fabSize="mini"
+            app:fab_label="Change Cat Photo"/>
+    </com.github.clans.fab.FloatingActionMenu>
 </android.support.design.widget.CoordinatorLayout>

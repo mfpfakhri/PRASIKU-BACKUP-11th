@@ -1,7 +1,6 @@
 package clouwiko.dev.prasiku.activity.activity;
 
 import android.content.Intent;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -11,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -27,7 +28,8 @@ public class CatProfileOwnerAvailableActivity extends AppCompatActivity {
     private ImageView imCatPhoto;
     private TextView tvCatName, tvOwner, tvCity, tvGender, tvDesc, tvDob, tvMed, tvVacc, tvSpNeu, tvReason;
     private Button btnAdopted;
-    private FloatingActionButton fabEdit;
+    private FloatingActionMenu fam;
+    private FloatingActionButton fabEdit, fabPhoto;
     private FirebaseAuth auth;
     private DatabaseReference databaseCats, databaseUsers;
 
@@ -51,7 +53,9 @@ public class CatProfileOwnerAvailableActivity extends AppCompatActivity {
         tvSpNeu = findViewById(R.id.cpo_available_spayneutervalue);
         tvReason = findViewById(R.id.cpo_available_reasonvalue);
         btnAdopted = findViewById(R.id.cpo_available_button);
-        fabEdit = findViewById(R.id.cpo_available_fab);
+        fam = findViewById(R.id.cpo_available_fam);
+        fabEdit = findViewById(R.id.cpo_available_fabedit);
+        fabPhoto = findViewById(R.id.cpo_available_fabphoto);
 
         btnAdopted.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,14 +68,42 @@ public class CatProfileOwnerAvailableActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String catId = getIntent().getStringExtra("cat_id");
+                String ownerId = getIntent().getStringExtra("owner_id");
+                String pActivity = getIntent().getStringExtra("previousActivity");
                 Intent intent = new Intent(getApplicationContext(), EditCatDataAvailableActivity.class);
                 intent.putExtra("cat_id", catId);
+                intent.putExtra("owner_id", ownerId);
+                intent.putExtra("previousActivity", pActivity);
                 startActivity(intent);
                 finish();
             }
         });
 
-        String pActivity = getIntent().getStringExtra("previousActivity");
+        fabPhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String catId = getIntent().getStringExtra("cat_id");
+                String ownerId = getIntent().getStringExtra("owner_id");
+                String pActivity = getIntent().getStringExtra("previousActivity");
+                Intent intent = new Intent(getApplicationContext(), EditCatPhotoActivity.class);
+                intent.putExtra("cat_id", catId);
+                intent.putExtra("owner_id", ownerId);
+                intent.putExtra("previousActivity", pActivity);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+//        fabEdit.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                String catId = getIntent().getStringExtra("cat_id");
+//                Intent intent = new Intent(getApplicationContext(), EditCatDataAvailableActivity.class);
+//                intent.putExtra("cat_id", catId);
+//                startActivity(intent);
+//                finish();
+//            }
+//        });
 
         getCatDataOwnAvailable();
     }

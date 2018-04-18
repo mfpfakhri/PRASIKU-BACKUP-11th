@@ -154,7 +154,8 @@ public class UploadCatDataActivity extends AppCompatActivity {
                 uploadCatDataValidation();
                 addCatData();
                 Toast.makeText(UploadCatDataActivity.this, "Successfully Added Cats Data for Adopt", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(UploadCatDataActivity.this, LandingActivity.class));
+                startActivity(new Intent(UploadCatDataActivity.this, MainMenuActivity.class));
+                finish();
             }
         });
     }

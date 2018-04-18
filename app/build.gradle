@@ -61,5 +61,8 @@ dependencies {
 
     //Picasso
     compile 'com.squareup.picasso:picasso:2.71828'
+
+    //Floating Action Button
+    compile 'com.github.clans:fab:1.6.4'
 }
 apply plugin: 'com.google.gms.google-services'
