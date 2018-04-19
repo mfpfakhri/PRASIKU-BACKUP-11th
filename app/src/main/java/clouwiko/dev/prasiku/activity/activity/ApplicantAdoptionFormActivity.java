@@ -8,12 +8,12 @@ import android.os.Bundle;
 
 import clouwiko.dev.prasiku.R;
 
-public class AdoptionFormActivity extends AppCompatActivity {
+public class ApplicantAdoptionFormActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_adoption_form);
+        setContentView(R.layout.activity_applicant_adoption_form);
 
         String catId = getIntent().getStringExtra("cat_id");
         String ownerId = getIntent().getStringExtra("owner_id");
@@ -23,7 +23,7 @@ public class AdoptionFormActivity extends AppCompatActivity {
     public void onBackPressed() {
         final String catId = getIntent().getStringExtra("cat_id");
         final String ownerId = getIntent().getStringExtra("owner_id");
-        AlertDialog.Builder builder = new AlertDialog.Builder(AdoptionFormActivity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(ApplicantAdoptionFormActivity.this);
         builder.setMessage("Are You sure want to quit?")
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override

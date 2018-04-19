@@ -3,12 +3,10 @@ package clouwiko.dev.prasiku.activity.activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -52,7 +50,7 @@ public class CatProfileApplicantAvailableActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String ownerId = getIntent().getStringExtra("owner_id");
                 String catId = getIntent().getStringExtra("cat_id");
-                Intent intent = new Intent(getApplicationContext(), AdoptionFormActivity.class);
+                Intent intent = new Intent(getApplicationContext(), ApplicantAdoptionFormActivity.class);
                 intent.putExtra("owner_id", ownerId);
                 intent.putExtra("cat_id", catId);
                 startActivity(intent);
