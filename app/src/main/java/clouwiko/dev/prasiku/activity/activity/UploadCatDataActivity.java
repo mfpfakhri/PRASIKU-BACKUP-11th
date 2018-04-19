@@ -217,7 +217,7 @@ public class UploadCatDataActivity extends AppCompatActivity {
                         String spinnerReason = spinnerCatReasonOpenAdoption.getSelectedItem().toString().trim();
                         String province = provincesNameArray.get(0).toString().trim();
                         String city = citiesNameArray.get(0).toString().trim();
-                        String status = "0";
+                        String status = "Available";
 
                         Cat cat = new Cat(id, ownerId, cPhotoUrl, name, dob, spinnerGender, desc, medNote, vacc, spayNeuter, spinnerReason, province, city, status);
 

@@ -141,14 +141,14 @@ public class AdoptionListActivity extends AppCompatActivity {
             holder.layoutroot.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (cStat.equals("0")){
+                    if (cStat.equals("Available")){
                         Intent intent = new Intent(getApplicationContext(), CatProfileOwnerAvailableActivity.class);
                         intent.putExtra("previousActivity", "adoptionlist");
                         intent.putExtra("owner_id", oId);
                         intent.putExtra("cat_id", cId);
                         startActivity(intent);
                         finish();
-                    } else if (cStat.equals("1")){
+                    } else if (cStat.equals("Adopted")){
                         Intent intent = new Intent(getApplicationContext(), CatProfileOwnerAdoptedActivity.class);
                         intent.putExtra("previousActivity", "adoptionlist");
                         intent.putExtra("owner_id", oId);

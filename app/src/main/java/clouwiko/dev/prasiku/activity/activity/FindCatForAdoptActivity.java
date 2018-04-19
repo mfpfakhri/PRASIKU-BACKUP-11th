@@ -244,14 +244,14 @@ public class FindCatForAdoptActivity extends AppCompatActivity {
                     String userID = auth.getCurrentUser().getUid().toString().trim();
 
                     if (userID.equals(oId)){
-                        if (cStat.equals("0")){
+                        if (cStat.equals("Available")){
                             Intent intent = new Intent(getApplicationContext(), CatProfileOwnerAvailableActivity.class);
                             intent.putExtra("previousActivity", "findcat");
                             intent.putExtra("owner_id", oId);
                             intent.putExtra("cat_id", cId);
                             startActivity(intent);
                             finish();
-                        } else if (cStat.equals("1")){
+                        } else if (cStat.equals("Adopted")){
                             Intent intent = new Intent(getApplicationContext(), CatProfileOwnerAdoptedActivity.class);
                             intent.putExtra("previousActivity", "findcat");
                             intent.putExtra("owner_id", oId);
@@ -262,14 +262,14 @@ public class FindCatForAdoptActivity extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), "You have no right to choose this option", Toast.LENGTH_SHORT).show();
                         }
                     } else {
-                        if (cStat.equals("0")){
+                        if (cStat.equals("Available")){
                             Intent intent = new Intent(getApplicationContext(), CatProfileApplicantAvailableActivity.class);
                             intent.putExtra("previousActivity", "findcat");
                             intent.putExtra("owner_id", oId);
                             intent.putExtra("cat_id", cId);
                             startActivity(intent);
                             finish();
-                        } else if (cStat.equals("1")){
+                        } else if (cStat.equals("Adopted")){
                             Intent intent = new Intent(getApplicationContext(), CatProfileApplicantAdoptedActivity.class);
                             intent.putExtra("previousActivity", "findcat");
                             intent.putExtra("owner_id", oId);

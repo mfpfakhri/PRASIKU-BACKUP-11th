@@ -96,13 +96,6 @@ public class CatProfileOwnerAdoptedActivity extends AppCompatActivity {
                 String reason = dataSnapshot.child("catReason").getValue(String.class);
                 String catphotouri = dataSnapshot.child("catProfilePhoto").getValue(String.class);
                 String adoptionstatus = dataSnapshot.child("catAdoptedStatus").getValue(String.class);
-                String adoptionvalue = null;
-
-                if (adoptionstatus.equals("0")){
-                    adoptionstatus = "Available";
-                } else if (adoptionstatus.equals("1")){
-                    adoptionstatus = "Adopted";
-                }
 
                 tvCatName.setText(catname);
                 tvCity.setText(city);
