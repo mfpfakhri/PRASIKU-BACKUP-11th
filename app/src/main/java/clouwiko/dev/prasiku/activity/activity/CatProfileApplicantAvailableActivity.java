@@ -22,7 +22,7 @@ public class CatProfileApplicantAvailableActivity extends AppCompatActivity {
 
     private String TAG = "CatProfileApplicantAvailable";
     private ImageView imCatPhoto;
-    private TextView tvCatName, tvOwner, tvCity, tvGender, tvDesc, tvDob, tvMed, tvVacc, tvSpNeu, tvReason;
+    private TextView tvCatName, tvOwner, tvCity, tvGender, tvDesc, tvDob, tvMed, tvVacc, tvSpNeu, tvReason, tvAdoptionStatus;
     private Button btnAvailable;
     private FirebaseAuth auth;
     private DatabaseReference databaseCats, databaseUsers;
@@ -43,6 +43,7 @@ public class CatProfileApplicantAvailableActivity extends AppCompatActivity {
         tvVacc = findViewById(R.id.cpa_available_vaccinevalue);
         tvSpNeu = findViewById(R.id.cpa_available_spayneutervalue);
         tvReason = findViewById(R.id.cpa_available_reasonvalue);
+        tvAdoptionStatus = findViewById(R.id.cpa_available_adoptstatusvalue);
         btnAvailable = findViewById(R.id.cpa_available_button);
 
         btnAvailable.setOnClickListener(new View.OnClickListener() {
@@ -81,6 +82,7 @@ public class CatProfileApplicantAvailableActivity extends AppCompatActivity {
                 String vaccine = dataSnapshot.child("catVaccStat").getValue(String.class);
                 String spayneuter = dataSnapshot.child("catSpayNeuterStat").getValue(String.class);
                 String reason = dataSnapshot.child("catReason").getValue(String.class);
+                String adoptionstatus = dataSnapshot.child("catAdoptedStatus").getValue(String.class);
                 String catphotouri = dataSnapshot.child("catProfilePhoto").getValue(String.class);
 
                 tvCatName.setText(catname);
@@ -92,6 +94,7 @@ public class CatProfileApplicantAvailableActivity extends AppCompatActivity {
                 tvVacc.setText(vaccine);
                 tvSpNeu.setText(spayneuter);
                 tvReason.setText(reason);
+                tvAdoptionStatus.setText(adoptionstatus);
                 Picasso.get().load(catphotouri).centerCrop().resize(192, 192).into(imCatPhoto);
 
                 databaseUsers.addValueEventListener(new ValueEventListener() {
@@ -122,7 +125,7 @@ public class CatProfileApplicantAvailableActivity extends AppCompatActivity {
         Intent intentFindCat = new Intent(getApplicationContext(), FindCatForAdoptActivity.class);
         Intent intentMainMenu = new Intent(getApplicationContext(), MainMenuActivity.class);
 
-        if (pActivity.equals("findcat")){
+            if (pActivity.equals("findcat")){
             intentFindCat.putExtra("previousActivity", "findcat");
             startActivity(intentFindCat);
             finish();

@@ -200,7 +200,7 @@
                     android:layout_weight="1">
 
                     <EditText
-                        android:id="@+id/adoptionform_animal"
+                        android:id="@+id/adoptionform_animalnumber"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/hint_adoptionform_animal"
@@ -295,7 +295,7 @@
                     android:layout_weight="1">
 
                     <EditText
-                        android:id="@+id/adoptionform_familynumber"
+                        android:id="@+id/adoptionform_peoplenumber"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/hint_adoptionform_familynumber"
@@ -371,7 +371,7 @@
                     android:textSize="18dp" />
 
                 <Switch
-                    android:id="@+id/adoptionform_housememberpermission"
+                    android:id="@+id/adoptionform_familypermission"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true" />
@@ -456,6 +456,18 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true" />
             </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="8dp">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=""/>
+        </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"

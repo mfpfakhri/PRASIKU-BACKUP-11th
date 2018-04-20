@@ -24,7 +24,7 @@ public class CatProfileApplicantAdoptedActivity extends AppCompatActivity {
 
     private String TAG = "CatProfileApplicantAdopted";
     private ImageView imCatPhoto;
-    private TextView tvCatName, tvOwner, tvCity, tvGender, tvDesc, tvDob, tvMed, tvVacc, tvSpNeu, tvReason;
+    private TextView tvCatName, tvOwner, tvCity, tvGender, tvDesc, tvDob, tvMed, tvVacc, tvSpNeu, tvReason, tvAdoptionStatus;
     private Button btnAdopted;
     private FirebaseAuth auth;
     private DatabaseReference databaseCats, databaseUsers;
@@ -45,6 +45,7 @@ public class CatProfileApplicantAdoptedActivity extends AppCompatActivity {
         tvVacc = findViewById(R.id.cpa_adopted_vaccinevalue);
         tvSpNeu = findViewById(R.id.cpa_adopted_spayneutervalue);
         tvReason = findViewById(R.id.cpa_adopted_reasonvalue);
+        tvAdoptionStatus = findViewById(R.id.cpa_adopted_adoptstatusvalue);
         btnAdopted = findViewById(R.id.cpa_adopted_button);
 
         btnAdopted.setOnClickListener(new View.OnClickListener() {
@@ -77,6 +78,7 @@ public class CatProfileApplicantAdoptedActivity extends AppCompatActivity {
                 String vaccine = dataSnapshot.child("catVaccStat").getValue(String.class);
                 String spayneuter = dataSnapshot.child("catSpayNeuterStat").getValue(String.class);
                 String reason = dataSnapshot.child("catReason").getValue(String.class);
+                String adoptionstatus = dataSnapshot.child("catAdoptedStatus").getValue(String.class);
                 String catphotouri = dataSnapshot.child("catProfilePhoto").getValue(String.class);
 
                 tvCatName.setText(catname);
@@ -88,6 +90,7 @@ public class CatProfileApplicantAdoptedActivity extends AppCompatActivity {
                 tvVacc.setText(vaccine);
                 tvSpNeu.setText(spayneuter);
                 tvReason.setText(reason);
+                tvAdoptionStatus.setText(adoptionstatus);
                 Picasso.get().load(catphotouri).centerCrop().resize(192, 192).into(imCatPhoto);
 
                 databaseUsers.addValueEventListener(new ValueEventListener() {
