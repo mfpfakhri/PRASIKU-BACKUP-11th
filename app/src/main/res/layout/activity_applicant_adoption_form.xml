@@ -357,117 +357,180 @@
                     android:textSize="18dp" />
             </LinearLayout>
 
-            <RelativeLayout
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:gravity="center">
+                android:layout_margin="16dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
                     android:text="@string/adoptionform_housememberpermission"
-                    android:textSize="18dp" />
+                    android:textSize="17dp" />
 
-                <Switch
-                    android:id="@+id/adoptionform_familypermission"
-                    android:layout_width="wrap_content"
+                <RadioGroup
+                    android:id="@+id/adoptionform_housememberpermission"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true" />
-            </RelativeLayout>
+                    android:orientation="horizontal">
 
-            <RelativeLayout
+                    <RadioButton
+                        android:id="@+id/adoptionform_housememberpermission_yes"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginTop="4dp"
+                        android:text="@string/adoptionform_yesvalue" />
+
+                    <RadioButton
+                        android:id="@+id/adoptionform_housememberpermission_no"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="@string/adoptionform_novalue" />
+                </RadioGroup>
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:gravity="center">
+                android:layout_margin="16dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
                     android:text="@string/adoptionform_movingplan"
-                    android:textSize="18dp" />
+                    android:textSize="17dp" />
 
-                <Switch
+                <RadioGroup
                     android:id="@+id/adoptionform_movingplan"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true" />
-            </RelativeLayout>
+                    android:orientation="horizontal">
 
-            <RelativeLayout
+                    <RadioButton
+                        android:id="@+id/adoptionform_movingplan_yes"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginTop="4dp"
+                        android:text="@string/adoptionform_yesvalue" />
+
+                    <RadioButton
+                        android:id="@+id/adoptionform_movingplan_no"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="@string/adoptionform_novalue" />
+                </RadioGroup>
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:gravity="center">
+                android:layout_margin="16dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
                     android:text="@string/adoptionform_aftermarriage"
-                    android:textSize="18dp" />
+                    android:textSize="17dp" />
 
-                <Switch
+                <RadioGroup
                     android:id="@+id/adoptionform_aftermarriage"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true" />
-            </RelativeLayout>
+                    android:orientation="horizontal">
 
-            <RelativeLayout
+                    <RadioButton
+                        android:id="@+id/adoptionform_aftermarriage_yes"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginTop="4dp"
+                        android:text="@string/adoptionform_yesvalue" />
+
+                    <RadioButton
+                        android:id="@+id/adoptionform_aftermarriage_no"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="@string/adoptionform_novalue" />
+                </RadioGroup>
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:gravity="center">
+                android:layout_margin="16dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
                     android:text="@string/adoptionform_kidsinhouse"
-                    android:textSize="18dp" />
+                    android:textSize="17dp" />
 
-                <Switch
+                <RadioGroup
                     android:id="@+id/adoptionform_kidsinhouse"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true" />
-            </RelativeLayout>
+                    android:orientation="horizontal">
 
-            <RelativeLayout
+                    <RadioButton
+                        android:id="@+id/adoptionform_kidsinhouse_yes"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginTop="4dp"
+                        android:text="@string/adoptionform_yesvalue" />
+
+                    <RadioButton
+                        android:id="@+id/adoptionform_kidsinhouse_no"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="@string/adoptionform_novalue" />
+                </RadioGroup>
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:gravity="center">
+                android:layout_margin="16dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
                     android:text="@string/adoptionform_financialplan"
-                    android:textSize="18dp" />
+                    android:textSize="17dp" />
 
-                <Switch
+                <RadioGroup
                     android:id="@+id/adoptionform_financialplan"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true" />
-            </RelativeLayout>
+                    android:orientation="horizontal">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:padding="8dp">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text=""/>
-        </LinearLayout>
+                    <RadioButton
+                        android:id="@+id/adoptionform_financialplan_yes"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginTop="4dp"
+                        android:text="@string/adoptionform_yesvalue" />
+
+                    <RadioButton
+                        android:id="@+id/adoptionform_financialplan_no"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="@string/adoptionform_novalue" />
+                </RadioGroup>
+            </android.support.design.widget.TextInputLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"

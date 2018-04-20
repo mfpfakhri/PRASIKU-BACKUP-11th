@@ -327,7 +327,7 @@ public class SignUpActivity extends AppCompatActivity {
                 if (matcherPhone.matches()) {
 
                 } else {
-                    Toast.makeText(getApplicationContext(), "Enter Valid Phone", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Enter Valid Phone Number", Toast.LENGTH_SHORT).show();
                     return;
                 }
 

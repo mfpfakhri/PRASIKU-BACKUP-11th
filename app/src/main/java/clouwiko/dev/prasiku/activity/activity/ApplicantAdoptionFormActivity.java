@@ -5,11 +5,15 @@ import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -17,14 +21,20 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.Arrays;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import clouwiko.dev.prasiku.R;
+import clouwiko.dev.prasiku.activity.model.Adoption;
 import fr.ganfra.materialspinner.MaterialSpinner;
 
 public class ApplicantAdoptionFormActivity extends AppCompatActivity {
 
     private EditText etPhone, etAddress, etJob, etReason, etAnimalNumber, etHouseSize, etPeopleNumber, etAnimalLive;
     private MaterialSpinner msHouseType;
-    private Switch swFamilyPermission, swMovingPlan, swMarriagePlan, swKids, swFinancial;
+    private RadioGroup rgFamilyPermission, rgMovingPlan, rgMarriagePlan, rgKids, rgFinancial;
+    private RadioButton rbFamilyPermission, rbMovingPlan, rbMarriagePlan, rbKids, rbFinancial;
     private Button btnApply;
     private DatabaseReference databaseAdoption;
     private FirebaseAuth auth;
@@ -44,11 +54,11 @@ public class ApplicantAdoptionFormActivity extends AppCompatActivity {
         etPeopleNumber = findViewById(R.id.adoptionform_peoplenumber);
         etAnimalLive = findViewById(R.id.adoptionform_animallive);
         msHouseType = findViewById(R.id.adoptionform_housetype);
-        swFamilyPermission = findViewById(R.id.adoptionform_familypermission);
-        swMovingPlan = findViewById(R.id.adoptionform_movingplan);
-        swMarriagePlan = findViewById(R.id.adoptionform_aftermarriage);
-        swKids = findViewById(R.id.adoptionform_kidsinhouse);
-        swFinancial = findViewById(R.id.adoptionform_financialplan);
+        rgFamilyPermission = findViewById(R.id.adoptionform_housememberpermission);
+        rgMovingPlan = findViewById(R.id.adoptionform_movingplan);
+        rgMarriagePlan = findViewById(R.id.adoptionform_aftermarriage);
+        rgKids = findViewById(R.id.adoptionform_kidsinhouse);
+        rgFinancial = findViewById(R.id.adoptionform_financialplan);
         btnApply = findViewById(R.id.adoptionform_submit_button);
 
         //Get Firebase Auth Instance
@@ -69,25 +79,118 @@ public class ApplicantAdoptionFormActivity extends AppCompatActivity {
         btnApply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                applyAdoption();
-            }
-        });
-        final String[] financial = new String[]{"No", "Yes"};
-        swFinancial.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked){
-                    financial[0] = "Yes";
-                } else {
-                    financial[0] = "No";
+                //Applicant Phone Validation
+                String phoneValidation = etPhone.getText().toString();
+                if (TextUtils.isEmpty(phoneValidation)) {
+                    Toast.makeText(getApplicationContext(), "Enter Your phone number", Toast.LENGTH_SHORT).show();
                 }
+                final String validPhone = "^[+]?[0-9]{10,13}$";
+                Matcher matcherPhone = Pattern.compile(validPhone).matcher(phoneValidation);
+                if (matcherPhone.matches()) {
+
+                } else {
+                    Toast.makeText(getApplicationContext(), "Enter Valid Phone Number", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                //Applicant Address Validation
+                String addressValidation = etAddress.getText().toString();
+                if (TextUtils.isEmpty(addressValidation)) {
+                    Toast.makeText(getApplicationContext(), "Enter Your address", Toast.LENGTH_SHORT).show();
+                }
+                //Applicant Reason Validation
+                String reasonValidation = etReason.getText().toString();
+                if (TextUtils.isEmpty(reasonValidation)) {
+                    Toast.makeText(getApplicationContext(), "Enter Your reason to adopt", Toast.LENGTH_SHORT).show();
+                }
+                //Applicant Number of Animal Validation
+                String noAnimalValidation = etAnimalNumber.getText().toString();
+                if (TextUtils.isEmpty(noAnimalValidation)) {
+                    Toast.makeText(getApplicationContext(), "Enter the Number of animal You have", Toast.LENGTH_SHORT).show();
+                }
+                //Applicant House Size Validation
+                String houseSizeValidation = etHouseSize.getText().toString();
+                if (TextUtils.isEmpty(houseSizeValidation)) {
+                    Toast.makeText(getApplicationContext(), "Enter the size of House Where You lived", Toast.LENGTH_SHORT).show();
+                }
+                //Number of People Validation
+                String peopleNumberValidation = etPeopleNumber.getText().toString();
+                if (TextUtils.isEmpty(peopleNumberValidation)) {
+                    Toast.makeText(getApplicationContext(), "Enter Number of People who lived in the House", Toast.LENGTH_SHORT).show();
+                }
+                //Applicant Animal will Live Validation
+                String animalPlaceValidation = etAnimalLive.getText().toString();
+                if (TextUtils.isEmpty(animalPlaceValidation)) {
+                    Toast.makeText(getApplicationContext(), "Enter the Place Where the Cats Will Stay", Toast.LENGTH_SHORT).show();
+                }
+                //House Type Validation
+                int houseTypePosition = msHouseType.getSelectedItemPosition();
+                if (houseTypePosition != 0) {
+
+                } else {
+                    Toast.makeText(getApplicationContext(), "Choose Your house type", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                //Family Permission Validation
+                if (rgFamilyPermission.getCheckedRadioButtonId() == -1) {
+                    Toast.makeText(getApplicationContext(), "Pick Family Permission option", Toast.LENGTH_SHORT).show();
+                    return;
+                } else {
+
+                }
+                //Moving Plan Validation
+                if (rgMovingPlan.getCheckedRadioButtonId() == -1) {
+                    Toast.makeText(getApplicationContext(), "Pick Your moving plan option", Toast.LENGTH_SHORT).show();
+                    return;
+                } else {
+
+                }
+                //Marriage Plan Validation
+                if (rgMarriagePlan.getCheckedRadioButtonId() == -1) {
+                    Toast.makeText(getApplicationContext(), "Pick Your marriage plan option", Toast.LENGTH_SHORT).show();
+                    return;
+                } else {
+
+                }
+                //Kids in The House Validation
+                if (rgKids.getCheckedRadioButtonId() == -1) {
+                    Toast.makeText(getApplicationContext(), "Pick kids in Your house condition option", Toast.LENGTH_SHORT).show();
+                    return;
+                } else {
+
+                }
+                //Financial Plan Validation
+                if (rgFinancial.getCheckedRadioButtonId() == -1) {
+                    Toast.makeText(getApplicationContext(), "Pick Your financial plan option", Toast.LENGTH_SHORT).show();
+                    return;
+                } else {
+
+                }
+                applyAdoption();
+                backToMainMenu();
             }
         });
+    }
+
+    private void backToMainMenu(){
+        Intent intent = new Intent(getApplicationContext(), MainMenuActivity.class);
+        Toast.makeText(getApplicationContext(), "Your Adoption Application has been Sent", Toast.LENGTH_SHORT).show();
+        startActivity(intent);
+        finish();
     }
 
     private void applyAdoption(){
         //Database Reference Path
         databaseAdoption = FirebaseDatabase.getInstance().getReference().child("adoption");
+        int selectedFamilyPermission = rgFamilyPermission.getCheckedRadioButtonId();
+        rbFamilyPermission = findViewById(selectedFamilyPermission);
+        int selectedMovingPlan = rgMovingPlan.getCheckedRadioButtonId();
+        rbMovingPlan = findViewById(selectedMovingPlan);
+        int selectedMarriagePlan = rgMarriagePlan.getCheckedRadioButtonId();
+        rbMarriagePlan = findViewById(selectedMarriagePlan);
+        int selectedKidsHouse = rgKids.getCheckedRadioButtonId();
+        rbKids = findViewById(selectedKidsHouse);
+        int selectedFinancial = rgFinancial.getCheckedRadioButtonId();
+        rbFinancial = findViewById(selectedFinancial);
 
         String adoptionId = databaseAdoption.push().getKey();
         String catId = getIntent().getStringExtra("cat_id");
@@ -102,61 +205,15 @@ public class ApplicantAdoptionFormActivity extends AppCompatActivity {
         String familynumber = etPeopleNumber.getText().toString().trim();
         String animallive = etAnimalLive.getText().toString().trim();
         String housetype = msHouseType.getSelectedItem().toString().trim();
-        final String[] familypermission = new String[]{"No", "Yes"};
-        swFamilyPermission.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked){
-                    familypermission[0] = "Yes";
-                } else {
-                    familypermission[0] = "No";
-                }
-            }
-        });
-        final String[] movingplan = new String[]{"No", "Yes"};
-        swMovingPlan.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked){
-                    movingplan[0] = "Yes";
-                } else {
-                    movingplan[0] = "No";
-                }
-            }
-        });
-        final String[] marriageplan = new String[]{"No", "Yes"};
-        swMarriagePlan.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked){
-                    marriageplan[0] = "Yes";
-                } else {
-                    marriageplan[0] = "No";
-                }
-            }
-        });
-        final String[] kidsinhouse = new String[]{"No", "Yes"};
-        swKids.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked){
-                    kidsinhouse[0] = "Yes";
-                } else {
-                    kidsinhouse[0] = "No";
-                }
-            }
-        });
-        final String[] financial = new String[]{"No", "Yes"};
-        swFinancial.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked){
-                    financial[0] = "Yes";
-                } else {
-                    financial[0] = "No";
-                }
-            }
-        });
+        String familypermission = rbFamilyPermission.getText().toString().trim();
+        String movingplan = rbMovingPlan.getText().toString().trim();
+        String marriageplan = rbMarriagePlan.getText().toString().trim();
+        String kidsinhouse = rbKids.getText().toString().trim();
+        String financial = rbFinancial.getText().toString().trim();
+        String status = "Received";
+        Adoption adoption = new Adoption(adoptionId, catId, ownerId, applicantId, phone, address, job, reasonwhy, numberofanimal, housetype, houseize, familynumber, animallive, familypermission, movingplan, marriageplan, kidsinhouse, financial, status);
+
+        databaseAdoption.child(adoptionId).setValue(adoption);
     }
 
     @Override

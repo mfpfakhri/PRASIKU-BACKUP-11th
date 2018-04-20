@@ -123,6 +123,8 @@
     <string name="hint_adoptionstatus">Adoption Status</string>
     <string name="editcatadopted_done_button">Change Adoption Status</string>
     <string name="catprofile_adoptstatuslabel">Adoption Status</string>
+    <string name="adoptionform_yesvalue">Yes</string>
+    <string name="adoptionform_novalue">No</string>
 
     <string-array name="gender">
         <item>Male</item>

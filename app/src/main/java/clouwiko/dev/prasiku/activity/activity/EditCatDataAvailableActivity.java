@@ -211,7 +211,6 @@ public class EditCatDataAvailableActivity extends AppCompatActivity {
         btnDoneEditing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                catDataValidation();
                 //Cat's Name Validation
                 String cName = inputCatName.getText().toString();
                 if (TextUtils.isEmpty(cName)) {
