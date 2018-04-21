@@ -1,17 +1,13 @@
 package clouwiko.dev.prasiku.activity.activity;
 
-import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -150,7 +146,7 @@ public class EditCatDataAdoptedActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         } else if (pActivity.equals("adoptionlist")) {
-            Intent intent = new Intent(getApplicationContext(), AdoptionListActivity.class);
+            Intent intent = new Intent(getApplicationContext(), UserAdoptionListActivity.class);
             intent.putExtra("previousActivity", pActivity);
             intent.putExtra("cat_id", catId);
             intent.putExtra("owner_id", ownerId);

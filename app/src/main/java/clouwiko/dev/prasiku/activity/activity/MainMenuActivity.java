@@ -192,11 +192,15 @@ public class MainMenuActivity extends AppCompatActivity
         } else if (id == R.id.nav_menu) {
             startActivity(new Intent(getApplicationContext(), MainMenuActivity.class));
         } else if (id == R.id.nav_catlist) {
-            startActivity(new Intent(getApplicationContext(), AdoptionListActivity.class));
+            startActivity(new Intent(getApplicationContext(), UserAdoptionListActivity.class));
+        } else if (id == R.id.nav_my_app_list) {
+            startActivity(new Intent(getApplicationContext(), UserApplicationListActivity.class));
         } else if (id == R.id.nav_app_received) {
             startActivity(new Intent(getApplicationContext(), AppReceivedActivity.class));
         } else if (id == R.id.nav_app_submitted) {
-            startActivity(new Intent(getApplicationContext(), AppSubmittedActivity.class));
+            startActivity(new Intent(getApplicationContext(), AppApprovedActivity.class));
+        } else if (id == R.id.nav_app_rejected) {
+            startActivity(new Intent(getApplicationContext(), AppRejectedActivity.class));
         } else if (id == R.id.nav_tutorial) {
             startActivity(new Intent(getApplicationContext(), TutorialActivity.class));
         } else if (id == R.id.nav_about_us) {

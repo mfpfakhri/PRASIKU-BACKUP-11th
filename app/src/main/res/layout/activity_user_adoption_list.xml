@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="clouwiko.dev.prasiku.activity.activity.AdoptionListActivity">
+    tools:context="clouwiko.dev.prasiku.activity.activity.UserAdoptionListActivity">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

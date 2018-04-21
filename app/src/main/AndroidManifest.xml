@@ -54,7 +54,7 @@
             android:name=".activity.activity.AppReceivedActivity"
             android:parentActivityName=".activity.activity.MainMenuActivity" />
         <activity
-            android:name=".activity.activity.AppSubmittedActivity"
+            android:name=".activity.activity.AppApprovedActivity"
             android:parentActivityName=".activity.activity.MainMenuActivity" />
         <activity
             android:name=".activity.activity.TutorialActivity"
@@ -70,7 +70,7 @@
             android:parentActivityName=".activity.activity.MainMenuActivity" />
         <activity android:name=".activity.activity.CatBreedsStandardsActivity" />
         <activity
-            android:name=".activity.activity.AdoptionListActivity"
+            android:name=".activity.activity.UserAdoptionListActivity"
             android:parentActivityName=".activity.activity.MainMenuActivity" />
         <activity android:name=".activity.activity.CatProfileApplicantAdoptedActivity" />
         <activity android:name=".activity.activity.CatProfileApplicantAvailableActivity" />
@@ -79,6 +79,8 @@
         <activity android:name=".activity.activity.ApplicantAdoptionFormActivity" />
         <activity android:name=".activity.activity.EditCatDataAdoptedActivity" />
         <activity android:name=".activity.activity.EditCatDataAvailableActivity" />
+        <activity android:name=".activity.activity.AppRejectedActivity" />
+        <activity android:name=".activity.activity.UserApplicationListActivity"></activity>
     </application>
 
 </manifest>

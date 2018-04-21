@@ -30,8 +30,8 @@ import java.util.List;
 import clouwiko.dev.prasiku.R;
 import clouwiko.dev.prasiku.activity.model.Cat;
 
-public class AdoptionListActivity extends AppCompatActivity {
-    private String TAG = "AdoptionListActivity";
+public class UserAdoptionListActivity extends AppCompatActivity {
+    private String TAG = "UserAdoptionListActivity";
     private RecyclerView adoptionRecyclerView;
     private LinearLayoutManager linearLayoutManager;
     private List<Cat> catLists;
@@ -43,7 +43,7 @@ public class AdoptionListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_adoption_list);
+        setContentView(R.layout.activity_user_adoption_list);
 
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar_adoption);
         setSupportActionBar(toolbar);

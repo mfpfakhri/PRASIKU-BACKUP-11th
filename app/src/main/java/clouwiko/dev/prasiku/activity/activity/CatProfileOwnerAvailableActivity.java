@@ -136,7 +136,7 @@ public class CatProfileOwnerAvailableActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         String pActivity = getIntent().getStringExtra("previousActivity");
-        Intent intentAdoptionList = new Intent(getApplicationContext(), AdoptionListActivity.class);
+        Intent intentAdoptionList = new Intent(getApplicationContext(), UserAdoptionListActivity.class);
         Intent intentFindCat = new Intent(getApplicationContext(), FindCatForAdoptActivity.class);
         Intent intentMainMenu = new Intent(getApplicationContext(), MainMenuActivity.class);
 

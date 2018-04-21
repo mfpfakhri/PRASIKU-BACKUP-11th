@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
@@ -14,19 +15,32 @@
             android:title="@string/main_menu" />
         <item
             android:id="@+id/nav_catlist"
-            android:icon="@drawable/ic_assignment_black_24dp"
+            android:icon="@drawable/list_black_48x48"
             android:title="@string/my_adoption_list"/>
         <item
-            android:id="@+id/nav_app_received"
+            android:id="@+id/nav_my_app_list"
             android:icon="@drawable/ic_assignment_black_24dp"
-            android:title="@string/app_received" />
-        <item
-            android:id="@+id/nav_app_submitted"
-            android:icon="@drawable/ic_assignment_black_24dp"
-            android:title="@string/app_submitted" />
+            android:title="@string/my_app_list"/>
     </group>
 
-    <item android:title="Others">
+    <item android:title="@string/nav_app_root">
+        <menu>
+            <item
+                android:id="@+id/nav_app_received"
+                android:title="@string/app_received"
+                android:icon="@drawable/assignment_returned_black_48x48"/>
+            <item
+                android:id="@+id/nav_app_submitted"
+                android:icon="@drawable/assignment_turned_in_black_48x48"
+                android:title="@string/app_submitted" />
+            <item
+                android:id="@+id/nav_app_rejected"
+                android:icon="@drawable/assignment_late_black_48x48"
+                android:title="@string/app_rejected" />
+        </menu>
+    </item>
+
+    <item android:title="@string/nav_others_root">
         <menu>
             <item
                 android:id="@+id/nav_tutorial"

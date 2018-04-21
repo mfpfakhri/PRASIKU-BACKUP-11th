@@ -125,6 +125,10 @@
     <string name="catprofile_adoptstatuslabel">Adoption Status</string>
     <string name="adoptionform_yesvalue">Yes</string>
     <string name="adoptionform_novalue">No</string>
+    <string name="nav_app_root">Applications</string>
+    <string name="app_rejected">Application Rejected</string>
+    <string name="nav_others_root">Others</string>
+    <string name="my_app_list">My Application List</string>
 
     <string-array name="gender">
         <item>Male</item>

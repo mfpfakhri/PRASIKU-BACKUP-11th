@@ -6,16 +6,16 @@ import android.support.v7.widget.Toolbar;
 
 import clouwiko.dev.prasiku.R;
 
-public class AppSubmittedActivity extends AppCompatActivity {
+public class AppRejectedActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_app_submitted);
+        setContentView(R.layout.activity_app_rejected);
 
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Application Received");
+        getSupportActionBar().setTitle("Application Rejected");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 }
