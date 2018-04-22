@@ -28,8 +28,8 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="app_submitted">Application Submitted</string>
-    <string name="app_received">Application Received</string>
+    <string name="app_submitted">Submitted</string>
+    <string name="app_received">Received</string>
     <string name="about_us">About Us</string>
     <string name="tutorial">Tutorial</string>
     <string name="sign_out">Sign Out</string>
@@ -126,9 +126,10 @@
     <string name="adoptionform_yesvalue">Yes</string>
     <string name="adoptionform_novalue">No</string>
     <string name="nav_app_root">Applications</string>
-    <string name="app_rejected">Application Rejected</string>
+    <string name="app_rejected">Rejected</string>
     <string name="nav_others_root">Others</string>
     <string name="my_app_list">My Application List</string>
+    <string name="application_status">Status :</string>
 
     <string-array name="gender">
         <item>Male</item>

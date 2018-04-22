@@ -31,7 +31,7 @@ import clouwiko.dev.prasiku.R;
 import clouwiko.dev.prasiku.activity.model.Cat;
 
 public class UserAdoptionListActivity extends AppCompatActivity {
-    private String TAG = "UserAdoptionListActivity";
+    private String TAG = "UserAdoptionList";
     private RecyclerView adoptionRecyclerView;
     private LinearLayoutManager linearLayoutManager;
     private List<Cat> catLists;
@@ -45,7 +45,7 @@ public class UserAdoptionListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_adoption_list);
 
-        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar_adoption);
+        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("My Adoption List");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

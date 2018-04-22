@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -17,6 +18,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import clouwiko.dev.prasiku.R;
+import clouwiko.dev.prasiku.activity.model.Adoption;
 
 public class CatProfileApplicantAvailableActivity extends AppCompatActivity {
 
@@ -25,7 +27,7 @@ public class CatProfileApplicantAvailableActivity extends AppCompatActivity {
     private TextView tvCatName, tvOwner, tvCity, tvGender, tvDesc, tvDob, tvMed, tvVacc, tvSpNeu, tvReason, tvAdoptionStatus;
     private Button btnAvailable;
     private FirebaseAuth auth;
-    private DatabaseReference databaseCats, databaseUsers;
+    private DatabaseReference databaseCats, databaseUsers, databaseAdoptions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,25 +48,108 @@ public class CatProfileApplicantAvailableActivity extends AppCompatActivity {
         tvAdoptionStatus = findViewById(R.id.cpa_available_adoptstatusvalue);
         btnAvailable = findViewById(R.id.cpa_available_button);
 
+        databaseAdoptions = FirebaseDatabase.getInstance().getReference().child("adoptions");
+        databaseAdoptions.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot adoptionsnapshot : dataSnapshot.getChildren()) {
+                    Adoption adoption = adoptionsnapshot.getValue(Adoption.class);
+                    String catiddb = adoption.getAdoptionCatId().toString().trim();
+                    String appiddb = adoption.getAdoptionApplicantId().toString().trim();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
         btnAvailable.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String ownerId = getIntent().getStringExtra("owner_id");
-                String catId = getIntent().getStringExtra("cat_id");
-                Intent intent = new Intent(getApplicationContext(), ApplicantAdoptionFormActivity.class);
-                intent.putExtra("owner_id", ownerId);
-                intent.putExtra("cat_id", catId);
-                startActivity(intent);
-                finish();
+                auth = FirebaseAuth.getInstance();
+                databaseAdoptions = FirebaseDatabase.getInstance().getReference().child("adoptions");
+                databaseAdoptions.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot adoptionsnapshot : dataSnapshot.getChildren()) {
+                            Adoption adoption = adoptionsnapshot.getValue(Adoption.class);
+                            String catiddb = adoption.getAdoptionCatId().toString().trim();
+                            String appiddb = adoption.getAdoptionApplicantId().toString().trim();
+                            String currentuserid = auth.getCurrentUser().getUid().toString().trim();
+                            String oId = getIntent().getStringExtra("owner_id");
+                            String cId = getIntent().getStringExtra("cat_id");
+                            if (currentuserid.equals(appiddb)){
+                                if (cId.equals(catiddb)){
+                                    Intent intent = new Intent(getApplicationContext(), FindCatForAdoptActivity.class);
+                                    Toast.makeText(getApplicationContext(), "You have already applied for adopt this cat", Toast.LENGTH_SHORT).show();
+                                    startActivity(intent);
+                                    finish();
+                                } else {
+
+                                }
+                            } else {
+                                String cName = getIntent().getStringExtra("cat_name");
+                                String cPhoto = getIntent().getStringExtra("cat_photo");
+                                Intent intent = new Intent(getApplicationContext(), ApplicantAdoptionFormActivity.class);
+                                intent.putExtra("owner_id", oId);
+                                intent.putExtra("cat_id", cId);
+                                intent.putExtra("cat_name", cName);
+                                intent.putExtra("cat_photo", cPhoto);
+                                startActivity(intent);
+                                finish();
+                            }
+//                            if (cId.equals(catiddb) && currentuserid.equals(appiddb)) {
+//                                Intent intent = new Intent(getApplicationContext(), MainMenuActivity.class);
+//                                Toast.makeText(getApplicationContext(), "You've already applying for adopt this cat", Toast.LENGTH_SHORT).show();
+//                                startActivity(intent);
+//                                finish();
+//                            } else {
+//                                String cName = getIntent().getStringExtra("cat_name");
+//                                String cPhoto = getIntent().getStringExtra("cat_photo");
+//                                Intent intent = new Intent(getApplicationContext(), ApplicantAdoptionFormActivity.class);
+//                                intent.putExtra("owner_id", oId);
+//                                intent.putExtra("cat_id", cId);
+//                                intent.putExtra("cat_name", cName);
+//                                intent.putExtra("cat_photo", cPhoto);
+//                                startActivity(intent);
+//                                finish();
+//                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
             }
         });
+
+//        btnAvailable.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                String oId = getIntent().getStringExtra("owner_id");
+//                String cId = getIntent().getStringExtra("cat_id");
+//                String cName = getIntent().getStringExtra("cat_name");
+//                String cPhoto = getIntent().getStringExtra("cat_photo");
+//                Intent intent = new Intent(getApplicationContext(), ApplicantAdoptionFormActivity.class);
+//                intent.putExtra("owner_id", oId);
+//                intent.putExtra("cat_id", cId);
+//                intent.putExtra("cat_name", cName);
+//                intent.putExtra("cat_photo", cPhoto);
+//                startActivity(intent);
+//                finish();
+//            }
+//        });
 
         String pActivity = getIntent().getStringExtra("previousActivity");
 
         getCatDataAppAvail();
     }
 
-    private void getCatDataAppAvail(){
+    private void getCatDataAppAvail() {
         String catId = getIntent().getStringExtra("cat_id");
         String ownerId = getIntent().getStringExtra("owner_id");
 
@@ -125,7 +210,7 @@ public class CatProfileApplicantAvailableActivity extends AppCompatActivity {
         Intent intentFindCat = new Intent(getApplicationContext(), FindCatForAdoptActivity.class);
         Intent intentMainMenu = new Intent(getApplicationContext(), MainMenuActivity.class);
 
-            if (pActivity.equals("findcat")){
+        if (pActivity.equals("findcat")) {
             intentFindCat.putExtra("previousActivity", "findcat");
             startActivity(intentFindCat);
             finish();

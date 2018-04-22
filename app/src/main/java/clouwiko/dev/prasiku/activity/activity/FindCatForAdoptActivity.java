@@ -231,6 +231,8 @@ public class FindCatForAdoptActivity extends AppCompatActivity {
             final String oId = catData.getCatOwnerId().toString().trim();
             final String cId = catData.getCatId().toString().trim();
             final String cStat = catData.getCatAdoptedStatus().toString().trim();
+            final String cName = catData.getCatName().toString().trim();
+            final String cPhoto = catData.getCatProfilePhoto().toString().trim();
 
             holder.name.setText(catData.getCatName());
             holder.reason.setText(catData.getCatReason());
@@ -267,6 +269,8 @@ public class FindCatForAdoptActivity extends AppCompatActivity {
                             intent.putExtra("previousActivity", "findcat");
                             intent.putExtra("owner_id", oId);
                             intent.putExtra("cat_id", cId);
+                            intent.putExtra("cat_name", cName);
+                            intent.putExtra("cat_photo", cPhoto);
                             startActivity(intent);
                             finish();
                         } else if (cStat.equals("Adopted")){

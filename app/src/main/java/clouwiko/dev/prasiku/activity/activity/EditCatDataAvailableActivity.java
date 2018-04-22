@@ -32,6 +32,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -41,13 +42,14 @@ import com.squareup.picasso.Picasso;
 import java.util.Calendar;
 
 import clouwiko.dev.prasiku.R;
+import clouwiko.dev.prasiku.activity.model.Adoption;
 import clouwiko.dev.prasiku.activity.model.Cat;
 import clouwiko.dev.prasiku.activity.other.RoundedCornersTransform;
 import fr.ganfra.materialspinner.MaterialSpinner;
 
 public class EditCatDataAvailableActivity extends AppCompatActivity {
 
-    private EditText inputCatName, inputCatDob, inputCatDesc, inputCatMedNote;
+    private EditText inputCatDob, inputCatDesc, inputCatMedNote;
     private MaterialSpinner spinnerCatGender, spinnerCatReasonOpenAdoption, spinnerAdoptionStatus;
     private RadioGroup radioGroupVaccine, radioGroupSpayNeuter;
     private RadioButton radioButtonVacc, radioButtonSpayNeuter;
@@ -55,7 +57,7 @@ public class EditCatDataAvailableActivity extends AppCompatActivity {
 
     private Button btnDoneEditing;
 
-    private DatabaseReference databaseCats;
+    private DatabaseReference databaseCats, databaseAdoptions;
     private FirebaseAuth auth;
 
     @Override
@@ -68,7 +70,6 @@ public class EditCatDataAvailableActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Edit Cat Data");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        inputCatName = findViewById(R.id.editcatavailable_name);
         inputCatDob = findViewById(R.id.editcatavailable_dob);
         inputCatDesc = findViewById(R.id.editcatavailable_desc);
         inputCatMedNote = findViewById(R.id.editcatavailable_mednote);
@@ -167,8 +168,6 @@ public class EditCatDataAvailableActivity extends AppCompatActivity {
                     default:
 
                 }
-
-                inputCatName.setText(name);
                 inputCatDob.setText(dob);
                 inputCatDesc.setText(desc);
                 inputCatMedNote.setText(mednote);
@@ -211,12 +210,6 @@ public class EditCatDataAvailableActivity extends AppCompatActivity {
         btnDoneEditing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Cat's Name Validation
-                String cName = inputCatName.getText().toString();
-                if (TextUtils.isEmpty(cName)) {
-                    Toast.makeText(getApplicationContext(), "Enter Your Cat Name", Toast.LENGTH_SHORT).show();
-                }
-
                 //Cat's DOB Validation
                 String catDobDate = inputCatDob.getText().toString().trim();
                 if (TextUtils.isEmpty(catDobDate)) {
@@ -283,7 +276,6 @@ public class EditCatDataAvailableActivity extends AppCompatActivity {
                         int selectedSpayNeuter = radioGroupSpayNeuter.getCheckedRadioButtonId();
                         radioButtonSpayNeuter = findViewById(selectedSpayNeuter);
 
-                        String nameupdate = inputCatName.getText().toString().trim();
                         String dobupdate = inputCatDob.getText().toString().trim();
                         String descriptionupdate = inputCatDesc.getText().toString().trim();
                         String mednoteupdate = inputCatMedNote.getText().toString().trim();
@@ -293,6 +285,7 @@ public class EditCatDataAvailableActivity extends AppCompatActivity {
                         String reasonupdate = spinnerCatReasonOpenAdoption.getSelectedItem().toString().trim();
                         String adoptedstatusupdate = spinnerAdoptionStatus.getSelectedItem().toString().trim();
 
+                        String nameupdate = dataSnapshot.child("catName").getValue(String.class);
                         String catidupdate = dataSnapshot.child("catId").getValue(String.class);
                         String ownerupdate = dataSnapshot.child("catOwnerId").getValue(String.class);
                         String photoupdate = dataSnapshot.child("catProfilePhoto").getValue(String.class);
@@ -300,7 +293,7 @@ public class EditCatDataAvailableActivity extends AppCompatActivity {
                         String catcityupdate = dataSnapshot.child("catCity").getValue(String.class);
 
                         updateCatData(catidupdate, ownerupdate, photoupdate, nameupdate, dobupdate, genderupdate, descriptionupdate, mednoteupdate, vaccstatupdate, spayneuterstatupdate, reasonupdate, catprovinceupdate, catcityupdate, adoptedstatusupdate);
-//                        finish();
+
                     }
 
                     @Override
@@ -309,7 +302,6 @@ public class EditCatDataAvailableActivity extends AppCompatActivity {
                     }
                 });
                 backToMainMenu();
-//                finish();
             }
         });
     }
@@ -354,12 +346,6 @@ public class EditCatDataAvailableActivity extends AppCompatActivity {
     }
 
     private void catDataValidation() {
-        //Cat's Name Validation
-        String cName = inputCatName.getText().toString();
-        if (TextUtils.isEmpty(cName)) {
-            Toast.makeText(getApplicationContext(), "Enter Your Cat Name", Toast.LENGTH_SHORT).show();
-        }
-
         //Cat's DOB Validation
         String catDobDate = inputCatDob.getText().toString().trim();
         if (TextUtils.isEmpty(catDobDate)) {

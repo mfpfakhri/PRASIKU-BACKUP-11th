@@ -18,6 +18,9 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -68,13 +71,15 @@ public class ApplicantAdoptionFormActivity extends AppCompatActivity {
         user = auth.getCurrentUser();
 
         //Get Current User Key
-        String applicantID = user.getUid().toString().trim();
+        final String applicantID = user.getUid().toString().trim();
 
         //Database Reference Path
-        databaseAdoption = FirebaseDatabase.getInstance().getReference().child("adoption");
+        databaseAdoption = FirebaseDatabase.getInstance().getReference().child("adoptions");
 
         String catId = getIntent().getStringExtra("cat_id");
         String ownerId = getIntent().getStringExtra("owner_id");
+        String cName = getIntent().getStringExtra("cat_name");
+        String cPhoto = getIntent().getStringExtra("cat_photo");
 
         btnApply.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -180,7 +185,7 @@ public class ApplicantAdoptionFormActivity extends AppCompatActivity {
 
     private void applyAdoption(){
         //Database Reference Path
-        databaseAdoption = FirebaseDatabase.getInstance().getReference().child("adoption");
+        databaseAdoption = FirebaseDatabase.getInstance().getReference().child("adoptions");
         int selectedFamilyPermission = rgFamilyPermission.getCheckedRadioButtonId();
         rbFamilyPermission = findViewById(selectedFamilyPermission);
         int selectedMovingPlan = rgMovingPlan.getCheckedRadioButtonId();
@@ -195,6 +200,8 @@ public class ApplicantAdoptionFormActivity extends AppCompatActivity {
         String adoptionId = databaseAdoption.push().getKey();
         String catId = getIntent().getStringExtra("cat_id");
         String ownerId = getIntent().getStringExtra("owner_id");
+        String catname = getIntent().getStringExtra("cat_name");
+        String catphoto = getIntent().getStringExtra("cat_photo");
         String applicantId = FirebaseAuth.getInstance().getCurrentUser().getUid().toString().trim();
         String phone = etPhone.getText().toString().trim();
         String address = etAddress.getText().toString().trim();
@@ -211,7 +218,7 @@ public class ApplicantAdoptionFormActivity extends AppCompatActivity {
         String kidsinhouse = rbKids.getText().toString().trim();
         String financial = rbFinancial.getText().toString().trim();
         String status = "Received";
-        Adoption adoption = new Adoption(adoptionId, catId, ownerId, applicantId, phone, address, job, reasonwhy, numberofanimal, housetype, houseize, familynumber, animallive, familypermission, movingplan, marriageplan, kidsinhouse, financial, status);
+        Adoption adoption = new Adoption(adoptionId, catId, ownerId, applicantId, phone, address, job, reasonwhy, numberofanimal, housetype, houseize, familynumber, animallive, familypermission, movingplan, marriageplan, kidsinhouse, financial, status, catname, catphoto);
 
         databaseAdoption.child(adoptionId).setValue(adoption);
     }
