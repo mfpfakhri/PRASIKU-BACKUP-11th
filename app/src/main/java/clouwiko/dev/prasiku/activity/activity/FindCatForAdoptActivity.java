@@ -220,7 +220,7 @@ public class FindCatForAdoptActivity extends AppCompatActivity {
 
         @Override
         public FindCatForAdoptActivity.FindCatAdapter.AdoptCatViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adoption_list_layout, parent, false);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.rv_adoption_list_layout, parent, false);
 
             return new FindCatForAdoptActivity.FindCatAdapter.AdoptCatViewHolder(view);
         }

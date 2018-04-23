@@ -37,7 +37,7 @@ public class UserAdoptionListActivity extends AppCompatActivity {
     private List<Cat> catLists;
     private AdoptCatAdapter adoptionAdapter;
     private FirebaseDatabase firebaseDatabase;
-    private DatabaseReference databaseCats, databaseCurrentUser;
+    private DatabaseReference databaseCats;
     private FirebaseAuth auth;
 
     @Override
@@ -72,15 +72,11 @@ public class UserAdoptionListActivity extends AppCompatActivity {
 
     void getCatData() {
         //Firebase Current User UID
-        String userUID = auth.getUid();
+        String userId = auth.getCurrentUser().getUid();
 
         //Database Reference
         databaseCats = firebaseDatabase.getReference().child("cats");
-
-        //Current User Database
-//        databaseCurrentUser = databaseCat.child(userUID);
-
-        databaseCats.orderByChild("catOwnerId").equalTo(userUID).addChildEventListener(new ChildEventListener() {
+        databaseCats.orderByChild("catOwnerId").equalTo(userId).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Cat userCatData = dataSnapshot.getValue(Cat.class);
@@ -119,7 +115,7 @@ public class UserAdoptionListActivity extends AppCompatActivity {
 
         @Override
         public AdoptCatAdapter.AdoptCatViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adoption_list_layout, parent, false);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.rv_adoption_list_layout, parent, false);
 
             return new AdoptCatViewHolder(view);
         }
@@ -134,8 +130,6 @@ public class UserAdoptionListActivity extends AppCompatActivity {
             holder.name.setText(catData.getCatName());
             holder.reason.setText(catData.getCatReason());
             holder.gender.setText(catData.getCatGender());
-//            holder.ownerid.setText(catData.getCatOwnerId());
-//            holder.catid.setText(catData.getCatId());
             Picasso.get().load(catData.getCatProfilePhoto()).resize(128, 128).into(holder.photo);
 
             holder.layoutroot.setOnClickListener(new View.OnClickListener() {
@@ -168,7 +162,7 @@ public class UserAdoptionListActivity extends AppCompatActivity {
         }
 
         public class AdoptCatViewHolder extends RecyclerView.ViewHolder {
-            TextView name, reason, gender, ownerid, catid;
+            TextView name, reason, gender;
             ImageView photo;
             LinearLayout layoutroot;
 
@@ -178,8 +172,6 @@ public class UserAdoptionListActivity extends AppCompatActivity {
                 name = (TextView) itemView.findViewById(R.id.adoptionlist_catname);
                 reason = (TextView) itemView.findViewById(R.id.adoptionlist_catreason);
                 gender = (TextView) itemView.findViewById(R.id.userhome_catgender);
-//                ownerid = (TextView) itemView.findViewById(R.id.userhome_catownerid);
-//                catid = (TextView) itemView.findViewById(R.id.userhome_catid);
                 photo = (ImageView) itemView.findViewById(R.id.adoptionlist_catphotos);
                 layoutroot = (LinearLayout) itemView.findViewById(R.id.adoptionlist_root);
             }

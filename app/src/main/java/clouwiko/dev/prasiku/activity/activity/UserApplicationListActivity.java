@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
@@ -22,7 +21,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -30,7 +28,6 @@ import java.util.List;
 
 import clouwiko.dev.prasiku.R;
 import clouwiko.dev.prasiku.activity.model.Adoption;
-import clouwiko.dev.prasiku.activity.model.Cat;
 
 public class UserApplicationListActivity extends AppCompatActivity {
     private String TAG = "UserApplicationList";
@@ -117,7 +114,7 @@ public class UserApplicationListActivity extends AppCompatActivity {
 
         @Override
         public UserApplicationListActivity.ApplicationListAdapter.ApplicationListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.application_list_layout, parent, false);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.rv_application_list_layout, parent, false);
 
             return new UserApplicationListActivity.ApplicationListAdapter.ApplicationListViewHolder(view);
         }
