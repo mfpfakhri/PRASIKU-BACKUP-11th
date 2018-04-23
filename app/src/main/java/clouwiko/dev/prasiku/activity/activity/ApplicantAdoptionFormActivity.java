@@ -202,7 +202,9 @@ public class ApplicantAdoptionFormActivity extends AppCompatActivity {
         String ownerId = getIntent().getStringExtra("owner_id");
         String catname = getIntent().getStringExtra("cat_name");
         String catphoto = getIntent().getStringExtra("cat_photo");
-        String applicantId = FirebaseAuth.getInstance().getCurrentUser().getUid().toString().trim();
+        String applicantname = getIntent().getStringExtra("applicant_name");
+        String applicantphoto = getIntent().getStringExtra("applicant_photo");
+        String applicantId = auth.getCurrentUser().getUid().toString().trim();
         String phone = etPhone.getText().toString().trim();
         String address = etAddress.getText().toString().trim();
         String job = etJob.getText().toString().trim();
@@ -218,7 +220,7 @@ public class ApplicantAdoptionFormActivity extends AppCompatActivity {
         String kidsinhouse = rbKids.getText().toString().trim();
         String financial = rbFinancial.getText().toString().trim();
         String status = "Received";
-        Adoption adoption = new Adoption(adoptionId, catId, ownerId, applicantId, phone, address, job, reasonwhy, numberofanimal, housetype, houseize, familynumber, animallive, familypermission, movingplan, marriageplan, kidsinhouse, financial, status, catname, catphoto);
+        Adoption adoption = new Adoption(adoptionId, catId, ownerId, applicantId, phone, address, job, reasonwhy, numberofanimal, housetype, houseize, familynumber, animallive, familypermission, movingplan, marriageplan, kidsinhouse, financial, status, catname, catphoto, applicantname, applicantphoto);
 
         databaseAdoption.child(adoptionId).setValue(adoption);
     }

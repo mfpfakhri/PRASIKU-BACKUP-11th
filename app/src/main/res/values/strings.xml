@@ -130,6 +130,22 @@
     <string name="nav_others_root">Others</string>
     <string name="my_app_list">My Application List</string>
     <string name="application_status">Status :</string>
+    <string name="adoptionreview_adoption_form_label">Adoption Form for :</string>
+    <string name="adoptionreview_applicant_phone_label">Phone Number</string>
+    <string name="adoptionreview_applicant_job_label">Job</string>
+    <string name="adoptionreview_applicant_address_label">Address</string>
+    <string name="adoptionreview_applicant_reson_label">Reason for Adopt</string>
+    <string name="adoptionreview_applicant_noa_label">Number of animal(s) I have</string>
+    <string name="adoptionreview_applicant_housetype_label">My House Type</string>
+    <string name="adoptionreview_applicant_housesize_label">My House Size</string>
+    <string name="adoptionreview_applicant_nop_label">Number of people(s) in My house</string>
+    <string name="adoptionreview_applicant_housemember_label">House member permission</string>
+    <string name="adoptionreview_applicant_movingplan_label">Plan to move</string>
+    <string name="adoptionreview_applicant_marriageplan_label">After marriage plan</string>
+    <string name="adoptionreview_applicant_kids_label">Kids in My house</string>
+    <string name="adoptionreview_applicant_financial_label">My financial plan</string>
+    <string name="adoptionreview_applicant_catplace_label">Place for cat(s) to stay</string>
+    <string name="adoptionreview_applicant_status_label">Application Status :</string>
 
     <string-array name="gender">
         <item>Male</item>

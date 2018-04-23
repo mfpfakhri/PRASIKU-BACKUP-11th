@@ -79,10 +79,13 @@
         <activity android:name=".activity.activity.ApplicantAdoptionFormActivity" />
         <activity android:name=".activity.activity.EditCatDataAdoptedActivity" />
         <activity android:name=".activity.activity.EditCatDataAvailableActivity" />
-        <activity android:name=".activity.activity.AppRejectedActivity"
+        <activity
+            android:name=".activity.activity.AppRejectedActivity"
             android:parentActivityName=".activity.activity.MainMenuActivity" />
-        <activity android:name=".activity.activity.UserApplicationListActivity"
+        <activity
+            android:name=".activity.activity.UserApplicationListActivity"
             android:parentActivityName=".activity.activity.MainMenuActivity" />
+        <activity android:name=".activity.activity.ApplicantAdoptionReviewActivity"></activity>
     </application>
 
 </manifest>

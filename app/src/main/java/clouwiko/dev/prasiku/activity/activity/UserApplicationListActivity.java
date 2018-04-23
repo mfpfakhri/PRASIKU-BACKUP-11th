@@ -128,10 +128,21 @@ public class UserApplicationListActivity extends AppCompatActivity {
             final String oId = adoptionData.getAdoptionOwnerId().toString().trim();
             final String cId = adoptionData.getAdoptionCatId().toString().trim();
             final String aId = adoptionData.getAdoptionApplicantId().toString().trim();
+            final String appId = adoptionData.getAdoptionId().toString().trim();
 
             holder.status.setText(adoptionData.getAdoptionApplicationStatus().toString().trim());
             holder.name.setText(adoptionData.getAdoptionCatName().toString().trim());
             Picasso.get().load(adoptionData.getAdoptionCatPhoto()).resize(128, 128).into(holder.photo);
+
+            holder.layoutroot.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getApplicationContext(), ApplicantAdoptionReviewActivity.class);
+                    intent.putExtra("application_id", appId);
+                    startActivity(intent);
+                    finish();
+                }
+            });
         }
 
         @Override
@@ -153,5 +164,12 @@ public class UserApplicationListActivity extends AppCompatActivity {
                 layoutroot = itemView.findViewById(R.id.application_root);
             }
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(getApplicationContext(), MainMenuActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

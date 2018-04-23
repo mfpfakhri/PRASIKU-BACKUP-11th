@@ -265,12 +265,16 @@ public class FindCatForAdoptActivity extends AppCompatActivity {
                         }
                     } else {
                         if (cStat.equals("Available")){
+                            String applicantname = getIntent().getStringExtra("applicant_name");
+                            String applicantphoto = getIntent().getStringExtra("applicant_photo");
                             Intent intent = new Intent(getApplicationContext(), CatProfileApplicantAvailableActivity.class);
                             intent.putExtra("previousActivity", "findcat");
                             intent.putExtra("owner_id", oId);
                             intent.putExtra("cat_id", cId);
                             intent.putExtra("cat_name", cName);
                             intent.putExtra("cat_photo", cPhoto);
+                            intent.putExtra("applicant_name", applicantname);
+                            intent.putExtra("applicant_photo", applicantphoto);
                             startActivity(intent);
                             finish();
                         } else if (cStat.equals("Adopted")){

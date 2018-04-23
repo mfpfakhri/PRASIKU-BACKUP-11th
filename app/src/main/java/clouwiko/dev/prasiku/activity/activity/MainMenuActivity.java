@@ -122,8 +122,23 @@ public class MainMenuActivity extends AppCompatActivity
         findCatCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), FindCatForAdoptActivity.class);
-                startActivity(intent);
+                databaseUsers = FirebaseDatabase.getInstance().getReference().child("users").child(userUID);
+                databaseUsers.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        String applicantname = dataSnapshot.child("userFname").getValue(String.class);
+                        String applicantphoto = dataSnapshot.child("userProfilePhoto").getValue(String.class);
+                        Intent intent = new Intent(getApplicationContext(), FindCatForAdoptActivity.class);
+                        intent.putExtra("applicant_name", applicantname);
+                        intent.putExtra("applicant_photo", applicantphoto);
+                        startActivity(intent);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
             }
         });
         breedsStandardsCard.setOnClickListener(new View.OnClickListener() {
