@@ -28,7 +28,7 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="app_submitted">Submitted</string>
+    <string name="app_submitted">Accepted</string>
     <string name="app_received">Received</string>
     <string name="about_us">About Us</string>
     <string name="tutorial">Tutorial</string>

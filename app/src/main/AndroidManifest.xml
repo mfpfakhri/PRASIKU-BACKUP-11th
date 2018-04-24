@@ -54,7 +54,7 @@
             android:name=".activity.activity.AppReceivedActivity"
             android:parentActivityName=".activity.activity.MainMenuActivity" />
         <activity
-            android:name=".activity.activity.AppApprovedActivity"
+            android:name=".activity.activity.AppAcceptedActivity"
             android:parentActivityName=".activity.activity.MainMenuActivity" />
         <activity
             android:name=".activity.activity.TutorialActivity"
