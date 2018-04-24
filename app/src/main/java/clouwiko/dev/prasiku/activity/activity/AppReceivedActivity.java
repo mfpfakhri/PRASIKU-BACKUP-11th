@@ -128,6 +128,7 @@ public class AppReceivedActivity extends AppCompatActivity {
             String catname = receivedData.getAdoptionCatName().toString().trim();
             String apponstatus = receivedData.getAdoptionApplicationStatus().toString().trim();
             final String applicationid = receivedData.getAdoptionId().toString().trim();
+            final String catid = receivedData.getAdoptionCatId().toString().trim();
 
             holder.appname.setText(applicantname);
             holder.catname.setText(catname);
@@ -139,6 +140,7 @@ public class AppReceivedActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     Intent intent = new Intent(getApplicationContext(), AppReceivedReviewActivity.class);
                     intent.putExtra("application_id", applicationid);
+                    intent.putExtra("cat_id", catid);
                     startActivity(intent);
                     finish();
                 }

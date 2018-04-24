@@ -18,6 +18,7 @@ import com.squareup.picasso.Picasso;
 
 import clouwiko.dev.prasiku.R;
 import clouwiko.dev.prasiku.activity.model.Adoption;
+import clouwiko.dev.prasiku.activity.model.Cat;
 
 public class AppReceivedReviewActivity extends AppCompatActivity {
     private String TAG = "AppReceivedReviewActivity";
@@ -25,7 +26,7 @@ public class AppReceivedReviewActivity extends AppCompatActivity {
     private TextView tvAppName, tvCatName, tvPhone, tvAddress, tvJob, tvReason, tvNoA, tvHouseType, tvHouseSize, tvNoP, tvCatPlace, tvHouseMember, tvMovingPlan, tvMarriagePlan, tvKids, tvFinancial, tvAppStatus;
     private Button btnAccept, btnReject;
     private FirebaseAuth auth;
-    private DatabaseReference databaseAdoptions;
+    private DatabaseReference databaseAdoptions, databaseCats;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,7 +143,33 @@ public class AppReceivedReviewActivity extends AppCompatActivity {
                         String owneridapponstatus = ownerid + "_" + apponstatus;
 
                         updateAcceptedAdoptionData(adoptionid, catid, ownerid, appid, appphone, appaddress, appjob, appreason, appnoanimal, apphousetype, apphousesize, appnopeople, appcatplace, appfampermission, appmove, appmarriage, appkids, appfinancial, apponstatus, catname, catphoto, appname, appphoto, owneridapponstatus);
+                        databaseCats = FirebaseDatabase.getInstance().getReference().child("cats").child(catid);
+                        databaseCats.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                String catidupdate = dataSnapshot.child("catId").getValue(String.class);
+                                String ownerupdate = dataSnapshot.child("catOwnerId").getValue(String.class);
+                                String photoupdate = dataSnapshot.child("catProfilePhoto").getValue(String.class);
+                                String nameupdate = dataSnapshot.child("catName").getValue(String.class);
+                                String dobupdate = dataSnapshot.child("catDob").getValue(String.class);
+                                String genderupdate = dataSnapshot.child("catGender").getValue(String.class);
+                                String descriptionupdate = dataSnapshot.child("catDescription").getValue(String.class);
+                                String mednoteupdate = dataSnapshot.child("catMedNote").getValue(String.class);
+                                String vaccstatupdate = dataSnapshot.child("catVaccStat").getValue(String.class);
+                                String spayneuterstatupdate = dataSnapshot.child("catSpayNeuterStat").getValue(String.class);
+                                String reasonupdate = dataSnapshot.child("catReason").getValue(String.class);
+                                String catprovinceupdate = dataSnapshot.child("catProvince").getValue(String.class);
+                                String catcityupdate = dataSnapshot.child("catCity").getValue(String.class);
+                                String adoptedstatusupdate = "Adopted";
 
+                                updateAcceptedCatData(catidupdate, ownerupdate, photoupdate, nameupdate, dobupdate, genderupdate, descriptionupdate, mednoteupdate, vaccstatupdate, spayneuterstatupdate, reasonupdate, catprovinceupdate, catcityupdate, adoptedstatusupdate);
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
                     }
 
                     @Override
@@ -187,7 +214,6 @@ public class AppReceivedReviewActivity extends AppCompatActivity {
                         String owneridapponstatus = ownerid + "_" + apponstatus;
 
                         updateRejectedAdoptionData(adoptionid, catid, ownerid, appid, appphone, appaddress, appjob, appreason, appnoanimal, apphousetype, apphousesize, appnopeople, appcatplace, appfampermission, appmove, appmarriage, appkids, appfinancial, apponstatus, catname, catphoto, appname, appphoto, owneridapponstatus);
-
                     }
 
                     @Override
@@ -212,6 +238,16 @@ public class AppReceivedReviewActivity extends AppCompatActivity {
         databaseAdoptions = FirebaseDatabase.getInstance().getReference().child("adoptions").child(applicationid);
         Adoption adoptionReject = new Adoption(adoptionId, adoptionCatId, adoptionOwnerId, adoptionApplicantId, adoptionApplicantPhone, adoptionApplicantAddress, adoptionApplicantJob, adoptionApplicantReason, adoptionApplicantNoAnimal, adoptionApplicantHouseType, adoptionApplicantHouseSize, adoptionApplicantNoPeople, adoptionApplicantCatPlace, adoptionApplicantFamPermission, adoptionApplicantMove, adoptionApplicantMarriage, adoptionApplicantKids, adoptionApplicantFinancial, adoptionApplicationStatus, adoptionCatName, adoptionCatPhoto, adoptionApplicantName, adoptionApplicantPhoto, adoptionOwnerIdApponStatus);
         databaseAdoptions.setValue(adoptionReject);
+        return true;
+    }
+
+    private boolean updateAcceptedCatData(String catId, String catOwnerId, String catProfilePhoto, String catName, String catDob, String catGender, String catDescription, String catMedNote, String catVaccStat, String catSpayNeuterStat, String catReason, String catProvince, String catCity, String catAdoptedStatus){
+        String catid = getIntent().getStringExtra("cat_id");
+        databaseCats = FirebaseDatabase.getInstance().getReference().child("cats").child(catid);
+
+        Cat cat = new Cat(catId, catOwnerId, catProfilePhoto, catName, catDob, catGender, catDescription, catMedNote, catVaccStat, catSpayNeuterStat, catReason, catProvince, catCity, catAdoptedStatus);
+        databaseCats.setValue(cat);
+
         return true;
     }
 
