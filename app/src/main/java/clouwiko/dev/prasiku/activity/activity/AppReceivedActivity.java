@@ -73,10 +73,11 @@ public class AppReceivedActivity extends AppCompatActivity {
     void getAppReceivedData() {
         //Firebase Current User UID
         String userId = auth.getCurrentUser().getUid();
+        String useridapponstatus = userId+"_Received".toString().trim();
 
         //Database Reference
         databaseAdoptions = firebaseDatabase.getReference().child("adoptions");
-        databaseAdoptions.orderByChild("adoptionOwnerIdApponStatus").equalTo(userId+"_"+"Received").addChildEventListener(new ChildEventListener() {
+        databaseAdoptions.orderByChild("adoptionOwnerIdApponStatus").equalTo(useridapponstatus).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Adoption userAppReceivedData = dataSnapshot.getValue(Adoption.class);
@@ -126,7 +127,7 @@ public class AppReceivedActivity extends AppCompatActivity {
             String applicantname = receivedData.getAdoptionApplicantName().toString().trim();
             String catname = receivedData.getAdoptionCatName().toString().trim();
             String apponstatus = receivedData.getAdoptionApplicationStatus().toString().trim();
-            final String applicationid = receivedData.getAdoptionApplicantId().toString().trim();
+            final String applicationid = receivedData.getAdoptionId().toString().trim();
 
             holder.appname.setText(applicantname);
             holder.catname.setText(catname);
@@ -164,5 +165,11 @@ public class AppReceivedActivity extends AppCompatActivity {
                 layoutroot = (LinearLayout) itemView.findViewById(R.id.application_status_root);
             }
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(getApplicationContext(), MainMenuActivity.class);
+        startActivity(intent);
     }
 }

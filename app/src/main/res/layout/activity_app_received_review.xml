@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/light_gray"
     tools:context="clouwiko.dev.prasiku.activity.activity.AppReceivedReviewActivity">
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -23,7 +24,7 @@
                 android:paddingBottom="8dp">
 
                 <ImageView
-                    android:id="@+id/adoptionreview_cat_photo"
+                    android:id="@+id/appreceivedreview_cat_photo"
                     android:layout_width="92sp"
                     android:layout_height="92sp"
                     android:background="@color/colorPrimaryDarkTransparant"
@@ -43,7 +44,7 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            android:id="@+id/adoptionreview_applicant_name"
+                            android:id="@+id/appreceivedreview_applicant_name"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:gravity="center_vertical"
@@ -70,7 +71,7 @@
                         android:textSize="16sp" />
 
                     <TextView
-                        android:id="@+id/adoptionreview_cat_name"
+                        android:id="@+id/appreceivedreview_cat_name"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
@@ -115,7 +116,7 @@
                         android:textSize="16sp" />
 
                     <TextView
-                        android:id="@+id/adoptionreview_applicant_phone"
+                        android:id="@+id/appreceivedreview_applicant_phone"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
@@ -159,7 +160,7 @@
                         android:textSize="16sp" />
 
                     <TextView
-                        android:id="@+id/adoptionreview_applicant_address"
+                        android:id="@+id/appreceivedreview_applicant_address"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
@@ -203,7 +204,7 @@
                         android:textSize="16sp" />
 
                     <TextView
-                        android:id="@+id/adoptionreview_applicant_job"
+                        android:id="@+id/appreceivedreview_applicant_job"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
@@ -247,7 +248,7 @@
                         android:textSize="16sp" />
 
                     <TextView
-                        android:id="@+id/adoptionreview_applicant_reason"
+                        android:id="@+id/appreceivedreview_applicant_reason"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
@@ -291,7 +292,7 @@
                         android:textSize="16sp" />
 
                     <TextView
-                        android:id="@+id/adoptionreview_applicant_noa"
+                        android:id="@+id/appreceivedreview_applicant_noa"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
@@ -335,7 +336,7 @@
                         android:textSize="16sp" />
 
                     <TextView
-                        android:id="@+id/adoptionreview_applicant_house_type"
+                        android:id="@+id/appreceivedreview_applicant_house_type"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
@@ -379,7 +380,7 @@
                         android:textSize="16sp" />
 
                     <TextView
-                        android:id="@+id/adoptionreview_applicant_house_size"
+                        android:id="@+id/appreceivedreview_applicant_house_size"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
@@ -423,7 +424,7 @@
                         android:textSize="16sp" />
 
                     <TextView
-                        android:id="@+id/adoptionreview_applicant_nop"
+                        android:id="@+id/appreceivedreview_applicant_nop"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
@@ -467,7 +468,7 @@
                         android:textSize="16sp" />
 
                     <TextView
-                        android:id="@+id/adoptionreview_applicant_catplace"
+                        android:id="@+id/appreceivedreview_applicant_catplace"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
@@ -502,7 +503,7 @@
                         android:textSize="16sp" />
 
                     <TextView
-                        android:id="@+id/adoptionreview_applicant_housemember"
+                        android:id="@+id/appreceivedreview_applicant_housemember"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
@@ -537,7 +538,7 @@
                         android:textSize="16sp" />
 
                     <TextView
-                        android:id="@+id/adoptionreview_applicant_movingplan"
+                        android:id="@+id/appreceivedreview_applicant_movingplan"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
@@ -572,7 +573,7 @@
                         android:textSize="16sp" />
 
                     <TextView
-                        android:id="@+id/adoptionreview_applicant_marriageplan"
+                        android:id="@+id/appreceivedreview_applicant_marriageplan"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
@@ -607,7 +608,7 @@
                         android:textSize="16sp" />
 
                     <TextView
-                        android:id="@+id/adoptionreview_applicant_kids"
+                        android:id="@+id/appreceivedreview_applicant_kids"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
@@ -642,7 +643,7 @@
                         android:textSize="16sp" />
 
                     <TextView
-                        android:id="@+id/adoptionreview_applicant_financial"
+                        android:id="@+id/appreceivedreview_applicant_financial"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
@@ -677,12 +678,51 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/adoptionreview_applicant_status"
+                        android:id="@+id/appreceivedreview_applicant_status"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text=""
                         android:textSize="16sp" />
                 </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="16dp"
+                android:paddingTop="16dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/appreceivedreview_accept_button"
+                        style="?android:textAppearanceSmall"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="16dp"
+                        android:layout_weight="1"
+                        android:background="@color/colorPrimary"
+                        android:text="Accept"
+                        android:textColor="@android:color/black"
+                        android:textStyle="bold" />
+
+                    <Button
+                        android:id="@+id/appreceivedreview_reject_button"
+                        style="?android:textAppearanceSmall"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="16dp"
+                        android:layout_weight="1"
+                        android:background="@color/colorPrimary"
+                        android:text="Reject"
+                        android:textColor="@android:color/black"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
