@@ -220,7 +220,8 @@ public class ApplicantAdoptionFormActivity extends AppCompatActivity {
         String kidsinhouse = rbKids.getText().toString().trim();
         String financial = rbFinancial.getText().toString().trim();
         String status = "Received";
-        Adoption adoption = new Adoption(adoptionId, catId, ownerId, applicantId, phone, address, job, reasonwhy, numberofanimal, housetype, houseize, familynumber, animallive, familypermission, movingplan, marriageplan, kidsinhouse, financial, status, catname, catphoto, applicantname, applicantphoto);
+        String owner_status = ownerId+"_"+status;
+        Adoption adoption = new Adoption(adoptionId, catId, ownerId, applicantId, phone, address, job, reasonwhy, numberofanimal, housetype, houseize, familynumber, animallive, familypermission, movingplan, marriageplan, kidsinhouse, financial, status, catname, catphoto, applicantname, applicantphoto, owner_status);
 
         databaseAdoption.child(adoptionId).setValue(adoption);
     }

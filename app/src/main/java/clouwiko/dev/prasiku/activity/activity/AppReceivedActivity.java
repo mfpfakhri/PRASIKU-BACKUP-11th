@@ -76,7 +76,7 @@ public class AppReceivedActivity extends AppCompatActivity {
 
         //Database Reference
         databaseAdoptions = firebaseDatabase.getReference().child("adoptions");
-        databaseAdoptions.orderByChild("adoptionOwnerId").equalTo(userId).addChildEventListener(new ChildEventListener() {
+        databaseAdoptions.orderByChild("adoptionOwnerIdApponStatus").equalTo(userId+"_"+"Received").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Adoption userAppReceivedData = dataSnapshot.getValue(Adoption.class);
@@ -126,6 +126,7 @@ public class AppReceivedActivity extends AppCompatActivity {
             String applicantname = receivedData.getAdoptionApplicantName().toString().trim();
             String catname = receivedData.getAdoptionCatName().toString().trim();
             String apponstatus = receivedData.getAdoptionApplicationStatus().toString().trim();
+            final String applicationid = receivedData.getAdoptionApplicantId().toString().trim();
 
             holder.appname.setText(applicantname);
             holder.catname.setText(catname);
@@ -136,6 +137,7 @@ public class AppReceivedActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(getApplicationContext(), AppReceivedReviewActivity.class);
+                    intent.putExtra("application_id", applicationid);
                     startActivity(intent);
                     finish();
                 }
