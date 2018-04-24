@@ -128,12 +128,6 @@ public class EditCatDataAdoptedActivity extends AppCompatActivity {
     }
 
     private void backToMainMenu() {
-//        Intent intent = new Intent(getApplicationContext(), MainMenuActivity.class);
-//        Toast toast = Toast.makeText(getApplicationContext(), "Cat Adoption Status Successfully Edited", Toast.LENGTH_SHORT);
-//        toast.show();
-//        startActivity(intent);
-//        toast.cancel();
-//        finish();
         String catId = getIntent().getStringExtra("cat_id");
         String ownerId = getIntent().getStringExtra("owner_id");
         String pActivity = getIntent().getStringExtra("previousActivity");
@@ -166,17 +160,6 @@ public class EditCatDataAdoptedActivity extends AppCompatActivity {
 
         return true;
     }
-
-//    private void adoptionStatusValidation() {
-//        //Cat's Gender Validation
-//        int adoptionStatusSpinner = spinnerAdoptionStatus.getSelectedItemPosition();
-//        if (adoptionStatusSpinner == 0) {
-//            Toast.makeText(getApplicationContext(), "Choose Adoption Status", Toast.LENGTH_SHORT).show();
-//            return;
-//        } else {
-//
-//        }
-//    }
 
     @Override
     public void onBackPressed() {

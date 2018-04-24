@@ -1,6 +1,8 @@
 package clouwiko.dev.prasiku.activity.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -112,115 +114,135 @@ public class AppReceivedReviewActivity extends AppCompatActivity {
         btnAccept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String applicationid = getIntent().getStringExtra("application_id");
-                databaseAdoptions = FirebaseDatabase.getInstance().getReference().child("adoptions").child(applicationid);
-                databaseAdoptions.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        String adoptionid = dataSnapshot.child("adoptionId").getValue(String.class);
-                        String catid = dataSnapshot.child("adoptionCatId").getValue(String.class);
-                        String ownerid = dataSnapshot.child("adoptionOwnerId").getValue(String.class);
-                        String appid = dataSnapshot.child("adoptionApplicantId").getValue(String.class);
-                        String appphone = dataSnapshot.child("adoptionApplicantPhone").getValue(String.class);
-                        String appaddress = dataSnapshot.child("adoptionApplicantAddress").getValue(String.class);
-                        String appjob = dataSnapshot.child("adoptionApplicantJob").getValue(String.class);
-                        String appreason = dataSnapshot.child("adoptionApplicantReason").getValue(String.class);
-                        String appnoanimal = dataSnapshot.child("adoptionApplicantNoAnimal").getValue(String.class);
-                        String apphousetype = dataSnapshot.child("adoptionApplicantHouseType").getValue(String.class);
-                        String apphousesize = dataSnapshot.child("adoptionApplicantHouseSize").getValue(String.class);
-                        String appnopeople = dataSnapshot.child("adoptionApplicantNoPeople").getValue(String.class);
-                        String appcatplace = dataSnapshot.child("adoptionApplicantCatPlace").getValue(String.class);
-                        String appfampermission = dataSnapshot.child("adoptionApplicantFamPermission").getValue(String.class);
-                        String appmove = dataSnapshot.child("adoptionApplicantMove").getValue(String.class);
-                        String appmarriage = dataSnapshot.child("adoptionApplicantMarriage").getValue(String.class);
-                        String appkids = dataSnapshot.child("adoptionApplicantKids").getValue(String.class);
-                        String appfinancial = dataSnapshot.child("adoptionApplicantFinancial").getValue(String.class);
-                        String apponstatus = "Accepted";
-                        String catname = dataSnapshot.child("adoptionCatName").getValue(String.class);
-                        String catphoto = dataSnapshot.child("adoptionCatPhoto").getValue(String.class);
-                        String appname = dataSnapshot.child("adoptionApplicantName").getValue(String.class);
-                        String appphoto = dataSnapshot.child("adoptionApplicantPhoto").getValue(String.class);
-                        String owneridapponstatus = ownerid + "_" + apponstatus;
-
-                        updateAcceptedAdoptionData(adoptionid, catid, ownerid, appid, appphone, appaddress, appjob, appreason, appnoanimal, apphousetype, apphousesize, appnopeople, appcatplace, appfampermission, appmove, appmarriage, appkids, appfinancial, apponstatus, catname, catphoto, appname, appphoto, owneridapponstatus);
-                        databaseCats = FirebaseDatabase.getInstance().getReference().child("cats").child(catid);
-                        databaseCats.addListenerForSingleValueEvent(new ValueEventListener() {
+                AlertDialog.Builder builder = new AlertDialog.Builder(AppReceivedReviewActivity.this);
+                builder.setMessage("Are You sure want to set this person as adopter?")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override
-                            public void onDataChange(DataSnapshot dataSnapshot) {
-                                String catidupdate = dataSnapshot.child("catId").getValue(String.class);
-                                String ownerupdate = dataSnapshot.child("catOwnerId").getValue(String.class);
-                                String photoupdate = dataSnapshot.child("catProfilePhoto").getValue(String.class);
-                                String nameupdate = dataSnapshot.child("catName").getValue(String.class);
-                                String dobupdate = dataSnapshot.child("catDob").getValue(String.class);
-                                String genderupdate = dataSnapshot.child("catGender").getValue(String.class);
-                                String descriptionupdate = dataSnapshot.child("catDescription").getValue(String.class);
-                                String mednoteupdate = dataSnapshot.child("catMedNote").getValue(String.class);
-                                String vaccstatupdate = dataSnapshot.child("catVaccStat").getValue(String.class);
-                                String spayneuterstatupdate = dataSnapshot.child("catSpayNeuterStat").getValue(String.class);
-                                String reasonupdate = dataSnapshot.child("catReason").getValue(String.class);
-                                String catprovinceupdate = dataSnapshot.child("catProvince").getValue(String.class);
-                                String catcityupdate = dataSnapshot.child("catCity").getValue(String.class);
-                                String adoptedstatusupdate = "Adopted";
+                            public void onClick(DialogInterface dialog, int which) {
+                                String applicationid = getIntent().getStringExtra("application_id");
+                                databaseAdoptions = FirebaseDatabase.getInstance().getReference().child("adoptions").child(applicationid);
+                                databaseAdoptions.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        String adoptionid = dataSnapshot.child("adoptionId").getValue(String.class);
+                                        String catid = dataSnapshot.child("adoptionCatId").getValue(String.class);
+                                        String ownerid = dataSnapshot.child("adoptionOwnerId").getValue(String.class);
+                                        String appid = dataSnapshot.child("adoptionApplicantId").getValue(String.class);
+                                        String appphone = dataSnapshot.child("adoptionApplicantPhone").getValue(String.class);
+                                        String appaddress = dataSnapshot.child("adoptionApplicantAddress").getValue(String.class);
+                                        String appjob = dataSnapshot.child("adoptionApplicantJob").getValue(String.class);
+                                        String appreason = dataSnapshot.child("adoptionApplicantReason").getValue(String.class);
+                                        String appnoanimal = dataSnapshot.child("adoptionApplicantNoAnimal").getValue(String.class);
+                                        String apphousetype = dataSnapshot.child("adoptionApplicantHouseType").getValue(String.class);
+                                        String apphousesize = dataSnapshot.child("adoptionApplicantHouseSize").getValue(String.class);
+                                        String appnopeople = dataSnapshot.child("adoptionApplicantNoPeople").getValue(String.class);
+                                        String appcatplace = dataSnapshot.child("adoptionApplicantCatPlace").getValue(String.class);
+                                        String appfampermission = dataSnapshot.child("adoptionApplicantFamPermission").getValue(String.class);
+                                        String appmove = dataSnapshot.child("adoptionApplicantMove").getValue(String.class);
+                                        String appmarriage = dataSnapshot.child("adoptionApplicantMarriage").getValue(String.class);
+                                        String appkids = dataSnapshot.child("adoptionApplicantKids").getValue(String.class);
+                                        String appfinancial = dataSnapshot.child("adoptionApplicantFinancial").getValue(String.class);
+                                        String apponstatus = "Accepted";
+                                        String catname = dataSnapshot.child("adoptionCatName").getValue(String.class);
+                                        String catphoto = dataSnapshot.child("adoptionCatPhoto").getValue(String.class);
+                                        String appname = dataSnapshot.child("adoptionApplicantName").getValue(String.class);
+                                        String appphoto = dataSnapshot.child("adoptionApplicantPhoto").getValue(String.class);
+                                        String owneridapponstatus = ownerid + "_" + apponstatus;
 
-                                updateAcceptedCatData(catidupdate, ownerupdate, photoupdate, nameupdate, dobupdate, genderupdate, descriptionupdate, mednoteupdate, vaccstatupdate, spayneuterstatupdate, reasonupdate, catprovinceupdate, catcityupdate, adoptedstatusupdate);
+                                        updateAcceptedAdoptionData(adoptionid, catid, ownerid, appid, appphone, appaddress, appjob, appreason, appnoanimal, apphousetype, apphousesize, appnopeople, appcatplace, appfampermission, appmove, appmarriage, appkids, appfinancial, apponstatus, catname, catphoto, appname, appphoto, owneridapponstatus);
+                                        databaseCats = FirebaseDatabase.getInstance().getReference().child("cats").child(catid);
+                                        databaseCats.addListenerForSingleValueEvent(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                                String catidupdate = dataSnapshot.child("catId").getValue(String.class);
+                                                String ownerupdate = dataSnapshot.child("catOwnerId").getValue(String.class);
+                                                String photoupdate = dataSnapshot.child("catProfilePhoto").getValue(String.class);
+                                                String nameupdate = dataSnapshot.child("catName").getValue(String.class);
+                                                String dobupdate = dataSnapshot.child("catDob").getValue(String.class);
+                                                String genderupdate = dataSnapshot.child("catGender").getValue(String.class);
+                                                String descriptionupdate = dataSnapshot.child("catDescription").getValue(String.class);
+                                                String mednoteupdate = dataSnapshot.child("catMedNote").getValue(String.class);
+                                                String vaccstatupdate = dataSnapshot.child("catVaccStat").getValue(String.class);
+                                                String spayneuterstatupdate = dataSnapshot.child("catSpayNeuterStat").getValue(String.class);
+                                                String reasonupdate = dataSnapshot.child("catReason").getValue(String.class);
+                                                String catprovinceupdate = dataSnapshot.child("catProvince").getValue(String.class);
+                                                String catcityupdate = dataSnapshot.child("catCity").getValue(String.class);
+                                                String adoptedstatusupdate = "Adopted";
+
+                                                updateAcceptedCatData(catidupdate, ownerupdate, photoupdate, nameupdate, dobupdate, genderupdate, descriptionupdate, mednoteupdate, vaccstatupdate, spayneuterstatupdate, reasonupdate, catprovinceupdate, catcityupdate, adoptedstatusupdate);
+                                            }
+
+                                            @Override
+                                            public void onCancelled(DatabaseError databaseError) {
+
+                                            }
+                                        });
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+
+                                    }
+                                });
                             }
-
-                            @Override
-                            public void onCancelled(DatabaseError databaseError) {
-
-                            }
-                        });
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
+                        })
+                        .setNegativeButton("No", null);
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
             }
         });
 
         btnReject.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String applicationid = getIntent().getStringExtra("application_id");
-                databaseAdoptions = FirebaseDatabase.getInstance().getReference().child("adoptions").child(applicationid);
-                databaseAdoptions.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        String adoptionid = dataSnapshot.child("adoptionId").getValue(String.class);
-                        String catid = dataSnapshot.child("adoptionCatId").getValue(String.class);
-                        String ownerid = dataSnapshot.child("adoptionOwnerId").getValue(String.class);
-                        String appid = dataSnapshot.child("adoptionApplicantId").getValue(String.class);
-                        String appphone = dataSnapshot.child("adoptionApplicantPhone").getValue(String.class);
-                        String appaddress = dataSnapshot.child("adoptionApplicantAddress").getValue(String.class);
-                        String appjob = dataSnapshot.child("adoptionApplicantJob").getValue(String.class);
-                        String appreason = dataSnapshot.child("adoptionApplicantReason").getValue(String.class);
-                        String appnoanimal = dataSnapshot.child("adoptionApplicantNoAnimal").getValue(String.class);
-                        String apphousetype = dataSnapshot.child("adoptionApplicantHouseType").getValue(String.class);
-                        String apphousesize = dataSnapshot.child("adoptionApplicantHouseSize").getValue(String.class);
-                        String appnopeople = dataSnapshot.child("adoptionApplicantNoPeople").getValue(String.class);
-                        String appcatplace = dataSnapshot.child("adoptionApplicantCatPlace").getValue(String.class);
-                        String appfampermission = dataSnapshot.child("adoptionApplicantFamPermission").getValue(String.class);
-                        String appmove = dataSnapshot.child("adoptionApplicantMove").getValue(String.class);
-                        String appmarriage = dataSnapshot.child("adoptionApplicantMarriage").getValue(String.class);
-                        String appkids = dataSnapshot.child("adoptionApplicantKids").getValue(String.class);
-                        String appfinancial = dataSnapshot.child("adoptionApplicantFinancial").getValue(String.class);
-                        String apponstatus = "Rejected";
-                        String catname = dataSnapshot.child("adoptionCatName").getValue(String.class);
-                        String catphoto = dataSnapshot.child("adoptionCatPhoto").getValue(String.class);
-                        String appname = dataSnapshot.child("adoptionApplicantName").getValue(String.class);
-                        String appphoto = dataSnapshot.child("adoptionApplicantPhoto").getValue(String.class);
-                        String owneridapponstatus = ownerid + "_" + apponstatus;
+                AlertDialog.Builder builder = new AlertDialog.Builder(AppReceivedReviewActivity.this);
+                builder.setMessage("Are You sure want to reject this person as adoption application?")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                String applicationid = getIntent().getStringExtra("application_id");
+                                databaseAdoptions = FirebaseDatabase.getInstance().getReference().child("adoptions").child(applicationid);
+                                databaseAdoptions.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        String adoptionid = dataSnapshot.child("adoptionId").getValue(String.class);
+                                        String catid = dataSnapshot.child("adoptionCatId").getValue(String.class);
+                                        String ownerid = dataSnapshot.child("adoptionOwnerId").getValue(String.class);
+                                        String appid = dataSnapshot.child("adoptionApplicantId").getValue(String.class);
+                                        String appphone = dataSnapshot.child("adoptionApplicantPhone").getValue(String.class);
+                                        String appaddress = dataSnapshot.child("adoptionApplicantAddress").getValue(String.class);
+                                        String appjob = dataSnapshot.child("adoptionApplicantJob").getValue(String.class);
+                                        String appreason = dataSnapshot.child("adoptionApplicantReason").getValue(String.class);
+                                        String appnoanimal = dataSnapshot.child("adoptionApplicantNoAnimal").getValue(String.class);
+                                        String apphousetype = dataSnapshot.child("adoptionApplicantHouseType").getValue(String.class);
+                                        String apphousesize = dataSnapshot.child("adoptionApplicantHouseSize").getValue(String.class);
+                                        String appnopeople = dataSnapshot.child("adoptionApplicantNoPeople").getValue(String.class);
+                                        String appcatplace = dataSnapshot.child("adoptionApplicantCatPlace").getValue(String.class);
+                                        String appfampermission = dataSnapshot.child("adoptionApplicantFamPermission").getValue(String.class);
+                                        String appmove = dataSnapshot.child("adoptionApplicantMove").getValue(String.class);
+                                        String appmarriage = dataSnapshot.child("adoptionApplicantMarriage").getValue(String.class);
+                                        String appkids = dataSnapshot.child("adoptionApplicantKids").getValue(String.class);
+                                        String appfinancial = dataSnapshot.child("adoptionApplicantFinancial").getValue(String.class);
+                                        String apponstatus = "Rejected";
+                                        String catname = dataSnapshot.child("adoptionCatName").getValue(String.class);
+                                        String catphoto = dataSnapshot.child("adoptionCatPhoto").getValue(String.class);
+                                        String appname = dataSnapshot.child("adoptionApplicantName").getValue(String.class);
+                                        String appphoto = dataSnapshot.child("adoptionApplicantPhoto").getValue(String.class);
+                                        String owneridapponstatus = ownerid + "_" + apponstatus;
 
-                        updateRejectedAdoptionData(adoptionid, catid, ownerid, appid, appphone, appaddress, appjob, appreason, appnoanimal, apphousetype, apphousesize, appnopeople, appcatplace, appfampermission, appmove, appmarriage, appkids, appfinancial, apponstatus, catname, catphoto, appname, appphoto, owneridapponstatus);
-                    }
+                                        updateRejectedAdoptionData(adoptionid, catid, ownerid, appid, appphone, appaddress, appjob, appreason, appnoanimal, apphousetype, apphousesize, appnopeople, appcatplace, appfampermission, appmove, appmarriage, appkids, appfinancial, apponstatus, catname, catphoto, appname, appphoto, owneridapponstatus);
+                                    }
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
 
-                    }
-                });
+                                    }
+                                });
+                            }
+                        })
+                        .setNegativeButton("No", null);
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
             }
         });
     }
@@ -241,7 +263,7 @@ public class AppReceivedReviewActivity extends AppCompatActivity {
         return true;
     }
 
-    private boolean updateAcceptedCatData(String catId, String catOwnerId, String catProfilePhoto, String catName, String catDob, String catGender, String catDescription, String catMedNote, String catVaccStat, String catSpayNeuterStat, String catReason, String catProvince, String catCity, String catAdoptedStatus){
+    private boolean updateAcceptedCatData(String catId, String catOwnerId, String catProfilePhoto, String catName, String catDob, String catGender, String catDescription, String catMedNote, String catVaccStat, String catSpayNeuterStat, String catReason, String catProvince, String catCity, String catAdoptedStatus) {
         String catid = getIntent().getStringExtra("cat_id");
         databaseCats = FirebaseDatabase.getInstance().getReference().child("cats").child(catid);
 
