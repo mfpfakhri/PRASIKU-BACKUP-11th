@@ -3,7 +3,6 @@ package clouwiko.dev.prasiku.activity.activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,9 +15,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import clouwiko.dev.prasiku.R;
-import clouwiko.dev.prasiku.activity.model.Adoption;
 
-public class ApplicantAdoptionReviewActivity extends AppCompatActivity {
+public class UserApplicationListReviewActivity extends AppCompatActivity {
     private String TAG = "ApplicantAdoptionReview";
     private ImageView imCatPhoto;
     private TextView tvAppName, tvCatName, tvPhone, tvAddress, tvJob, tvReason, tvNoA, tvHouseType, tvHouseSize, tvNoP, tvCatPlace, tvHouseMember, tvMovingPlan, tvMarriagePlan, tvKids, tvFinancial, tvAppStatus;
@@ -28,7 +26,7 @@ public class ApplicantAdoptionReviewActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_applicant_adoption_review);
+        setContentView(R.layout.activity_user_application_list_review);
 
         //Firebase Auth
         auth = FirebaseAuth.getInstance();

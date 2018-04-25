@@ -134,7 +134,7 @@ public class UserApplicationListActivity extends AppCompatActivity {
             holder.layoutroot.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(getApplicationContext(), ApplicantAdoptionReviewActivity.class);
+                    Intent intent = new Intent(getApplicationContext(), UserApplicationListReviewActivity.class);
                     intent.putExtra("application_id", appId);
                     startActivity(intent);
                     finish();

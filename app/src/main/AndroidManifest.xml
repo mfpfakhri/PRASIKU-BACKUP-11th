@@ -85,7 +85,7 @@
         <activity
             android:name=".activity.activity.UserApplicationListActivity"
             android:parentActivityName=".activity.activity.MainMenuActivity" />
-        <activity android:name=".activity.activity.ApplicantAdoptionReviewActivity" />
+        <activity android:name=".activity.activity.UserApplicationListReviewActivity" />
         <activity android:name=".activity.activity.AppReceivedReviewActivity"></activity>
     </application>
 

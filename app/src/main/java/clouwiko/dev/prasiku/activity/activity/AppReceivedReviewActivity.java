@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -171,6 +172,10 @@ public class AppReceivedReviewActivity extends AppCompatActivity {
                                                 String adoptedstatusupdate = "Adopted";
 
                                                 updateAcceptedCatData(catidupdate, ownerupdate, photoupdate, nameupdate, dobupdate, genderupdate, descriptionupdate, mednoteupdate, vaccstatupdate, spayneuterstatupdate, reasonupdate, catprovinceupdate, catcityupdate, adoptedstatusupdate);
+                                                Intent intent = new Intent(getApplicationContext(), MainMenuActivity.class);
+                                                Toast.makeText(getApplicationContext(), "Check your accepted Application to Download the terms", Toast.LENGTH_SHORT).show();
+                                                startActivity(intent);
+                                                finish();
                                             }
 
                                             @Override

@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -19,6 +20,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import clouwiko.dev.prasiku.R;
+import clouwiko.dev.prasiku.activity.model.Adoption;
 
 public class CatProfileOwnerAdoptedActivity extends AppCompatActivity {
 
@@ -28,7 +30,7 @@ public class CatProfileOwnerAdoptedActivity extends AppCompatActivity {
     private Button btnAdopted;
     private FloatingActionButton fabEdit;
     private FirebaseAuth auth;
-    private DatabaseReference databaseCats, databaseUsers;
+    private DatabaseReference databaseCats, databaseUsers, databaseAdoptions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,15 +62,45 @@ public class CatProfileOwnerAdoptedActivity extends AppCompatActivity {
         fabEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String pActivity = getIntent().getStringExtra("previousActivity");
-                String catId = getIntent().getStringExtra("cat_id");
-                String ownerId = getIntent().getStringExtra("owner_id");
-                Intent intent = new Intent(getApplicationContext(), EditCatDataAdoptedActivity.class);
-                intent.putExtra("previousActivity", pActivity);
-                intent.putExtra("cat_id", catId);
-                intent.putExtra("owner_id", ownerId);
-                startActivity(intent);
-                finish();
+                final String pActivity = getIntent().getStringExtra("previousActivity");
+                final String catId = getIntent().getStringExtra("cat_id");
+                final String ownerId = getIntent().getStringExtra("owner_id");
+                final String apponstatus = catId + "_Accepted";
+                databaseAdoptions = FirebaseDatabase.getInstance().getReference().child("adoptions");
+                databaseAdoptions.orderByChild("adoptionCatIdApponStatus").equalTo(apponstatus).addChildEventListener(new ChildEventListener() {
+                    @Override
+                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                        Adoption adoption = dataSnapshot.getValue(Adoption.class);
+                        String appid = adoption.getAdoptionId().toString().trim();
+                        Intent intent = new Intent(getApplicationContext(), EditCatDataAdoptedActivity.class);
+                        intent.putExtra("previousActivity", pActivity);
+                        intent.putExtra("cat_id", catId);
+                        intent.putExtra("owner_id", ownerId);
+                        intent.putExtra("application_id", appid);
+                        startActivity(intent);
+                        finish();
+                    }
+
+                    @Override
+                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                    }
+
+                    @Override
+                    public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                    }
+
+                    @Override
+                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
             }
         });
 
@@ -137,10 +169,10 @@ public class CatProfileOwnerAdoptedActivity extends AppCompatActivity {
         Intent intentFindCat = new Intent(getApplicationContext(), FindCatForAdoptActivity.class);
         Intent intentMainMenu = new Intent(getApplicationContext(), MainMenuActivity.class);
 
-        if (pActivity.equals("adoptionlist")){
+        if (pActivity.equals("adoptionlist")) {
             startActivity(intentAdoptionList);
             finish();
-        } else if (pActivity.equals("findcat")){
+        } else if (pActivity.equals("findcat")) {
             startActivity(intentFindCat);
             finish();
         } else {

@@ -293,7 +293,44 @@ public class EditCatDataAvailableActivity extends AppCompatActivity {
                         String catcityupdate = dataSnapshot.child("catCity").getValue(String.class);
 
                         updateCatData(catidupdate, ownerupdate, photoupdate, nameupdate, dobupdate, genderupdate, descriptionupdate, mednoteupdate, vaccstatupdate, spayneuterstatupdate, reasonupdate, catprovinceupdate, catcityupdate, adoptedstatusupdate);
-
+//                        databaseAdoptions = FirebaseDatabase.getInstance().getReference().child("adoptions");
+//                        databaseAdoptions.orderByChild("adoptionCatId").equalTo(catidupdate).addListenerForSingleValueEvent(new ValueEventListener() {
+//                            @Override
+//                            public void onDataChange(DataSnapshot dataSnapshot) {
+//                                String adoptionid = dataSnapshot.child("adoptionId").getValue(String.class);
+//                                String catid = dataSnapshot.child("adoptionCatId").getValue(String.class);
+//                                String ownerid = dataSnapshot.child("adoptionOwnerId").getValue(String.class);
+//                                String appid = dataSnapshot.child("adoptionApplicantId").getValue(String.class);
+//                                String appphone = dataSnapshot.child("adoptionApplicantPhone").getValue(String.class);
+//                                String appaddress = dataSnapshot.child("adoptionApplicantAddress").getValue(String.class);
+//                                String appjob = dataSnapshot.child("adoptionApplicantJob").getValue(String.class);
+//                                String appreason = dataSnapshot.child("adoptionApplicantReason").getValue(String.class);
+//                                String appnoanimal = dataSnapshot.child("adoptionApplicantNoAnimal").getValue(String.class);
+//                                String apphousetype = dataSnapshot.child("adoptionApplicantHouseType").getValue(String.class);
+//                                String apphousesize = dataSnapshot.child("adoptionApplicantHouseSize").getValue(String.class);
+//                                String appnopeople = dataSnapshot.child("adoptionApplicantNoPeople").getValue(String.class);
+//                                String appcatplace = dataSnapshot.child("adoptionApplicantCatPlace").getValue(String.class);
+//                                String appfampermission = dataSnapshot.child("adoptionApplicantFamPermission").getValue(String.class);
+//                                String appmove = dataSnapshot.child("adoptionApplicantMove").getValue(String.class);
+//                                String appmarriage = dataSnapshot.child("adoptionApplicantMarriage").getValue(String.class);
+//                                String appkids = dataSnapshot.child("adoptionApplicantKids").getValue(String.class);
+//                                String appfinancial = dataSnapshot.child("adoptionApplicantFinancial").getValue(String.class);
+//                                String apponstatus = "Rejected";
+//                                String catname = dataSnapshot.child("adoptionCatName").getValue(String.class);
+//                                String catphoto = dataSnapshot.child("adoptionCatPhoto").getValue(String.class);
+//                                String appname = dataSnapshot.child("adoptionApplicantName").getValue(String.class);
+//                                String appphoto = dataSnapshot.child("adoptionApplicantPhoto").getValue(String.class);
+//                                String owneridapponstatus = ownerid + "_" + apponstatus;
+//                                String catidapponstatus = catid + "_" + apponstatus;
+//
+//                                updateAcceptedAdoptionData(adoptionid, catid, ownerid, appid, appphone, appaddress, appjob, appreason, appnoanimal, apphousetype, apphousesize, appnopeople, appcatplace, appfampermission, appmove, appmarriage, appkids, appfinancial, apponstatus, catname, catphoto, appname, appphoto, owneridapponstatus, catidapponstatus);
+//                            }
+//
+//                            @Override
+//                            public void onCancelled(DatabaseError databaseError) {
+//
+//                            }
+//                        });
                     }
 
                     @Override
