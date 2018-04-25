@@ -125,7 +125,7 @@ public class AppReceivedActivity extends AppCompatActivity {
         public void onBindViewHolder(AppReceivedAdapter.AppReceivedViewHolder holder, int position) {
             Adoption receivedData = adoptionList.get(position);
             String applicantname = receivedData.getAdoptionApplicantName().toString().trim();
-            String catname = receivedData.getAdoptionCatName().toString().trim();
+            final String catname = receivedData.getAdoptionCatName().toString().trim();
             String apponstatus = receivedData.getAdoptionApplicationStatus().toString().trim();
             final String applicationid = receivedData.getAdoptionId().toString().trim();
             final String catid = receivedData.getAdoptionCatId().toString().trim();
@@ -141,6 +141,7 @@ public class AppReceivedActivity extends AppCompatActivity {
                     Intent intent = new Intent(getApplicationContext(), AppReceivedReviewActivity.class);
                     intent.putExtra("application_id", applicationid);
                     intent.putExtra("cat_id", catid);
+                    intent.putExtra("cat_name", catname);
                     startActivity(intent);
                     finish();
                 }
@@ -149,6 +150,7 @@ public class AppReceivedActivity extends AppCompatActivity {
 
         @Override
         public int getItemCount() {
+
             return adoptionList.size();
         }
 

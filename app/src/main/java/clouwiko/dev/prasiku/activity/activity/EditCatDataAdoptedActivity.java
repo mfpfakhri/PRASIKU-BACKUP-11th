@@ -107,7 +107,7 @@ public class EditCatDataAdoptedActivity extends AppCompatActivity {
 
                     }
                 });
-                String apponstatus = cId + "_Accepted".toString().trim();
+                String apponstatus = cId + "_Accepted";
                 databaseAdoptions = FirebaseDatabase.getInstance().getReference().child("adoptions");
                 databaseAdoptions.orderByChild("adoptionCatIdApponStatus").equalTo(apponstatus).addChildEventListener(new ChildEventListener() {
                     @Override
@@ -139,6 +139,7 @@ public class EditCatDataAdoptedActivity extends AppCompatActivity {
                         String catidapponstatus = catid + "_" + apponstatus;
 
                         updateAcceptedAdoptionData(adoptionid, catid, owid, appid, appphone, appaddress, appjob, appreason, appnoanimal, apphousetype, apphousesize, appnopeople, appcatplace, appfampermission, appmove, appmarriage, appkids, appfinancial, apponstatus, catname, catphoto, appname, appphoto, owneridapponstatus, catidapponstatus);
+                        Toast.makeText(getApplicationContext(), "Successfully changed cat adopt status", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override

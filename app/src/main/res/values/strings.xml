@@ -148,6 +148,8 @@
     <string name="adoptionreview_applicant_status_label">Application Status :</string>
     <string name="application_status_adopt_label">For Adopt :</string>
     <string name="application_status_stat_label">Status :</string>
+    <string name="adoptionreview_contact_status_label">You can contact me on :</string>
+    <string name="appacceptedreview_agreement">Adoption Agreement</string>
 
     <string-array name="gender">
         <item>Male</item>

@@ -86,7 +86,9 @@
             android:name=".activity.activity.UserApplicationListActivity"
             android:parentActivityName=".activity.activity.MainMenuActivity" />
         <activity android:name=".activity.activity.UserApplicationListReviewActivity" />
-        <activity android:name=".activity.activity.AppReceivedReviewActivity"></activity>
+        <activity android:name=".activity.activity.AppReceivedReviewActivity" />
+        <activity android:name=".activity.activity.AppAcceptedReviewActivity" />
+        <activity android:name=".activity.activity.AppRejectedReviewActivity"></activity>
     </application>
 
 </manifest>
