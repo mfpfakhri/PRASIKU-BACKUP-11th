@@ -359,16 +359,60 @@
         </android.support.v7.widget.CardView>
     </android.support.v4.widget.NestedScrollView>
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/cpo_adopted_fab"
+    <com.github.clans.fab.FloatingActionMenu
+        android:id="@+id/cpo_fam"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:layout_marginRight="16dp"
-        android:background="@color/colorPrimaryDarkTransparant"
         android:elevation="6dp"
-        android:src="@drawable/ic_mode_edit_white_24dp"
+        app:fab_label=""
         app:layout_anchor="@id/cpo_adopted_cardview"
         app:layout_anchorGravity="bottom|right|end"
-        app:pressedTranslationZ="12dp" />
+        app:menu_colorNormal="@color/colorPrimaryDark"
+        app:menu_colorPressed="@color/colorPrimaryDarkTransparant"
+        app:menu_colorRipple="@color/colorPrimaryDarkTransparant"
+        app:menu_labels_colorNormal="@color/light_gray"
+        app:menu_labels_colorPressed="@color/light_gray"
+        app:menu_labels_colorRipple="@color/light_gray"
+        app:menu_labels_textColor="@color/black"
+        app:menu_openDirection="up"
+        app:menu_showShadow="true">
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/cpo_adopted_fab_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_delete_white_24dp"
+            app:fabSize="mini"
+            app:fab_colorNormal="@color/colorPrimaryDarkTransparant"
+            app:fab_colorPressed="@color/light_gray"
+            app:fab_colorRipple="@color/light_gray"
+            app:fab_label="@string/delete_cat_data" />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/cpo_adopted_fab_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_mode_edit_white_24dp"
+            app:fabSize="mini"
+            app:fab_colorNormal="@color/colorPrimaryDarkTransparant"
+            app:fab_colorPressed="@color/light_gray"
+            app:fab_colorRipple="@color/light_gray"
+            app:fab_label="@string/edit_cat_data" />
+
+    </com.github.clans.fab.FloatingActionMenu>
+
+    <!--<android.support.design.widget.FloatingActionButton-->
+    <!--android:id="@+id/cpo_adopted_fab"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginBottom="16dp"-->
+    <!--android:layout_marginRight="16dp"-->
+    <!--android:background="@color/colorPrimaryDarkTransparant"-->
+    <!--android:elevation="6dp"-->
+    <!--android:src="@drawable/ic_mode_edit_white_24dp"-->
+    <!--app:layout_anchor="@id/cpo_adopted_cardview"-->
+    <!--app:layout_anchorGravity="bottom|right|end"-->
+    <!--app:pressedTranslationZ="12dp" />-->
 </android.support.design.widget.CoordinatorLayout>

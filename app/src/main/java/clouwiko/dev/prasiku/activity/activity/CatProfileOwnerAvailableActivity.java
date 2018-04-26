@@ -1,7 +1,8 @@
 package clouwiko.dev.prasiku.activity.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -10,15 +11,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import clouwiko.dev.prasiku.R;
+import clouwiko.dev.prasiku.activity.model.Adoption;
 
 public class CatProfileOwnerAvailableActivity extends AppCompatActivity {
 
@@ -26,9 +31,10 @@ public class CatProfileOwnerAvailableActivity extends AppCompatActivity {
     private ImageView imCatPhoto;
     private TextView tvCatName, tvOwner, tvCity, tvGender, tvDesc, tvDob, tvMed, tvVacc, tvSpNeu, tvReason, tvAdoptStatus;
     private Button btnAdopted;
-    private FloatingActionButton fab;
+    private FloatingActionMenu fam;
+    private FloatingActionButton fabEdit, fabDelete;
     private FirebaseAuth auth;
-    private DatabaseReference databaseCats, databaseUsers;
+    private DatabaseReference databaseCats, databaseUsers, databaseDelete;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +57,9 @@ public class CatProfileOwnerAvailableActivity extends AppCompatActivity {
         tvReason = findViewById(R.id.cpo_available_reasonvalue);
         tvAdoptStatus = findViewById(R.id.cpo_available_adoptstatusvalue);
         btnAdopted = findViewById(R.id.cpo_available_button);
-        fab = findViewById(R.id.cpo_available_fab);
+        fam = findViewById(R.id.cpo_fam);
+        fabEdit = findViewById(R.id.cpo_available_fab_edit);
+        fabDelete = findViewById(R.id.cpo_available_fab_delete);
 
         btnAdopted.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,7 +68,7 @@ public class CatProfileOwnerAvailableActivity extends AppCompatActivity {
             }
         });
 
-        fab.setOnClickListener(new View.OnClickListener() {
+        fabEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String catId = getIntent().getStringExtra("cat_id");
@@ -72,6 +80,83 @@ public class CatProfileOwnerAvailableActivity extends AppCompatActivity {
                 intent.putExtra("previousActivity", pActivity);
                 startActivity(intent);
                 finish();
+            }
+        });
+
+        fabDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(CatProfileOwnerAvailableActivity.this);
+                builder.setMessage("Are You sure want to delete this cat?")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                String catId = getIntent().getStringExtra("cat_id");
+                                String catapponreceived = catId + "_Received";
+                                String catapponaccepted = catId + "_Accepted";
+                                String catapponrejected = catId + "_Rejected";
+                                databaseCats = FirebaseDatabase.getInstance().getReference().child("cats").child(catId);
+                                databaseCats.removeValue();
+                                databaseDelete = FirebaseDatabase.getInstance().getReference().child("adoptions");
+                                databaseDelete.orderByChild("adoptionCatIdApponStatus").equalTo(catapponreceived).addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        for (DataSnapshot updRejectAppSnapshot : dataSnapshot.getChildren()) {
+                                            updRejectAppSnapshot.getRef().setValue(null);
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+
+                                    }
+                                });
+                                databaseDelete.orderByChild("adoptionCatIdApponStatus").equalTo(catapponaccepted).addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        for (DataSnapshot updRejectAppSnapshot : dataSnapshot.getChildren()) {
+                                            updRejectAppSnapshot.getRef().setValue(null);
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+
+                                    }
+                                });
+                                databaseDelete.orderByChild("adoptionCatIdApponStatus").equalTo(catapponrejected).addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        for (DataSnapshot updRejectAppSnapshot : dataSnapshot.getChildren()) {
+                                            updRejectAppSnapshot.getRef().setValue(null);
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+
+                                    }
+                                });
+                                String pActivity = getIntent().getStringExtra("previousActivity");
+                                Intent intentAdoptionList = new Intent(getApplicationContext(), UserAdoptionListActivity.class);
+                                Intent intentFindCat = new Intent(getApplicationContext(), FindCatForAdoptActivity.class);
+                                Intent intentMainMenu = new Intent(getApplicationContext(), MainMenuActivity.class);
+
+                                if (pActivity.equals("adoptionlist")) {
+                                    startActivity(intentAdoptionList);
+                                    finish();
+                                } else if (pActivity.equals("findcat")) {
+                                    startActivity(intentFindCat);
+                                    finish();
+                                } else {
+                                    startActivity(intentMainMenu);
+                                    finish();
+                                }
+                            }
+                        })
+                        .setNegativeButton("No", null);
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
             }
         });
 

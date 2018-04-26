@@ -150,6 +150,8 @@
     <string name="application_status_stat_label">Status :</string>
     <string name="adoptionreview_contact_status_label">You can contact me on :</string>
     <string name="appacceptedreview_agreement">Adoption Agreement</string>
+    <string name="edit_cat_data">Edit</string>
+    <string name="delete_cat_data">Delete</string>
 
     <string-array name="gender">
         <item>Male</item>

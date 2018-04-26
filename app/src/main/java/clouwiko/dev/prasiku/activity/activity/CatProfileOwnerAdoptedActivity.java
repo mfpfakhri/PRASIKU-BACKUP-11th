@@ -1,7 +1,8 @@
 package clouwiko.dev.prasiku.activity.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -10,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -28,9 +31,10 @@ public class CatProfileOwnerAdoptedActivity extends AppCompatActivity {
     private ImageView imCatPhoto;
     private TextView tvCatName, tvOwner, tvCity, tvGender, tvDesc, tvDob, tvMed, tvVacc, tvSpNeu, tvReason, tvAdoptStatus;
     private Button btnAdopted;
-    private FloatingActionButton fabEdit;
+    private FloatingActionMenu fam;
+    private FloatingActionButton fabEdit, fabDelete;
     private FirebaseAuth auth;
-    private DatabaseReference databaseCats, databaseUsers, databaseAdoptions;
+    private DatabaseReference databaseCats, databaseUsers, databaseAdoptions, databaseDelete;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +54,9 @@ public class CatProfileOwnerAdoptedActivity extends AppCompatActivity {
         tvReason = findViewById(R.id.cpo_adopted_reasonvalue);
         tvAdoptStatus = findViewById(R.id.cpo_adopted_adoptstatusvalue);
         btnAdopted = findViewById(R.id.cpo_adopted_button);
-        fabEdit = findViewById(R.id.cpo_adopted_fab);
+        fam = findViewById(R.id.cpo_fam);
+        fabEdit = findViewById(R.id.cpo_adopted_fab_edit);
+        fabDelete = findViewById(R.id.cpo_adopted_fab_delete);
 
         btnAdopted.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,6 +107,83 @@ public class CatProfileOwnerAdoptedActivity extends AppCompatActivity {
 
                     }
                 });
+            }
+        });
+
+        fabDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(CatProfileOwnerAdoptedActivity.this);
+                builder.setMessage("Are You sure want to delete this cat?")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                String catId = getIntent().getStringExtra("cat_id");
+                                String catapponreceived = catId + "_Received";
+                                String catapponaccepted = catId + "_Accepted";
+                                String catapponrejected = catId + "_Rejected";
+                                databaseCats = FirebaseDatabase.getInstance().getReference().child("cats").child(catId);
+                                databaseCats.removeValue();
+                                databaseDelete = FirebaseDatabase.getInstance().getReference().child("adoptions");
+                                databaseDelete.orderByChild("adoptionCatIdApponStatus").equalTo(catapponreceived).addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        for (DataSnapshot updRejectAppSnapshot : dataSnapshot.getChildren()) {
+                                            updRejectAppSnapshot.getRef().setValue(null);
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+
+                                    }
+                                });
+                                databaseDelete.orderByChild("adoptionCatIdApponStatus").equalTo(catapponaccepted).addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        for (DataSnapshot updRejectAppSnapshot : dataSnapshot.getChildren()) {
+                                            updRejectAppSnapshot.getRef().setValue(null);
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+
+                                    }
+                                });
+                                databaseDelete.orderByChild("adoptionCatIdApponStatus").equalTo(catapponrejected).addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        for (DataSnapshot updRejectAppSnapshot : dataSnapshot.getChildren()) {
+                                            updRejectAppSnapshot.getRef().setValue(null);
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+
+                                    }
+                                });
+                                String pActivity = getIntent().getStringExtra("previousActivity");
+                                Intent intentAdoptionList = new Intent(getApplicationContext(), UserAdoptionListActivity.class);
+                                Intent intentFindCat = new Intent(getApplicationContext(), FindCatForAdoptActivity.class);
+                                Intent intentMainMenu = new Intent(getApplicationContext(), MainMenuActivity.class);
+
+                                if (pActivity.equals("adoptionlist")) {
+                                    startActivity(intentAdoptionList);
+                                    finish();
+                                } else if (pActivity.equals("findcat")) {
+                                    startActivity(intentFindCat);
+                                    finish();
+                                } else {
+                                    startActivity(intentMainMenu);
+                                    finish();
+                                }
+                            }
+                        })
+                        .setNegativeButton("No", null);
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
             }
         });
 
