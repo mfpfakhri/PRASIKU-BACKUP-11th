@@ -34,7 +34,7 @@ public class AppReceivedReviewActivity extends AppCompatActivity {
     private TextView tvAppName, tvCatName, tvPhone, tvAddress, tvJob, tvReason, tvNoA, tvHouseType, tvHouseSize, tvNoP, tvCatPlace, tvHouseMember, tvMovingPlan, tvMarriagePlan, tvKids, tvFinancial, tvAppStatus;
     private Button btnSaveNum, btnAccept, btnReject, btnWa, btnMessage;
     private FirebaseAuth auth;
-    private DatabaseReference databaseAdoptions, databaseCats;
+    private DatabaseReference databaseAdoptions, databaseCats, databaseAdoptionsReject;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -218,6 +218,26 @@ public class AppReceivedReviewActivity extends AppCompatActivity {
 
                                             }
                                         });
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+
+                                    }
+                                });
+                                String cat_extra = getIntent().getStringExtra("cat_id");
+                                String catapponstatus = cat_extra+"_Received";
+                                databaseAdoptionsReject = FirebaseDatabase.getInstance().getReference().child("adoptions");
+                                databaseAdoptionsReject.orderByChild("adoptionCatIdApponStatus").equalTo(catapponstatus).addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        for (DataSnapshot updRejectAppSnapshot : dataSnapshot.getChildren()){
+                                            Adoption updRejectAppAdoption = updRejectAppSnapshot.getValue(Adoption.class);
+                                            updRejectAppAdoption.setAdoptionApplicationStatus("Rejected");
+                                            updRejectAppAdoption.setAdoptionCatIdApponStatus(updRejectAppAdoption.getAdoptionCatId()+"_Rejected");
+                                            updRejectAppAdoption.setAdoptionOwnerIdApponStatus(updRejectAppAdoption.getAdoptionOwnerId()+"_Rejected");
+                                            databaseAdoptionsReject.child(updRejectAppAdoption.getAdoptionId()).setValue(updRejectAppAdoption);
+                                        }
                                     }
 
                                     @Override
