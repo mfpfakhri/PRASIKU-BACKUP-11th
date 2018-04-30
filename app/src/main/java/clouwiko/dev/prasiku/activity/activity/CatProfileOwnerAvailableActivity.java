@@ -112,7 +112,6 @@ public class CatProfileOwnerAvailableActivity extends AppCompatActivity {
 
                                     }
                                 });
-//                                databaseCats.removeValue();
                                 databaseDelete = FirebaseDatabase.getInstance().getReference().child("adoptions");
                                 databaseDelete.orderByChild("adoptionCatIdApponStatus").equalTo(catapponreceived).addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
@@ -125,7 +124,6 @@ public class CatProfileOwnerAvailableActivity extends AppCompatActivity {
                                             adoptionreceived.setAdoptionDeleteStatus("1");
                                             adoptionreceived.setAdoptionOwnerDeleteStatus(adoptionreceived.getAdoptionOwnerId()+"_1");
                                             databaseDelete.child(adoptionreceived.getAdoptionId()).setValue(adoptionreceived);
-//                                            updRejectAppSnapshot.getRef().setValue(null);
                                         }
                                     }
 
@@ -145,7 +143,6 @@ public class CatProfileOwnerAvailableActivity extends AppCompatActivity {
                                             adoptionaccepted.setAdoptionDeleteStatus("1");
                                             adoptionaccepted.setAdoptionOwnerDeleteStatus(adoptionaccepted.getAdoptionOwnerId()+"_1");
                                             databaseDelete.child(adoptionaccepted.getAdoptionId()).setValue(adoptionaccepted);
-//                                            updRejectAppSnapshot.getRef().setValue(null);
                                         }
                                     }
 
@@ -165,7 +162,6 @@ public class CatProfileOwnerAvailableActivity extends AppCompatActivity {
                                             adoptionrejected.setAdoptionDeleteStatus("1");
                                             adoptionrejected.setAdoptionOwnerDeleteStatus(adoptionrejected.getAdoptionOwnerId()+"_1");
                                             databaseDelete.child(adoptionrejected.getAdoptionId()).setValue(adoptionrejected);
-//                                            updRejectAppSnapshot.getRef().setValue(null);
                                         }
                                     }
 
