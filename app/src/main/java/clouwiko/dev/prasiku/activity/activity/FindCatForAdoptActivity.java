@@ -177,11 +177,11 @@ public class FindCatForAdoptActivity extends AppCompatActivity {
         String userUID = auth.getUid();
 
         String keyCityValue = spinnerCities.getSelectedItem().toString().trim();
+        String cityDeleteStatus = keyCityValue+"_0";
 
         //Database Reference
         databaseCats = FirebaseDatabase.getInstance().getReference().child("cats");
-
-        databaseCats.orderByChild("catCity").equalTo(keyCityValue).addChildEventListener(new ChildEventListener() {
+        databaseCats.orderByChild("catCityDeleteStatus").equalTo(cityDeleteStatus).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Cat userCatData = dataSnapshot.getValue(Cat.class);

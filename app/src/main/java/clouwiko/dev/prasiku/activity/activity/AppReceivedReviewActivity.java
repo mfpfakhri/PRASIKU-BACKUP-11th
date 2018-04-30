@@ -206,9 +206,12 @@ public class AppReceivedReviewActivity extends AppCompatActivity {
                                                 String reasonupdate = dataSnapshot.child("catReason").getValue(String.class);
                                                 String catprovinceupdate = dataSnapshot.child("catProvince").getValue(String.class);
                                                 String catcityupdate = dataSnapshot.child("catCity").getValue(String.class);
+                                                String catdelete = dataSnapshot.child("catDeleteStatus").getValue(String.class);
+                                                String ownercatdelete = dataSnapshot.child("catOwnerDeleteStatus").getValue(String.class);
                                                 String adoptedstatusupdate = "Adopted";
+                                                String citydeletestatus = dataSnapshot.child("catCityDeleteStatus").getValue(String.class);
 
-                                                updateAcceptedCatData(catidupdate, ownerupdate, photoupdate, nameupdate, dobupdate, genderupdate, descriptionupdate, mednoteupdate, vaccstatupdate, spayneuterstatupdate, reasonupdate, catprovinceupdate, catcityupdate, adoptedstatusupdate);
+                                                updateAcceptedCatData(catidupdate, ownerupdate, photoupdate, nameupdate, dobupdate, genderupdate, descriptionupdate, mednoteupdate, vaccstatupdate, spayneuterstatupdate, reasonupdate, catprovinceupdate, catcityupdate, adoptedstatusupdate, catdelete, ownercatdelete, citydeletestatus);
                                                 Intent intent = new Intent(getApplicationContext(), MainMenuActivity.class);
                                                 Toast.makeText(getApplicationContext(), "Check your accepted Application to Download the terms", Toast.LENGTH_SHORT).show();
                                                 startActivity(intent);
@@ -380,11 +383,11 @@ public class AppReceivedReviewActivity extends AppCompatActivity {
         return true;
     }
 
-    private boolean updateAcceptedCatData(String catId, String catOwnerId, String catProfilePhoto, String catName, String catDob, String catGender, String catDescription, String catMedNote, String catVaccStat, String catSpayNeuterStat, String catReason, String catProvince, String catCity, String catAdoptedStatus) {
+    private boolean updateAcceptedCatData(String catId, String catOwnerId, String catProfilePhoto, String catName, String catDob, String catGender, String catDescription, String catMedNote, String catVaccStat, String catSpayNeuterStat, String catReason, String catProvince, String catCity, String catAdoptedStatus, String catDeleteStatus, String catOwnerDeleteStatus, String catCityDeleteStatus) {
         String catid = getIntent().getStringExtra("cat_id");
         databaseCats = FirebaseDatabase.getInstance().getReference().child("cats").child(catid);
 
-        Cat cat = new Cat(catId, catOwnerId, catProfilePhoto, catName, catDob, catGender, catDescription, catMedNote, catVaccStat, catSpayNeuterStat, catReason, catProvince, catCity, catAdoptedStatus);
+        Cat cat = new Cat(catId, catOwnerId, catProfilePhoto, catName, catDob, catGender, catDescription, catMedNote, catVaccStat, catSpayNeuterStat, catReason, catProvince, catCity, catAdoptedStatus, catDeleteStatus, catOwnerDeleteStatus, catCityDeleteStatus);
         databaseCats.setValue(cat);
 
         return true;

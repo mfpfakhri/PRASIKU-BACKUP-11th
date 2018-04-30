@@ -191,6 +191,5 @@
     <string-array name="adoptionstatus">
         <item>Adopted</item>
         <item>Available</item>
-        <item>Not Available/ Delete</item>
     </string-array>
 </resources>

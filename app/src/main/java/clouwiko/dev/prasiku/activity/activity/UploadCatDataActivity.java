@@ -219,9 +219,10 @@ public class UploadCatDataActivity extends AppCompatActivity {
                         String city = citiesNameArray.get(0).toString().trim();
                         String status = "Available";
                         String deletestatus = "0";
-                        String ownerdeletestatus = ownerId + deletestatus;
+                        String ownerdeletestatus = ownerId + "_0";
+                        String citydeletestatus = city + "_0";
 
-                        Cat cat = new Cat(id, ownerId, cPhotoUrl, name, dob, spinnerGender, desc, medNote, vacc, spayNeuter, spinnerReason, province, city, status, deletestatus, ownerdeletestatus);
+                        Cat cat = new Cat(id, ownerId, cPhotoUrl, name, dob, spinnerGender, desc, medNote, vacc, spayNeuter, spinnerReason, province, city, status, deletestatus, ownerdeletestatus, citydeletestatus);
 
                         databaseCats.child(id).setValue(cat);
                     }

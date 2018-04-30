@@ -123,7 +123,7 @@ public class CatProfileOwnerAdoptedActivity extends AppCompatActivity {
                                 String catapponaccepted = catId + "_Accepted";
                                 String catapponrejected = catId + "_Rejected";
                                 databaseCats = FirebaseDatabase.getInstance().getReference().child("cats").child(catId);
-                                databaseCats.removeValue();
+//                                databaseCats.removeValue();
                                 databaseDelete = FirebaseDatabase.getInstance().getReference().child("adoptions");
                                 databaseDelete.orderByChild("adoptionCatIdApponStatus").equalTo(catapponreceived).addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
