@@ -1,6 +1,7 @@
 package clouwiko.dev.prasiku.activity.activity;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -22,6 +24,7 @@ import clouwiko.dev.prasiku.R;
 
 public class SignInActivity extends AppCompatActivity {
 
+    private TextView title;
     private EditText inputEmail, inputPassword;
     private FirebaseAuth auth;
     private ProgressBar progressBar;
@@ -30,17 +33,23 @@ public class SignInActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_sign_in);
 
         //Get Firebase Auth Instance
         auth = FirebaseAuth.getInstance();
 
-        setContentView(R.layout.activity_sign_in);
-
+        title = findViewById(R.id.signin_title);
+        Typeface facetitles = Typeface.createFromAsset(getAssets(),"fonts/segoeuisl.ttf");
+        title.setTypeface(facetitles);
         inputEmail = (EditText) findViewById(R.id.email);
         inputPassword = (EditText) findViewById(R.id.password);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         btnSignIn = (Button) findViewById(R.id.action_sign_in_button);
+        Typeface facesignin = Typeface.createFromAsset(getAssets(),"fonts/segoeuil.ttf");
+        btnSignIn.setTypeface(facesignin);
         btnResetPassword = (Button) findViewById(R.id.intent_reset_password_button);
+        Typeface facesigninreset = Typeface.createFromAsset(getAssets(),"fonts/segoeuil.ttf");
+        btnResetPassword.setTypeface(facesigninreset);
 
         //Get Firebase auth instance
         auth = FirebaseAuth.getInstance();

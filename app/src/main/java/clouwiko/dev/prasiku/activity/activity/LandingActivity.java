@@ -34,11 +34,16 @@ public class LandingActivity extends AppCompatActivity {
         }
 
         textSlogan = findViewById(R.id.textSlogan);
-        Typeface face = Typeface.createFromAsset(getAssets(),"fonts/NABILA.TTF");
-        textSlogan.setTypeface(face);
+        Typeface faceslogan = Typeface.createFromAsset(getAssets(),"fonts/segoeuisl.ttf");
+        textSlogan.setTypeface(faceslogan);
 
         btnSignIn = findViewById(R.id.main_sign_in_button);
+        Typeface facesignin = Typeface.createFromAsset(getAssets(),"fonts/segoeuil.ttf");
+        btnSignIn.setTypeface(faceslogan);
+
         btnSignUp = findViewById(R.id.main_sign_up_button);
+        Typeface facesignup = Typeface.createFromAsset(getAssets(),"fonts/segoeuil.ttf");
+        btnSignUp.setTypeface(faceslogan);
 
 //        btnInputProvinces = (Button)findViewById(R.id.main_province_intent_button);
 //        btnInputCities = (Button)findViewById(R.id.main_city_intent_button);

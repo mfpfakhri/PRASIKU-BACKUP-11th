@@ -6,6 +6,7 @@ import android.content.ContentResolver;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.provider.MediaStore;
@@ -24,6 +25,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -58,6 +60,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     //TODO: Object Declaration
     private String TAG = "SignUpActivity";
+    private TextView title;
     private EditText inputEmail, inputPassword, inputFullName, inputDob, inputPhone, inputAddress;
     private DatePickerDialog.OnDateSetListener dobSetListener;
     private MaterialSpinner spinnerGender;
@@ -86,6 +89,9 @@ public class SignUpActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
 
         //TODO: Initialize Object
+        title = findViewById(R.id.signup_title);
+        Typeface facetitles = Typeface.createFromAsset(getAssets(),"fonts/segoeuisl.ttf");
+        title.setTypeface(facetitles);
         inputEmail = findViewById(R.id.email);
         inputPassword = findViewById(R.id.password);
         inputFullName = findViewById(R.id.full_name);
@@ -97,7 +103,11 @@ public class SignUpActivity extends AppCompatActivity {
         spinnerCities = findViewById(R.id.citySpinner_signup);
         userPhotoIv = findViewById(R.id.userPhotos);
         btnSignUp = findViewById(R.id.action_sign_up_button);
+        Typeface facesignup = Typeface.createFromAsset(getAssets(),"fonts/segoeuil.ttf");
+        btnSignUp.setTypeface(facesignup);
         btnSignIn = findViewById(R.id.intent_sign_in_button);
+        Typeface facesignupin = Typeface.createFromAsset(getAssets(),"fonts/segoeuil.ttf");
+        btnSignIn.setTypeface(facesignupin);
         progressBar = findViewById(R.id.progressBar);
 
         if (progressBar != null) {
