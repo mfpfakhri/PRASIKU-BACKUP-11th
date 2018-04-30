@@ -73,7 +73,7 @@ public class UploadCatDataActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload_cat_data);
 
-        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar_uploadcat);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_uploadcat);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Upload Cat Data");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -218,8 +218,10 @@ public class UploadCatDataActivity extends AppCompatActivity {
                         String province = provincesNameArray.get(0).toString().trim();
                         String city = citiesNameArray.get(0).toString().trim();
                         String status = "Available";
+                        String deletestatus = "0";
+                        String ownerdeletestatus = ownerId + deletestatus;
 
-                        Cat cat = new Cat(id, ownerId, cPhotoUrl, name, dob, spinnerGender, desc, medNote, vacc, spayNeuter, spinnerReason, province, city, status);
+                        Cat cat = new Cat(id, ownerId, cPhotoUrl, name, dob, spinnerGender, desc, medNote, vacc, spayNeuter, spinnerReason, province, city, status, deletestatus, ownerdeletestatus);
 
                         databaseCats.child(id).setValue(cat);
                     }

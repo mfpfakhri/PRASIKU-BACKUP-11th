@@ -30,11 +30,13 @@ public class Adoption {
     private String adoptionApplicantPhoto;
     private String adoptionOwnerIdApponStatus;
     private String adoptionCatIdApponStatus;
+    private String adoptionDeleteStatus;
+    private String adoptionOwnerDeleteStatus;
 
     public Adoption() {
     }
 
-    public Adoption(String adoptionId, String adoptionCatId, String adoptionOwnerId, String adoptionApplicantId, String adoptionApplicantPhone, String adoptionApplicantAddress, String adoptionApplicantJob, String adoptionApplicantReason, String adoptionApplicantNoAnimal, String adoptionApplicantHouseType, String adoptionApplicantHouseSize, String adoptionApplicantNoPeople, String adoptionApplicantCatPlace, String adoptionApplicantFamPermission, String adoptionApplicantMove, String adoptionApplicantMarriage, String adoptionApplicantKids, String adoptionApplicantFinancial, String adoptionApplicationStatus, String adoptionCatName, String adoptionCatPhoto, String adoptionApplicantName, String adoptionApplicantPhoto, String adoptionOwnerIdApponStatus, String adoptionCatIdApponStatus) {
+    public Adoption(String adoptionId, String adoptionCatId, String adoptionOwnerId, String adoptionApplicantId, String adoptionApplicantPhone, String adoptionApplicantAddress, String adoptionApplicantJob, String adoptionApplicantReason, String adoptionApplicantNoAnimal, String adoptionApplicantHouseType, String adoptionApplicantHouseSize, String adoptionApplicantNoPeople, String adoptionApplicantCatPlace, String adoptionApplicantFamPermission, String adoptionApplicantMove, String adoptionApplicantMarriage, String adoptionApplicantKids, String adoptionApplicantFinancial, String adoptionApplicationStatus, String adoptionCatName, String adoptionCatPhoto, String adoptionApplicantName, String adoptionApplicantPhoto, String adoptionOwnerIdApponStatus, String adoptionCatIdApponStatus, String adoptionDeleteStatus, String adoptionOwnerDeleteStatus) {
         this.adoptionId = adoptionId;
         this.adoptionCatId = adoptionCatId;
         this.adoptionOwnerId = adoptionOwnerId;
@@ -60,6 +62,8 @@ public class Adoption {
         this.adoptionApplicantPhoto = adoptionApplicantPhoto;
         this.adoptionOwnerIdApponStatus = adoptionOwnerIdApponStatus;
         this.adoptionCatIdApponStatus = adoptionCatIdApponStatus;
+        this.adoptionDeleteStatus = adoptionDeleteStatus;
+        this.adoptionOwnerDeleteStatus = adoptionOwnerDeleteStatus;
     }
 
     public String getAdoptionId() {
@@ -260,5 +264,21 @@ public class Adoption {
 
     public void setAdoptionCatIdApponStatus(String adoptionCatIdApponStatus) {
         this.adoptionCatIdApponStatus = adoptionCatIdApponStatus;
+    }
+
+    public String getAdoptionDeleteStatus() {
+        return adoptionDeleteStatus;
+    }
+
+    public void setAdoptionDeleteStatus(String adoptionDeleteStatus) {
+        this.adoptionDeleteStatus = adoptionDeleteStatus;
+    }
+
+    public String getAdoptionOwnerDeleteStatus() {
+        return adoptionOwnerDeleteStatus;
+    }
+
+    public void setAdoptionOwnerDeleteStatus(String adoptionOwnerDeleteStatus) {
+        this.adoptionOwnerDeleteStatus = adoptionOwnerDeleteStatus;
     }
 }

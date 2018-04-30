@@ -45,7 +45,7 @@ public class UserAdoptionListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_adoption_list);
 
-        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("My Adoption List");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -73,10 +73,11 @@ public class UserAdoptionListActivity extends AppCompatActivity {
     void getCatData() {
         //Firebase Current User UID
         String userId = auth.getCurrentUser().getUid();
+        String ownerdeletestat = userId + "_0";
 
         //Database Reference
         databaseCats = firebaseDatabase.getReference().child("cats");
-        databaseCats.orderByChild("catOwnerId").equalTo(userId).addChildEventListener(new ChildEventListener() {
+        databaseCats.orderByChild("catOwnerDeleteStatus").equalTo(ownerdeletestat).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Cat userCatData = dataSnapshot.getValue(Cat.class);
@@ -135,14 +136,14 @@ public class UserAdoptionListActivity extends AppCompatActivity {
             holder.layoutroot.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (cStat.equals("Available")){
+                    if (cStat.equals("Available")) {
                         Intent intent = new Intent(getApplicationContext(), CatProfileOwnerAvailableActivity.class);
                         intent.putExtra("previousActivity", "adoptionlist");
                         intent.putExtra("owner_id", oId);
                         intent.putExtra("cat_id", cId);
                         startActivity(intent);
                         finish();
-                    } else if (cStat.equals("Adopted")){
+                    } else if (cStat.equals("Adopted")) {
                         Intent intent = new Intent(getApplicationContext(), CatProfileOwnerAdoptedActivity.class);
                         intent.putExtra("previousActivity", "adoptionlist");
                         intent.putExtra("owner_id", oId);

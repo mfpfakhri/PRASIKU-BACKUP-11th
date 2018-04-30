@@ -260,77 +260,235 @@ public class EditCatDataAvailableActivity extends AppCompatActivity {
 
                 //Cat's Gender Validation
                 int adoptionStatusSpinner = spinnerAdoptionStatus.getSelectedItemPosition();
-                if (adoptionStatusSpinner == 0) {
-                    Toast.makeText(getApplicationContext(), "Choose Adoption Status", Toast.LENGTH_SHORT).show();
-                    return;
-                } else if (adoptionStatusSpinner == 1) {
-                    String cat_extra = getIntent().getStringExtra("cat_id");
-                    String catapponstatus = cat_extra + "_Received";
-                    databaseAdoptionsReject = FirebaseDatabase.getInstance().getReference().child("adoptions");
-                    databaseAdoptionsReject.orderByChild("adoptionCatIdApponStatus").equalTo(catapponstatus).addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            for (DataSnapshot updRejectAppSnapshot : dataSnapshot.getChildren()) {
-                                Adoption updRejectAppAdoption = updRejectAppSnapshot.getValue(Adoption.class);
-                                updRejectAppAdoption.setAdoptionApplicationStatus("Rejected");
-                                updRejectAppAdoption.setAdoptionCatIdApponStatus(updRejectAppAdoption.getAdoptionCatId() + "_Rejected");
-                                updRejectAppAdoption.setAdoptionOwnerIdApponStatus(updRejectAppAdoption.getAdoptionOwnerId() + "_Rejected");
-                                databaseAdoptionsReject.child(updRejectAppAdoption.getAdoptionId()).setValue(updRejectAppAdoption);
+                switch (adoptionStatusSpinner) {
+                    case 0:
+                        Toast.makeText(getApplicationContext(), "Choose Adoption Status", Toast.LENGTH_SHORT).show();
+                        return;
+                    case 1:
+                        final String cat_extra = getIntent().getStringExtra("cat_id");
+                        String catapponstatus = cat_extra + "_Received";
+                        databaseAdoptionsReject = FirebaseDatabase.getInstance().getReference().child("adoptions");
+                        databaseAdoptionsReject.orderByChild("adoptionCatIdApponStatus").equalTo(catapponstatus).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                for (DataSnapshot updRejectAppSnapshot : dataSnapshot.getChildren()) {
+                                    Adoption updRejectAppAdoption = updRejectAppSnapshot.getValue(Adoption.class);
+                                    updRejectAppAdoption.setAdoptionApplicationStatus("Rejected");
+                                    updRejectAppAdoption.setAdoptionCatIdApponStatus(updRejectAppAdoption.getAdoptionCatId() + "_Rejected");
+                                    updRejectAppAdoption.setAdoptionOwnerIdApponStatus(updRejectAppAdoption.getAdoptionOwnerId() + "_Rejected");
+                                    databaseAdoptionsReject.child(updRejectAppAdoption.getAdoptionId()).setValue(updRejectAppAdoption);
+                                }
                             }
-                        }
 
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
 
-                        }
-                    });
-                } else {
-                    String cId = getIntent().getStringExtra("cat_id");
-                    databaseCats = FirebaseDatabase.getInstance().getReference().child("cats").child(cId);
-                    databaseCats.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            int selectedVacc = radioGroupVaccine.getCheckedRadioButtonId();
-                            radioButtonVacc = findViewById(selectedVacc);
-                            int selectedSpayNeuter = radioGroupSpayNeuter.getCheckedRadioButtonId();
-                            radioButtonSpayNeuter = findViewById(selectedSpayNeuter);
+                            }
+                        });
+                        databaseCats = FirebaseDatabase.getInstance().getReference().child("cats").child(cat_extra);
+                        databaseCats.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                Cat cat = dataSnapshot.getValue(Cat.class);
+                                cat.setCatAdoptedStatus("Adopted");
+                                databaseCats.child(cat_extra).setValue(cat);
+                            }
 
-                            String dobupdate = inputCatDob.getText().toString().trim();
-                            String descriptionupdate = inputCatDesc.getText().toString().trim();
-                            String mednoteupdate = inputCatMedNote.getText().toString().trim();
-                            String genderupdate = spinnerCatGender.getSelectedItem().toString().trim();
-                            String vaccstatupdate = radioButtonVacc.getText().toString().trim();
-                            String spayneuterstatupdate = radioButtonSpayNeuter.getText().toString().trim();
-                            String reasonupdate = spinnerCatReasonOpenAdoption.getSelectedItem().toString().trim();
-                            String adoptedstatusupdate = spinnerAdoptionStatus.getSelectedItem().toString().trim();
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
 
-                            String nameupdate = dataSnapshot.child("catName").getValue(String.class);
-                            String catidupdate = dataSnapshot.child("catId").getValue(String.class);
-                            String ownerupdate = dataSnapshot.child("catOwnerId").getValue(String.class);
-                            String photoupdate = dataSnapshot.child("catProfilePhoto").getValue(String.class);
-                            String catprovinceupdate = dataSnapshot.child("catProvince").getValue(String.class);
-                            String catcityupdate = dataSnapshot.child("catCity").getValue(String.class);
+                            }
+                        });
+                    case 2:
+                        String cId = getIntent().getStringExtra("cat_id");
+                        databaseCats = FirebaseDatabase.getInstance().getReference().child("cats").child(cId);
+                        databaseCats.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                int selectedVacc = radioGroupVaccine.getCheckedRadioButtonId();
+                                radioButtonVacc = findViewById(selectedVacc);
+                                int selectedSpayNeuter = radioGroupSpayNeuter.getCheckedRadioButtonId();
+                                radioButtonSpayNeuter = findViewById(selectedSpayNeuter);
 
-                            updateCatData(catidupdate, ownerupdate, photoupdate, nameupdate, dobupdate, genderupdate, descriptionupdate, mednoteupdate, vaccstatupdate, spayneuterstatupdate, reasonupdate, catprovinceupdate, catcityupdate, adoptedstatusupdate);
+                                String dobupdate = inputCatDob.getText().toString().trim();
+                                String descriptionupdate = inputCatDesc.getText().toString().trim();
+                                String mednoteupdate = inputCatMedNote.getText().toString().trim();
+                                String genderupdate = spinnerCatGender.getSelectedItem().toString().trim();
+                                String vaccstatupdate = radioButtonVacc.getText().toString().trim();
+                                String spayneuterstatupdate = radioButtonSpayNeuter.getText().toString().trim();
+                                String reasonupdate = spinnerCatReasonOpenAdoption.getSelectedItem().toString().trim();
+                                String adoptedstatusupdate = spinnerAdoptionStatus.getSelectedItem().toString().trim();
 
-                        }
+                                String nameupdate = dataSnapshot.child("catName").getValue(String.class);
+                                String catidupdate = dataSnapshot.child("catId").getValue(String.class);
+                                String ownerupdate = dataSnapshot.child("catOwnerId").getValue(String.class);
+                                String photoupdate = dataSnapshot.child("catProfilePhoto").getValue(String.class);
+                                String catprovinceupdate = dataSnapshot.child("catProvince").getValue(String.class);
+                                String catcityupdate = dataSnapshot.child("catCity").getValue(String.class);
+                                String catdelete = dataSnapshot.child("catDeleteStatus").getValue(String.class);
+                                String ownercatdelete = dataSnapshot.child("catOwnerDeleteStatus").getValue(String.class);
 
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
+                                updateCatData(catidupdate, ownerupdate, photoupdate, nameupdate, dobupdate, genderupdate, descriptionupdate, mednoteupdate, vaccstatupdate, spayneuterstatupdate, reasonupdate, catprovinceupdate, catcityupdate, adoptedstatusupdate, catdelete, ownercatdelete);
+                            }
 
-                        }
-                    });
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+                    case 3:
+                        final String cat_id = getIntent().getStringExtra("cat_id");
+                        String catapponreceived = cat_id + "_Received";
+                        databaseAdoptionsReject = FirebaseDatabase.getInstance().getReference().child("adoptions");
+                        databaseAdoptionsReject.orderByChild("adoptionCatIdApponStatus").equalTo(catapponreceived).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                for (DataSnapshot updRejectAppSnapshot : dataSnapshot.getChildren()) {
+                                    Adoption updRejectAppAdoption = updRejectAppSnapshot.getValue(Adoption.class);
+                                    updRejectAppAdoption.setAdoptionApplicationStatus("Not_Available");
+                                    updRejectAppAdoption.setAdoptionCatIdApponStatus(updRejectAppAdoption.getAdoptionCatId() + "_Not_Available");
+                                    updRejectAppAdoption.setAdoptionOwnerIdApponStatus(updRejectAppAdoption.getAdoptionOwnerId() + "Not_Available");
+                                    updRejectAppAdoption.setAdoptionDeleteStatus("1");
+                                    updRejectAppAdoption.setAdoptionOwnerDeleteStatus(updRejectAppAdoption.getAdoptionOwnerId()+"_1");
+                                    databaseAdoptionsReject.child(updRejectAppAdoption.getAdoptionId()).setValue(updRejectAppAdoption);
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+                        String catapponaccepted = cat_id + "_Accepted";
+                        databaseAdoptionsReject = FirebaseDatabase.getInstance().getReference().child("adoptions");
+                        databaseAdoptionsReject.orderByChild("adoptionCatIdApponStatus").equalTo(catapponaccepted).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                for (DataSnapshot updRejectAppSnapshot : dataSnapshot.getChildren()) {
+                                    Adoption updRejectAppAdoption = updRejectAppSnapshot.getValue(Adoption.class);
+                                    updRejectAppAdoption.setAdoptionApplicationStatus("Not_Available");
+                                    updRejectAppAdoption.setAdoptionCatIdApponStatus(updRejectAppAdoption.getAdoptionCatId() + "_Not_Available");
+                                    updRejectAppAdoption.setAdoptionOwnerIdApponStatus(updRejectAppAdoption.getAdoptionOwnerId() + "Not_Available");
+                                    updRejectAppAdoption.setAdoptionDeleteStatus("1");
+                                    updRejectAppAdoption.setAdoptionOwnerDeleteStatus(updRejectAppAdoption.getAdoptionOwnerId()+"_1");
+                                    databaseAdoptionsReject.child(updRejectAppAdoption.getAdoptionId()).setValue(updRejectAppAdoption);
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+                        String catapponrejected = cat_id + "_Rejected";
+                        databaseAdoptionsReject = FirebaseDatabase.getInstance().getReference().child("adoptions");
+                        databaseAdoptionsReject.orderByChild("adoptionCatIdApponStatus").equalTo(catapponrejected).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                for (DataSnapshot updRejectAppSnapshot : dataSnapshot.getChildren()) {
+                                    Adoption updRejectAppAdoption = updRejectAppSnapshot.getValue(Adoption.class);
+                                    updRejectAppAdoption.setAdoptionApplicationStatus("Not_Available");
+                                    updRejectAppAdoption.setAdoptionCatIdApponStatus(updRejectAppAdoption.getAdoptionCatId() + "_Not_Available");
+                                    updRejectAppAdoption.setAdoptionOwnerIdApponStatus(updRejectAppAdoption.getAdoptionOwnerId() + "Not_Available");
+                                    updRejectAppAdoption.setAdoptionDeleteStatus("1");
+                                    updRejectAppAdoption.setAdoptionOwnerDeleteStatus(updRejectAppAdoption.getAdoptionOwnerId()+"_1");
+                                    databaseAdoptionsReject.child(updRejectAppAdoption.getAdoptionId()).setValue(updRejectAppAdoption);
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+                        databaseCats = FirebaseDatabase.getInstance().getReference().child("cats").child(cat_id);
+                        databaseCats.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                Cat cat = dataSnapshot.getValue(Cat.class);
+                                cat.setCatAdoptedStatus("Not_Available");
+                                cat.setCatDeleteStatus("1");
+                                cat.setCatOwnerDeleteStatus(cat.getCatOwnerId()+"_1");
+                                databaseCats.child(cat_id).setValue(cat);
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
                 }
+//                if (adoptionStatusSpinner == 0) {
+//                    Toast.makeText(getApplicationContext(), "Choose Adoption Status", Toast.LENGTH_SHORT).show();
+//                    return;
+//                } else if (adoptionStatusSpinner == 1) {
+//                    String cat_extra = getIntent().getStringExtra("cat_id");
+//                    String catapponstatus = cat_extra + "_Received";
+//                    databaseAdoptionsReject = FirebaseDatabase.getInstance().getReference().child("adoptions");
+//                    databaseAdoptionsReject.orderByChild("adoptionCatIdApponStatus").equalTo(catapponstatus).addListenerForSingleValueEvent(new ValueEventListener() {
+//                        @Override
+//                        public void onDataChange(DataSnapshot dataSnapshot) {
+//                            for (DataSnapshot updRejectAppSnapshot : dataSnapshot.getChildren()) {
+//                                Adoption updRejectAppAdoption = updRejectAppSnapshot.getValue(Adoption.class);
+//                                updRejectAppAdoption.setAdoptionApplicationStatus("Rejected");
+//                                updRejectAppAdoption.setAdoptionCatIdApponStatus(updRejectAppAdoption.getAdoptionCatId() + "_Rejected");
+//                                updRejectAppAdoption.setAdoptionOwnerIdApponStatus(updRejectAppAdoption.getAdoptionOwnerId() + "_Rejected");
+//                                databaseAdoptionsReject.child(updRejectAppAdoption.getAdoptionId()).setValue(updRejectAppAdoption);
+//                            }
+//                        }
+//
+//                        @Override
+//                        public void onCancelled(DatabaseError databaseError) {
+//
+//                        }
+//                    });
+//                } else {
+//                    String cId = getIntent().getStringExtra("cat_id");
+//                    databaseCats = FirebaseDatabase.getInstance().getReference().child("cats").child(cId);
+//                    databaseCats.addListenerForSingleValueEvent(new ValueEventListener() {
+//                        @Override
+//                        public void onDataChange(DataSnapshot dataSnapshot) {
+//                            int selectedVacc = radioGroupVaccine.getCheckedRadioButtonId();
+//                            radioButtonVacc = findViewById(selectedVacc);
+//                            int selectedSpayNeuter = radioGroupSpayNeuter.getCheckedRadioButtonId();
+//                            radioButtonSpayNeuter = findViewById(selectedSpayNeuter);
+//
+//                            String dobupdate = inputCatDob.getText().toString().trim();
+//                            String descriptionupdate = inputCatDesc.getText().toString().trim();
+//                            String mednoteupdate = inputCatMedNote.getText().toString().trim();
+//                            String genderupdate = spinnerCatGender.getSelectedItem().toString().trim();
+//                            String vaccstatupdate = radioButtonVacc.getText().toString().trim();
+//                            String spayneuterstatupdate = radioButtonSpayNeuter.getText().toString().trim();
+//                            String reasonupdate = spinnerCatReasonOpenAdoption.getSelectedItem().toString().trim();
+//                            String adoptedstatusupdate = spinnerAdoptionStatus.getSelectedItem().toString().trim();
+//
+//                            String nameupdate = dataSnapshot.child("catName").getValue(String.class);
+//                            String catidupdate = dataSnapshot.child("catId").getValue(String.class);
+//                            String ownerupdate = dataSnapshot.child("catOwnerId").getValue(String.class);
+//                            String photoupdate = dataSnapshot.child("catProfilePhoto").getValue(String.class);
+//                            String catprovinceupdate = dataSnapshot.child("catProvince").getValue(String.class);
+//                            String catcityupdate = dataSnapshot.child("catCity").getValue(String.class);
+//
+//                            updateCatData(catidupdate, ownerupdate, photoupdate, nameupdate, dobupdate, genderupdate, descriptionupdate, mednoteupdate, vaccstatupdate, spayneuterstatupdate, reasonupdate, catprovinceupdate, catcityupdate, adoptedstatusupdate);
+//
+//                        }
+//
+//                        @Override
+//                        public void onCancelled(DatabaseError databaseError) {
+//
+//                        }
+//                    });
+//                }
                 backToMainMenu();
             }
         });
     }
 
-    private boolean updateCatData(String catId, String catOwnerId, String catProfilePhoto, String catName, String catDob, String catGender, String catDescription, String catMedNote, String catVaccStat, String catSpayNeuterStat, String catReason, String catProvince, String catCity, String catAdoptedStatus) {
+    private boolean updateCatData(String catId, String catOwnerId, String catProfilePhoto, String catName, String catDob, String catGender, String catDescription, String catMedNote, String catVaccStat, String catSpayNeuterStat, String catReason, String catProvince, String catCity, String catAdoptedStatus, String catDeleteStatus, String catOwnerDeleteStatus) {
         String cId = getIntent().getStringExtra("cat_id");
         databaseCats = FirebaseDatabase.getInstance().getReference().child("cats").child(cId);
 
-        Cat cat = new Cat(catId, catOwnerId, catProfilePhoto, catName, catDob, catGender, catDescription, catMedNote, catVaccStat, catSpayNeuterStat, catReason, catProvince, catCity, catAdoptedStatus);
+        Cat cat = new Cat(catId, catOwnerId, catProfilePhoto, catName, catDob, catGender, catDescription, catMedNote, catVaccStat, catSpayNeuterStat, catReason, catProvince, catCity, catAdoptedStatus, catDeleteStatus, catOwnerDeleteStatus);
 
         databaseCats.setValue(cat);
 
@@ -338,12 +496,6 @@ public class EditCatDataAvailableActivity extends AppCompatActivity {
     }
 
     private void backToMainMenu() {
-//        Intent intent = new Intent(getApplicationContext(), MainMenuActivity.class);
-//        Toast toast = Toast.makeText(getApplicationContext(), "Cat Data Successfully Edited", Toast.LENGTH_SHORT);
-//        toast.show();
-//        startActivity(intent);
-//        toast.cancel();
-//        finish();
         String catId = getIntent().getStringExtra("cat_id");
         String ownerId = getIntent().getStringExtra("owner_id");
         String pActivity = getIntent().getStringExtra("previousActivity");

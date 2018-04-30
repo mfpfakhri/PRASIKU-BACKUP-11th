@@ -176,14 +176,14 @@ public class ApplicantAdoptionFormActivity extends AppCompatActivity {
         });
     }
 
-    private void backToMainMenu(){
+    private void backToMainMenu() {
         Intent intent = new Intent(getApplicationContext(), MainMenuActivity.class);
         Toast.makeText(getApplicationContext(), "Your Adoption Application has been Sent", Toast.LENGTH_SHORT).show();
         startActivity(intent);
         finish();
     }
 
-    private void applyAdoption(){
+    private void applyAdoption() {
         //Database Reference Path
         databaseAdoption = FirebaseDatabase.getInstance().getReference().child("adoptions");
         int selectedFamilyPermission = rgFamilyPermission.getCheckedRadioButtonId();
@@ -220,9 +220,11 @@ public class ApplicantAdoptionFormActivity extends AppCompatActivity {
         String kidsinhouse = rbKids.getText().toString().trim();
         String financial = rbFinancial.getText().toString().trim();
         String status = "Received";
-        String owner_status = ownerId+"_"+status;
-        String cat_status = catId+"_"+status;
-        Adoption adoption = new Adoption(adoptionId, catId, ownerId, applicantId, phone, address, job, reasonwhy, numberofanimal, housetype, houseize, familynumber, animallive, familypermission, movingplan, marriageplan, kidsinhouse, financial, status, catname, catphoto, applicantname, applicantphoto, owner_status, cat_status);
+        String owner_status = ownerId + "_" + status;
+        String cat_status = catId + "_" + status;
+        String delete_status = "0";
+        String owner_delete_status = ownerId + delete_status;
+        Adoption adoption = new Adoption(adoptionId, catId, ownerId, applicantId, phone, address, job, reasonwhy, numberofanimal, housetype, houseize, familynumber, animallive, familypermission, movingplan, marriageplan, kidsinhouse, financial, status, catname, catphoto, applicantname, applicantphoto, owner_status, cat_status, delete_status, owner_delete_status);
 
         databaseAdoption.child(adoptionId).setValue(adoption);
     }

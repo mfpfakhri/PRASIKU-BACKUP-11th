@@ -72,10 +72,11 @@ public class UserApplicationListActivity extends AppCompatActivity {
     void getCatData() {
         //Firebase Current User UID
         String userUID = auth.getUid();
+        String ownerdeletestatus = userUID + "_0";
 
         //Database Reference
         databaseAdoptions = firebaseDatabase.getReference().child("adoptions");
-        databaseAdoptions.orderByChild("adoptionApplicantId").equalTo(userUID).addChildEventListener(new ChildEventListener() {
+        databaseAdoptions.orderByChild("adoptionOwnerDeleteStatus").equalTo(ownerdeletestatus).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Adoption adoptionData = dataSnapshot.getValue(Adoption.class);
