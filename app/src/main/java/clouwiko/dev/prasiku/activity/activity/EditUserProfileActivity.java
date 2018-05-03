@@ -41,6 +41,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import clouwiko.dev.prasiku.R;
+import clouwiko.dev.prasiku.activity.model.Adoption;
+import clouwiko.dev.prasiku.activity.model.Cat;
 import clouwiko.dev.prasiku.activity.model.User;
 import fr.ganfra.materialspinner.MaterialSpinner;
 
@@ -52,7 +54,7 @@ public class EditUserProfileActivity extends AppCompatActivity {
     private Button btnUpdate;
     private ProgressBar progressBar;
     private FirebaseAuth auth;
-    private DatabaseReference databaseProvinces, databaseCities, databaseUsers;
+    private DatabaseReference databaseProvinces, databaseCities, databaseUsers, databaseCats, databaseAdoptions;
 
     ArrayAdapter<String> citiesAdapter;
     List<String> cities;
@@ -296,21 +298,61 @@ public class EditUserProfileActivity extends AppCompatActivity {
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         for (DataSnapshot userdatasnapshot : dataSnapshot.getChildren()) {
                             User userdata = userdatasnapshot.getValue(User.class);
-                            String updName = txtFullName.getText().toString().trim();
-                            String updDob = txtDob.getText().toString().trim();
-                            String updGender = spinnerGender.getSelectedItem().toString().trim();
-                            String updProvince = spinnerProvinces.getSelectedItem().toString().trim();
-                            String updCity = spinnerCities.getSelectedItem().toString().trim();
-                            String updPhone = txtPhone.getText().toString().trim();
-                            String updAddress = txtAddress.getText().toString().trim();
-                            userdata.setUserFname(updName);
-                            userdata.setUserDob(updDob);
-                            userdata.setUserGender(updGender);
-                            userdata.setUserProvince(updProvince);
-                            userdata.setUserCity(updCity);
-                            userdata.setUserPhone(updPhone);
-                            userdata.setUserAddress(updAddress);
+                            String updUserName = txtFullName.getText().toString().trim();
+                            String updUserDob = txtDob.getText().toString().trim();
+                            String updUserGender = spinnerGender.getSelectedItem().toString().trim();
+                            String updUserProvince = spinnerProvinces.getSelectedItem().toString().trim();
+                            String updUserCity = spinnerCities.getSelectedItem().toString().trim();
+                            String updUserPhone = txtPhone.getText().toString().trim();
+                            String updUserAddress = txtAddress.getText().toString().trim();
+                            userdata.setUserFname(updUserName);
+                            userdata.setUserDob(updUserDob);
+                            userdata.setUserGender(updUserGender);
+                            userdata.setUserProvince(updUserProvince);
+                            userdata.setUserCity(updUserCity);
+                            userdata.setUserPhone(updUserPhone);
+                            userdata.setUserAddress(updUserAddress);
                             databaseUsers.child(userdata.getUserUid()).setValue(userdata);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
+                databaseCats = FirebaseDatabase.getInstance().getReference().child("cats");
+                databaseCats.orderByChild("catOwnerId").equalTo(userID).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot catdatasnapshot : dataSnapshot.getChildren()) {
+                            Cat catdata = catdatasnapshot.getValue(Cat.class);
+                            String updCatCity = spinnerCities.getSelectedItem().toString().trim();
+                            String updCatCityDelete = updCatCity + "_" + catdata.getCatDeleteStatus();
+                            String updCatProvince = spinnerProvinces.getSelectedItem().toString().trim();
+                            catdata.setCatCity(updCatCity);
+                            catdata.setCatCityDeleteStatus(updCatCityDelete);
+                            catdata.setCatProvince(updCatProvince);
+                            databaseCats.child(catdata.getCatId()).setValue(catdata);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
+                databaseAdoptions = FirebaseDatabase.getInstance().getReference().child("adoptions");
+                databaseAdoptions.orderByChild("adoptionApplicantId").equalTo(userID).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot adoptdatasnapshot : dataSnapshot.getChildren()){
+                            Adoption adoptiondata = adoptdatasnapshot.getValue(Adoption.class);
+                            String updAdoptionApplName = txtFullName.getText().toString().trim();
+                            adoptiondata.setAdoptionApplicantName(updAdoptionApplName);
+                            databaseAdoptions.child(adoptiondata.getAdoptionId()).setValue(adoptiondata);
                         }
                     }
 
