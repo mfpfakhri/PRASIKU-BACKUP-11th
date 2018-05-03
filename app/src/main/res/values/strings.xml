@@ -153,6 +153,7 @@
     <string name="edit_cat_data">Edit</string>
     <string name="delete_cat_data">Delete</string>
     <string name="action_edit_profile">Edit Profile</string>
+    <string name="edituserprofile_update">Update</string>
 
     <string-array name="gender">
         <item>Male</item>

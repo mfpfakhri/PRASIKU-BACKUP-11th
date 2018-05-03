@@ -17,7 +17,7 @@
             android:theme="@style/AppTheme.AppBarOverlay">
 
             <android.support.v7.widget.Toolbar
-                android:id="@+id/editcatavailable_toolbar"
+                android:id="@+id/edituserprofile_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:layout_weight="1"
@@ -44,23 +44,7 @@
                     android:layout_height="wrap_content">
 
                     <EditText
-                        android:id="@+id/email"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/hint_email"
-                        android:inputType="textEmailAddress"
-                        android:maxLines="1"
-                        android:singleLine="true"
-                        android:textColor="@color/black" />
-
-                </android.support.design.widget.TextInputLayout>
-
-                <android.support.design.widget.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <EditText
-                        android:id="@+id/full_name"
+                        android:id="@+id/edituserprofile_full_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/hint_full_name"
@@ -76,7 +60,7 @@
                     android:layout_height="wrap_content">
 
                     <EditText
-                        android:id="@+id/dobDatepicker"
+                        android:id="@+id/edituserprofile_dob"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:clickable="true"
@@ -88,20 +72,20 @@
                 </android.support.design.widget.TextInputLayout>
 
                 <fr.ganfra.materialspinner.MaterialSpinner
-                    android:id="@+id/genderSpinner_signup"
+                    android:id="@+id/edituserprofile_genderspinner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:entries="@array/gender"
                     app:ms_hint="@string/hint_gender" />
 
                 <fr.ganfra.materialspinner.MaterialSpinner
-                    android:id="@+id/provinceSpinner_signup"
+                    android:id="@+id/edituserprofile_provincespinner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:ms_hint="@string/hint_province" />
 
                 <fr.ganfra.materialspinner.MaterialSpinner
-                    android:id="@+id/citySpinner_signup"
+                    android:id="@+id/edituserprofile_cityspinner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:ms_baseColor="@color/black"
@@ -112,7 +96,7 @@
                     android:layout_height="wrap_content">
 
                     <EditText
-                        android:id="@+id/phoneNumber"
+                        android:id="@+id/edituserprofile_phonenumber"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/hint_cp"
@@ -128,7 +112,7 @@
                     android:layout_height="wrap_content">
 
                     <EditText
-                        android:id="@+id/address"
+                        android:id="@+id/edituserprofile_address"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/hint_address"
@@ -148,13 +132,13 @@
                     android:padding="8dp">
 
                     <Button
-                        android:id="@+id/action_sign_up_button"
+                        android:id="@+id/edituserprofile_update_button"
                         style="?android:textAppearanceSmall"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
                         android:background="@color/colorPrimary"
-                        android:text="@string/action_sign_up"
+                        android:text="@string/edituserprofile_update"
                         android:textColor="@android:color/black"
                         android:textStyle="bold" />
                 </LinearLayout>

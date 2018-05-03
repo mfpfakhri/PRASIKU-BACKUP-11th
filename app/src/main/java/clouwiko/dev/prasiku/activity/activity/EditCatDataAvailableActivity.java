@@ -67,7 +67,7 @@ public class EditCatDataAvailableActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.editcatavailable_toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Edit Cat Data");
+        getSupportActionBar().setTitle("Edit Cat");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         inputCatDob = findViewById(R.id.editcatavailable_dob);
@@ -379,57 +379,6 @@ public class EditCatDataAvailableActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Cat Data Successfully Edited", Toast.LENGTH_SHORT).show();
             startActivity(intent);
             finish();
-        }
-    }
-
-    private void catDataValidation() {
-        //Cat's DOB Validation
-        String catDobDate = inputCatDob.getText().toString().trim();
-        if (TextUtils.isEmpty(catDobDate)) {
-            Toast.makeText(getApplicationContext(), "Enter Your Cat's Birth Date", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        //Cat's Gender Validation
-        int catSpinnerPosition = spinnerCatGender.getSelectedItemPosition();
-        if (catSpinnerPosition != 0) {
-
-        } else {
-            Toast.makeText(getApplicationContext(), "Choose Your Cat's Gender", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        //Cat's Description Validation
-        String desc = inputCatDesc.getText().toString();
-        if (TextUtils.isEmpty(desc)) {
-            Toast.makeText(getApplicationContext(), "Please Describe Your Cat", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        //Vaccine Status Validation
-        if (radioGroupVaccine.getCheckedRadioButtonId() == -1) {
-            Toast.makeText(getApplicationContext(), "Choose Cat's Vaccine Status", Toast.LENGTH_SHORT).show();
-            return;
-        } else {
-
-        }
-
-        //Spay/ Neuter Validation
-        if (radioGroupSpayNeuter.getCheckedRadioButtonId() == -1) {
-            Toast.makeText(getApplicationContext(), "Choose Cat's Spay/ Neuter Status", Toast.LENGTH_SHORT).show();
-            return;
-        } else {
-
-        }
-
-        //Open Adoption Reason
-        //Cat's Gender Validation
-        int adoptionStatusSpinner = spinnerAdoptionStatus.getSelectedItemPosition();
-        if (adoptionStatusSpinner == 0) {
-            Toast.makeText(getApplicationContext(), "Choose Adoption Status", Toast.LENGTH_SHORT).show();
-            return;
-        } else {
-
         }
     }
 

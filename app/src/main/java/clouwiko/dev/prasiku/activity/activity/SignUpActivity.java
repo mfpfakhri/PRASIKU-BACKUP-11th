@@ -91,7 +91,7 @@ public class SignUpActivity extends AppCompatActivity {
 
         //TODO: Initialize Object
         title = findViewById(R.id.signup_title);
-        Typeface facetitles = Typeface.createFromAsset(getAssets(),"fonts/segoeuisl.ttf");
+        Typeface facetitles = Typeface.createFromAsset(getAssets(), "fonts/segoeuisl.ttf");
         title.setTypeface(facetitles);
         inputEmail = findViewById(R.id.email);
         inputPassword = findViewById(R.id.password);
@@ -104,10 +104,10 @@ public class SignUpActivity extends AppCompatActivity {
         spinnerCities = findViewById(R.id.citySpinner_signup);
         userPhotoIv = findViewById(R.id.userPhotos);
         btnSignUp = findViewById(R.id.action_sign_up_button);
-        Typeface facesignup = Typeface.createFromAsset(getAssets(),"fonts/segoeuil.ttf");
+        Typeface facesignup = Typeface.createFromAsset(getAssets(), "fonts/segoeuil.ttf");
         btnSignUp.setTypeface(facesignup);
         btnSignIn = findViewById(R.id.intent_sign_in_button);
-        Typeface facesignupin = Typeface.createFromAsset(getAssets(),"fonts/segoeuil.ttf");
+        Typeface facesignupin = Typeface.createFromAsset(getAssets(), "fonts/segoeuil.ttf");
         btnSignIn.setTypeface(facesignupin);
         progressBar = findViewById(R.id.progressBar);
 
@@ -316,16 +316,20 @@ public class SignUpActivity extends AppCompatActivity {
                 }
 
                 //Province Validation
-                String spinnerProvinceValue = spinnerProvinces.getSelectedItem().toString().trim();
-                if (TextUtils.isEmpty(spinnerProvinceValue)) {
-                    Toast.makeText(getApplicationContext(), "Enter Your Province", Toast.LENGTH_SHORT).show();
+                int spinnerProvincePosition = spinnerProvinces.getSelectedItemPosition();
+                if (spinnerProvincePosition != 0) {
+
+                } else {
+                    Toast.makeText(getApplicationContext(), "Select Your Province", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 //City Validation
-                String spinnerCityValue = spinnerCities.getSelectedItem().toString().trim();
-                if (TextUtils.isEmpty(spinnerCityValue)) {
-                    Toast.makeText(getApplicationContext(), "Enter Your City", Toast.LENGTH_SHORT).show();
+                int spinnerCityPosition = spinnerCities.getSelectedItemPosition();
+                if (spinnerCityPosition != 0) {
+
+                } else {
+                    Toast.makeText(getApplicationContext(), "Select Your City", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
