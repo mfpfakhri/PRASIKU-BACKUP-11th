@@ -5,11 +5,11 @@ import android.os.Bundle;
 
 import clouwiko.dev.prasiku.R;
 
-public class CatBreedsStandardsActivity extends AppCompatActivity {
+public class EditUserProfileActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cat_breeds_standards);
+        setContentView(R.layout.activity_edit_user_profile);
     }
 }

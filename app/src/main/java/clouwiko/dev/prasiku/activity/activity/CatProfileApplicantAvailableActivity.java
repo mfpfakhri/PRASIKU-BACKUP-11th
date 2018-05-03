@@ -57,14 +57,12 @@ public class CatProfileApplicantAvailableActivity extends AppCompatActivity {
                 String cName = getIntent().getStringExtra("cat_name");
                 String cPhoto = getIntent().getStringExtra("cat_photo");
                 String applicantname = getIntent().getStringExtra("applicant_name");
-                String applicantphoto = getIntent().getStringExtra("applicant_photo");
                 Intent intent = new Intent(getApplicationContext(), ApplicantAdoptionFormActivity.class);
                 intent.putExtra("owner_id", oId);
                 intent.putExtra("cat_id", cId);
                 intent.putExtra("cat_name", cName);
                 intent.putExtra("cat_photo", cPhoto);
                 intent.putExtra("applicant_name", applicantname);
-                intent.putExtra("applicant_photo", applicantphoto);
                 startActivity(intent);
                 finish();
             }

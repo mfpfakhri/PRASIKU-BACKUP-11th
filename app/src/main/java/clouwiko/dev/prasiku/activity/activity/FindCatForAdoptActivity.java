@@ -274,7 +274,6 @@ public class FindCatForAdoptActivity extends AppCompatActivity {
                             intent.putExtra("cat_name", cName);
                             intent.putExtra("cat_photo", cPhoto);
                             intent.putExtra("applicant_name", applicantname);
-                            intent.putExtra("applicant_photo", applicantphoto);
                             startActivity(intent);
                             finish();
                         } else if (cStat.equals("Adopted")){

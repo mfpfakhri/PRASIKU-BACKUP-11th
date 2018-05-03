@@ -203,7 +203,6 @@ public class ApplicantAdoptionFormActivity extends AppCompatActivity {
         String catname = getIntent().getStringExtra("cat_name");
         String catphoto = getIntent().getStringExtra("cat_photo");
         String applicantname = getIntent().getStringExtra("applicant_name");
-        String applicantphoto = getIntent().getStringExtra("applicant_photo");
         String applicantId = auth.getCurrentUser().getUid().toString().trim();
         String phone = etPhone.getText().toString().trim();
         String address = etAddress.getText().toString().trim();
@@ -224,7 +223,7 @@ public class ApplicantAdoptionFormActivity extends AppCompatActivity {
         String cat_status = catId + "_" + status;
         String delete_status = "0";
         String owner_delete_status = ownerId + delete_status;
-        Adoption adoption = new Adoption(adoptionId, catId, ownerId, applicantId, phone, address, job, reasonwhy, numberofanimal, housetype, houseize, familynumber, animallive, familypermission, movingplan, marriageplan, kidsinhouse, financial, status, catname, catphoto, applicantname, applicantphoto, owner_status, cat_status, delete_status, owner_delete_status);
+        Adoption adoption = new Adoption(adoptionId, catId, ownerId, applicantId, phone, address, job, reasonwhy, numberofanimal, housetype, houseize, familynumber, animallive, familypermission, movingplan, marriageplan, kidsinhouse, financial, status, catname, catphoto, applicantname, owner_status, cat_status, delete_status, owner_delete_status);
 
         databaseAdoption.child(adoptionId).setValue(adoption);
     }

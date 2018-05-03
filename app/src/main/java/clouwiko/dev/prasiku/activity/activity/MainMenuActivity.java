@@ -37,7 +37,7 @@ public class MainMenuActivity extends AppCompatActivity
     private FirebaseAuth auth;
     private FirebaseAuth.AuthStateListener authStateListener;
     private ProgressBar progressBar;
-    private CardView uploadCard, findCatCard, breedsStandardsCard;
+    private CardView uploadCard, findCatCard;
     private long backPressedTime;
     private Toast backToast;
     private ImageView userPhoto;
@@ -69,7 +69,6 @@ public class MainMenuActivity extends AppCompatActivity
         //Defining Object
         uploadCard = (CardView) findViewById(R.id.upload_cat_data);
         findCatCard = (CardView) findViewById(R.id.find_cat_for_adopt);
-        breedsStandardsCard = (CardView) findViewById(R.id.cat_breeds_standards);
         userPhoto = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.userProfilePhotoND);
         userName = (TextView) navigationView.getHeaderView(0).findViewById(R.id.userFNameND);
         userEmail = (TextView) navigationView.getHeaderView(0).findViewById(R.id.userEmailND);
@@ -141,13 +140,6 @@ public class MainMenuActivity extends AppCompatActivity
                 });
             }
         });
-        breedsStandardsCard.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), CatBreedsStandardsActivity.class);
-                startActivity(intent);
-            }
-        });
     }
 
     @Override
@@ -180,6 +172,10 @@ public class MainMenuActivity extends AppCompatActivity
         int id = menuItem.getItemId();
         progressBar.setVisibility(View.VISIBLE);
         switch (id) {
+            case R.id.action_edit_profile:
+                startActivity(new Intent(MainMenuActivity.this, EditUserProfileActivity.class));
+                progressBar.setVisibility(View.GONE);
+                break;
             case R.id.action_edit_password:
                 startActivity(new Intent(MainMenuActivity.this, ChangePasswordActivity.class));
                 progressBar.setVisibility(View.GONE);

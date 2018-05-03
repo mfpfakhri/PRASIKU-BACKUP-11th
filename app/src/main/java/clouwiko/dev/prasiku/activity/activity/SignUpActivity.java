@@ -48,6 +48,7 @@ import com.google.firebase.storage.UploadTask;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -206,6 +207,7 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Calendar cal = Calendar.getInstance();
+                cal.setTimeZone(TimeZone.getTimeZone("UTC"));
                 int day = cal.get(Calendar.DAY_OF_MONTH);
                 int month = cal.get(Calendar.MONTH);
                 int year = cal.get(Calendar.YEAR);
@@ -215,6 +217,7 @@ public class SignUpActivity extends AppCompatActivity {
                         android.R.style.Theme_Holo_Light_Dialog_MinWidth,
                         dobSetListener,
                         day, month, year);
+                dialog.getDatePicker().setMaxDate(System.currentTimeMillis());
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 dialog.show();
             }
@@ -224,9 +227,9 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onDateSet(DatePicker datePicker, int dayOfMonth, int month, int year) {
                 month = month + 1;
-                Log.d("onDateSet: date: " + dayOfMonth + "/" + month + "/" + year, dobSetListener.toString());
+                Log.d("onDateSet: date: " + dayOfMonth + "-" + month + "-" + year, dobSetListener.toString());
 
-                String date = dayOfMonth + "/" + month + "/" + year;
+                String date = dayOfMonth + "-" + month + "-" + year;
                 inputDob.setText(date);
             }
         };

@@ -68,7 +68,6 @@
         <activity
             android:name=".activity.activity.FindCatForAdoptActivity"
             android:parentActivityName=".activity.activity.MainMenuActivity" />
-        <activity android:name=".activity.activity.CatBreedsStandardsActivity" />
         <activity
             android:name=".activity.activity.UserAdoptionListActivity"
             android:parentActivityName=".activity.activity.MainMenuActivity" />
@@ -88,7 +87,8 @@
         <activity android:name=".activity.activity.UserApplicationListReviewActivity" />
         <activity android:name=".activity.activity.AppReceivedReviewActivity" />
         <activity android:name=".activity.activity.AppAcceptedReviewActivity" />
-        <activity android:name=".activity.activity.AppRejectedReviewActivity"></activity>
+        <activity android:name=".activity.activity.AppRejectedReviewActivity" />
+        <activity android:name=".activity.activity.EditUserProfileActivity"></activity>
     </application>
 
 </manifest>
