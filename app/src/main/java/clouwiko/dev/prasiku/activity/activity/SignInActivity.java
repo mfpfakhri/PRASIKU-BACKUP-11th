@@ -29,6 +29,7 @@ public class SignInActivity extends AppCompatActivity {
     private FirebaseAuth auth;
     private ProgressBar progressBar;
     private Button btnSignIn, btnResetPassword;
+    private FirebaseAuth.AuthStateListener authStateListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,22 +38,50 @@ public class SignInActivity extends AppCompatActivity {
 
         //Get Firebase Auth Instance
         auth = FirebaseAuth.getInstance();
+        final FirebaseUser user = auth.getCurrentUser();
+
+//        authStateListener = new FirebaseAuth.AuthStateListener() {
+//            @Override
+//            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+//                if (user != null) {
+//                    if (user.isEmailVerified()) {
+//                        Intent intent = new Intent(SignInActivity.this, MainMenuActivity.class);
+//                        startActivity(intent);
+//                        finish();
+//                    } else {
+//                        auth.signOut();
+//                        startActivity(new Intent(SignInActivity.this, VerificationActivity.class));
+//                        finish();
+//                    }
+//                } else {
+//                    startActivity(new Intent(SignInActivity.this, LandingActivity.class));
+//                    finish();
+//                }
+//            }
+//        };
+
+//        if (emailverified) {
+//            Intent intent = new Intent(SignInActivity.this, MainMenuActivity.class);
+//            startActivity(intent);
+//            finish();
+//        } else {
+//            Intent intent = new Intent(SignInActivity.this, VerificationActivity.class);
+//            startActivity(intent);
+//            finish();
+//        }
 
         title = findViewById(R.id.signin_title);
-        Typeface facetitles = Typeface.createFromAsset(getAssets(),"fonts/segoeuisl.ttf");
+        Typeface facetitles = Typeface.createFromAsset(getAssets(), "fonts/segoeuisl.ttf");
         title.setTypeface(facetitles);
         inputEmail = (EditText) findViewById(R.id.email);
         inputPassword = (EditText) findViewById(R.id.password);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         btnSignIn = (Button) findViewById(R.id.action_sign_in_button);
-        Typeface facesignin = Typeface.createFromAsset(getAssets(),"fonts/segoeuil.ttf");
+        Typeface facesignin = Typeface.createFromAsset(getAssets(), "fonts/segoeuil.ttf");
         btnSignIn.setTypeface(facesignin);
         btnResetPassword = (Button) findViewById(R.id.intent_reset_password_button);
-        Typeface facesigninreset = Typeface.createFromAsset(getAssets(),"fonts/segoeuil.ttf");
+        Typeface facesigninreset = Typeface.createFromAsset(getAssets(), "fonts/segoeuil.ttf");
         btnResetPassword.setTypeface(facesigninreset);
-
-        //Get Firebase auth instance
-        auth = FirebaseAuth.getInstance();
 
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,27 +97,35 @@ public class SignInActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Enter Password", Toast.LENGTH_SHORT).show();
                     return;
                 }
+                if (password.length() < 6) {
+                    inputPassword.setError(getString(R.string.minimum_password));
+                }
 
                 progressBar.setVisibility(View.VISIBLE);
-
                 //Authenticate User
                 auth.signInWithEmailAndPassword(email, password)
                         .addOnCompleteListener(SignInActivity.this, new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
+                                final FirebaseUser user = auth.getCurrentUser();
                                 // If sign in fails, display a message to the user. If sign in succeeds
                                 // the auth state listener will be notified and logic to handle the
                                 // signed in user can be handled in the listener.
-                                progressBar.setVisibility(View.GONE);
-                                if (!task.isSuccessful()) {
-                                    //There was an Error
-                                    if (password.length() < 6) {
-                                        inputPassword.setError(getString(R.string.minimum_password));
+                                if (task.isSuccessful()) {
+                                    if (user.isEmailVerified()){
+                                        progressBar.setVisibility(View.GONE);
+                                        Intent intent = new Intent(SignInActivity.this, MainMenuActivity.class);
+                                        startActivity(intent);
+                                        finish();
                                     } else {
-                                        Toast.makeText(SignInActivity.this, getString(R.string.auth_failed), Toast.LENGTH_SHORT).show();
+                                        progressBar.setVisibility(View.GONE);
+                                        Intent intent = new Intent(SignInActivity.this, VerificationActivity.class);
+                                        startActivity(intent);
+                                        finish();
                                     }
                                 } else {
-                                    loadUserInformation();
+                                    progressBar.setVisibility(View.GONE);
+                                    Toast.makeText(SignInActivity.this, getString(R.string.auth_failed), Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });
@@ -104,29 +141,32 @@ public class SignInActivity extends AppCompatActivity {
         });
     }
 
-    private void loadUserInformation() {
-        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user.isEmailVerified()) {
-            Intent intent = new Intent(SignInActivity.this, MainMenuActivity.class);
-            startActivity(intent);
-            finish();
-        } else {
-            Intent intent = new Intent(SignInActivity.this, VerificationActivity.class);
-            startActivity(intent);
-            finish();
-        }
-    }
+//    private void loadUserInformation() {
+//        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+//        if (user.isEmailVerified()) {
+//            Intent intent = new Intent(SignInActivity.this, MainMenuActivity.class);
+//            startActivity(intent);
+//            finish();
+//        } else {
+//            Intent intent = new Intent(SignInActivity.this, VerificationActivity.class);
+//            startActivity(intent);
+//            finish();
+//        }
+//    }
 
     @Override
     public void onBackPressed() {
-        //Get Firebase auth instance
-        auth = FirebaseAuth.getInstance();
-
-        //Get Current User
-        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user == null) {
-            startActivity(new Intent(SignInActivity.this, LandingActivity.class));
-            finish();
-        }
+        Intent intent = new Intent(SignInActivity.this, LandingActivity.class);
+        startActivity(intent);
+        finish();
+//        //Get Firebase auth instance
+//        auth = FirebaseAuth.getInstance();
+//
+//        //Get Current User
+//        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+//        if (user == null) {
+//            startActivity(new Intent(SignInActivity.this, LandingActivity.class));
+//            finish();
+//        }
     }
 }

@@ -378,6 +378,7 @@ public class SignUpActivity extends AppCompatActivity {
                                     finish();
                                 } else {
                                     Toast.makeText(SignUpActivity.this, "Authentication Failed" + task.getException(), Toast.LENGTH_SHORT).show();
+                                    finish();
                                 }
                             }
                         });
@@ -487,6 +488,7 @@ public class SignUpActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         startActivity(new Intent(SignUpActivity.this, LandingActivity.class));
+        finish();
     }
 
     @Override

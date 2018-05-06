@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -21,6 +22,8 @@ public class LandingActivity extends AppCompatActivity {
     private Button btnSignIn, btnSignUp;
 //    private Button btnInputProvinces, btnInputCities;
     TextView textSlogan;
+//    private long backPressedTime;
+//    private Toast backToast;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,16 +103,20 @@ public class LandingActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        //Get Firebase auth instance
-        auth = FirebaseAuth.getInstance();
-
-        //Get Current User
-        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user == null) {
-            Intent intent = new Intent(Intent.ACTION_MAIN);
-            intent.addCategory(Intent.CATEGORY_HOME);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
-        }
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+//        //Get Firebase auth instance
+//        auth = FirebaseAuth.getInstance();
+//
+//        //Get Current User
+//        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+//        if (user == null) {
+//            Intent intent = new Intent(Intent.ACTION_MAIN);
+//            intent.addCategory(Intent.CATEGORY_HOME);
+//            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//            startActivity(intent);
+//        }
     }
 }
