@@ -21,7 +21,7 @@ public class VerificationActivity extends AppCompatActivity {
     TextView instruction;
     private FirebaseAuth auth;
     private FirebaseAuth.AuthStateListener authStateListener;
-    private Button btnVerif, btnEmail;
+    private Button btnVerif, btnEmail, btnLanding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +33,7 @@ public class VerificationActivity extends AppCompatActivity {
 
         btnVerif = findViewById(R.id.verify_send_button);
         btnEmail = findViewById(R.id.verify_email_button);
+        btnLanding = findViewById(R.id.verify_landing_button);
 
         //Get Firebase Auth Instance
         auth = FirebaseAuth.getInstance();
@@ -76,6 +77,15 @@ public class VerificationActivity extends AppCompatActivity {
                 Intent intent = new Intent(Intent.ACTION_MAIN);
                 intent.addCategory(Intent.CATEGORY_APP_EMAIL);
                 startActivity(intent);
+            }
+        });
+
+        btnLanding.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                auth.signOut();
+                startActivity(new Intent(VerificationActivity.this, LandingActivity.class));
+                finish();
             }
         });
     }

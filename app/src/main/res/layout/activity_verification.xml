@@ -48,4 +48,15 @@
             android:textColor="@android:color/black"
             android:textStyle="bold" />
     </LinearLayout>
+    <Button
+        android:id="@+id/verify_landing_button"
+        style="?android:textAppearanceSmall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:textAllCaps="false"
+        android:background="@color/colorPrimary"
+        android:text="@string/verify_landing_button"
+        android:textColor="@android:color/black"
+        android:textStyle="bold" />
 </LinearLayout>

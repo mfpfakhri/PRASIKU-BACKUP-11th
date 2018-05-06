@@ -157,6 +157,7 @@
     <string name="verify_order">Check Your email to verify your account</string>
     <string name="verify_send_text">Send Verification</string>
     <string name="verify_email_text">Go to Your Email</string>
+    <string name="verify_landing_button"><![CDATA[<< Back to Homepage]]></string>
 
     <string-array name="gender">
         <item>Male</item>
