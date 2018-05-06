@@ -34,24 +34,31 @@ public class LandingActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         final FirebaseUser user = auth.getCurrentUser();
 
-        authStateListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                if (user != null) {
-                    if (user.isEmailVerified()) {
-                        startActivity(new Intent(LandingActivity.this, MainMenuActivity.class));
-                        finish();
-                    } else {
-                        auth.signOut();
-                        startActivity(new Intent(LandingActivity.this, VerificationActivity.class));
-                        finish();
-                    }
-                } else {
-                    startActivity(new Intent(LandingActivity.this, LandingActivity.class));
-                    finish();
-                }
+        if (user != null) {
+            if (user.isEmailVerified()) {
+                startActivity(new Intent(LandingActivity.this, MainMenuActivity.class));
+                finish();
+            } else {
+                startActivity(new Intent(LandingActivity.this, VerificationActivity.class));
+                finish();
             }
-        };
+        }
+
+//        authStateListener = new FirebaseAuth.AuthStateListener() {
+//            @Override
+//            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+//                if (user != null) {
+//                    if (user.isEmailVerified()) {
+//                        startActivity(new Intent(LandingActivity.this, MainMenuActivity.class));
+//                        finish();
+//                    } else {
+//                        auth.signOut();
+//                        startActivity(new Intent(LandingActivity.this, VerificationActivity.class));
+//                        finish();
+//                    }
+//                }
+//            }
+//        };
 
         textSlogan = findViewById(R.id.textSlogan);
         Typeface faceslogan = Typeface.createFromAsset(getAssets(),"fonts/segoeuisl.ttf");
@@ -103,20 +110,20 @@ public class LandingActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(Intent.ACTION_MAIN);
-        intent.addCategory(Intent.CATEGORY_HOME);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
-//        //Get Firebase auth instance
-//        auth = FirebaseAuth.getInstance();
-//
-//        //Get Current User
-//        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-//        if (user == null) {
-//            Intent intent = new Intent(Intent.ACTION_MAIN);
-//            intent.addCategory(Intent.CATEGORY_HOME);
-//            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//            startActivity(intent);
-//        }
+//        Intent intent = new Intent(Intent.ACTION_MAIN);
+//        intent.addCategory(Intent.CATEGORY_HOME);
+//        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//        startActivity(intent);
+        //Get Firebase auth instance
+        auth = FirebaseAuth.getInstance();
+
+        //Get Current User
+        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user == null) {
+            Intent intent = new Intent(Intent.ACTION_MAIN);
+            intent.addCategory(Intent.CATEGORY_HOME);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        }
     }
 }

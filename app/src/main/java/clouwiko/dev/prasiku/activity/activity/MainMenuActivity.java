@@ -85,10 +85,8 @@ public class MainMenuActivity extends AppCompatActivity
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if (user != null) {
                     if (user.isEmailVerified()) {
-                        startActivity(new Intent(MainMenuActivity.this, MainMenuActivity.class));
-                        finish();
+
                     } else {
-                        auth.signOut();
                         startActivity(new Intent(MainMenuActivity.this, VerificationActivity.class));
                         finish();
                     }

@@ -36,7 +36,7 @@
             android:textStyle="bold" />
 
         <Button
-            android:id="@+id/verify_signin_button"
+            android:id="@+id/verify_email_button"
             style="?android:textAppearanceSmall"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -44,7 +44,7 @@
             android:layout_weight="1"
             android:textAllCaps="false"
             android:background="@color/colorPrimary"
-            android:text="@string/verify_signin_text"
+            android:text="@string/verify_email_text"
             android:textColor="@android:color/black"
             android:textStyle="bold" />
     </LinearLayout>
