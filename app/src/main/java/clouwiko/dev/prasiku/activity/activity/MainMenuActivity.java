@@ -83,9 +83,15 @@ public class MainMenuActivity extends AppCompatActivity
         authStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                if (user == null) {
-                    //User Auth State is Changed - User is Null
-                    //Launch Login Activity
+                if (user != null) {
+                    if (user.isEmailVerified()) {
+
+                    } else {
+                        auth.signOut();
+                        startActivity(new Intent(MainMenuActivity.this, VerificationActivity.class));
+                        finish();
+                    }
+                } else {
                     startActivity(new Intent(MainMenuActivity.this, LandingActivity.class));
                     finish();
                 }

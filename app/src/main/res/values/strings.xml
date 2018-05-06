@@ -154,6 +154,9 @@
     <string name="delete_cat_data">Delete</string>
     <string name="action_edit_profile">Edit Profile</string>
     <string name="edituserprofile_update">Update</string>
+    <string name="verify_order">Check Your email to verify your account</string>
+    <string name="verify_send_text">Send Verification</string>
+    <string name="verify_signin_text">Sign In</string>
 
     <string-array name="gender">
         <item>Male</item>

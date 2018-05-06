@@ -28,12 +28,14 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.ProviderQueryResult;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -42,6 +44,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
@@ -364,13 +367,17 @@ public class SignUpActivity extends AppCompatActivity {
                                 // If sign in fails, display a message to the user. If sign in succeeds
                                 // the auth state listener will be notified and logic to handle the
                                 // signed in user can be handled in the listener.
-                                if (!task.isSuccessful()) {
-                                    Toast.makeText(SignUpActivity.this, "Authentication Failed" + task.getException(), Toast.LENGTH_SHORT).show();
-                                } else {
-                                    addUserData();
-                                    Toast.makeText(getApplicationContext(), "Your Account has been Created", Toast.LENGTH_SHORT).show();
+                                addUserData();
+                                final FirebaseUser user = auth.getCurrentUser();
+                                user.sendEmailVerification();
+                                Toast.makeText(getApplicationContext(), "Your Account has been Created, Check Your Email to Verified", Toast.LENGTH_SHORT).show();
+//                                startActivity(new Intent(SignUpActivity.this, LandingActivity.class));
+//                                finish();
+                                if (task.isComplete()) {
                                     startActivity(new Intent(SignUpActivity.this, LandingActivity.class));
                                     finish();
+                                } else {
+                                    Toast.makeText(SignUpActivity.this, "Authentication Failed" + task.getException(), Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });
@@ -451,7 +458,7 @@ public class SignUpActivity extends AppCompatActivity {
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        String email = auth.getCurrentUser().getEmail();
+                        String email = inputEmail.getText().toString().trim();
                         String userUid = auth.getCurrentUser().getUid();
                         String fName = inputFullName.getText().toString().trim();
                         String dobDate = inputDob.getText().toString().trim();
@@ -466,6 +473,7 @@ public class SignUpActivity extends AppCompatActivity {
                         User user = new User(email, userUid, fName, dobDate, spinnerValue, pPhotoUrl, province, city, phone, address, status);
 
                         databaseUsers.child(userUid).setValue(user);
+                        finish();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {

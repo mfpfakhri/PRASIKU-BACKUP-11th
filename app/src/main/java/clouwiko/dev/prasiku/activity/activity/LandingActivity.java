@@ -2,6 +2,7 @@ package clouwiko.dev.prasiku.activity.activity;
 
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -16,6 +17,7 @@ import clouwiko.dev.prasiku.R;
 public class LandingActivity extends AppCompatActivity {
 
     private FirebaseAuth auth;
+    private FirebaseAuth.AuthStateListener authStateListener;
     private Button btnSignIn, btnSignUp;
 //    private Button btnInputProvinces, btnInputCities;
     TextView textSlogan;
@@ -27,11 +29,26 @@ public class LandingActivity extends AppCompatActivity {
 
         //Init Firebase Auth
         auth = FirebaseAuth.getInstance();
+        final FirebaseUser user = auth.getCurrentUser();
 
-        //Check if Already Session
-        if (auth.getCurrentUser() != null){
-            startActivity(new Intent(LandingActivity.this, MainMenuActivity.class));
-        }
+        authStateListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                if (user != null) {
+                    if (user.isEmailVerified()) {
+                        startActivity(new Intent(LandingActivity.this, MainMenuActivity.class));
+                        finish();
+                    } else {
+                        auth.signOut();
+                        startActivity(new Intent(LandingActivity.this, VerificationActivity.class));
+                        finish();
+                    }
+                } else {
+                    startActivity(new Intent(LandingActivity.this, LandingActivity.class));
+                    finish();
+                }
+            }
+        };
 
         textSlogan = findViewById(R.id.textSlogan);
         Typeface faceslogan = Typeface.createFromAsset(getAssets(),"fonts/segoeuisl.ttf");

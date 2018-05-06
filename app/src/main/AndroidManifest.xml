@@ -88,7 +88,8 @@
         <activity android:name=".activity.activity.AppReceivedReviewActivity" />
         <activity android:name=".activity.activity.AppAcceptedReviewActivity" />
         <activity android:name=".activity.activity.AppRejectedReviewActivity" />
-        <activity android:name=".activity.activity.EditUserProfileActivity"></activity>
+        <activity android:name=".activity.activity.EditUserProfileActivity" />
+        <activity android:name=".activity.activity.VerificationActivity"></activity>
     </application>
 
 </manifest>

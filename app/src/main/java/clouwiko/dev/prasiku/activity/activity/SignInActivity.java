@@ -88,9 +88,7 @@ public class SignInActivity extends AppCompatActivity {
                                         Toast.makeText(SignInActivity.this, getString(R.string.auth_failed), Toast.LENGTH_SHORT).show();
                                     }
                                 } else {
-                                    Intent intent = new Intent(SignInActivity.this, MainMenuActivity.class);
-                                    startActivity(intent);
-                                    finish();
+                                    loadUserInformation();
                                 }
                             }
                         });
@@ -104,6 +102,19 @@ public class SignInActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    private void loadUserInformation() {
+        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user.isEmailVerified()) {
+            Intent intent = new Intent(SignInActivity.this, MainMenuActivity.class);
+            startActivity(intent);
+            finish();
+        } else {
+            Intent intent = new Intent(SignInActivity.this, VerificationActivity.class);
+            startActivity(intent);
+            finish();
+        }
     }
 
     @Override
