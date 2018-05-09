@@ -1,6 +1,8 @@
 package clouwiko.dev.prasiku.activity.activity;
 
 import android.Manifest;
+import android.app.DownloadManager;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
@@ -11,6 +13,7 @@ import android.provider.Telephony;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -44,6 +47,7 @@ public class AppAcceptedReviewActivity extends AppCompatActivity {
     private FirebaseAuth auth;
     private DatabaseReference databaseAdoptions, databaseCats;
     private static final int PERMISSION_REQUEST_STORAGE = 1;
+    private DownloadManager downloadManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -221,7 +225,36 @@ public class AppAcceptedReviewActivity extends AppCompatActivity {
         btnAgreement.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                downloadAsset("surat_perjanjian_adopsi_sikucing.pdf");
+                downloadAsset("Surat Perjanjian Adopsi SIKUCING.pdf");
+                AlertDialog.Builder builder = new AlertDialog.Builder(AppAcceptedReviewActivity.this);
+                builder.setMessage("Do You want to open agreement directory?")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                File path = new File(Environment.getExternalStorageDirectory(), Environment.DIRECTORY_DOWNLOADS);
+                                Uri uri = Uri.fromFile(path);
+                                PackageManager packageManager = getPackageManager();
+                                boolean myfiles_installed;
+                                try {
+                                    packageManager.getPackageInfo("com.sec.android.app.myfiles",PackageManager.GET_ACTIVITIES);
+                                    myfiles_installed = true;
+                                } catch (PackageManager.NameNotFoundException e) {
+                                    myfiles_installed = false;
+                                }
+                                Intent intent = getPackageManager().getLaunchIntentForPackage("com.sec.android.app.myfiles");
+                                if (myfiles_installed == true) {
+                                    intent.setAction("samsung.myfiles.intent.action.LAUNCH_MY_FILES");
+                                    intent.putExtra("samsung.myfiles.intent.extra.START_PATH", path.getAbsolutePath());
+                                    intent.setDataAndType(uri, "application/pdf");
+                                    startActivity(intent);
+                                } else {
+                                    Toast.makeText(getApplicationContext(), "No apps can perform this action, open the directory where adoption agreement manually", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        })
+                        .setNegativeButton("No", null);
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
             }
         });
     }
@@ -231,7 +264,7 @@ public class AppAcceptedReviewActivity extends AppCompatActivity {
         switch (requestCode) {
             case PERMISSION_REQUEST_STORAGE: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    if (ContextCompat.checkSelfPermission(AppAcceptedReviewActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
+                    if (ContextCompat.checkSelfPermission(AppAcceptedReviewActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
 
                     }
                 } else {
@@ -241,10 +274,11 @@ public class AppAcceptedReviewActivity extends AppCompatActivity {
         }
     }
 
-    private void downloadAsset(String filename){
-        String dirPath = Environment.getExternalStorageDirectory().getAbsolutePath()+"/SIKUCING";
+    private void downloadAsset(String filename) {
+//        String dirPath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/SIKUCING";
+        String dirPath = Environment.getExternalStorageDirectory().getAbsolutePath();
         File dir = new File(dirPath);
-        if (!dir.exists()){
+        if (!dir.exists()) {
             dir.mkdirs();
         }
         AssetManager assetManager = getAssets();
@@ -256,19 +290,19 @@ public class AppAcceptedReviewActivity extends AppCompatActivity {
             out = new FileOutputStream(outfile);
             downloadFile(in, out);
             Toast.makeText(this, "Adoption Agreement Downloaded, Check on Your Storage SIKUCING Folder", Toast.LENGTH_SHORT).show();
-        } catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
             Toast.makeText(this, "Failed to Download Adoption Agreement", Toast.LENGTH_SHORT).show();
         } finally {
-            if (in != null){
+            if (in != null) {
                 try {
                     in.close();
-                } catch (IOException e){
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
-            if (out != null){
-                try{
+            if (out != null) {
+                try {
                     out.close();
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -280,7 +314,7 @@ public class AppAcceptedReviewActivity extends AppCompatActivity {
     private void downloadFile(InputStream in, OutputStream out) throws IOException {
         byte[] buffer = new byte[1024];
         int read;
-        while ((read = in.read(buffer)) != -1){
+        while ((read = in.read(buffer)) != -1) {
             out.write(buffer, 0, read);
         }
     }
