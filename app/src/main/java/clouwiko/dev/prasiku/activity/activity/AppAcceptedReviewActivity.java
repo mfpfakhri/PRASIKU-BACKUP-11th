@@ -1,9 +1,16 @@
 package clouwiko.dev.prasiku.activity.activity;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.res.AssetManager;
 import android.net.Uri;
+import android.os.Environment;
 import android.provider.ContactsContract;
 import android.provider.Telephony;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -20,6 +27,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+
 import clouwiko.dev.prasiku.R;
 import clouwiko.dev.prasiku.activity.model.Adoption;
 
@@ -30,6 +43,7 @@ public class AppAcceptedReviewActivity extends AppCompatActivity {
     private Button btnSaveNum, btnWa, btnMessage, btnAgreement;
     private FirebaseAuth auth;
     private DatabaseReference databaseAdoptions, databaseCats;
+    private static final int PERMISSION_REQUEST_STORAGE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +78,7 @@ public class AppAcceptedReviewActivity extends AppCompatActivity {
         btnAgreement = findViewById(R.id.appacceptedreview_agreement_button);
         btnWa = findViewById(R.id.appacceptedreview_whatsapp_button);
         btnMessage = findViewById(R.id.appacceptedreview_message_button);
+        btnAgreement = findViewById(R.id.appacceptedreview_agreement_button);
 
         databaseAdoptions = FirebaseDatabase.getInstance().getReference().child("adoptions").child(appId);
         databaseAdoptions.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -153,7 +168,7 @@ public class AppAcceptedReviewActivity extends AppCompatActivity {
                     sendIntent.setType("text/plain");
                     sendIntent.setPackage("com.whatsapp");
                     startActivity(sendIntent);
-                } catch (android.content.ActivityNotFoundException ex){
+                } catch (android.content.ActivityNotFoundException ex) {
                     Toast.makeText(getApplicationContext(), "Whatsapp have not been installed.", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.whatsapp")));
                 }
@@ -175,7 +190,7 @@ public class AppAcceptedReviewActivity extends AppCompatActivity {
                         String defaultSmsPackageName = Telephony.Sms.getDefaultSmsPackage(getApplicationContext());
                         Uri uri = Uri.parse("tel:" + appphone);
                         Intent sendIntent = new Intent(Intent.ACTION_VIEW, uri);
-                        sendIntent.putExtra("address",appphone);
+                        sendIntent.putExtra("address", appphone);
                         sendIntent.putExtra("sms_body", message);
                         sendIntent.setPackage(defaultSmsPackageName);
                         sendIntent.setType("vnd.android-dir/mms-sms");
@@ -189,5 +204,84 @@ public class AppAcceptedReviewActivity extends AppCompatActivity {
                 });
             }
         });
+
+        //Give the app permission to access storage
+        if (ContextCompat.checkSelfPermission(AppAcceptedReviewActivity.this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(AppAcceptedReviewActivity.this,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                ActivityCompat.requestPermissions(AppAcceptedReviewActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSION_REQUEST_STORAGE);
+            } else {
+                ActivityCompat.requestPermissions(AppAcceptedReviewActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSION_REQUEST_STORAGE);
+            }
+        } else {
+
+        }
+
+        btnAgreement.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                downloadAsset("surat_perjanjian_adopsi_sikucing.pdf");
+            }
+        });
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSION_REQUEST_STORAGE: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    if (ContextCompat.checkSelfPermission(AppAcceptedReviewActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
+
+                    }
+                } else {
+                    Toast.makeText(getApplicationContext(), "No Permission Granted", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
+    }
+
+    private void downloadAsset(String filename){
+        String dirPath = Environment.getExternalStorageDirectory().getAbsolutePath()+"/SIKUCING";
+        File dir = new File(dirPath);
+        if (!dir.exists()){
+            dir.mkdirs();
+        }
+        AssetManager assetManager = getAssets();
+        InputStream in = null;
+        OutputStream out = null;
+        try {
+            in = assetManager.open(filename);
+            File outfile = new File(dirPath, filename);
+            out = new FileOutputStream(outfile);
+            downloadFile(in, out);
+            Toast.makeText(this, "Adoption Agreement Downloaded, Check on Your Storage SIKUCING Folder", Toast.LENGTH_SHORT).show();
+        } catch (IOException e){
+            e.printStackTrace();
+            Toast.makeText(this, "Failed to Download Adoption Agreement", Toast.LENGTH_SHORT).show();
+        } finally {
+            if (in != null){
+                try {
+                    in.close();
+                } catch (IOException e){
+                    e.printStackTrace();
+                }
+            }
+            if (out != null){
+                try{
+                    out.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    private void downloadFile(InputStream in, OutputStream out) throws IOException {
+        byte[] buffer = new byte[1024];
+        int read;
+        while ((read = in.read(buffer)) != -1){
+            out.write(buffer, 0, read);
+        }
     }
 }
