@@ -2,6 +2,8 @@ package clouwiko.dev.prasiku.activity.activity;
 
 import android.Manifest;
 import android.app.DownloadManager;
+import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -227,27 +229,18 @@ public class AppAcceptedReviewActivity extends AppCompatActivity {
             public void onClick(View v) {
                 downloadAsset("Surat Perjanjian Adopsi SIKUCING.pdf");
                 AlertDialog.Builder builder = new AlertDialog.Builder(AppAcceptedReviewActivity.this);
-                builder.setMessage("Do You want to open agreement directory?")
+                builder.setMessage("Do You want to open adoption agreement?")
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                File path = new File(Environment.getExternalStorageDirectory(), Environment.DIRECTORY_DOWNLOADS);
-                                Uri uri = Uri.fromFile(path);
-                                PackageManager packageManager = getPackageManager();
-                                boolean myfiles_installed;
-                                try {
-                                    packageManager.getPackageInfo("com.sec.android.app.myfiles",PackageManager.GET_ACTIVITIES);
-                                    myfiles_installed = true;
-                                } catch (PackageManager.NameNotFoundException e) {
-                                    myfiles_installed = false;
-                                }
-                                Intent intent = getPackageManager().getLaunchIntentForPackage("com.sec.android.app.myfiles");
-                                if (myfiles_installed == true) {
-                                    intent.setAction("samsung.myfiles.intent.action.LAUNCH_MY_FILES");
-                                    intent.putExtra("samsung.myfiles.intent.extra.START_PATH", path.getAbsolutePath());
-                                    intent.setDataAndType(uri, "application/pdf");
-                                    startActivity(intent);
-                                } else {
+                                File pdfFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath()+File.separator+"Surat Perjanjian Adopsi SIKUCING.pdf");
+                                Uri path = Uri.fromFile(pdfFile);
+                                Intent pdfOpenIntent = new Intent(Intent.ACTION_VIEW);
+                                pdfOpenIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                pdfOpenIntent.setDataAndType(path, "application/pdf");
+                                try{
+                                    AppAcceptedReviewActivity.this.startActivity(pdfOpenIntent);
+                                } catch (ActivityNotFoundException e) {
                                     Toast.makeText(getApplicationContext(), "No apps can perform this action, open the directory where adoption agreement manually", Toast.LENGTH_SHORT).show();
                                 }
                             }
@@ -255,6 +248,37 @@ public class AppAcceptedReviewActivity extends AppCompatActivity {
                         .setNegativeButton("No", null);
                 AlertDialog alertDialog = builder.create();
                 alertDialog.show();
+
+                //Another Option : open downloaded file directory
+//                AlertDialog.Builder builder = new AlertDialog.Builder(AppAcceptedReviewActivity.this);
+//                builder.setMessage("Do You want to open agreement directory?")
+//                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialog, int which) {
+//                                File path = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath()+File.separator);
+//                                Uri uri = Uri.fromFile(path);
+//                                PackageManager packageManager = getPackageManager();
+//                                boolean myfiles_installed;
+//                                try {
+//                                    packageManager.getPackageInfo("com.sec.android.app.myfiles", PackageManager.GET_ACTIVITIES);
+//                                    myfiles_installed = true;
+//                                } catch (PackageManager.NameNotFoundException e) {
+//                                    myfiles_installed = false;
+//                                }
+//                                Intent intent = getPackageManager().getLaunchIntentForPackage("com.sec.android.app.myfiles");
+//                                if (myfiles_installed == true) {
+//                                    intent.setAction("samsung.myfiles.intent.action.LAUNCH_MY_FILES");
+//                                    intent.putExtra("samsung.myfiles.intent.extra.START_PATH", path.getAbsolutePath());
+//                                    intent.setDataAndType(uri, "application/pdf");
+//                                    startActivity(intent);
+//                                } else {
+//                                    Toast.makeText(getApplicationContext(), "No apps can perform this action, open the directory where adoption agreement manually", Toast.LENGTH_SHORT).show();
+//                                }
+//                            }
+//                        })
+//                        .setNegativeButton("No", null);
+//                AlertDialog alertDialog = builder.create();
+//                alertDialog.show();
             }
         });
     }
@@ -275,8 +299,11 @@ public class AppAcceptedReviewActivity extends AppCompatActivity {
     }
 
     private void downloadAsset(String filename) {
+        //Another Option : Put Adoption Agreement on SIKUCING directory
 //        String dirPath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/SIKUCING";
-        String dirPath = Environment.getExternalStorageDirectory().getAbsolutePath();
+
+        //Put Adoption Agreement on System Default Downloads directory
+        String dirPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath()+File.separator;
         File dir = new File(dirPath);
         if (!dir.exists()) {
             dir.mkdirs();
