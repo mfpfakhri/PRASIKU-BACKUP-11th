@@ -267,7 +267,7 @@ public class EditCatDataAvailableActivity extends AppCompatActivity {
                     case 0:
                         Toast.makeText(getApplicationContext(), "Choose Adoption Status", Toast.LENGTH_SHORT).show();
                         return;
-                    case 1:
+                    case 1: {
                         final String cat_extra = getIntent().getStringExtra("cat_id");
                         String catapponstatus = cat_extra + "_Received";
                         databaseAdoptionsReject = FirebaseDatabase.getInstance().getReference().child("adoptions");
@@ -302,9 +302,14 @@ public class EditCatDataAvailableActivity extends AppCompatActivity {
 
                             }
                         });
-                        backToMainMenu();
+//                        backToMainMenu();
+//                        finish();
+                        Toast.makeText(getApplicationContext(), "Cat Data Successfully Edited", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getApplicationContext(), MainMenuActivity.class);
+                        startActivity(intent);
                         finish();
-                    case 2:
+                    }
+                    case 2: {
                         String cId = getIntent().getStringExtra("cat_id");
                         databaseCats = FirebaseDatabase.getInstance().getReference().child("cats").child(cId);
                         databaseCats.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -342,8 +347,13 @@ public class EditCatDataAvailableActivity extends AppCompatActivity {
 
                             }
                         });
-                        backToMainMenu();
+//                        backToPrevious();
+//                        finish();
+                        Toast.makeText(getApplicationContext(), "Cat Data Successfully Edited", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getApplicationContext(), MainMenuActivity.class);
+                        startActivity(intent);
                         finish();
+                    }
                 }
             }
         });
@@ -360,27 +370,33 @@ public class EditCatDataAvailableActivity extends AppCompatActivity {
         return true;
     }
 
-    private void backToMainMenu() {
-        String catId = getIntent().getStringExtra("cat_id");
-        String ownerId = getIntent().getStringExtra("owner_id");
-        String pActivity = getIntent().getStringExtra("previousActivity");
-        Intent intent = new Intent(getApplicationContext(), CatProfileOwnerAvailableActivity.class);
-        if (pActivity.equals("findcat")) {
-            intent.putExtra("previousActivity", pActivity);
-            intent.putExtra("cat_id", catId);
-            intent.putExtra("owner_id", ownerId);
-            Toast.makeText(getApplicationContext(), "Cat Data Successfully Edited", Toast.LENGTH_SHORT).show();
-            startActivity(intent);
-            finish();
-        } else if (pActivity.equals("adoptionlist")) {
-            intent.putExtra("previousActivity", pActivity);
-            intent.putExtra("cat_id", catId);
-            intent.putExtra("owner_id", ownerId);
-            Toast.makeText(getApplicationContext(), "Cat Data Successfully Edited", Toast.LENGTH_SHORT).show();
-            startActivity(intent);
-            finish();
-        }
-    }
+//    private void backToPrevious() {
+//        String catId = getIntent().getStringExtra("cat_id");
+//        String ownerId = getIntent().getStringExtra("owner_id");
+//        String pActivity = getIntent().getStringExtra("previousActivity");
+//        Intent intent = new Intent(getApplicationContext(), CatProfileOwnerAvailableActivity.class);
+//        if (pActivity.equals("findcat")) {
+//            intent.putExtra("previousActivity", pActivity);
+//            intent.putExtra("cat_id", catId);
+//            intent.putExtra("owner_id", ownerId);
+//            Toast.makeText(getApplicationContext(), "Cat Data Successfully Edited", Toast.LENGTH_SHORT).show();
+//            startActivity(intent);
+//            finish();
+//        } else if (pActivity.equals("adoptionlist")) {
+//            intent.putExtra("previousActivity", pActivity);
+//            intent.putExtra("cat_id", catId);
+//            intent.putExtra("owner_id", ownerId);
+//            Toast.makeText(getApplicationContext(), "Cat Data Successfully Edited", Toast.LENGTH_SHORT).show();
+//            startActivity(intent);
+//            finish();
+//        }
+//    }
+
+//    private void backToMainMenu() {
+//        Intent intent = new Intent(getApplicationContext(), MainMenuActivity.class);
+//        startActivity(intent);
+//        finish();
+//    }
 
     @Override
     public void onBackPressed() {
