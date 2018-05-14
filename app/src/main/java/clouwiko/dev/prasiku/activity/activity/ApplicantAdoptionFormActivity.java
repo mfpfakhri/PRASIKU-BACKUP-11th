@@ -2,6 +2,7 @@ package clouwiko.dev.prasiku.activity.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -34,6 +35,7 @@ import fr.ganfra.materialspinner.MaterialSpinner;
 
 public class ApplicantAdoptionFormActivity extends AppCompatActivity {
 
+    private TextView title;
     private EditText etPhone, etAddress, etJob, etReason, etAnimalNumber, etHouseSize, etPeopleNumber, etAnimalLive;
     private MaterialSpinner msHouseType;
     private RadioGroup rgFamilyPermission, rgMovingPlan, rgMarriagePlan, rgKids, rgFinancial;
@@ -48,6 +50,9 @@ public class ApplicantAdoptionFormActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_applicant_adoption_form);
 
+        title = findViewById(R.id.adoptionform_title);
+        Typeface faceslogan = Typeface.createFromAsset(getAssets(),"fonts/segoeuisl.ttf");
+        title.setTypeface(faceslogan);
         etPhone = findViewById(R.id.adoptionform_phone);
         etAddress = findViewById(R.id.adoptionform_address);
         etJob = findViewById(R.id.adoptionform_job);
@@ -223,8 +228,8 @@ public class ApplicantAdoptionFormActivity extends AppCompatActivity {
         String delete_status = "0";
         String applicantIdDelete = applicantId + "_" + delete_status;
 //        String owner_delete_status = ownerId + delete_status;
-//        String cat_status = catId + "_" + status;
-        Adoption adoption = new Adoption(adoptionId, catId, ownerId, applicantId, applicantIdDelete, phone, address, job, reasonwhy, numberofanimal, housetype, houseize, familynumber, animallive, familypermission, movingplan, marriageplan, kidsinhouse, financial, status, catname, catphoto, applicantname, owner_status, delete_status);
+        String cat_status = catId + "_" + status;
+        Adoption adoption = new Adoption(adoptionId, catId, ownerId, applicantId, applicantIdDelete, phone, address, job, reasonwhy, numberofanimal, housetype, houseize, familynumber, animallive, familypermission, movingplan, marriageplan, kidsinhouse, financial, status, catname, catphoto, applicantname, owner_status, delete_status, cat_status);
 
         databaseAdoption.child(adoptionId).setValue(adoption);
     }

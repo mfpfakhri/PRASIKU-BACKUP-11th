@@ -40,8 +40,8 @@ public class UserHomeProfileFragment extends Fragment {
 
         //Object Declaration
         profileCity = (TextView) view.findViewById(R.id.userhomeprofile_cityvalue);
-        profilePhone = (TextView) view.findViewById(R.id.userhomeprofile_emailvalue);
-        profileEmail = (TextView) view.findViewById(R.id.userhomeprofile_phonevalue);
+        profilePhone = (TextView) view.findViewById(R.id.userhomeprofile_phonevalue);
+        profileEmail = (TextView) view.findViewById(R.id.userhomeprofile_emailvalue);
         profileAddress = (TextView)view.findViewById(R.id.userhomeprofile_addressvalue);
 
         //Get Current User UID
