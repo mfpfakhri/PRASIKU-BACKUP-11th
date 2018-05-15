@@ -73,7 +73,7 @@ public class AppReceivedActivity extends AppCompatActivity {
     void getAppReceivedData() {
         //Firebase Current User UID
         String userId = auth.getCurrentUser().getUid();
-        String useridapponstatus = userId+"_Received".toString().trim();
+        String useridapponstatus = userId+"_Received";
 
         //Database Reference
         databaseAdoptions = firebaseDatabase.getReference().child("adoptions");
@@ -124,11 +124,11 @@ public class AppReceivedActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(AppReceivedAdapter.AppReceivedViewHolder holder, int position) {
             Adoption receivedData = adoptionList.get(position);
-            String applicantname = receivedData.getAdoptionApplicantName().toString().trim();
-            final String catname = receivedData.getAdoptionCatName().toString().trim();
-            String apponstatus = receivedData.getAdoptionApplicationStatus().toString().trim();
-            final String applicationid = receivedData.getAdoptionId().toString().trim();
-            final String catid = receivedData.getAdoptionCatId().toString().trim();
+            String applicantname = receivedData.getAdoptionApplicantName();
+            final String catname = receivedData.getAdoptionCatName();
+            String apponstatus = receivedData.getAdoptionApplicationStatus();
+            final String applicationid = receivedData.getAdoptionId();
+            final String catid = receivedData.getAdoptionCatId();
 
             holder.appname.setText(applicantname);
             holder.catname.setText(catname);

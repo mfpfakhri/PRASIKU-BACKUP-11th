@@ -78,7 +78,7 @@ public class CatProfileOwnerAdoptedActivity extends AppCompatActivity {
                     @Override
                     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                         Adoption adoption = dataSnapshot.getValue(Adoption.class);
-                        String appid = adoption.getAdoptionId().toString().trim();
+                        String appid = adoption.getAdoptionId();
                         Intent intent = new Intent(getApplicationContext(), EditCatDataAdoptedActivity.class);
                         intent.putExtra("previousActivity", pActivity);
                         intent.putExtra("cat_id", catId);
@@ -120,15 +120,16 @@ public class CatProfileOwnerAdoptedActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 String catId = getIntent().getStringExtra("cat_id");
-                                String catapponreceived = catId + "_Received";
-                                String catapponaccepted = catId + "_Accepted";
-                                String catapponrejected = catId + "_Rejected";
+//                                String catapponreceived = catId + "_Received";
+//                                String catapponaccepted = catId + "_Accepted";
+//                                String catapponrejected = catId + "_Rejected";
                                 databaseCats = FirebaseDatabase.getInstance().getReference().child("cats").child(catId);
                                 databaseCats.addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(DataSnapshot dataSnapshot) {
                                         Cat cat = dataSnapshot.getValue(Cat.class);
                                         cat.setCatAdoptedStatus("Not Available");
+                                        cat.setCatCityDeleteStatus(cat.getCatCity()+"_1");
                                         cat.setCatDeleteStatus("1");
                                         cat.setCatOwnerDeleteStatus(cat.getCatOwnerId()+"_1");
                                         databaseCats.setValue(cat);
@@ -146,9 +147,10 @@ public class CatProfileOwnerAdoptedActivity extends AppCompatActivity {
                                         for (DataSnapshot updCatAdoptSnapshot : dataSnapshot.getChildren()){
                                             Adoption updAdoption = updCatAdoptSnapshot.getValue(Adoption.class);
                                             updAdoption.setAdoptionApplicationStatus("Not Available");
-//                                            updAdoption.setAdoptionCatIdApponStatus(updAdoption.getAdoptionCatId() + "_Not Available");
+                                            updAdoption.setAdoptionCatIdApponStatus(updAdoption.getAdoptionCatId() + "_Not Available");
                                             updAdoption.setAdoptionOwnerIdApponStatus(updAdoption.getAdoptionOwnerId()+"_Not Available");
                                             updAdoption.setAdoptionDeleteStatus("1");
+                                            updAdoption.setAdoptionApplicantIdDeleteStatus(updAdoption.getAdoptionApplicantId()+"_1");
 //                                            updAdoption.setAdoptionOwnerDeleteStatus(updAdoption.getAdoptionOwnerId()+"_1");
                                             databaseDelete.child(updAdoption.getAdoptionId()).setValue(updAdoption);
                                         }

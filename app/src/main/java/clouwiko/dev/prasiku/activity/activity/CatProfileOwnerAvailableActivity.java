@@ -102,6 +102,7 @@ public class CatProfileOwnerAvailableActivity extends AppCompatActivity {
                                     public void onDataChange(DataSnapshot dataSnapshot) {
                                         Cat cat = dataSnapshot.getValue(Cat.class);
                                         cat.setCatAdoptedStatus("Not Available");
+                                        cat.setCatCityDeleteStatus(cat.getCatCity()+"_1");
                                         cat.setCatDeleteStatus("1");
                                         cat.setCatOwnerDeleteStatus(cat.getCatOwnerId()+"_1");
                                         databaseCats.setValue(cat);
@@ -119,9 +120,10 @@ public class CatProfileOwnerAvailableActivity extends AppCompatActivity {
                                         for (DataSnapshot updCatAdoptSnapshot : dataSnapshot.getChildren()){
                                             Adoption updAdoption = updCatAdoptSnapshot.getValue(Adoption.class);
                                             updAdoption.setAdoptionApplicationStatus("Not Available");
-//                                            updAdoption.setAdoptionCatIdApponStatus(updAdoption.getAdoptionCatId() + "_Not Available");
+                                            updAdoption.setAdoptionCatIdApponStatus(updAdoption.getAdoptionCatId() + "_Not Available");
                                             updAdoption.setAdoptionOwnerIdApponStatus(updAdoption.getAdoptionOwnerId()+"_Not Available");
                                             updAdoption.setAdoptionDeleteStatus("1");
+                                            updAdoption.setAdoptionApplicantIdDeleteStatus(updAdoption.getAdoptionApplicantId()+"_1");
 //                                            updAdoption.setAdoptionOwnerDeleteStatus(updAdoption.getAdoptionOwnerId()+"_1");
                                             databaseDelete.child(updAdoption.getAdoptionId()).setValue(updAdoption);
                                         }

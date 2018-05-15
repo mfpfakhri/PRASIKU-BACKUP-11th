@@ -239,7 +239,7 @@ public class AppReceivedReviewActivity extends AppCompatActivity {
                                         for (DataSnapshot updRejectAppSnapshot : dataSnapshot.getChildren()){
                                             Adoption updRejectAppAdoption = updRejectAppSnapshot.getValue(Adoption.class);
                                             updRejectAppAdoption.setAdoptionApplicationStatus("Rejected");
-//                                            updRejectAppAdoption.setAdoptionCatIdApponStatus(updRejectAppAdoption.getAdoptionCatId()+"_Rejected");
+                                            updRejectAppAdoption.setAdoptionCatIdApponStatus(updRejectAppAdoption.getAdoptionCatId()+"_Rejected");
                                             updRejectAppAdoption.setAdoptionOwnerIdApponStatus(updRejectAppAdoption.getAdoptionOwnerId()+"_Rejected");
                                             databaseAdoptionsReject.child(updRejectAppAdoption.getAdoptionId()).setValue(updRejectAppAdoption);
                                         }

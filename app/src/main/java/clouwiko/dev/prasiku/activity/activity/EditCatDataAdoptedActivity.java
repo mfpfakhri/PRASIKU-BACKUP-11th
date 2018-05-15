@@ -114,9 +114,10 @@ public class EditCatDataAdoptedActivity extends AppCompatActivity {
 
                         }
                     });
-                    String apponstatus = cId + "_Accepted";
+//                    String apponstatus = cId + "_Accepted";
                     databaseAdoptions = FirebaseDatabase.getInstance().getReference().child("adoptions");
-                    databaseAdoptions.orderByChild("adoptionCatIdApponStatus").equalTo(apponstatus).addChildEventListener(new ChildEventListener() {
+//                    databaseAdoptions.orderByChild("adoptionCatIdApponStatus").equalTo(apponstatus).addChildEventListener(new ChildEventListener() {
+                    databaseAdoptions.orderByChild("adoptionCatId").equalTo(cId).addChildEventListener(new ChildEventListener() {
                         @Override
                         public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                             String adoptionid = dataSnapshot.child("adoptionId").getValue(String.class);
@@ -171,7 +172,9 @@ public class EditCatDataAdoptedActivity extends AppCompatActivity {
 
                         }
                     });
-                    backToMainMenu();
+                    Toast.makeText(getApplicationContext(), "Cat Data Successfully Edited", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getApplicationContext(), MainMenuActivity.class);
+                    startActivity(intent);
                     finish();
                 }
             }
@@ -186,28 +189,28 @@ public class EditCatDataAdoptedActivity extends AppCompatActivity {
         return true;
     }
 
-    private void backToMainMenu() {
-        String catId = getIntent().getStringExtra("cat_id");
-        String ownerId = getIntent().getStringExtra("owner_id");
-        String pActivity = getIntent().getStringExtra("previousActivity");
-        if (pActivity.equals("findcat")) {
-            Intent intent = new Intent(getApplicationContext(), FindCatForAdoptActivity.class);
-            intent.putExtra("previousActivity", pActivity);
-            intent.putExtra("cat_id", catId);
-            intent.putExtra("owner_id", ownerId);
-            Toast.makeText(getApplicationContext(), "Cat Adoption Status Successfully Edited", Toast.LENGTH_SHORT).show();
-            startActivity(intent);
-            finish();
-        } else if (pActivity.equals("adoptionlist")) {
-            Intent intent = new Intent(getApplicationContext(), UserAdoptionListActivity.class);
-            intent.putExtra("previousActivity", pActivity);
-            intent.putExtra("cat_id", catId);
-            intent.putExtra("owner_id", ownerId);
-            Toast.makeText(getApplicationContext(), "Cat Adoption Status Successfully Edited", Toast.LENGTH_SHORT).show();
-            startActivity(intent);
-            finish();
-        }
-    }
+//    private void backToMainMenu() {
+//        String catId = getIntent().getStringExtra("cat_id");
+//        String ownerId = getIntent().getStringExtra("owner_id");
+//        String pActivity = getIntent().getStringExtra("previousActivity");
+//        if (pActivity.equals("findcat")) {
+//            Intent intent = new Intent(getApplicationContext(), FindCatForAdoptActivity.class);
+//            intent.putExtra("previousActivity", pActivity);
+//            intent.putExtra("cat_id", catId);
+//            intent.putExtra("owner_id", ownerId);
+//            Toast.makeText(getApplicationContext(), "Cat Adoption Status Successfully Edited", Toast.LENGTH_SHORT).show();
+//            startActivity(intent);
+//            finish();
+//        } else if (pActivity.equals("adoptionlist")) {
+//            Intent intent = new Intent(getApplicationContext(), UserAdoptionListActivity.class);
+//            intent.putExtra("previousActivity", pActivity);
+//            intent.putExtra("cat_id", catId);
+//            intent.putExtra("owner_id", ownerId);
+//            Toast.makeText(getApplicationContext(), "Cat Adoption Status Successfully Edited", Toast.LENGTH_SHORT).show();
+//            startActivity(intent);
+//            finish();
+//        }
+//    }
 
     private boolean updateCatData(String catId, String catOwnerId, String catProfilePhoto, String catName, String catDob, String catGender, String catDescription, String catMedNote, String catVaccStat, String catSpayNeuterStat, String catReason, String catProvince, String catCity, String catAdoptedStatus, String adoptionDeleteStatus, String adoptionOwnerDeleteStatus, String catCityDeleteStatus) {
         String cId = getIntent().getStringExtra("cat_id");
