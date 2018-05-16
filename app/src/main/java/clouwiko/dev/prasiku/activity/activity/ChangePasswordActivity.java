@@ -40,18 +40,18 @@ public class ChangePasswordActivity extends AppCompatActivity {
         //Get Current User
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-        authStateListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user == null) {
-                    // user auth state is changed - user is null
-                    // launch login activity
-                    startActivity(new Intent(ChangePasswordActivity.this, SignInActivity.class));
-                    finish();
-                }
-            }
-        };
+//        authStateListener = new FirebaseAuth.AuthStateListener() {
+//            @Override
+//            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+//                FirebaseUser user = firebaseAuth.getCurrentUser();
+//                if (user == null) {
+//                    // user auth state is changed - user is null
+//                    // launch login activity
+//                    startActivity(new Intent(ChangePasswordActivity.this, SignInActivity.class));
+//                    finish();
+//                }
+//            }
+//        };
 
         newPassword = (EditText) findViewById(R.id.new_password);
         btnChangePassword = (Button) findViewById(R.id.action_change_password);
@@ -80,12 +80,12 @@ public class ChangePasswordActivity extends AppCompatActivity {
                                     public void onComplete(@NonNull Task<Void> task) {
                                         if (task.isSuccessful()) {
                                             Toast.makeText(ChangePasswordActivity.this, "Password is Updated, Sign In with New Password", Toast.LENGTH_SHORT).show();
-                                            FirebaseAuth.getInstance().signOut();
+                                            auth.signOut();
                                             startActivity(new Intent(ChangePasswordActivity.this, SignInActivity.class));
                                             progressBar.setVisibility(View.GONE);
                                             finish();
                                         } else {
-                                            Toast.makeText(ChangePasswordActivity.this, "Failed to Update Email", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(ChangePasswordActivity.this, "Failed to Update Password", Toast.LENGTH_SHORT).show();
                                             progressBar.setVisibility(View.GONE);
                                         }
                                     }

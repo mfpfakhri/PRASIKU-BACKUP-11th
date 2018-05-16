@@ -36,7 +36,10 @@
         <activity
             android:name=".activity.activity.MainMenuActivity"
             android:clearTaskOnLaunch="true" />
-        <activity android:name=".activity.activity.ChangePasswordActivity" />
+        <activity android:name=".activity.activity.ChangePasswordActivity"
+            android:parentActivityName=".activity.activity.MainMenuActivity" />
+        <activity android:name=".activity.activity.EditUserProfileActivity"
+            android:parentActivityName=".activity.activity.MainMenuActivity" />
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
@@ -88,7 +91,6 @@
         <activity android:name=".activity.activity.AppReceivedReviewActivity" />
         <activity android:name=".activity.activity.AppAcceptedReviewActivity" />
         <activity android:name=".activity.activity.AppRejectedReviewActivity" />
-        <activity android:name=".activity.activity.EditUserProfileActivity" />
         <activity android:name=".activity.activity.VerificationActivity"></activity>
     </application>
 
