@@ -470,8 +470,9 @@ public class SignUpActivity extends AppCompatActivity {
                         String phone = inputPhone.getText().toString().trim();
                         String address = inputAddress.getText().toString().trim();
                         String status = "0";
+                        String citystatus = city+"_0";
 
-                        User user = new User(email, userUid, fName, dobDate, spinnerValue, pPhotoUrl, province, city, phone, address, status);
+                        User user = new User(email, userUid, fName, dobDate, spinnerValue, pPhotoUrl, province, city, phone, address, status, citystatus);
 
                         databaseUsers.child(userUid).setValue(user);
                         finish();

@@ -37,10 +37,10 @@ import fr.ganfra.materialspinner.MaterialSpinner;
 
 public class FindCatForAdoptActivity extends AppCompatActivity {
     private String TAG = "FindCat";
-    private MaterialSpinner spinnerProvinces, spinnerCities;
-    private Button btnSearchCat;
     private FirebaseAuth auth;
+    private MaterialSpinner spinnerProvinces, spinnerCities;
     private DatabaseReference databaseProvinces, databaseCities, databaseCats;
+    private Button btnSearchCat;
     private RecyclerView catResultsRecyclerView;
     private LinearLayoutManager linearLayoutManager;
     private List<Cat> catLists;
