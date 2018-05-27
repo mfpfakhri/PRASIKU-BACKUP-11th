@@ -158,6 +158,7 @@
     <string name="verify_send_text">Send Verification</string>
     <string name="verify_email_text">Go to Your Email</string>
     <string name="verify_landing_button"><![CDATA[<< Back to Homepage]]></string>
+    <string name="banned_information">Your account has been Banned. \nPlease contact Administrator for further information. \n(adm.sikucing@gmail.com)</string>
 
     <string-array name="gender">
         <item>Male</item>

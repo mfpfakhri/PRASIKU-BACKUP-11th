@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:padding="16dp"
+    android:orientation="vertical"
+    tools:context="clouwiko.dev.prasiku.activity.activity.UserBannedActivity">
+    <TextView
+        android:id="@+id/banned_information"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/banned_information"
+        android:paddingBottom="16dp"
+        android:textSize="18sp"
+        android:textAlignment="center"/>
+    <Button
+        android:id="@+id/banned_landing_button"
+        style="?android:textAppearanceSmall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:textAllCaps="false"
+        android:background="@color/colorPrimary"
+        android:text="@string/verify_landing_button"
+        android:textColor="@android:color/black"
+        android:textStyle="bold" />
+</LinearLayout>

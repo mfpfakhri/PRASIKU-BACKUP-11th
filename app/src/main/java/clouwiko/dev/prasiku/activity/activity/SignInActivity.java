@@ -138,7 +138,8 @@ public class SignInActivity extends AppCompatActivity {
                                                     case "1":
                                                         progressBar.setVisibility(View.GONE);
                                                         Toast.makeText(getApplicationContext(), "Your Account has been Banned", Toast.LENGTH_SHORT).show();
-                                                        auth.signOut();
+                                                        Intent intentBanned = new Intent(getApplicationContext(), UserBannedActivity.class);
+                                                        startActivity(intentBanned);
                                                         break;
                                                     case "2":
                                                         progressBar.setVisibility(View.GONE);
