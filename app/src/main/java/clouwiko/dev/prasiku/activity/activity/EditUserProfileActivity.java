@@ -351,9 +351,9 @@ public class EditUserProfileActivity extends AppCompatActivity {
                         for (DataSnapshot adoptdatasnapshot : dataSnapshot.getChildren()){
                             Adoption adoptiondata = adoptdatasnapshot.getValue(Adoption.class);
                             String updAdoptionApplName = txtFullName.getText().toString().trim();
-                            String updAdoptionApplPhone = txtPhone.getText().toString().trim();
+//                            String updAdoptionApplPhone = txtPhone.getText().toString().trim();
                             adoptiondata.setAdoptionApplicantName(updAdoptionApplName);
-                            adoptiondata.setAdoptionApplicantPhone(updAdoptionApplPhone);
+//                            adoptiondata.setAdoptionApplicantPhone(updAdoptionApplPhone);
                             databaseAdoptions.child(adoptiondata.getAdoptionId()).setValue(adoptiondata);
                         }
                     }

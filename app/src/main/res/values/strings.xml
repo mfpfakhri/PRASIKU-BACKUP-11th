@@ -18,7 +18,7 @@
     <string name="action_sign_out">Sign Out</string>
     <string name="action_change_password">Change Password</string>
     <string name="new_password">Your New Password</string>
-    <string name="old_password">Your Current Password</string>
+    <string name="current_password">Your Current Password</string>
 
     <!--NAVIGATION DRAWER-->
     <string name="navigation_drawer_open">Open navigation drawer</string>

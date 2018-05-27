@@ -175,14 +175,19 @@ public class MainMenuActivity extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem menuItem) {
         int id = menuItem.getItemId();
+        String userId = auth.getCurrentUser().getUid();
         progressBar.setVisibility(View.VISIBLE);
         switch (id) {
             case R.id.action_edit_profile:
-                startActivity(new Intent(MainMenuActivity.this, EditUserProfileActivity.class));
+                Intent intentEditUser = new Intent(getApplicationContext(), EditUserProfileActivity.class);
+                intentEditUser.putExtra("userId", userId);
+                startActivity(intentEditUser);
                 progressBar.setVisibility(View.GONE);
                 break;
             case R.id.action_edit_password:
-                startActivity(new Intent(MainMenuActivity.this, ChangePasswordActivity.class));
+                Intent intentChangePassword = new Intent(getApplicationContext(), ChangePasswordActivity.class);
+                intentChangePassword.putExtra("userId", userId);
+                startActivity(intentChangePassword);
                 progressBar.setVisibility(View.GONE);
                 break;
             case R.id.action_sign_out:

@@ -5,6 +5,7 @@ package clouwiko.dev.prasiku.activity.model;
  */
 
 public class Adoption {
+    private String adoptionDeleteStatus;
     private String adoptionId;
     private String adoptionCatId;
     private String adoptionOwnerId;
@@ -29,7 +30,6 @@ public class Adoption {
     private String adoptionCatPhoto;
     private String adoptionApplicantName;
     private String adoptionOwnerIdApponStatus;
-    private String adoptionDeleteStatus;
     private String adoptionCatIdApponStatus;
 //    private String adoptionOwnerDeleteStatus;
 
