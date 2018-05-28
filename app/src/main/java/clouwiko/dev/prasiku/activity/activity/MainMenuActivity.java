@@ -1,6 +1,9 @@
 package clouwiko.dev.prasiku.activity.activity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -106,7 +109,16 @@ public class MainMenuActivity extends AppCompatActivity
                 String userPhotoUri = dataSnapshot.child("userProfilePhoto").getValue(String.class);
                 userName.setText(userNameStr);
                 userEmail.setText(userEmailStr);
-                Picasso.get().load(userPhotoUri).transform(new RoundedCornersTransform()).centerCrop().resize(192, 192).into(userPhoto);
+                if (userPhotoUri.equals("")) {
+//                    String noPhoto = "@drawable/no_image";
+//                    int imageResource = getResources().getIdentifier(noPhoto, null, getPackageName());
+                    Drawable nophoto = getResources().getDrawable(R.drawable.no_image);
+                    Bitmap imageResource = ((BitmapDrawable) nophoto).getBitmap();
+                    Drawable res = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(imageResource, 140, 140, true));
+                    userPhoto.setImageDrawable(res);
+                } else {
+                    Picasso.get().load(userPhotoUri).transform(new RoundedCornersTransform()).centerInside().resize(256, 256).into(userPhoto);
+                }
             }
 
             @Override
@@ -145,24 +157,6 @@ public class MainMenuActivity extends AppCompatActivity
                 });
             }
         });
-    }
-
-    @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else if (backPressedTime + 2000 > System.currentTimeMillis()) {
-//            backToast.cancel();
-            Intent intent = new Intent(Intent.ACTION_MAIN);
-            intent.addCategory(Intent.CATEGORY_HOME);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
-        } else {
-            backToast = Toast.makeText(getBaseContext(), "Press Back Again to Exit", Toast.LENGTH_SHORT);
-            backToast.show();
-        }
-        backPressedTime = System.currentTimeMillis();
     }
 
     @Override
@@ -231,5 +225,23 @@ public class MainMenuActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else if (backPressedTime + 2000 > System.currentTimeMillis()) {
+//            backToast.cancel();
+            Intent intent = new Intent(Intent.ACTION_MAIN);
+            intent.addCategory(Intent.CATEGORY_HOME);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        } else {
+            backToast = Toast.makeText(getBaseContext(), "Press Back Again to Exit", Toast.LENGTH_SHORT);
+            backToast.show();
+        }
+        backPressedTime = System.currentTimeMillis();
     }
 }

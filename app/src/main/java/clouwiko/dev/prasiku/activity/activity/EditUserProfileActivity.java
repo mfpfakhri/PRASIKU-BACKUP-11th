@@ -1,17 +1,24 @@
 package clouwiko.dev.prasiku.activity.activity;
 
 import android.app.DatePickerDialog;
+import android.content.ActivityNotFoundException;
+import android.content.ContentResolver;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.webkit.MimeTypeMap;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -23,6 +30,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.ProviderQueryResult;
@@ -31,7 +40,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -47,14 +59,15 @@ import clouwiko.dev.prasiku.activity.model.User;
 import fr.ganfra.materialspinner.MaterialSpinner;
 
 public class EditUserProfileActivity extends AppCompatActivity {
-    private String TAG = "EditUserProfileActivity";
-    private EditText txtFullName, txtDob, txtPhone, txtAddress;
-    private DatePickerDialog.OnDateSetListener dobSetListener;
-    private MaterialSpinner spinnerGender, spinnerProvinces, spinnerCities;
+    private ImageView ivPhoto, btnUpdatePhoto, btnDeletePhoto;
+    private EditText etName, etDob, etPhone, etAddress;
+    private MaterialSpinner msGender, msProvince, msCity;
     private Button btnUpdate;
-    private ProgressBar progressBar;
-    private FirebaseAuth auth;
-    private DatabaseReference databaseProvinces, databaseCities, databaseUsers, databaseCats, databaseAdoptions;
+    private DatabaseReference databaseUsers, databaseCats, databaseAdoptions, databaseProvinces, databaseCities;
+    private DatePickerDialog.OnDateSetListener dobSetListener;
+    private StorageReference storageUsers;
+    private static final String STORAGE_PATH = "userProfilePhoto/";
+    Uri uriUserPhoto;
 
     ArrayAdapter<String> citiesAdapter;
     List<String> cities;
@@ -65,62 +78,149 @@ public class EditUserProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_user_profile);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.edituserprofile_toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Edit User");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        //Firebase Auth
-        auth = FirebaseAuth.getInstance();
-        final String userID = auth.getCurrentUser().getUid();
-
-        txtFullName = findViewById(R.id.edituserprofile_full_name);
-        txtDob = findViewById(R.id.edituserprofile_dob);
-        txtPhone = findViewById(R.id.edituserprofile_phonenumber);
-        txtAddress = findViewById(R.id.edituserprofile_address);
-        spinnerGender = findViewById(R.id.edituserprofile_genderspinner);
-        spinnerProvinces = findViewById(R.id.edituserprofile_provincespinner);
-        spinnerCities = findViewById(R.id.edituserprofile_cityspinner);
+        ivPhoto = findViewById(R.id.edituserprofile_photo_imageview);
+        btnUpdatePhoto = findViewById(R.id.edituserprofile_photo_edit_button);
+        btnDeletePhoto = findViewById(R.id.edituserprofile_photo_delete_button);
+        etName = findViewById(R.id.edituserprofile_full_name);
+        etDob = findViewById(R.id.edituserprofile_dob);
+        etPhone = findViewById(R.id.edituserprofile_phonenumber);
+        etAddress = findViewById(R.id.edituserprofile_address);
+        msGender = findViewById(R.id.edituserprofile_genderspinner);
+        msProvince = findViewById(R.id.edituserprofile_provincespinner);
+        msCity = findViewById(R.id.edituserprofile_cityspinner);
         btnUpdate = findViewById(R.id.edituserprofile_update_button);
-        progressBar = findViewById(R.id.progressBar);
 
-        if (progressBar != null) {
-            progressBar.setVisibility(View.GONE);
-        }
+        btnUpdatePhoto.setVisibility(View.GONE);
+        btnDeletePhoto.setVisibility(View.GONE);
 
-        //TODO: Initial Spinner for cities
+        final String uId = getIntent().getStringExtra("userId");
+        databaseUsers = FirebaseDatabase.getInstance().getReference().child("users").child(uId);
+        databaseUsers.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                User userData = dataSnapshot.getValue(User.class);
+                String name = userData.getUserFname();
+                String dob = userData.getUserDob();
+                String phone = userData.getUserPhone();
+                String address = userData.getUserAddress();
+                String gender = userData.getUserGender();
+                String photo = userData.getUserProfilePhoto();
+                if (userData.getUserProfilePhoto().equals("")) {
+                    btnUpdatePhoto.setVisibility(View.VISIBLE);
+                } else {
+                    btnDeletePhoto.setVisibility(View.VISIBLE);
+                    Picasso.get().load(photo).resize(256, 256).centerInside().into(ivPhoto);
+                }
+                switch (gender) {
+                    case "Male":
+                        msGender.setSelection(1);
+                        break;
+                    case "Female":
+                        msGender.setSelection(2);
+                        break;
+                    default:
+
+                }
+                etName.setText(name);
+                etDob.setText(dob);
+                etPhone.setText(phone);
+                etAddress.setText(address);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        btnDeletePhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(EditUserProfileActivity.this);
+                builder.setMessage("Are You sure want to remove Your profile photo?")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                databaseUsers = FirebaseDatabase.getInstance().getReference().child("users").child(uId);
+                                databaseUsers.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        User userData = dataSnapshot.getValue(User.class);
+                                        String photo = userData.getUserProfilePhoto();
+                                        try {
+                                            if (photo.equals("")) {
+                                                Toast.makeText(getApplicationContext(), "There is no photo available", Toast.LENGTH_SHORT).show();
+                                            } else {
+                                                StorageReference photoRef = FirebaseStorage.getInstance().getReferenceFromUrl(photo);
+                                                photoRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void aVoid) {
+                                                        Toast.makeText(getApplicationContext(), "You do not have a profile picture now", Toast.LENGTH_SHORT).show();
+                                                    }
+                                                });
+                                                userData.setUserProfilePhoto("");
+                                                databaseUsers.setValue(userData).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void aVoid) {
+                                                        startActivity(getIntent());
+                                                    }
+                                                });
+                                            }
+                                        } catch (NullPointerException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+
+                                    }
+                                });
+                            }
+                        })
+                        .setNegativeButton("No", null);
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+            }
+        });
+
+        btnUpdatePhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mediaOpen();
+            }
+        });
+
+        //Spinner Cities
         cities = new ArrayList<String>();
-        citiesAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, cities);
-        citiesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerCities.setAdapter(citiesAdapter);
+        citiesAdapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.spinner_style, cities);
+//        citiesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        msCity.setAdapter(citiesAdapter);
         provincesKey = new ArrayList<>();
-        //
-        //TODO: Set Database Reference
+
         databaseProvinces = FirebaseDatabase.getInstance().getReference().child("provinces");
-        //TODO: Change addEventListener to addListenerForSingleValueEvent
+        //TODO:RWP change addEventListener to addListenerForSingleValueEvent
         databaseProvinces.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // Is better to use a List, because you don't know the size
                 // of the iterator returned by dataSnapshot.getChildren() to
                 // initialize the array
-                //TODO: Initialize List of provinces
                 final List<String> provinces = new ArrayList<String>();
                 for (DataSnapshot provinceSnapshot : dataSnapshot.getChildren()) {
-                    //TODO: Get Value of provinceName
                     final String provinceName = provinceSnapshot.child("provinceName").getValue(String.class);
                     provinces.add(provinceName);
-                    //TODO: Add key to array
+                    //TODO:RWP add key to array
                     String key = provinceSnapshot.getKey();
                     provincesKey.add(key);
                     //--
-                    spinnerProvinces.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    msProvince.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                            int spinnerProvincesPosition = spinnerProvinces.getSelectedItemPosition();
-                            //TODO: Remove all cities and clear selection city
+                            int spinnerProvincesPosition = msProvince.getSelectedItemPosition();
+                            //TODO:RWP remove all cities and clear selection city
                             cities.clear();
-                            spinnerCities.setSelection(0);
+                            msCity.setSelection(0);
                             //--
                             if (spinnerProvincesPosition != 0) {
                                 //TODO:RWP get key by its position
@@ -155,9 +255,9 @@ public class EditUserProfileActivity extends AppCompatActivity {
                         }
                     });
                 }
-                ArrayAdapter<String> provincesAdapter = new ArrayAdapter<String>(EditUserProfileActivity.this, android.R.layout.simple_spinner_item, provinces);
-                provincesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spinnerProvinces.setAdapter(provincesAdapter);
+                ArrayAdapter<String> provincesAdapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.spinner_style, provinces);
+//                provincesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                msProvince.setAdapter(provincesAdapter);
             }
 
             @Override
@@ -166,11 +266,10 @@ public class EditUserProfileActivity extends AppCompatActivity {
             }
         });
 
-        txtDob.setOnClickListener(new View.OnClickListener() {
+        etDob.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Calendar cal = Calendar.getInstance();
-                cal.setTimeZone(TimeZone.getTimeZone("UTC"));
                 int day = cal.get(Calendar.DAY_OF_MONTH);
                 int month = cal.get(Calendar.MONTH);
                 int year = cal.get(Calendar.YEAR);
@@ -180,7 +279,6 @@ public class EditUserProfileActivity extends AppCompatActivity {
                         android.R.style.Theme_Holo_Light_Dialog_MinWidth,
                         dobSetListener,
                         day, month, year);
-                dialog.getDatePicker().setMaxDate(System.currentTimeMillis());
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 dialog.show();
             }
@@ -190,183 +288,362 @@ public class EditUserProfileActivity extends AppCompatActivity {
             @Override
             public void onDateSet(DatePicker datePicker, int dayOfMonth, int month, int year) {
                 month = month + 1;
-                Log.d("onDateSet: date: " + dayOfMonth + "-" + month + "-" + year, dobSetListener.toString());
+                Log.d("onDateSet: date: " + dayOfMonth + "/" + month + "/" + year, dobSetListener.toString());
 
-                String date = dayOfMonth + "-" + month + "-" + year;
-                txtDob.setText(date);
+                String date = dayOfMonth + "/" + month + "/" + year;
+                etDob.setText(date);
             }
         };
-
-        databaseUsers = FirebaseDatabase.getInstance().getReference().child("users");
-        databaseUsers.orderByKey().equalTo(userID).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot userdatasnapshot : dataSnapshot.getChildren()) {
-                    User userdata = userdatasnapshot.getValue(User.class);
-                    txtFullName.setText(userdata.getUserFname());
-                    txtDob.setText(userdata.getUserDob());
-                    txtPhone.setText(userdata.getUserPhone());
-                    txtAddress.setText(userdata.getUserAddress());
-                    String gender = userdata.getUserGender();
-                    switch (gender) {
-                        case "Male":
-                            spinnerGender.setSelection(1);
-                            break;
-                        case "Female":
-                            spinnerGender.setSelection(2);
-                            break;
-                        default:
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
 
         btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Full Name Validation
-                String fName = txtFullName.getText().toString().trim();
-                if (TextUtils.isEmpty(fName)) {
-                    Toast.makeText(getApplicationContext(), "Enter Your Full Name", Toast.LENGTH_SHORT).show();
+                String valName = etName.getText().toString().trim();
+                if (valName.isEmpty()) {
+                    Toast.makeText(getApplicationContext(), "Enter User Name", Toast.LENGTH_SHORT).show();
                     return;
+                } else {
+
                 }
 
-                //DOB Validation
-                String dobDate = txtDob.getText().toString().trim();
-                if (TextUtils.isEmpty(dobDate)) {
-                    Toast.makeText(getApplicationContext(), "Enter Your Birth Date", Toast.LENGTH_SHORT).show();
+                String valDob = etDob.getText().toString().trim();
+                if (valDob.isEmpty()) {
+                    Toast.makeText(getApplicationContext(), "Enter User Dob", Toast.LENGTH_SHORT).show();
                     return;
+                } else {
+
                 }
 
-                //Gender Validation
-                int spinnerGenderPosition = spinnerGender.getSelectedItemPosition();
-                if (spinnerGenderPosition != 0) {
+                int valGender = msGender.getSelectedItemPosition();
+                if (valGender != 0) {
 
                 } else {
-                    Toast.makeText(EditUserProfileActivity.this, "Pick Your Gender", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Select User Gender", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                //Province Validation
-                int spinnerProvincePosition = spinnerProvinces.getSelectedItemPosition();
-                if (spinnerProvincePosition != 0) {
+                int valProvince = msProvince.getSelectedItemPosition();
+                if (valProvince != 0) {
 
                 } else {
-                    Toast.makeText(getApplicationContext(), "Select Your Province", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Select User Province", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                //City Validation
-                int spinnerCityPosition = spinnerCities.getSelectedItemPosition();
-                if (spinnerCityPosition != 0) {
+                int valCity = msCity.getSelectedItemPosition();
+                if (valCity != 0) {
 
                 } else {
-                    Toast.makeText(getApplicationContext(), "Select Your City", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Select User City", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                //Phone Number Validation
-                final String validPhone = "^[+]?[0-9]{10,13}$";
-                String phone = txtPhone.getText().toString().trim();
-                if (TextUtils.isEmpty(phone)) {
-                    Toast.makeText(getApplicationContext(), "Enter Your Phone Number", Toast.LENGTH_SHORT).show();
+                String valPhone = etPhone.getText().toString().trim();
+                if (valPhone.isEmpty()) {
+                    Toast.makeText(getApplicationContext(), "Enter User Phone Number", Toast.LENGTH_SHORT).show();
                     return;
-                }
-                Matcher matcherPhone = Pattern.compile(validPhone).matcher(phone);
-                if (matcherPhone.matches()) {
-
                 } else {
-                    Toast.makeText(getApplicationContext(), "Enter Valid Phone Number", Toast.LENGTH_SHORT).show();
-                    return;
+
                 }
 
-                //Address Validation
-                String address = txtAddress.getText().toString().trim();
-                if (TextUtils.isEmpty(address)) {
-                    Toast.makeText(getApplicationContext(), "Enter Your Address", Toast.LENGTH_SHORT).show();
+                String valAddress = etAddress.getText().toString().trim();
+                if (valAddress.isEmpty()) {
+                    Toast.makeText(getApplicationContext(), "Enter User Address", Toast.LENGTH_SHORT).show();
                     return;
+                } else {
+
                 }
 
-                databaseUsers = FirebaseDatabase.getInstance().getReference().child("users");
-                databaseUsers.orderByKey().equalTo(userID).addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        for (DataSnapshot userdatasnapshot : dataSnapshot.getChildren()) {
-                            User userdata = userdatasnapshot.getValue(User.class);
-                            String updUserName = txtFullName.getText().toString().trim();
-                            String updUserDob = txtDob.getText().toString().trim();
-                            String updUserGender = spinnerGender.getSelectedItem().toString().trim();
-                            String updUserProvince = spinnerProvinces.getSelectedItem().toString().trim();
-                            String updUserCity = spinnerCities.getSelectedItem().toString().trim();
-                            String updUserPhone = txtPhone.getText().toString().trim();
-                            String updUserAddress = txtAddress.getText().toString().trim();
-                            userdata.setUserFname(updUserName);
-                            userdata.setUserDob(updUserDob);
-                            userdata.setUserGender(updUserGender);
-                            userdata.setUserProvince(updUserProvince);
-                            userdata.setUserCity(updUserCity);
-                            userdata.setUserPhone(updUserPhone);
-                            userdata.setUserAddress(updUserAddress);
-                            databaseUsers.child(userdata.getUserUid()).setValue(userdata);
+                if (ivPhoto.getDrawable() != null) {
+                    databaseUsers = FirebaseDatabase.getInstance().getReference().child("users").child(uId);
+                    databaseUsers.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            User userCheck = dataSnapshot.getValue(User.class);
+                            String photoCheck = userCheck.getUserProfilePhoto();
+                            if (photoCheck.equals("")) {
+                                storageUsers = FirebaseStorage.getInstance().getReference();
+                                StorageReference reference = storageUsers.child(STORAGE_PATH + System.currentTimeMillis() + "." + getActualImage(uriUserPhoto));
+                                reference.putFile(uriUserPhoto)
+                                        .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                            @Override
+                                            public void onSuccess(final UploadTask.TaskSnapshot taskSnapshot) {
+                                                databaseUsers = FirebaseDatabase.getInstance().getReference().child("users").child(uId);
+                                                databaseUsers.addListenerForSingleValueEvent(new ValueEventListener() {
+                                                    @Override
+                                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                                        User userUpdate = dataSnapshot.getValue(User.class);
+                                                        String photo = taskSnapshot.getDownloadUrl().toString();
+                                                        String name = etName.getText().toString().trim();
+                                                        String dob = etDob.getText().toString().trim();
+                                                        String phone = etPhone.getText().toString().trim();
+                                                        String address = etAddress.getText().toString().trim();
+                                                        String gender = msGender.getSelectedItem().toString().trim();
+                                                        String province = msProvince.getSelectedItem().toString().trim();
+                                                        String city = msCity.getSelectedItem().toString().trim();
+
+                                                        userUpdate.setUserProfilePhoto(photo);
+                                                        userUpdate.setUserFname(name);
+                                                        userUpdate.setUserDob(dob);
+                                                        userUpdate.setUserPhone(phone);
+                                                        userUpdate.setUserAddress(address);
+                                                        userUpdate.setUserGender(gender);
+                                                        userUpdate.setUserProvince(province);
+                                                        userUpdate.setUserCity(city);
+                                                        userUpdate.setUserCityStatus(city + "_" + userUpdate.getUserStatus());
+                                                        databaseUsers.setValue(userUpdate);
+                                                    }
+
+                                                    @Override
+                                                    public void onCancelled(DatabaseError databaseError) {
+
+                                                    }
+                                                });
+                                                databaseCats = FirebaseDatabase.getInstance().getReference().child("cats");
+                                                databaseCats.orderByChild("catOwnerId").equalTo(uId).addListenerForSingleValueEvent(new ValueEventListener() {
+                                                    @Override
+                                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                                        for (DataSnapshot catUpdateSnapshot : dataSnapshot.getChildren()) {
+                                                            Cat catUpdate = catUpdateSnapshot.getValue(Cat.class);
+                                                            String province = msProvince.getSelectedItem().toString().trim();
+                                                            String city = msCity.getSelectedItem().toString().trim();
+
+                                                            catUpdate.setCatProvince(province);
+                                                            catUpdate.setCatCity(city);
+                                                            catUpdate.setCatCityDeleteStatus(city + "_" + catUpdate.getCatDeleteStatus());
+                                                            databaseCats.child(catUpdate.getCatId()).setValue(catUpdate);
+                                                        }
+                                                    }
+
+                                                    @Override
+                                                    public void onCancelled(DatabaseError databaseError) {
+
+                                                    }
+                                                });
+                                                databaseAdoptions = FirebaseDatabase.getInstance().getReference().child("adoptions");
+                                                databaseAdoptions.orderByChild("adoptionApplicantId").equalTo(uId).addListenerForSingleValueEvent(new ValueEventListener() {
+                                                    @Override
+                                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                                        for (DataSnapshot adoptionUpdateSnapshot : dataSnapshot.getChildren()) {
+                                                            Adoption adoptionUpdate = adoptionUpdateSnapshot.getValue(Adoption.class);
+                                                            String name = etName.getText().toString().trim();
+                                                            adoptionUpdate.setAdoptionApplicantName(name);
+                                                            databaseAdoptions.child(adoptionUpdate.getAdoptionId()).setValue(adoptionUpdate);
+                                                        }
+                                                    }
+
+                                                    @Override
+                                                    public void onCancelled(DatabaseError databaseError) {
+
+                                                    }
+                                                });
+                                                Toast.makeText(getApplicationContext(), "Successfully update User data", Toast.LENGTH_SHORT).show();
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+                            } else {
+                                databaseUsers = FirebaseDatabase.getInstance().getReference().child("users").child(uId);
+                                databaseUsers.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        User userUpdate = dataSnapshot.getValue(User.class);
+                                        String name = etName.getText().toString().trim();
+                                        String dob = etDob.getText().toString().trim();
+                                        String phone = etPhone.getText().toString().trim();
+                                        String address = etAddress.getText().toString().trim();
+                                        String gender = msGender.getSelectedItem().toString().trim();
+                                        String province = msProvince.getSelectedItem().toString().trim();
+                                        String city = msCity.getSelectedItem().toString().trim();
+
+                                        userUpdate.setUserFname(name);
+                                        userUpdate.setUserDob(dob);
+                                        userUpdate.setUserPhone(phone);
+                                        userUpdate.setUserAddress(address);
+                                        userUpdate.setUserGender(gender);
+                                        userUpdate.setUserProvince(province);
+                                        userUpdate.setUserCity(city);
+                                        userUpdate.setUserCityStatus(city + "_" + userUpdate.getUserStatus());
+                                        databaseUsers.setValue(userUpdate);
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+
+                                    }
+                                });
+                                databaseCats = FirebaseDatabase.getInstance().getReference().child("cats");
+                                databaseCats.orderByChild("catOwnerId").equalTo(uId).addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        for (DataSnapshot catUpdateSnapshot : dataSnapshot.getChildren()) {
+                                            Cat catUpdate = catUpdateSnapshot.getValue(Cat.class);
+                                            String province = msProvince.getSelectedItem().toString().trim();
+                                            String city = msCity.getSelectedItem().toString().trim();
+
+                                            catUpdate.setCatProvince(province);
+                                            catUpdate.setCatCity(city);
+                                            catUpdate.setCatCityDeleteStatus(city + "_" + catUpdate.getCatDeleteStatus());
+                                            databaseCats.child(catUpdate.getCatId()).setValue(catUpdate);
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+
+                                    }
+                                });
+                                databaseAdoptions = FirebaseDatabase.getInstance().getReference().child("adoptions");
+                                databaseAdoptions.orderByChild("adoptionApplicantId").equalTo(uId).addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        for (DataSnapshot adoptionUpdateSnapshot : dataSnapshot.getChildren()) {
+                                            Adoption adoptionUpdate = adoptionUpdateSnapshot.getValue(Adoption.class);
+                                            String name = etName.getText().toString().trim();
+                                            adoptionUpdate.setAdoptionApplicantName(name);
+                                            databaseAdoptions.child(adoptionUpdate.getAdoptionId()).setValue(adoptionUpdate);
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+
+                                    }
+                                });
+                                Toast.makeText(getApplicationContext(), "Successfully update User data", Toast.LENGTH_SHORT).show();
+                            }
                         }
-                    }
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
 
-                    }
-                });
-
-                databaseCats = FirebaseDatabase.getInstance().getReference().child("cats");
-                databaseCats.orderByChild("catOwnerId").equalTo(userID).addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        for (DataSnapshot catdatasnapshot : dataSnapshot.getChildren()) {
-                            Cat catdata = catdatasnapshot.getValue(Cat.class);
-                            String updCatCity = spinnerCities.getSelectedItem().toString().trim();
-                            String updCatCityDelete = updCatCity + "_" + catdata.getCatDeleteStatus();
-                            String updCatProvince = spinnerProvinces.getSelectedItem().toString().trim();
-                            catdata.setCatCity(updCatCity);
-                            catdata.setCatCityDeleteStatus(updCatCityDelete);
-                            catdata.setCatProvince(updCatProvince);
-                            databaseCats.child(catdata.getCatId()).setValue(catdata);
                         }
-                    }
+                    });
+                } else {
+                    databaseUsers = FirebaseDatabase.getInstance().getReference().child("users").child(uId);
+                    databaseUsers.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            User userUpdate = dataSnapshot.getValue(User.class);
+                            String name = etName.getText().toString().trim();
+                            String dob = etDob.getText().toString().trim();
+                            String phone = etPhone.getText().toString().trim();
+                            String address = etAddress.getText().toString().trim();
+                            String gender = msGender.getSelectedItem().toString().trim();
+                            String province = msProvince.getSelectedItem().toString().trim();
+                            String city = msCity.getSelectedItem().toString().trim();
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
-
-                databaseAdoptions = FirebaseDatabase.getInstance().getReference().child("adoptions");
-                databaseAdoptions.orderByChild("adoptionApplicantId").equalTo(userID).addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        for (DataSnapshot adoptdatasnapshot : dataSnapshot.getChildren()){
-                            Adoption adoptiondata = adoptdatasnapshot.getValue(Adoption.class);
-                            String updAdoptionApplName = txtFullName.getText().toString().trim();
-//                            String updAdoptionApplPhone = txtPhone.getText().toString().trim();
-                            adoptiondata.setAdoptionApplicantName(updAdoptionApplName);
-//                            adoptiondata.setAdoptionApplicantPhone(updAdoptionApplPhone);
-                            databaseAdoptions.child(adoptiondata.getAdoptionId()).setValue(adoptiondata);
+                            userUpdate.setUserFname(name);
+                            userUpdate.setUserDob(dob);
+                            userUpdate.setUserPhone(phone);
+                            userUpdate.setUserAddress(address);
+                            userUpdate.setUserGender(gender);
+                            userUpdate.setUserProvince(province);
+                            userUpdate.setUserCity(city);
+                            userUpdate.setUserCityStatus(city + "_" + userUpdate.getUserStatus());
+                            databaseUsers.setValue(userUpdate);
                         }
-                    }
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
 
-                    }
-                });
+                        }
+                    });
+                    databaseCats = FirebaseDatabase.getInstance().getReference().child("cats");
+                    databaseCats.orderByChild("catOwnerId").equalTo(uId).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            for (DataSnapshot catUpdateSnapshot : dataSnapshot.getChildren()) {
+                                Cat catUpdate = catUpdateSnapshot.getValue(Cat.class);
+                                String province = msProvince.getSelectedItem().toString().trim();
+                                String city = msCity.getSelectedItem().toString().trim();
+
+                                catUpdate.setCatProvince(province);
+                                catUpdate.setCatCity(city);
+                                catUpdate.setCatCityDeleteStatus(city + "_" + catUpdate.getCatDeleteStatus());
+                                databaseCats.child(catUpdate.getCatId()).setValue(catUpdate);
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+                    databaseAdoptions = FirebaseDatabase.getInstance().getReference().child("adoptions");
+                    databaseAdoptions.orderByChild("adoptionApplicantId").equalTo(uId).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            for (DataSnapshot adoptionUpdateSnapshot : dataSnapshot.getChildren()) {
+                                Adoption adoptionUpdate = adoptionUpdateSnapshot.getValue(Adoption.class);
+                                String name = etName.getText().toString().trim();
+                                adoptionUpdate.setAdoptionApplicantName(name);
+                                databaseAdoptions.child(adoptionUpdate.getAdoptionId()).setValue(adoptionUpdate);
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+                    Toast.makeText(getApplicationContext(), "Successfully update User data", Toast.LENGTH_SHORT).show();
+                }
                 backToMainMenu();
-                finish();
             }
         });
+    }
+
+    private void mediaOpen() {
+        Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(Intent.createChooser(galleryIntent, "Select Image from Gallery"), 2);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 0 && resultCode == RESULT_OK) {
+            cropUserImage();
+        } else if (requestCode == 2) {
+            if (data != null) {
+                uriUserPhoto = data.getData();
+                cropUserImage();
+            }
+        } else if (requestCode == 1) {
+            if (data != null) {
+                Bundle bundle = data.getExtras();
+                Bitmap bitmap = bundle.getParcelable("data");
+                ivPhoto.setImageBitmap(bitmap);
+            }
+        }
+    }
+
+    private String getActualImage(Uri uriUserPhoto) {
+        ContentResolver contentResolver = getContentResolver();
+        MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
+        return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uriUserPhoto));
+    }
+
+    private void cropUserImage() {
+        try {
+            Intent cropIntent = new Intent("com.android.camera.action.CROP");
+            cropIntent.setDataAndType(uriUserPhoto, "image/*");
+
+            cropIntent.putExtra("crop", "true");
+            cropIntent.putExtra("outputX", 180);
+            cropIntent.putExtra("outputY", 180);
+            cropIntent.putExtra("aspectX", 4);
+            cropIntent.putExtra("aspectY", 4);
+            cropIntent.putExtra("scaleUpIfNeeded", true);
+            cropIntent.putExtra("return-data", true);
+
+            startActivityForResult(cropIntent, 1);
+        } catch (ActivityNotFoundException ex) {
+
+        }
     }
 
     private void backToMainMenu() {
@@ -374,5 +651,23 @@ public class EditUserProfileActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), "Your Information Successfully Updated", Toast.LENGTH_SHORT).show();
         startActivity(intent);
         finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(EditUserProfileActivity.this);
+        builder.setMessage("Are You sure want to quit editing?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String uId = getIntent().getStringExtra("userId");
+                        Intent intent = new Intent(getApplicationContext(), MainMenuActivity.class);
+                        intent.putExtra("userId", uId);
+                        startActivity(intent);
+                    }
+                })
+                .setNegativeButton("No", null);
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 }
