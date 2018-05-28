@@ -219,7 +219,7 @@ public class CatProfileOwnerAdoptedActivity extends AppCompatActivity {
 //                                    }
 //                                });
                                 String pActivity = getIntent().getStringExtra("previousActivity");
-                                Intent intentAdoptionList = new Intent(getApplicationContext(), UserAdoptionListActivity.class);
+                                Intent intentAdoptionList = new Intent(getApplicationContext(), UserCatListActivity.class);
                                 Intent intentFindCat = new Intent(getApplicationContext(), FindCatForAdoptActivity.class);
                                 Intent intentMainMenu = new Intent(getApplicationContext(), MainMenuActivity.class);
 
@@ -302,7 +302,7 @@ public class CatProfileOwnerAdoptedActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         String pActivity = getIntent().getStringExtra("previousActivity");
-        Intent intentAdoptionList = new Intent(getApplicationContext(), UserAdoptionListActivity.class);
+        Intent intentAdoptionList = new Intent(getApplicationContext(), UserCatListActivity.class);
         Intent intentFindCat = new Intent(getApplicationContext(), FindCatForAdoptActivity.class);
         Intent intentMainMenu = new Intent(getApplicationContext(), MainMenuActivity.class);
 

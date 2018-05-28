@@ -213,7 +213,7 @@ public class MainMenuActivity extends AppCompatActivity
         } else if (id == R.id.nav_menu) {
             startActivity(new Intent(getApplicationContext(), MainMenuActivity.class));
         } else if (id == R.id.nav_catlist) {
-            startActivity(new Intent(getApplicationContext(), UserAdoptionListActivity.class));
+            startActivity(new Intent(getApplicationContext(), UserCatListActivity.class));
         } else if (id == R.id.nav_my_app_list) {
             startActivity(new Intent(getApplicationContext(), UserApplicationListActivity.class));
         } else if (id == R.id.nav_app_received) {

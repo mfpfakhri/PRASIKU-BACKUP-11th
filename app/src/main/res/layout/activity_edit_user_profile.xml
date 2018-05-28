@@ -39,6 +39,59 @@
                 android:gravity="center"
                 android:orientation="vertical">
 
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout
+                        android:id="@+id/edituserprofile_photo_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/activity_horizontal_margin"
+                        android:layout_marginTop="@dimen/activity_vertical_margin"
+                        app:corner_radius="16dp">
+
+                        <TextView
+                            android:id="@+id/edituserprofile_photo_textview"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:gravity="center"
+                            android:text="@string/hint_photo"
+                            android:textColor="@color/black"/>
+
+                        <ImageView
+                            android:id="@+id/edituserprofile_photo_imageview"
+                            android:layout_width="96dp"
+                            android:layout_height="96dp"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentTop="true"
+                            android:background="@drawable/round_corner"
+                            android:clickable="true"
+                            android:padding="1dp"
+                            android:scaleType="fitXY" />
+                    </com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout>
+
+                    <ImageView
+                        android:id="@+id/edituserprofile_photo_edit_button"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:src="@drawable/round_edit_black_24dp"
+                        android:background="@drawable/circlebg_transparent"
+                        android:layout_toRightOf="@id/edituserprofile_photo_view"
+                        android:layout_marginTop="80dp"
+                        android:layout_marginLeft="4dp"/>
+
+                    <ImageView
+                        android:id="@+id/edituserprofile_photo_delete_button"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:src="@drawable/round_delete_forever_black_24dp"
+                        android:background="@drawable/circlebg_transparent"
+                        android:layout_toRightOf="@id/edituserprofile_photo_view"
+                        android:layout_marginTop="80dp"
+                        android:layout_marginLeft="4dp"/>
+                </RelativeLayout>
+
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">

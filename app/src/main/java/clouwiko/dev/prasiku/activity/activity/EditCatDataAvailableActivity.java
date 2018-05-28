@@ -48,132 +48,140 @@ import clouwiko.dev.prasiku.activity.other.RoundedCornersTransform;
 import fr.ganfra.materialspinner.MaterialSpinner;
 
 public class EditCatDataAvailableActivity extends AppCompatActivity {
-
-    private EditText inputCatDob, inputCatDesc, inputCatMedNote;
-    private MaterialSpinner spinnerCatGender, spinnerCatReasonOpenAdoption, spinnerAdoptionStatus;
-    private RadioGroup radioGroupVaccine, radioGroupSpayNeuter;
-    private RadioButton radioButtonVacc, radioButtonSpayNeuter;
+    private ImageView ivPhoto, btnUpdatePhoto, btnDeletePhoto;
+    private EditText etName, etDob, etDesc, etMedNote;
+    private MaterialSpinner msGender, msReason, msAdoptionStatus;
+    private RadioGroup rgVaccine, rgSpayNeuter;
+    private RadioButton rbVaccine, rbSpayNeuter;
+    private Button btnUpdate;
+    private DatabaseReference databaseCats, databaseAdoptions;
     private DatePickerDialog.OnDateSetListener catDobSetListener;
-
-    private Button btnDoneEditing;
-
-    private DatabaseReference databaseCats, databaseAdoptions, databaseAdoptionsReject;
-    private FirebaseAuth auth;
+    private StorageReference storageCats;
+    private static final String STORAGE_PATH = "catPhoto/";
+    Uri uriCatPhoto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_cat_data_available);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.editcatavailable_toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Edit Cat");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ivPhoto = findViewById(R.id.editcatavailable_photo_imageview);
+        btnUpdatePhoto = findViewById(R.id.editcatavailable_photo_edit_button);
+        btnDeletePhoto = findViewById(R.id.editcatavailable_photo_delete_button);
+        etName = findViewById(R.id.editcatavailable_name);
+        etDob = findViewById(R.id.editcatavailable_dob);
+        etDesc = findViewById(R.id.editcatavailable_desc);
+        etMedNote = findViewById(R.id.editcatavailable_mednote);
+        msGender = findViewById(R.id.editcatavailable_gender);
+        msReason = findViewById(R.id.editcatavailable_reason);
+        msAdoptionStatus = findViewById(R.id.editcatavailable_adoptionstatus);
+        rgVaccine = findViewById(R.id.editcatavailable_vacc);
+        rgSpayNeuter = findViewById(R.id.editcatavailable_spayneuter);
+        btnUpdate = findViewById(R.id.editcatavailable_done_button);
 
-        inputCatDob = findViewById(R.id.editcatavailable_dob);
-        inputCatDesc = findViewById(R.id.editcatavailable_desc);
-        inputCatMedNote = findViewById(R.id.editcatavailable_mednote);
-        spinnerCatGender = findViewById(R.id.editcatavailable_gender);
-        spinnerCatReasonOpenAdoption = findViewById(R.id.editcatavailable_reason);
-        spinnerAdoptionStatus = findViewById(R.id.editcatavailable_adoptionstatus);
-        radioGroupVaccine = findViewById(R.id.editcatavailable_vacc);
-        radioGroupSpayNeuter = findViewById(R.id.editcatavailable_spayneuter);
-        btnDoneEditing = findViewById(R.id.editcatavailable_done_button);
+        btnUpdatePhoto.setVisibility(View.GONE);
+        btnDeletePhoto.setVisibility(View.GONE);
 
-        String catId = getIntent().getStringExtra("cat_id");
-        databaseCats = FirebaseDatabase.getInstance().getReference().child("cats").child(catId);
-        databaseCats.addValueEventListener(new ValueEventListener() {
+        final String cId = getIntent().getStringExtra("cat_id");
+        databaseCats = FirebaseDatabase.getInstance().getReference().child("cats").child(cId);
+        databaseCats.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                String name = dataSnapshot.child("catName").getValue(String.class);
-                String dob = dataSnapshot.child("catDob").getValue(String.class);
-                String desc = dataSnapshot.child("catDescription").getValue(String.class);
-                String mednote = dataSnapshot.child("catMedNote").getValue(String.class);
-                String gender = dataSnapshot.child("catGender").getValue(String.class);
+                Cat catData = dataSnapshot.getValue(Cat.class);
+                String name = catData.getCatName();
+                String dob = catData.getCatDob();
+                String description = catData.getCatDescription();
+                String medicalnote = catData.getCatMedNote();
+                String gender = catData.getCatGender();
+                String photo = catData.getCatProfilePhoto();
+                if (catData.getCatProfilePhoto().equals("")) {
+                    btnUpdatePhoto.setVisibility(View.VISIBLE);
+                } else {
+                    btnDeletePhoto.setVisibility(View.VISIBLE);
+                    Picasso.get().load(photo).resize(256, 256).centerInside().into(ivPhoto);
+                }
                 switch (gender) {
                     case "Male":
-                        spinnerCatGender.setSelection(1);
+                        msGender.setSelection(1);
                         break;
                     case "Female":
-                        spinnerCatGender.setSelection(2);
+                        msGender.setSelection(2);
                         break;
                     case "Unknown":
-                        spinnerCatGender.setSelection(3);
+                        msGender.setSelection(3);
                         break;
                     default:
 
                 }
-                String vaccine = dataSnapshot.child("catVaccStat").getValue(String.class);
-                switch (vaccine) {
-                    case "Yes, Already Vaccinated":
-                        radioGroupVaccine.check(R.id.editcatavailable_yes_vaccine);
-                        break;
-                    case "Not Yet":
-                        radioGroupVaccine.check(R.id.editcatavailable_no_vaccine);
-                        break;
-                    default:
-
-                }
-                String spayneuter = dataSnapshot.child("catSpayNeuterStat").getValue(String.class);
-                switch (spayneuter) {
-                    case "Yes, Already Spayed/ Neutered":
-                        radioGroupSpayNeuter.check(R.id.editcatavailable_yes_spayneuter);
-                        break;
-                    case "Not Yet":
-                        radioGroupSpayNeuter.check(R.id.editcatavailable_no_spayneuter);
-                        break;
-                    default:
-
-                }
-                String reason = dataSnapshot.child("catReason").getValue(String.class);
+                String reason = catData.getCatReason();
                 switch (reason) {
                     case "Stray":
-                        spinnerCatReasonOpenAdoption.setSelection(1);
+                        msReason.setSelection(1);
                         break;
                     case "Abandoned":
-                        spinnerCatReasonOpenAdoption.setSelection(2);
+                        msReason.setSelection(2);
                         break;
                     case "Abused":
-                        spinnerCatReasonOpenAdoption.setSelection(3);
+                        msReason.setSelection(3);
                         break;
                     case "Owner Dead":
-                        spinnerCatReasonOpenAdoption.setSelection(4);
+                        msReason.setSelection(4);
                         break;
                     case "Owner Give Up":
-                        spinnerCatReasonOpenAdoption.setSelection(5);
+                        msReason.setSelection(5);
                         break;
                     case "House Moving":
-                        spinnerCatReasonOpenAdoption.setSelection(6);
+                        msReason.setSelection(6);
                         break;
                     case "Financial":
-                        spinnerCatReasonOpenAdoption.setSelection(7);
+                        msReason.setSelection(7);
                         break;
                     case "Medical Problem":
-                        spinnerCatReasonOpenAdoption.setSelection(8);
+                        msReason.setSelection(8);
                         break;
                     case "Others":
-                        spinnerCatReasonOpenAdoption.setSelection(9);
+                        msReason.setSelection(9);
                         break;
                     default:
 
                 }
-                String adoptedstatus = dataSnapshot.child("catAdoptedStatus").getValue(String.class);
-                switch (adoptedstatus) {
-                    case "Available":
-                        spinnerAdoptionStatus.setSelection(2);
-                        break;
+                String adoptionstatus = catData.getCatAdoptedStatus();
+                switch (adoptionstatus) {
                     case "Adopted":
-                        spinnerAdoptionStatus.setSelection(1);
+                        msAdoptionStatus.setSelection(1);
                         break;
-                    case "Not Available":
-                        spinnerAdoptionStatus.setSelection(3);
+                    case "Available":
+                        msAdoptionStatus.setSelection(2);
                         break;
                     default:
 
                 }
-                inputCatDob.setText(dob);
-                inputCatDesc.setText(desc);
-                inputCatMedNote.setText(mednote);
+                String vaccine = catData.getCatVaccStat();
+                switch (vaccine) {
+                    case "Yes, Already Vaccinated":
+                        rgVaccine.check(R.id.editcatavailable_yes_vaccine);
+                        break;
+                    case "Not Yet":
+                        rgVaccine.check(R.id.editcatavailable_no_vaccine);
+                        break;
+                    default:
+
+                }
+                String spayneuter = catData.getCatSpayNeuterStat();
+                switch (spayneuter) {
+                    case "Yes, Already Spayed/ Neutered":
+                        rgSpayNeuter.check(R.id.editcatavailable_yes_spayneuter);
+                        break;
+                    case "Not Yet":
+                        rgSpayNeuter.check(R.id.editcatavailable_no_spayneuter);
+                        break;
+                    default:
+
+                }
+                etName.setText(name);
+                etDob.setText(dob);
+                etDesc.setText(description);
+                etMedNote.setText(medicalnote);
             }
 
             @Override
@@ -181,7 +189,83 @@ public class EditCatDataAvailableActivity extends AppCompatActivity {
 
             }
         });
-        inputCatDob.setOnClickListener(new View.OnClickListener() {
+
+        btnDeletePhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(EditCatDataAvailableActivity.this);
+                builder.setMessage("Are You sure want to remove this cat photo?")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                databaseCats = FirebaseDatabase.getInstance().getReference().child("cats").child(cId);
+                                databaseCats.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        Cat catData = dataSnapshot.getValue(Cat.class);
+                                        String photo = catData.getCatProfilePhoto();
+                                        try {
+                                            if (photo.equals("")) {
+                                                Toast.makeText(getApplicationContext(), "There is no photo available", Toast.LENGTH_SHORT).show();
+                                            } else {
+                                                StorageReference photoRef = FirebaseStorage.getInstance().getReferenceFromUrl(photo);
+                                                photoRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void aVoid) {
+                                                        Toast.makeText(getApplicationContext(), "This cat does not have photo now", Toast.LENGTH_SHORT).show();
+                                                    }
+                                                });
+                                                catData.setCatProfilePhoto("");
+                                                databaseCats.setValue(catData);
+                                                databaseAdoptions = FirebaseDatabase.getInstance().getReference().child("adoptions");
+                                                Query adoptionDeletePhoto = databaseAdoptions.orderByChild("adoptionCatId").equalTo(cId);
+                                                adoptionDeletePhoto.addListenerForSingleValueEvent(new ValueEventListener() {
+                                                    @Override
+                                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                                        for (DataSnapshot adoptionDeletePhotoSnapshot : dataSnapshot.getChildren()) {
+                                                            Adoption adoptionData = adoptionDeletePhotoSnapshot.getValue(Adoption.class);
+                                                            adoptionData.setAdoptionCatPhoto("");
+                                                            databaseAdoptions.child(adoptionData.getAdoptionId()).setValue(adoptionData).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                                @Override
+                                                                public void onSuccess(Void aVoid) {
+                                                                    startActivity(getIntent());
+                                                                }
+                                                            });
+                                                        }
+                                                    }
+
+                                                    @Override
+                                                    public void onCancelled(DatabaseError databaseError) {
+
+                                                    }
+                                                });
+                                            }
+                                        } catch (NullPointerException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+
+                                    }
+                                });
+                            }
+                        })
+                        .setNegativeButton("No", null);
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+            }
+        });
+
+        btnUpdatePhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mediaOpen();
+            }
+        });
+
+        etDob.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Calendar cal = Calendar.getInstance();
@@ -205,169 +289,417 @@ public class EditCatDataAvailableActivity extends AppCompatActivity {
                 month = month + 1;
                 Log.d("onDateSet: date: " + dayOfMonth + "/" + month + "/" + year, catDobSetListener.toString());
 
-                String date = dayOfMonth + "-" + month + "-" + year;
-                inputCatDob.setText(date);
+                String date = dayOfMonth + "/" + month + "/" + year;
+                etDob.setText(date);
             }
         };
 
-        btnDoneEditing.setOnClickListener(new View.OnClickListener() {
+        btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Cat's DOB Validation
-                String catDobDate = inputCatDob.getText().toString().trim();
-                if (TextUtils.isEmpty(catDobDate)) {
-                    Toast.makeText(getApplicationContext(), "Enter Your Cat's Birth Date", Toast.LENGTH_SHORT).show();
+                String cId = getIntent().getStringExtra("cat_id");
+                databaseCats = FirebaseDatabase.getInstance().getReference().child("cats").child(cId);
+                databaseAdoptions = FirebaseDatabase.getInstance().getReference().child("adoptions");
+
+                String valName = etName.getText().toString().trim();
+                if (valName.isEmpty()) {
+                    Toast.makeText(getApplicationContext(), "Enter Cat Name", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                //Cat's Gender Validation
-                int catSpinnerPosition = spinnerCatGender.getSelectedItemPosition();
-                if (catSpinnerPosition != 0) {
+                String valDob = etDob.getText().toString().trim();
+                if (valDob.isEmpty()) {
+                    Toast.makeText(getApplicationContext(), "Enter Cat Dob", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                int valGender = msGender.getSelectedItemPosition();
+                if (valGender != 0) {
 
                 } else {
-                    Toast.makeText(getApplicationContext(), "Choose Your Cat's Gender", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Select Cat Gender", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                //Cat's Description Validation
-                String desc = inputCatDesc.getText().toString();
-                if (TextUtils.isEmpty(desc)) {
-                    Toast.makeText(getApplicationContext(), "Please Describe Your Cat", Toast.LENGTH_SHORT).show();
+//                String valDescription = etDesc.getText().toString().trim();
+//                if (valDescription.isEmpty()){
+//
+//                } else {
+//                    Toast.makeText(getApplicationContext(), "Enter Cat Description", Toast.LENGTH_SHORT).show();
+//                    return;
+//                }
+
+                String valMedicalNote = etMedNote.getText().toString().trim();
+                if (valMedicalNote.isEmpty()) {
+                    Toast.makeText(getApplicationContext(), "Describe Cat Health Condition", Toast.LENGTH_SHORT).show();
                     return;
+                } else {
+
                 }
 
-                //Vaccine Status Validation
-                if (radioGroupVaccine.getCheckedRadioButtonId() == -1) {
+                if (rgVaccine.getCheckedRadioButtonId() == -1) {
                     Toast.makeText(getApplicationContext(), "Choose Cat's Vaccine Status", Toast.LENGTH_SHORT).show();
                     return;
                 } else {
 
                 }
 
-                //Spay/ Neuter Validation
-                if (radioGroupSpayNeuter.getCheckedRadioButtonId() == -1) {
+                if (rgSpayNeuter.getCheckedRadioButtonId() == -1) {
                     Toast.makeText(getApplicationContext(), "Choose Cat's Spay/ Neuter Status", Toast.LENGTH_SHORT).show();
                     return;
                 } else {
 
                 }
 
-                //Open Adoption Reason
-                int adoptionReasonSpinner = spinnerCatReasonOpenAdoption.getSelectedItemPosition();
-                if (adoptionReasonSpinner == 0) {
-                    Toast.makeText(getApplicationContext(), "Choose Reason for Open Adopt", Toast.LENGTH_SHORT).show();
-                    return;
-                } else {
+                int valReason = msReason.getSelectedItemPosition();
+                if (valReason != 0) {
 
+                } else {
+                    Toast.makeText(getApplicationContext(), "Select Reason for Open Adopt", Toast.LENGTH_SHORT).show();
+                    return;
                 }
 
-                //Cat's Gender Validation
-                int adoptionStatusSpinner = spinnerAdoptionStatus.getSelectedItemPosition();
-                switch (adoptionStatusSpinner) {
-                    case 0:
-                        Toast.makeText(getApplicationContext(), "Choose Adoption Status", Toast.LENGTH_SHORT).show();
-                        return;
-                    case 1: {
-                        final String cat_extra = getIntent().getStringExtra("cat_id");
-                        String catapponstatus = cat_extra + "_Received";
-                        databaseAdoptionsReject = FirebaseDatabase.getInstance().getReference().child("adoptions");
-                        databaseAdoptionsReject.orderByChild("adoptionCatIdApponStatus").equalTo(catapponstatus).addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(DataSnapshot dataSnapshot) {
-                                for (DataSnapshot updRejectAppSnapshot : dataSnapshot.getChildren()) {
-                                    Adoption updRejectAppAdoption = updRejectAppSnapshot.getValue(Adoption.class);
-                                    updRejectAppAdoption.setAdoptionApplicationStatus("Rejected");
-                                    updRejectAppAdoption.setAdoptionCatIdApponStatus(updRejectAppAdoption.getAdoptionCatId() + "_Rejected");
-                                    updRejectAppAdoption.setAdoptionOwnerIdApponStatus(updRejectAppAdoption.getAdoptionOwnerId() + "_Rejected");
-                                    databaseAdoptionsReject.child(updRejectAppAdoption.getAdoptionId()).setValue(updRejectAppAdoption);
-                                }
+                int valAdoptionStatus = msAdoptionStatus.getSelectedItemPosition();
+                if (valAdoptionStatus != 0) {
+
+                } else {
+                    Toast.makeText(getApplicationContext(), "Select Cat Adoption Status", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (ivPhoto.getDrawable() != null) {
+                    databaseCats.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            Cat catCheck = dataSnapshot.getValue(Cat.class);
+                            String catPhotoCheck = catCheck.getCatProfilePhoto();
+                            if (catPhotoCheck.equals("")) {
+                                storageCats = FirebaseStorage.getInstance().getReference();
+                                StorageReference reference = storageCats.child(STORAGE_PATH + System.currentTimeMillis() + "." + getActualImage(uriCatPhoto));
+                                reference.putFile(uriCatPhoto)
+                                        .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                            @Override
+                                            public void onSuccess(final UploadTask.TaskSnapshot taskSnapshot) {
+                                                int adoptionStatusSpinner = msAdoptionStatus.getSelectedItemPosition();
+                                                String cId = getIntent().getStringExtra("cat_id");
+                                                switch (adoptionStatusSpinner) {
+                                                    case 0:
+                                                        Toast.makeText(getApplicationContext(), "Choose Adoption Status", Toast.LENGTH_SHORT).show();
+                                                        return;
+                                                    case 1:
+                                                        databaseCats.addListenerForSingleValueEvent(new ValueEventListener() {
+                                                            @Override
+                                                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                                                Cat catUpdate = dataSnapshot.getValue(Cat.class);
+                                                                String updPhotoChange = taskSnapshot.getDownloadUrl().toString();
+                                                                String updNameChange = etName.getText().toString().trim();
+                                                                String updDobChange = etDob.getText().toString().trim();
+                                                                String updDescriptionChange = etDesc.getText().toString().trim();
+                                                                String updMedicalNoteChange = etMedNote.getText().toString().trim();
+                                                                String updGenderChange = msGender.getSelectedItem().toString().trim();
+                                                                String updReasonChange = msReason.getSelectedItem().toString().trim();
+                                                                String updAdoptionStatusChange = msAdoptionStatus.getSelectedItem().toString().trim();
+                                                                int updVaccineId = rgVaccine.getCheckedRadioButtonId();
+                                                                rbVaccine = findViewById(updVaccineId);
+                                                                String updVaccineChange = rbVaccine.getText().toString().trim();
+                                                                int updSpayNeuterId = rgSpayNeuter.getCheckedRadioButtonId();
+                                                                rbSpayNeuter = findViewById(updSpayNeuterId);
+                                                                String updSpayNeuterChange = rbSpayNeuter.getText().toString().trim();
+
+                                                                catUpdate.setCatProfilePhoto(updPhotoChange);
+                                                                catUpdate.setCatName(updNameChange);
+                                                                catUpdate.setCatDob(updDobChange);
+                                                                catUpdate.setCatDescription(updDescriptionChange);
+                                                                catUpdate.setCatMedNote(updMedicalNoteChange);
+                                                                catUpdate.setCatGender(updGenderChange);
+                                                                catUpdate.setCatReason(updReasonChange);
+                                                                catUpdate.setCatAdoptedStatus(updAdoptionStatusChange);
+                                                                catUpdate.setCatVaccStat(updVaccineChange);
+                                                                catUpdate.setCatSpayNeuterStat(updSpayNeuterChange);
+                                                                databaseCats.setValue(catUpdate);
+                                                            }
+
+                                                            @Override
+                                                            public void onCancelled(DatabaseError databaseError) {
+
+                                                            }
+                                                        });
+                                                        databaseAdoptions.orderByChild("adoptionCatId").equalTo(cId).addListenerForSingleValueEvent(new ValueEventListener() {
+                                                            @Override
+                                                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                                                for (DataSnapshot updateSnapshot : dataSnapshot.getChildren()) {
+                                                                    Adoption adoptionUpdate = updateSnapshot.getValue(Adoption.class);
+                                                                    String updPhotoChange = taskSnapshot.getDownloadUrl().toString();
+                                                                    String updNameChange = etName.getText().toString().trim();
+
+                                                                    adoptionUpdate.setAdoptionCatPhoto(updPhotoChange);
+                                                                    adoptionUpdate.setAdoptionCatName(updNameChange);
+                                                                    adoptionUpdate.setAdoptionApplicationStatus("Rejected");
+                                                                    adoptionUpdate.setAdoptionCatIdApponStatus(adoptionUpdate.getAdoptionCatId() + "_Rejected");
+                                                                    adoptionUpdate.setAdoptionOwnerIdApponStatus(adoptionUpdate.getAdoptionOwnerId() + "_Rejected");
+                                                                    databaseAdoptions.child(adoptionUpdate.getAdoptionId()).setValue(adoptionUpdate);
+                                                                }
+                                                            }
+
+                                                            @Override
+                                                            public void onCancelled(DatabaseError databaseError) {
+
+                                                            }
+                                                        });
+                                                        backToCatPick();
+                                                        finish();
+                                                        break;
+                                                    case 2:
+                                                        databaseCats.addListenerForSingleValueEvent(new ValueEventListener() {
+                                                            @Override
+                                                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                                                Cat catUpdate = dataSnapshot.getValue(Cat.class);
+                                                                String updPhotoIdle = taskSnapshot.getDownloadUrl().toString();
+                                                                String updNameIdle = etName.getText().toString().trim();
+                                                                String updDob = etDob.getText().toString().trim();
+                                                                String updDescription = etDesc.getText().toString().trim();
+                                                                String updMedicalNote = etMedNote.getText().toString().trim();
+                                                                String updGender = msGender.getSelectedItem().toString().trim();
+                                                                String updReason = msReason.getSelectedItem().toString().trim();
+                                                                String updAdoptionStatus = msAdoptionStatus.getSelectedItem().toString().trim();
+                                                                int updVaccineId = rgVaccine.getCheckedRadioButtonId();
+                                                                rbVaccine = findViewById(updVaccineId);
+                                                                String updVaccine = rbVaccine.getText().toString().trim();
+                                                                int updSpayNeuterId = rgSpayNeuter.getCheckedRadioButtonId();
+                                                                rbSpayNeuter = findViewById(updSpayNeuterId);
+                                                                String updSpayNeuter = rbSpayNeuter.getText().toString().trim();
+
+                                                                catUpdate.setCatProfilePhoto(updPhotoIdle);
+                                                                catUpdate.setCatName(updNameIdle);
+                                                                catUpdate.setCatDob(updDob);
+                                                                catUpdate.setCatDescription(updDescription);
+                                                                catUpdate.setCatMedNote(updMedicalNote);
+                                                                catUpdate.setCatGender(updGender);
+                                                                catUpdate.setCatReason(updReason);
+                                                                catUpdate.setCatAdoptedStatus(updAdoptionStatus);
+                                                                catUpdate.setCatVaccStat(updVaccine);
+                                                                catUpdate.setCatSpayNeuterStat(updSpayNeuter);
+                                                                databaseCats.setValue(catUpdate);
+                                                            }
+
+                                                            @Override
+                                                            public void onCancelled(DatabaseError databaseError) {
+
+                                                            }
+                                                        });
+                                                        databaseAdoptions.orderByChild("adoptionCatId").equalTo(cId).addListenerForSingleValueEvent(new ValueEventListener() {
+                                                            @Override
+                                                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                                                for (DataSnapshot updateSnapshot : dataSnapshot.getChildren()) {
+                                                                    Adoption adoptionUpdate = updateSnapshot.getValue(Adoption.class);
+                                                                    String updPhotoIdle = taskSnapshot.getDownloadUrl().toString();
+                                                                    String updNameIdle = etName.getText().toString().trim();
+
+                                                                    adoptionUpdate.setAdoptionCatPhoto(updPhotoIdle);
+                                                                    adoptionUpdate.setAdoptionCatName(updNameIdle);
+                                                                    databaseAdoptions.child(adoptionUpdate.getAdoptionId()).setValue(adoptionUpdate);
+                                                                }
+                                                            }
+
+                                                            @Override
+                                                            public void onCancelled(DatabaseError databaseError) {
+
+                                                            }
+                                                        });
+                                                        backToCatPick();
+                                                        finish();
+                                                        break;
+                                                }
+                                            }
+                                        });
+                            } else {
+                                updateCheckSpinner();
                             }
+                        }
 
-                            @Override
-                            public void onCancelled(DatabaseError databaseError) {
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
 
-                            }
-                        });
-                        databaseCats = FirebaseDatabase.getInstance().getReference().child("cats").child(cat_extra);
-                        databaseCats.addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(DataSnapshot dataSnapshot) {
-                                Cat cat = dataSnapshot.getValue(Cat.class);
-                                cat.setCatAdoptedStatus("Adopted");
-                                databaseCats.child(cat_extra).setValue(cat);
-                            }
-
-                            @Override
-                            public void onCancelled(DatabaseError databaseError) {
-
-                            }
-                        });
-//                        backToMainMenu();
-//                        finish();
-                        Toast.makeText(getApplicationContext(), "Cat Data Successfully Edited", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(getApplicationContext(), MainMenuActivity.class);
-                        startActivity(intent);
-                        finish();
-                    }
-                    case 2: {
-                        String cId = getIntent().getStringExtra("cat_id");
-                        databaseCats = FirebaseDatabase.getInstance().getReference().child("cats").child(cId);
-                        databaseCats.addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(DataSnapshot dataSnapshot) {
-                                int selectedVacc = radioGroupVaccine.getCheckedRadioButtonId();
-                                radioButtonVacc = findViewById(selectedVacc);
-                                int selectedSpayNeuter = radioGroupSpayNeuter.getCheckedRadioButtonId();
-                                radioButtonSpayNeuter = findViewById(selectedSpayNeuter);
-
-                                String dobupdate = inputCatDob.getText().toString().trim();
-                                String descriptionupdate = inputCatDesc.getText().toString().trim();
-                                String mednoteupdate = inputCatMedNote.getText().toString().trim();
-                                String genderupdate = spinnerCatGender.getSelectedItem().toString().trim();
-                                String vaccstatupdate = radioButtonVacc.getText().toString().trim();
-                                String spayneuterstatupdate = radioButtonSpayNeuter.getText().toString().trim();
-                                String reasonupdate = spinnerCatReasonOpenAdoption.getSelectedItem().toString().trim();
-                                String adoptedstatusupdate = spinnerAdoptionStatus.getSelectedItem().toString().trim();
-
-                                String nameupdate = dataSnapshot.child("catName").getValue(String.class);
-                                String catidupdate = dataSnapshot.child("catId").getValue(String.class);
-                                String ownerupdate = dataSnapshot.child("catOwnerId").getValue(String.class);
-                                String photoupdate = dataSnapshot.child("catProfilePhoto").getValue(String.class);
-                                String catprovinceupdate = dataSnapshot.child("catProvince").getValue(String.class);
-                                String catcityupdate = dataSnapshot.child("catCity").getValue(String.class);
-                                String catdelete = dataSnapshot.child("catDeleteStatus").getValue(String.class);
-                                String ownercatdelete = dataSnapshot.child("catOwnerDeleteStatus").getValue(String.class);
-                                String catcitydeletestatus = dataSnapshot.child("catCityDeleteStatus").getValue(String.class);
-
-                                updateCatData(catidupdate, ownerupdate, photoupdate, nameupdate, dobupdate, genderupdate, descriptionupdate, mednoteupdate, vaccstatupdate, spayneuterstatupdate, reasonupdate, catprovinceupdate, catcityupdate, adoptedstatusupdate, catdelete, ownercatdelete, catcitydeletestatus);
-                            }
-
-                            @Override
-                            public void onCancelled(DatabaseError databaseError) {
-
-                            }
-                        });
-//                        backToPrevious();
-//                        finish();
-                        Toast.makeText(getApplicationContext(), "Cat Data Successfully Edited", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(getApplicationContext(), MainMenuActivity.class);
-                        startActivity(intent);
-                        finish();
-                    }
+                        }
+                    });
+                } else {
+                    updateCheckSpinner();
                 }
             }
         });
     }
 
-    private boolean updateCatData(String catId, String catOwnerId, String catProfilePhoto, String catName, String catDob, String catGender, String catDescription, String catMedNote, String catVaccStat, String catSpayNeuterStat, String catReason, String catProvince, String catCity, String catAdoptedStatus, String catDeleteStatus, String catOwnerDeleteStatus, String catCityDeleteStatus) {
+    private void updateCheckSpinner() {
+        int adoptionStatusSpinner = msAdoptionStatus.getSelectedItemPosition();
         String cId = getIntent().getStringExtra("cat_id");
         databaseCats = FirebaseDatabase.getInstance().getReference().child("cats").child(cId);
+        databaseAdoptions = FirebaseDatabase.getInstance().getReference().child("adoptions");
+        switch (adoptionStatusSpinner) {
+            case 0:
+                Toast.makeText(getApplicationContext(), "Choose Adoption Status", Toast.LENGTH_SHORT).show();
+                return;
+            case 1:
+                databaseCats.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        Cat catUpdate = dataSnapshot.getValue(Cat.class);
+                        String updNameChange = etName.getText().toString().trim();
+                        String updDobChange = etDob.getText().toString().trim();
+                        String updDescriptionChange = etDesc.getText().toString().trim();
+                        String updMedicalNoteChange = etMedNote.getText().toString().trim();
+                        String updGenderChange = msGender.getSelectedItem().toString().trim();
+                        String updReasonChange = msReason.getSelectedItem().toString().trim();
+                        String updAdoptionStatusChange = msAdoptionStatus.getSelectedItem().toString().trim();
+                        int updVaccineId = rgVaccine.getCheckedRadioButtonId();
+                        rbVaccine = findViewById(updVaccineId);
+                        String updVaccineChange = rbVaccine.getText().toString().trim();
+                        int updSpayNeuterId = rgSpayNeuter.getCheckedRadioButtonId();
+                        rbSpayNeuter = findViewById(updSpayNeuterId);
+                        String updSpayNeuterChange = rbSpayNeuter.getText().toString().trim();
 
-        Cat cat = new Cat(catId, catOwnerId, catProfilePhoto, catName, catDob, catGender, catDescription, catMedNote, catVaccStat, catSpayNeuterStat, catReason, catProvince, catCity, catAdoptedStatus, catDeleteStatus, catOwnerDeleteStatus, catCityDeleteStatus);
+                        catUpdate.setCatName(updNameChange);
+                        catUpdate.setCatDob(updDobChange);
+                        catUpdate.setCatDescription(updDescriptionChange);
+                        catUpdate.setCatMedNote(updMedicalNoteChange);
+                        catUpdate.setCatGender(updGenderChange);
+                        catUpdate.setCatReason(updReasonChange);
+                        catUpdate.setCatAdoptedStatus(updAdoptionStatusChange);
+                        catUpdate.setCatVaccStat(updVaccineChange);
+                        catUpdate.setCatSpayNeuterStat(updSpayNeuterChange);
+                        databaseCats.setValue(catUpdate);
+                    }
 
-        databaseCats.setValue(cat);
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
 
-        return true;
+                    }
+                });
+                databaseAdoptions.orderByChild("adoptionCatId").equalTo(cId).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot updateSnapshot : dataSnapshot.getChildren()) {
+                            Adoption adoptionUpdate = updateSnapshot.getValue(Adoption.class);
+                            String updNameChange = etName.getText().toString().trim();
+                            adoptionUpdate.setAdoptionCatName(updNameChange);
+                            adoptionUpdate.setAdoptionApplicationStatus("Rejected");
+                            adoptionUpdate.setAdoptionCatIdApponStatus(adoptionUpdate.getAdoptionCatId() + "_Rejected");
+                            adoptionUpdate.setAdoptionOwnerIdApponStatus(adoptionUpdate.getAdoptionOwnerId() + "_Rejected");
+                            databaseAdoptions.child(adoptionUpdate.getAdoptionId()).setValue(adoptionUpdate);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+                backToCatPick();
+                finish();
+                break;
+            case 2:
+                databaseCats.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        Cat catUpdate = dataSnapshot.getValue(Cat.class);
+                        String updNameIdle = etName.getText().toString().trim();
+                        String updDobIdle = etDob.getText().toString().trim();
+                        String updDescriptionIdle = etDesc.getText().toString().trim();
+                        String updMedicalNoteIdle = etMedNote.getText().toString().trim();
+                        String updGenderIdle = msGender.getSelectedItem().toString().trim();
+                        String updReasonIdle = msReason.getSelectedItem().toString().trim();
+                        String updAdoptionStatusIdle = msAdoptionStatus.getSelectedItem().toString().trim();
+                        int updVaccineId = rgVaccine.getCheckedRadioButtonId();
+                        rbVaccine = findViewById(updVaccineId);
+                        String updVaccineIdle = rbVaccine.getText().toString().trim();
+                        int updSpayNeuterId = rgSpayNeuter.getCheckedRadioButtonId();
+                        rbSpayNeuter = findViewById(updSpayNeuterId);
+                        String updSpayNeuterIdle = rbSpayNeuter.getText().toString().trim();
+
+                        catUpdate.setCatName(updNameIdle);
+                        catUpdate.setCatDob(updDobIdle);
+                        catUpdate.setCatDescription(updDescriptionIdle);
+                        catUpdate.setCatMedNote(updMedicalNoteIdle);
+                        catUpdate.setCatGender(updGenderIdle);
+                        catUpdate.setCatReason(updReasonIdle);
+                        catUpdate.setCatAdoptedStatus(updAdoptionStatusIdle);
+                        catUpdate.setCatVaccStat(updVaccineIdle);
+                        catUpdate.setCatSpayNeuterStat(updSpayNeuterIdle);
+                        databaseCats.setValue(catUpdate);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+                databaseAdoptions.orderByChild("adoptionCatId").equalTo(cId).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot updateSnapshot : dataSnapshot.getChildren()) {
+                            Adoption adoptionUpdate = updateSnapshot.getValue(Adoption.class);
+                            String updNameIdle = etName.getText().toString().trim();
+                            adoptionUpdate.setAdoptionCatName(updNameIdle);
+                            databaseAdoptions.child(adoptionUpdate.getAdoptionId()).setValue(adoptionUpdate);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+                backToCatPick();
+                finish();
+                break;
+        }
+    }
+
+    private void mediaOpen() {
+        Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(Intent.createChooser(galleryIntent, "Select Image from Gallery"), 2);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 0 && resultCode == RESULT_OK) {
+            cropUserImage();
+        } else if (requestCode == 2) {
+            if (data != null) {
+                uriCatPhoto = data.getData();
+                cropUserImage();
+            }
+        } else if (requestCode == 1) {
+            if (data != null) {
+                Bundle bundle = data.getExtras();
+                Bitmap bitmap = bundle.getParcelable("data");
+                ivPhoto.setImageBitmap(bitmap);
+            }
+        }
+    }
+
+    private String getActualImage(Uri uriUserPhoto) {
+        ContentResolver contentResolver = getContentResolver();
+        MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
+        return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uriUserPhoto));
+    }
+
+    private void cropUserImage() {
+        try {
+            Intent cropIntent = new Intent("com.android.camera.action.CROP");
+            cropIntent.setDataAndType(uriCatPhoto, "image/*");
+
+            cropIntent.putExtra("crop", "true");
+            cropIntent.putExtra("outputX", 180);
+            cropIntent.putExtra("outputY", 180);
+            cropIntent.putExtra("aspectX", 4);
+            cropIntent.putExtra("aspectY", 4);
+            cropIntent.putExtra("scaleUpIfNeeded", true);
+            cropIntent.putExtra("return-data", true);
+
+            startActivityForResult(cropIntent, 1);
+        } catch (ActivityNotFoundException ex) {
+
+        }
     }
 
 //    private void backToPrevious() {
@@ -397,6 +729,26 @@ public class EditCatDataAvailableActivity extends AppCompatActivity {
 //        startActivity(intent);
 //        finish();
 //    }
+
+    private void backToCatPick(){
+        String pActivity = getIntent().getStringExtra("previousActivity");
+        String catId = getIntent().getStringExtra("cat_id");
+        String ownerId = getIntent().getStringExtra("owner_id");
+        Intent intent = new Intent(getApplicationContext(), CatProfileOwnerAvailableActivity.class);
+        if (pActivity.equals("findcat")) {
+            intent.putExtra("previousActivity", pActivity);
+            intent.putExtra("cat_id", catId);
+            intent.putExtra("owner_id", ownerId);
+            startActivity(intent);
+            finish();
+        } else if (pActivity.equals("adoptionlist")) {
+            intent.putExtra("previousActivity", pActivity);
+            intent.putExtra("cat_id", catId);
+            intent.putExtra("owner_id", ownerId);
+            startActivity(intent);
+            finish();
+        }
+    }
 
     @Override
     public void onBackPressed() {

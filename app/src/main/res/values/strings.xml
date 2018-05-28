@@ -82,7 +82,7 @@
     <string name="userhomeprofile_addresslabel">Address</string>
     <string name="userhome_catname">Cat Name</string>
     <string name="userhome_catreason">Reason for Open Adopt</string>
-    <string name="my_adoption_list">My Adoption List</string>
+    <string name="my_cat">My Cat</string>
     <string name="findcat_province">Select Province</string>
     <string name="findcat_city">Select City</string>
 
@@ -159,6 +159,7 @@
     <string name="verify_email_text">Go to Your Email</string>
     <string name="verify_landing_button"><![CDATA[<< Back to Homepage]]></string>
     <string name="banned_information">Your account has been Banned. \nPlease contact Administrator for further information. \n(adm.sikucing@gmail.com)</string>
+    <string name="hint_photo">Choose \nYour Photo</string>
 
     <string-array name="gender">
         <item>Male</item>

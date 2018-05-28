@@ -1,6 +1,7 @@
 package clouwiko.dev.prasiku.activity.activity;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -30,7 +31,7 @@ import java.util.List;
 import clouwiko.dev.prasiku.R;
 import clouwiko.dev.prasiku.activity.model.Cat;
 
-public class UserAdoptionListActivity extends AppCompatActivity {
+public class UserCatListActivity extends AppCompatActivity {
     private String TAG = "UserAdoptionList";
     private RecyclerView adoptionRecyclerView;
     private LinearLayoutManager linearLayoutManager;
@@ -127,11 +128,19 @@ public class UserAdoptionListActivity extends AppCompatActivity {
             final String oId = catData.getCatOwnerId().toString().trim();
             final String cId = catData.getCatId().toString().trim();
             final String cStat = catData.getCatAdoptedStatus().toString().trim();
+            String cPhoto = catData.getCatProfilePhoto().toString().trim();
 
             holder.name.setText(catData.getCatName());
             holder.reason.setText(catData.getCatReason());
             holder.gender.setText(catData.getCatGender());
-            Picasso.get().load(catData.getCatProfilePhoto()).resize(128, 128).into(holder.photo);
+            if (catData.getCatProfilePhoto().equals("")){
+                String noPhoto = "@drawable/no_image";
+                int imageResource = getResources().getIdentifier(noPhoto, null, getPackageName());
+                Drawable res = getResources().getDrawable(imageResource);
+                holder.photo.setImageDrawable(res);
+            } else {
+                Picasso.get().load(cPhoto).resize(64, 64).into(holder.photo);
+            }
 
             holder.layoutroot.setOnClickListener(new View.OnClickListener() {
                 @Override

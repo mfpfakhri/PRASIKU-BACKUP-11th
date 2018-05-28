@@ -2,6 +2,7 @@ package clouwiko.dev.prasiku.activity.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,7 +19,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
@@ -132,7 +132,7 @@ public class CatProfileOwnerAvailableActivity extends AppCompatActivity {
                                     }
                                 });
                                 String pActivity = getIntent().getStringExtra("previousActivity");
-                                Intent intentAdoptionList = new Intent(getApplicationContext(), UserAdoptionListActivity.class);
+                                Intent intentAdoptionList = new Intent(getApplicationContext(), UserCatListActivity.class);
                                 Intent intentFindCat = new Intent(getApplicationContext(), FindCatForAdoptActivity.class);
                                 Intent intentMainMenu = new Intent(getApplicationContext(), MainMenuActivity.class);
 
@@ -163,20 +163,21 @@ public class CatProfileOwnerAvailableActivity extends AppCompatActivity {
 
         databaseUsers = FirebaseDatabase.getInstance().getReference().child("users").child(ownerId);
         databaseCats = FirebaseDatabase.getInstance().getReference().child("cats").child(catId);
-        databaseCats.addValueEventListener(new ValueEventListener() {
+        databaseCats.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                String catname = dataSnapshot.child("catName").getValue(String.class);
-                String city = dataSnapshot.child("catCity").getValue(String.class);
-                String gender = dataSnapshot.child("catGender").getValue(String.class);
-                String desc = dataSnapshot.child("catDescription").getValue(String.class);
-                String dob = dataSnapshot.child("catDob").getValue(String.class);
-                String mednote = dataSnapshot.child("catMedNote").getValue(String.class);
-                String vaccine = dataSnapshot.child("catVaccStat").getValue(String.class);
-                String spayneuter = dataSnapshot.child("catSpayNeuterStat").getValue(String.class);
-                String reason = dataSnapshot.child("catReason").getValue(String.class);
-                String catphotouri = dataSnapshot.child("catProfilePhoto").getValue(String.class);
-                String adoptionstatus = dataSnapshot.child("catAdoptedStatus").getValue(String.class);
+                Cat catData = dataSnapshot.getValue(Cat.class);
+                String catname = catData.getCatName();
+                String city = catData.getCatCity();
+                String gender = catData.getCatGender();
+                String desc = catData.getCatDescription();
+                String dob = catData.getCatDob();
+                String mednote = catData.getCatMedNote();
+                String vaccine = catData.getCatVaccStat();
+                String spayneuter = catData.getCatSpayNeuterStat();
+                String reason = catData.getCatReason();
+                String catphotouri = catData.getCatProfilePhoto();
+                String adoptionstatus = catData.getCatAdoptedStatus();
 
                 tvCatName.setText(catname);
                 tvCity.setText(city);
@@ -188,7 +189,15 @@ public class CatProfileOwnerAvailableActivity extends AppCompatActivity {
                 tvSpNeu.setText(spayneuter);
                 tvReason.setText(reason);
                 tvAdoptStatus.setText(adoptionstatus);
-                Picasso.get().load(catphotouri).centerCrop().resize(192, 192).into(imCatPhoto);
+                if (catData.getCatProfilePhoto().equals("")) {
+                    String noPhoto = "@drawable/no_image";
+                    int imageResource = getResources().getIdentifier(noPhoto, null, getPackageName());
+                    Drawable res = getResources().getDrawable(imageResource);
+                    imCatPhoto.setImageDrawable(res);
+                    imCatPhoto.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+                } else {
+                    Picasso.get().load(catphotouri).centerCrop().resize(256, 256).into(imCatPhoto);
+                }
 
                 databaseUsers.addValueEventListener(new ValueEventListener() {
                     @Override
@@ -215,7 +224,7 @@ public class CatProfileOwnerAvailableActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         String pActivity = getIntent().getStringExtra("previousActivity");
-        Intent intentAdoptionList = new Intent(getApplicationContext(), UserAdoptionListActivity.class);
+        Intent intentAdoptionList = new Intent(getApplicationContext(), UserCatListActivity.class);
         Intent intentFindCat = new Intent(getApplicationContext(), FindCatForAdoptActivity.class);
         Intent intentMainMenu = new Intent(getApplicationContext(), MainMenuActivity.class);
 

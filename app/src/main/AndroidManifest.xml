@@ -74,7 +74,7 @@
             android:name=".activity.activity.FindCatForAdoptActivity"
             android:parentActivityName=".activity.activity.MainMenuActivity" />
         <activity
-            android:name=".activity.activity.UserAdoptionListActivity"
+            android:name=".activity.activity.UserCatListActivity"
             android:parentActivityName=".activity.activity.MainMenuActivity" />
         <activity android:name=".activity.activity.CatProfileApplicantAdoptedActivity" />
         <activity android:name=".activity.activity.CatProfileApplicantAvailableActivity" />
