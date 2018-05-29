@@ -160,6 +160,15 @@
     <string name="verify_landing_button"><![CDATA[<< Back to Homepage]]></string>
     <string name="banned_information">Your account has been Banned. \nPlease contact Administrator for further information. \n(adm.sikucing@gmail.com)</string>
     <string name="hint_photo">Choose \nYour Photo</string>
+    <string name="name_profile">Name</string>
+    <string name="dob_profile">Date of Birth</string>
+    <string name="gender_profile">Gender</string>
+    <string name="province_profile">Province</string>
+    <string name="city_profile">City</string>
+    <string name="address_profile">Address</string>
+    <string name="phone_profile">Phone</string>
+    <string name="email_profile">Email</string>
+    <string name="report">Report</string>
 
     <string-array name="gender">
         <item>Male</item>

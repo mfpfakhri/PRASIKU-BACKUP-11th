@@ -135,6 +135,28 @@ public class AppAcceptedReviewActivity extends AppCompatActivity {
             }
         });
 
+        tvAppName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                databaseAdoptions = FirebaseDatabase.getInstance().getReference().child("adoptions").child(appId);
+                databaseAdoptions.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        Adoption adoption = dataSnapshot.getValue(Adoption.class);
+                        String applicantid = adoption.getAdoptionApplicantId();
+                        Intent intent = new Intent(getApplicationContext(), UserHomeAcceptedActivity.class);
+                        intent.putExtra("userId", applicantid);
+                        startActivity(intent);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+            }
+        });
+
         btnSaveNum.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

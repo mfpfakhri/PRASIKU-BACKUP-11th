@@ -52,6 +52,7 @@
                             android:gravity="center_vertical"
                             android:text="Applicant Name"
                             android:textSize="16sp"
+                            android:textColor="@color/dark_blue"
                             android:textStyle="bold" />
 
                         <TextView
@@ -59,6 +60,7 @@
                             android:layout_height="match_parent"
                             android:gravity="center_vertical"
                             android:text="'s"
+                            android:textColor="@color/dark_blue"
                             android:textSize="16sp"
                             android:textStyle="bold" />
                     </LinearLayout>

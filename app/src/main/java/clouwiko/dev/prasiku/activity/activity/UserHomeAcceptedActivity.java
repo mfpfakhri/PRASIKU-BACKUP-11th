@@ -1,11 +1,16 @@
 package clouwiko.dev.prasiku.activity.activity;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.github.clans.fab.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -18,17 +23,18 @@ import com.squareup.picasso.Picasso;
 import clouwiko.dev.prasiku.R;
 import clouwiko.dev.prasiku.activity.model.User;
 
-public class UserHomeActivity extends AppCompatActivity {
+public class UserHomeAcceptedActivity extends AppCompatActivity {
     private ImageView ivPhoto;
     private TextView tvName, tvDob, tvGender, tvProvince, tvCity, tvAddress, tvPhone, tvEmail;
     private FirebaseAuth auth;
     private FirebaseUser user;
+    private FloatingActionButton fabReport;
     private DatabaseReference databaseUsers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_home);
+        setContentView(R.layout.activity_user_home_accepted);
 
         ivPhoto = findViewById(R.id.userprofile_photo);
         tvName = findViewById(R.id.userprofile_name_value);
@@ -39,6 +45,7 @@ public class UserHomeActivity extends AppCompatActivity {
         tvAddress = findViewById(R.id.userprofile_address_value);
         tvPhone = findViewById(R.id.userprofile_phone_value);
         tvEmail = findViewById(R.id.userprofile_email_value);
+        fabReport = findViewById(R.id.userprofile_fab_report);
 
         auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
@@ -80,6 +87,25 @@ public class UserHomeActivity extends AppCompatActivity {
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
+            }
+        });
+
+        fabReport.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(UserHomeAcceptedActivity.this);
+                builder.setMessage("Are You sure want to report this adopter?")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent intent = new Intent(getApplicationContext(), ReportFormActivity.class);
+                                intent.putExtra("userId", uId);
+                                startActivity(intent);
+                            }
+                        })
+                        .setNegativeButton("No", null);
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
             }
         });
     }

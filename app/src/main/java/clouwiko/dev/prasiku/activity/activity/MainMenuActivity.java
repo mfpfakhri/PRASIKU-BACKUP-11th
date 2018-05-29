@@ -203,7 +203,10 @@ public class MainMenuActivity extends AppCompatActivity
 
         if (id == R.id.nav_home) {
             auth.getCurrentUser();
-            startActivity(new Intent(getApplicationContext(), UserHomeActivity.class));
+            String userId = auth.getCurrentUser().getUid();
+            Intent intent = new Intent(getApplicationContext(), UserHomeActivity.class);
+            intent.putExtra("userId", userId);
+            startActivity(intent);
         } else if (id == R.id.nav_menu) {
             startActivity(new Intent(getApplicationContext(), MainMenuActivity.class));
         } else if (id == R.id.nav_catlist) {

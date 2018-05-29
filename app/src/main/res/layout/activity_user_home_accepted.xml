@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="clouwiko.dev.prasiku.activity.activity.UserHomeActivity">
+    tools:context="clouwiko.dev.prasiku.activity.activity.UserHomeAcceptedActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/userprofile_appbarlayout"
@@ -266,4 +266,37 @@
             </LinearLayout>
         </android.support.v7.widget.CardView>
     </android.support.v4.widget.NestedScrollView>
+
+
+    <com.github.clans.fab.FloatingActionMenu
+        android:id="@+id/userprofile_fam"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginRight="16dp"
+        android:elevation="6dp"
+        app:fab_label=""
+        app:layout_anchor="@id/userprofile_cardview"
+        app:layout_anchorGravity="bottom|right|end"
+        app:menu_colorNormal="@color/colorPrimaryDark"
+        app:menu_colorPressed="@color/colorPrimaryDarkTransparant"
+        app:menu_colorRipple="@color/colorPrimaryDarkTransparant"
+        app:menu_labels_colorNormal="@color/light_gray"
+        app:menu_labels_colorPressed="@color/light_gray"
+        app:menu_labels_colorRipple="@color/light_gray"
+        app:menu_labels_textColor="@color/black"
+        app:menu_openDirection="up"
+        app:menu_showShadow="true">
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/userprofile_fab_report"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/baseline_report_white_24dp"
+            app:fabSize="mini"
+            app:fab_colorNormal="@color/colorPrimaryDarkTransparant"
+            app:fab_colorPressed="@color/light_gray"
+            app:fab_colorRipple="@color/light_gray"
+            app:fab_label="@string/report" />
+    </com.github.clans.fab.FloatingActionMenu>
 </android.support.design.widget.CoordinatorLayout>
