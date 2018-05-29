@@ -13,11 +13,13 @@ public class Report {
     private String reportReportedName;
     private String reportMessage;
     private String reportStatus;
+    private String reportCat;
+    private String reportAdoptions;
 
     public Report() {
     }
 
-    public Report(String reportId, String reportDate, String reportReporterId, String reportReporterName, String reportReportedId, String reportReportedName, String reportMessage, String reportStatus) {
+    public Report(String reportId, String reportDate, String reportReporterId, String reportReporterName, String reportReportedId, String reportReportedName, String reportMessage, String reportStatus, String reportCat, String reportAdoptions) {
         this.reportId = reportId;
         this.reportDate = reportDate;
         this.reportReporterId = reportReporterId;
@@ -26,6 +28,8 @@ public class Report {
         this.reportReportedName = reportReportedName;
         this.reportMessage = reportMessage;
         this.reportStatus = reportStatus;
+        this.reportCat = reportCat;
+        this.reportAdoptions = reportAdoptions;
     }
 
     public String getReportId() {
@@ -90,5 +94,21 @@ public class Report {
 
     public void setReportStatus(String reportStatus) {
         this.reportStatus = reportStatus;
+    }
+
+    public String getReportCat() {
+        return reportCat;
+    }
+
+    public void setReportCat(String reportCat) {
+        this.reportCat = reportCat;
+    }
+
+    public String getReportAdoptions() {
+        return reportAdoptions;
+    }
+
+    public void setReportAdoptions(String reportAdoptions) {
+        this.reportAdoptions = reportAdoptions;
     }
 }

@@ -101,8 +101,10 @@ public class UserHomeAcceptedActivity extends AppCompatActivity {
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
+                                String applicationid = getIntent().getStringExtra("application_id");
                                 Intent intent = new Intent(getApplicationContext(), ReportFormActivity.class);
                                 intent.putExtra("userId", uId);
+                                intent.putExtra("application_id", applicationid);
                                 startActivity(intent);
                             }
                         })

@@ -1,5 +1,8 @@
 package clouwiko.dev.prasiku.activity.activity;
 
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -15,7 +18,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 import clouwiko.dev.prasiku.R;
+import clouwiko.dev.prasiku.activity.model.Adoption;
+import clouwiko.dev.prasiku.activity.model.Report;
 import clouwiko.dev.prasiku.activity.model.User;
 
 public class ReportFormActivity extends AppCompatActivity {
@@ -88,7 +97,71 @@ public class ReportFormActivity extends AppCompatActivity {
                 } else {
 
                 }
+                databaseReports = FirebaseDatabase.getInstance().getReference().child("reports");
+                String applicationid = getIntent().getStringExtra("application_id");
+                String userId = getIntent().getStringExtra("userId");
+                databaseAdoptions = FirebaseDatabase.getInstance().getReference().child("adoptions").child(applicationid);
+                databaseAdoptions.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        Adoption adoptionData = dataSnapshot.getValue(Adoption.class);
+                        final String reportedname = adoptionData.getAdoptionApplicantName();
+                        final String reportcat = adoptionData.getAdoptionCatId();
+                        final String reportadoptions = adoptionData.getAdoptionId();
+                        databaseOwner.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                User userData = dataSnapshot.getValue(User.class);
+                                String reporterid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                                String reportedid = getIntent().getStringExtra("userId");
+                                String reportername = userData.getUserFname();
+                                String reportmessage = etMessage.getText().toString();
+                                String reportstatus = "Received";
+                                String reportkey = databaseReports.push().getKey();
+                                Date date = Calendar.getInstance().getTime();
+                                SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
+                                String reportdate = dateFormat.format(date);
+                                Report report = new Report(reportkey, reportdate, reporterid, reportername, reportedid, reportedname, reportmessage, reportstatus, reportcat, reportadoptions);
+                                databaseReports.child(reporterid).setValue(report);
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+                Intent intent = new Intent(getApplicationContext(), UserHomeAcceptedActivity.class);
+                intent.putExtra("userId", userId);
+                intent.putExtra("application_id", applicationid);
+                startActivity(intent);
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(ReportFormActivity.this);
+        builder.setMessage("Are You sure want to quit?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String applicationid = getIntent().getStringExtra("application_id");
+                        String userId = getIntent().getStringExtra("userId");
+                        Intent intent = new Intent(getApplicationContext(), UserHomeAcceptedActivity.class);
+                        intent.putExtra("userId", userId);
+                        intent.putExtra("application_id", applicationid);
+                        startActivity(intent);
+                    }
+                })
+                .setNegativeButton("No", null);
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 }
