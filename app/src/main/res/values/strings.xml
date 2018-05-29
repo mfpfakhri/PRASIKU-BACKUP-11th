@@ -169,6 +169,11 @@
     <string name="phone_profile">Phone</string>
     <string name="email_profile">Email</string>
     <string name="report">Report</string>
+    <string name="your_name">Your name :</string>
+    <string name="report_message">Report Message</string>
+    <string name="send_report">Report this Person</string>
+    <string name="owner">Owner</string>
+    <string name="adopter">Adopter</string>
 
     <string-array name="gender">
         <item>Male</item>

@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -28,6 +29,7 @@ public class UserHomeAcceptedActivity extends AppCompatActivity {
     private TextView tvName, tvDob, tvGender, tvProvince, tvCity, tvAddress, tvPhone, tvEmail;
     private FirebaseAuth auth;
     private FirebaseUser user;
+    private FloatingActionMenu fam;
     private FloatingActionButton fabReport;
     private DatabaseReference databaseUsers;
 
@@ -45,6 +47,7 @@ public class UserHomeAcceptedActivity extends AppCompatActivity {
         tvAddress = findViewById(R.id.userprofile_address_value);
         tvPhone = findViewById(R.id.userprofile_phone_value);
         tvEmail = findViewById(R.id.userprofile_email_value);
+        fam = findViewById(R.id.userprofile_fam);
         fabReport = findViewById(R.id.userprofile_fab_report);
 
         auth = FirebaseAuth.getInstance();
@@ -108,5 +111,17 @@ public class UserHomeAcceptedActivity extends AppCompatActivity {
                 alertDialog.show();
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (fam.isOpened()){
+            fam.close(true);
+        } else {
+            String applicationid = getIntent().getStringExtra("application_id");
+            Intent intent = new Intent(getApplicationContext(), AppAcceptedReviewActivity.class);
+            intent.putExtra("application_id", applicationid);
+            startActivity(intent);
+        }
     }
 }

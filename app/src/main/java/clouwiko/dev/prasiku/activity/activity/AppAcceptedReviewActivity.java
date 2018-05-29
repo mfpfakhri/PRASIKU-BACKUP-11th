@@ -144,7 +144,9 @@ public class AppAcceptedReviewActivity extends AppCompatActivity {
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         Adoption adoption = dataSnapshot.getValue(Adoption.class);
                         String applicantid = adoption.getAdoptionApplicantId();
+                        String applicationid = getIntent().getStringExtra("application_id");
                         Intent intent = new Intent(getApplicationContext(), UserHomeAcceptedActivity.class);
+                        intent.putExtra("application_id", applicationid);
                         intent.putExtra("userId", applicantid);
                         startActivity(intent);
                     }
@@ -366,5 +368,11 @@ public class AppAcceptedReviewActivity extends AppCompatActivity {
         while ((read = in.read(buffer)) != -1) {
             out.write(buffer, 0, read);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(getApplicationContext(), AppAcceptedActivity.class);
+        startActivity(intent);
     }
 }
