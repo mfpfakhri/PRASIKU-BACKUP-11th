@@ -25,6 +25,58 @@
         {
           "client_id": "463961784477-q1ulipl7iene72p3jc7c0aqi6g5srift.apps.googleusercontent.com",
           "client_type": 3
+        },
+        {
+          "client_id": "463961784477-q1ulipl7iene72p3jc7c0aqi6g5srift.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCge0S3XmvjIM8I81X6BGtDFIG0qeR2GAM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "463961784477-q1ulipl7iene72p3jc7c0aqi6g5srift.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:463961784477:android:4870acdc3f01ba3c",
+        "android_client_info": {
+          "package_name": "dev.clouwiko.sikucingadm"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "463961784477-km4stiu65vsutftnon6uf32m1cq3e7kd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "dev.clouwiko.sikucingadm",
+            "certificate_hash": "b2ff658ba04b40d8c2801b1f0de820764b53d86d"
+          }
+        },
+        {
+          "client_id": "463961784477-q1ulipl7iene72p3jc7c0aqi6g5srift.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "463961784477-q1ulipl7iene72p3jc7c0aqi6g5srift.apps.googleusercontent.com",
+          "client_type": 3
         }
       ],
       "api_key": [

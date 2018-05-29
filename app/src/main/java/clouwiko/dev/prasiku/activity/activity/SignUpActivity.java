@@ -129,8 +129,8 @@ public class SignUpActivity extends AppCompatActivity {
 
         //TODO: Initial Spinner for cities
         cities = new ArrayList<String>();
-        citiesAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, cities);
-        citiesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        citiesAdapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.spinner_style, cities);
+//        citiesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerCities.setAdapter(citiesAdapter);
         provincesKey = new ArrayList<>();
         //
@@ -195,8 +195,8 @@ public class SignUpActivity extends AppCompatActivity {
                     });
                 }
 //                MaterialSpinner provincesSpinner = (MaterialSpinner) findViewById(R.id.provinceSpinner_signup);
-                ArrayAdapter<String> provincesAdapter = new ArrayAdapter<String>(SignUpActivity.this, android.R.layout.simple_spinner_item, provinces);
-                provincesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                ArrayAdapter<String> provincesAdapter = new ArrayAdapter<String>(SignUpActivity.this, R.layout.spinner_style, provinces);
+//                provincesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinnerProvinces.setAdapter(provincesAdapter);
             }
 

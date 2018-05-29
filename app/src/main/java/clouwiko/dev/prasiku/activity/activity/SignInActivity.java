@@ -114,13 +114,12 @@ public class SignInActivity extends AppCompatActivity {
                         .addOnCompleteListener(SignInActivity.this, new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
-                                FirebaseUser user = auth.getCurrentUser();
-                                String userId = user.getUid();
-
                                 // If sign in fails, display a message to the user. If sign in succeeds
                                 // the auth state listener will be notified and logic to handle the
                                 // signed in user can be handled in the listener.
                                 if (task.isSuccessful()) {
+                                    FirebaseUser user = auth.getCurrentUser();
+                                    String userId = user.getUid();
                                     if (user.isEmailVerified()){
                                         databaseUsers = FirebaseDatabase.getInstance().getReference().child("users").child(userId);
                                         databaseUsers.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -163,6 +162,7 @@ public class SignInActivity extends AppCompatActivity {
                                 } else {
                                     progressBar.setVisibility(View.GONE);
                                     Toast.makeText(SignInActivity.this, getString(R.string.auth_failed), Toast.LENGTH_SHORT).show();
+                                    return;
                                 }
                             }
                         });

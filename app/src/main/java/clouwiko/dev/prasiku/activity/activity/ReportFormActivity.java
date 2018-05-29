@@ -2,8 +2,10 @@ package clouwiko.dev.prasiku.activity.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -35,9 +37,7 @@ public class ReportFormActivity extends AppCompatActivity {
         etMessage = findViewById(R.id.report_message);
         btnReport = findViewById(R.id.action_send_report);
 
-        auth = FirebaseAuth.getInstance();
-        user = auth.getCurrentUser();
-        String ownerId = user.getUid();
+        String ownerId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         String adopterid = getIntent().getStringExtra("userId");
 
         databaseOwner = FirebaseDatabase.getInstance().getReference().child("users").child(ownerId);
@@ -69,6 +69,25 @@ public class ReportFormActivity extends AppCompatActivity {
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
+            }
+        });
+
+        btnReport.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String valMessage = etMessage.getText().toString();
+                if (valMessage.isEmpty()){
+                    etMessage.setError("You should fill report message");
+                    return;
+                } else {
+
+                }
+                if (valMessage.length()<100){
+                    Toast.makeText(getApplicationContext(), "Please describe Your report with more sentences", Toast.LENGTH_SHORT).show();
+                    return;
+                } else {
+
+                }
             }
         });
     }
