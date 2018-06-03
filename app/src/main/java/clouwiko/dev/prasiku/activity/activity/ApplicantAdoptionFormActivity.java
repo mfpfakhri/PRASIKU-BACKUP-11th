@@ -51,7 +51,7 @@ public class ApplicantAdoptionFormActivity extends AppCompatActivity {
         setContentView(R.layout.activity_applicant_adoption_form);
 
         title = findViewById(R.id.adoptionform_title);
-        Typeface faceslogan = Typeface.createFromAsset(getAssets(),"fonts/segoeuisl.ttf");
+        Typeface faceslogan = Typeface.createFromAsset(getAssets(), "fonts/segoeuisl.ttf");
         title.setTypeface(faceslogan);
         etPhone = findViewById(R.id.adoptionform_phone);
         etAddress = findViewById(R.id.adoptionform_address);
@@ -117,20 +117,14 @@ public class ApplicantAdoptionFormActivity extends AppCompatActivity {
                 if (TextUtils.isEmpty(noAnimalValidation)) {
                     Toast.makeText(getApplicationContext(), "Enter the Number of animal You have", Toast.LENGTH_SHORT).show();
                 }
-                //Applicant House Size Validation
-                String houseSizeValidation = etHouseSize.getText().toString();
-                if (TextUtils.isEmpty(houseSizeValidation)) {
-                    Toast.makeText(getApplicationContext(), "Enter the size of House Where You lived", Toast.LENGTH_SHORT).show();
-                }
-                //Number of People Validation
-                String peopleNumberValidation = etPeopleNumber.getText().toString();
-                if (TextUtils.isEmpty(peopleNumberValidation)) {
-                    Toast.makeText(getApplicationContext(), "Enter Number of People who lived in the House", Toast.LENGTH_SHORT).show();
-                }
-                //Applicant Animal will Live Validation
-                String animalPlaceValidation = etAnimalLive.getText().toString();
-                if (TextUtils.isEmpty(animalPlaceValidation)) {
-                    Toast.makeText(getApplicationContext(), "Enter the Place Where the Cats Will Stay", Toast.LENGTH_SHORT).show();
+                String validNoa = "^\\d{1,3}$";
+                Matcher matcherNoa= Pattern.compile(validNoa).matcher(noAnimalValidation);
+                if (matcherNoa.matches()) {
+
+                } else {
+//                    Toast.makeText(getApplicationContext(), "Enter Number Only", Toast.LENGTH_SHORT).show();
+                    etAnimalNumber.setError("Enter Number Only");
+                    return;
                 }
                 //House Type Validation
                 int houseTypePosition = msHouseType.getSelectedItemPosition();
@@ -138,6 +132,46 @@ public class ApplicantAdoptionFormActivity extends AppCompatActivity {
 
                 } else {
                     Toast.makeText(getApplicationContext(), "Choose Your house type", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                //Applicant House Size Validation
+                String houseSizeValidation = etHouseSize.getText().toString();
+                if (TextUtils.isEmpty(houseSizeValidation)) {
+                    Toast.makeText(getApplicationContext(), "Enter the size of House Where You lived", Toast.LENGTH_SHORT).show();
+                }
+                String validHouseSize = "^\\d{1,5}$";
+                Matcher matcherHouseSize = Pattern.compile(validHouseSize).matcher(houseSizeValidation);
+                if (matcherHouseSize.matches()) {
+
+                } else {
+//                    Toast.makeText(getApplicationContext(), "Enter Number Only", Toast.LENGTH_SHORT).show();
+                    etHouseSize.setError("Enter Number Only");
+                    return;
+                }
+                //Number of People Validation
+                String peopleNumberValidation = etPeopleNumber.getText().toString();
+                if (TextUtils.isEmpty(peopleNumberValidation)) {
+                    Toast.makeText(getApplicationContext(), "Enter Number of People who lived in the House", Toast.LENGTH_SHORT).show();
+                }
+                String validNop = "^\\d{1,3}$";
+                Matcher matcherNop = Pattern.compile(validNop).matcher(peopleNumberValidation);
+                if (matcherNop.matches()) {
+
+                } else {
+                    etPeopleNumber.setError("Enter Number Only");
+                    return;
+                }
+                //Applicant Animal will Live Validation
+                String animalPlaceValidation = etAnimalLive.getText().toString();
+                if (TextUtils.isEmpty(animalPlaceValidation)) {
+                    Toast.makeText(getApplicationContext(), "Enter the Place Where the Cats Will Stay", Toast.LENGTH_SHORT).show();
+                }
+                String validCatPlace = "(?<=\\s|^)[a-zA-Z]*(?=[.,;:]?\\s|$)";
+                Matcher matcherCatPlace = Pattern.compile(validCatPlace).matcher(animalPlaceValidation);
+                if (matcherCatPlace.matches()) {
+
+                } else {
+                    etAnimalLive.setError("Enter Alphabet Only");
                     return;
                 }
                 //Family Permission Validation

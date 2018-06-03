@@ -1,6 +1,7 @@
 package clouwiko.dev.prasiku.activity.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -8,6 +9,9 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
+import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -131,7 +135,13 @@ public class AppAcceptedActivity extends AppCompatActivity {
 
             holder.appname.setText(applicantname);
             holder.catname.setText(catname);
-            holder.apponstatus.setText(apponstatus);
+
+            SpannableStringBuilder acceptedBuilder = new SpannableStringBuilder();
+            SpannableString acceptedSpannable = new SpannableString(apponstatus);
+            acceptedSpannable.setSpan(new ForegroundColorSpan(Color.GREEN),0, acceptedSpannable.length(), 0);
+            acceptedBuilder.append(acceptedSpannable);
+            holder.apponstatus.setText(acceptedBuilder, TextView.BufferType.SPANNABLE);
+
             Picasso.get().load(receivedData.getAdoptionCatPhoto()).centerCrop().resize(128, 128).into(holder.photo);
 
             holder.layoutroot.setOnClickListener(new View.OnClickListener() {

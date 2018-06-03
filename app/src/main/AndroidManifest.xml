@@ -96,7 +96,8 @@
         <activity android:name=".activity.activity.VerificationActivity" />
         <activity android:name=".activity.activity.UserBannedActivity" />
         <activity android:name=".activity.activity.UserHomeAcceptedActivity" />
-        <activity android:name=".activity.activity.ReportFormActivity"></activity>
+        <activity android:name=".activity.activity.ReportFormActivity" />
+        <activity android:name=".activity.activity.NoResultFoundActivity"></activity>
     </application>
 
 </manifest>

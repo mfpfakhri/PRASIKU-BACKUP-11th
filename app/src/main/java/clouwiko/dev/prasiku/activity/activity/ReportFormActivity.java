@@ -122,7 +122,7 @@ public class ReportFormActivity extends AppCompatActivity {
                                 SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
                                 String reportdate = dateFormat.format(date);
                                 Report report = new Report(reportkey, reportdate, reporterid, reportername, reportedid, reportedname, reportmessage, reportstatus, reportcat, reportadoptions);
-                                databaseReports.child(reporterid).setValue(report);
+                                databaseReports.child(reportkey).setValue(report);
                             }
 
                             @Override

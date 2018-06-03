@@ -25,6 +25,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
@@ -85,8 +86,8 @@ public class FindCatForAdoptActivity extends AppCompatActivity {
         //TODO:RWP Initial Spinner for cities
         cities = new ArrayList<String>();
 //        final MaterialSpinner citiesSpinner = (MaterialSpinner) findViewById(R.id.findcatspinner_city);
-        citiesAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, cities);
-        citiesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        citiesAdapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.spinner_style, cities);
+//        citiesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerCities.setAdapter(citiesAdapter);
         provincesKey = new ArrayList<>();
         //
@@ -149,8 +150,8 @@ public class FindCatForAdoptActivity extends AppCompatActivity {
                     });
                 }
 //                MaterialSpinner provincesSpinner = (MaterialSpinner) findViewById(R.id.findcatspinner_province);
-                ArrayAdapter<String> provincesAdapter = new ArrayAdapter<String>(FindCatForAdoptActivity.this, android.R.layout.simple_spinner_item, provinces);
-                provincesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                ArrayAdapter<String> provincesAdapter = new ArrayAdapter<String>(FindCatForAdoptActivity.this, R.layout.spinner_style, provinces);
+//                provincesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinnerProvinces.setAdapter(provincesAdapter);
             }
 
@@ -167,17 +168,50 @@ public class FindCatForAdoptActivity extends AppCompatActivity {
         btnSearchCat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getAdoptList();
+                databaseCats = FirebaseDatabase.getInstance().getReference().child("cats");
+                int valProvince = spinnerProvinces.getSelectedItemPosition();
+                int valCity = spinnerCities.getSelectedItemPosition();
+                if (valProvince == 0) {
+                    Toast.makeText(getApplicationContext(), "Select Cat Province", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (valCity == 0) {
+                    Toast.makeText(getApplicationContext(), "Select Cat City", Toast.LENGTH_SHORT).show();
+                    return;
+                } else {
+                    String cityKey = spinnerCities.getSelectedItem().toString().trim();
+                    String cityDeleteKey = cityKey + "_0";
+                    Query checkQuery = databaseCats.orderByChild("catCityDeleteStatus").equalTo(cityDeleteKey);
+                    checkQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            if (dataSnapshot.exists()) {
+                                spinnerProvinces.setVisibility(View.GONE);
+                                spinnerCities.setVisibility(View.GONE);
+                                btnSearchCat.setVisibility(View.GONE);
+                                getCatList();
+                            } else {
+                                Intent intent = new Intent(getApplicationContext(), NoResultFoundActivity.class);
+                                startActivity(intent);
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+                }
             }
         });
     }
 
-    void getAdoptList() {
+    void getCatList() {
         //Firebase Current User UID
         String userUID = auth.getUid();
 
         String keyCityValue = spinnerCities.getSelectedItem().toString().trim();
-        String cityDeleteStatus = keyCityValue+"_0";
+        String cityDeleteStatus = keyCityValue + "_0";
 
         //Database Reference
         databaseCats = FirebaseDatabase.getInstance().getReference().child("cats");
@@ -245,15 +279,15 @@ public class FindCatForAdoptActivity extends AppCompatActivity {
                     //Firebase Current User Logged In ID
                     String userID = auth.getCurrentUser().getUid().toString().trim();
 
-                    if (userID.equals(oId)){
-                        if (cStat.equals("Available")){
+                    if (userID.equals(oId)) {
+                        if (cStat.equals("Available")) {
                             Intent intent = new Intent(getApplicationContext(), CatProfileOwnerAvailableActivity.class);
                             intent.putExtra("previousActivity", "findcat");
                             intent.putExtra("owner_id", oId);
                             intent.putExtra("cat_id", cId);
                             startActivity(intent);
                             finish();
-                        } else if (cStat.equals("Adopted")){
+                        } else if (cStat.equals("Adopted")) {
                             Intent intent = new Intent(getApplicationContext(), CatProfileOwnerAdoptedActivity.class);
                             intent.putExtra("previousActivity", "findcat");
                             intent.putExtra("owner_id", oId);
@@ -264,7 +298,7 @@ public class FindCatForAdoptActivity extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), "You have no right to choose this option", Toast.LENGTH_SHORT).show();
                         }
                     } else {
-                        if (cStat.equals("Available")){
+                        if (cStat.equals("Available")) {
                             String applicantname = getIntent().getStringExtra("applicant_name");
                             String applicantphoto = getIntent().getStringExtra("applicant_photo");
                             Intent intent = new Intent(getApplicationContext(), CatProfileApplicantAvailableActivity.class);
@@ -276,7 +310,7 @@ public class FindCatForAdoptActivity extends AppCompatActivity {
                             intent.putExtra("applicant_name", applicantname);
                             startActivity(intent);
                             finish();
-                        } else if (cStat.equals("Adopted")){
+                        } else if (cStat.equals("Adopted")) {
                             Intent intent = new Intent(getApplicationContext(), CatProfileApplicantAdoptedActivity.class);
                             intent.putExtra("previousActivity", "findcat");
                             intent.putExtra("owner_id", oId);
