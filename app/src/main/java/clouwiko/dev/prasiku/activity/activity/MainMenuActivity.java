@@ -32,6 +32,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import clouwiko.dev.prasiku.R;
+import clouwiko.dev.prasiku.activity.other.CircleTransform;
 import clouwiko.dev.prasiku.activity.other.RoundedCornersTransform;
 
 public class MainMenuActivity extends AppCompatActivity
@@ -100,6 +101,39 @@ public class MainMenuActivity extends AppCompatActivity
             }
         };
 
+        userPhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                auth.getCurrentUser();
+                String userId = auth.getCurrentUser().getUid();
+                Intent intent = new Intent(getApplicationContext(), UserHomeActivity.class);
+                intent.putExtra("userId", userId);
+                startActivity(intent);
+            }
+        });
+
+        userName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                auth.getCurrentUser();
+                String userId = auth.getCurrentUser().getUid();
+                Intent intent = new Intent(getApplicationContext(), UserHomeActivity.class);
+                intent.putExtra("userId", userId);
+                startActivity(intent);
+            }
+        });
+
+        userEmail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                auth.getCurrentUser();
+                String userId = auth.getCurrentUser().getUid();
+                Intent intent = new Intent(getApplicationContext(), UserHomeActivity.class);
+                intent.putExtra("userId", userId);
+                startActivity(intent);
+            }
+        });
+
         databaseUsers = FirebaseDatabase.getInstance().getReference().child("users").child(userUID);
         databaseUsers.addValueEventListener(new ValueEventListener() {
             @Override
@@ -117,7 +151,7 @@ public class MainMenuActivity extends AppCompatActivity
                     Drawable res = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(imageResource, 140, 140, true));
                     userPhoto.setImageDrawable(res);
                 } else {
-                    Picasso.get().load(userPhotoUri).transform(new RoundedCornersTransform()).centerInside().resize(256, 256).into(userPhoto);
+                    Picasso.get().load(userPhotoUri).transform(new CircleTransform()).centerInside().resize(256, 256).into(userPhoto);
                 }
             }
 
@@ -201,13 +235,7 @@ public class MainMenuActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_home) {
-            auth.getCurrentUser();
-            String userId = auth.getCurrentUser().getUid();
-            Intent intent = new Intent(getApplicationContext(), UserHomeActivity.class);
-            intent.putExtra("userId", userId);
-            startActivity(intent);
-        } else if (id == R.id.nav_menu) {
+        if (id == R.id.nav_menu) {
             startActivity(new Intent(getApplicationContext(), MainMenuActivity.class));
         } else if (id == R.id.nav_catlist) {
             startActivity(new Intent(getApplicationContext(), UserCatListActivity.class));
