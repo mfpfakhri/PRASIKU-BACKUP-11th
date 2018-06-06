@@ -175,6 +175,7 @@
     <string name="owner">Owner</string>
     <string name="adopter">Adopter</string>
     <string name="noresult">No Results for Search</string>
+    <string name="help_password">*Kata Sandi Bisa Beragam Karakter dan Minimal 6 Karakter</string>
 
     <string-array name="gender">
         <item>Male</item>

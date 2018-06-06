@@ -20,7 +20,7 @@ import clouwiko.dev.prasiku.activity.activity.AppAcceptedReviewActivity;
  * Created by muham on 06/06/2018.
  */
 
-public class NotificationGenerator {
+public class AgreementNotificationGenerator {
 
     private static final int NOTIFICATION_ID_OPEN_FOLDER = 9;
 

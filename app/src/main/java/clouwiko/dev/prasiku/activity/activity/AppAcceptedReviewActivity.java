@@ -3,7 +3,6 @@ package clouwiko.dev.prasiku.activity.activity;
 import android.Manifest;
 import android.app.DownloadManager;
 import android.content.ActivityNotFoundException;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -40,7 +39,7 @@ import java.io.OutputStream;
 
 import clouwiko.dev.prasiku.R;
 import clouwiko.dev.prasiku.activity.model.Adoption;
-import clouwiko.dev.prasiku.activity.other.NotificationGenerator;
+import clouwiko.dev.prasiku.activity.other.AgreementNotificationGenerator;
 
 public class AppAcceptedReviewActivity extends AppCompatActivity {
     private String TAG = "AppAcceptedReviewActivity";
@@ -253,7 +252,7 @@ public class AppAcceptedReviewActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 downloadAsset("Surat Perjanjian Adopsi SIKUCING.pdf");
-                NotificationGenerator.openPdfNotification(getApplicationContext());
+                AgreementNotificationGenerator.openPdfNotification(getApplicationContext());
                 AlertDialog.Builder builder = new AlertDialog.Builder(AppAcceptedReviewActivity.this);
                 builder.setMessage("Do You want to open adoption agreement?")
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {

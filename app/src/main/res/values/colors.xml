@@ -21,6 +21,7 @@
     <color name="btn_logut_bg">#ff6861</color>
 
     <color name="black">#000000</color>
+    <color name="red">#e90606</color>
     <color name="light_gray">#ededed</color>
     <color name="dark_gray">#7b7b7b</color>
     <color name="light_green">#2ec45d</color>
