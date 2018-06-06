@@ -40,6 +40,7 @@ import java.io.OutputStream;
 
 import clouwiko.dev.prasiku.R;
 import clouwiko.dev.prasiku.activity.model.Adoption;
+import clouwiko.dev.prasiku.activity.other.NotificationGenerator;
 
 public class AppAcceptedReviewActivity extends AppCompatActivity {
     private String TAG = "AppAcceptedReviewActivity";
@@ -252,6 +253,7 @@ public class AppAcceptedReviewActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 downloadAsset("Surat Perjanjian Adopsi SIKUCING.pdf");
+                NotificationGenerator.openPdfNotification(getApplicationContext());
                 AlertDialog.Builder builder = new AlertDialog.Builder(AppAcceptedReviewActivity.this);
                 builder.setMessage("Do You want to open adoption agreement?")
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
