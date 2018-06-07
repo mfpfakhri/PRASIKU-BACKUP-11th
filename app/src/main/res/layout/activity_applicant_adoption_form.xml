@@ -68,7 +68,7 @@
                         android:id="@+id/adoptionform_phone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/hint_adoptionform_phone"
+                        android:hint="@string/hint_cp_adoption_form"
                         android:inputType="text"
                         android:maxLines="1"
                         android:singleLine="true"
@@ -102,7 +102,7 @@
                         android:id="@+id/adoptionform_address"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/hint_adoptionform_address"
+                        android:hint="@string/hint_address_adoption_form"
                         android:inputType="text"
                         android:maxLines="1"
                         android:singleLine="true"
@@ -136,7 +136,7 @@
                         android:id="@+id/adoptionform_job"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/hint_adoptionform_job"
+                        android:hint="@string/hint_job"
                         android:inputType="text"
                         android:maxLines="1"
                         android:singleLine="true"
@@ -170,7 +170,7 @@
                         android:id="@+id/adoptionform_reasonwhy"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/hint_adoptionform_reasonwhy"
+                        android:hint="@string/hint_reason_why"
                         android:inputType="text"
                         android:maxLines="1"
                         android:singleLine="true"
@@ -204,7 +204,7 @@
                         android:id="@+id/adoptionform_animalnumber"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/hint_adoptionform_animal"
+                        android:hint="@string/hint_noa"
                         android:inputType="textMultiLine"
                         android:lines="3"
                         android:textColor="@color/black" />
@@ -234,7 +234,7 @@
                     android:layout_marginLeft="4dp"
                     android:layout_weight="1"
                     android:entries="@array/housetype"
-                    app:ms_hint="@string/hint_housetype"
+                    app:ms_hint="@string/hint_house_type"
                     app:ms_hintTextSize="18dp">
 
                 </fr.ganfra.materialspinner.MaterialSpinner>
@@ -265,7 +265,7 @@
                         android:id="@+id/adoptionform_housesize"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/hint_adoptionform_housesize"
+                        android:hint="@string/hint_house_size"
                         android:inputType="text"
                         android:maxLines="1"
                         android:singleLine="true"
@@ -299,7 +299,7 @@
                         android:id="@+id/adoptionform_peoplenumber"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/hint_adoptionform_familynumber"
+                        android:hint="@string/hint_family_number"
                         android:inputType="text"
                         android:maxLines="1"
                         android:singleLine="true"
@@ -333,7 +333,7 @@
                         android:id="@+id/adoptionform_animallive"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/hint_adoptionform_animallive"
+                        android:hint="@string/hint_cat_place"
                         android:inputType="text"
                         android:maxLines="1"
                         android:singleLine="true"
@@ -354,7 +354,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:lineSpacingMultiplier="1.2"
-                    android:text="@string/adoptionform_consideredthings"
+                    android:text="@string/hint_considered"
                     android:textSize="18dp" />
             </LinearLayout>
 
@@ -366,7 +366,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/adoptionform_housememberpermission"
+                    android:text="@string/hint_house_member_permission"
                     android:textSize="17dp" />
 
                 <RadioGroup
@@ -381,7 +381,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:layout_marginTop="4dp"
-                        android:text="@string/adoptionform_yesvalue" />
+                        android:text="@string/yes_value" />
 
                     <RadioButton
                         android:id="@+id/adoptionform_housememberpermission_no"
@@ -389,7 +389,7 @@
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:text="@string/adoptionform_novalue" />
+                        android:text="@string/no_value" />
                 </RadioGroup>
             </android.support.design.widget.TextInputLayout>
 
@@ -401,7 +401,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/adoptionform_movingplan"
+                    android:text="@string/hint_moving_plan"
                     android:textSize="17dp" />
 
                 <RadioGroup
@@ -416,7 +416,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:layout_marginTop="4dp"
-                        android:text="@string/adoptionform_yesvalue" />
+                        android:text="@string/yes_value" />
 
                     <RadioButton
                         android:id="@+id/adoptionform_movingplan_no"
@@ -424,7 +424,7 @@
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:text="@string/adoptionform_novalue" />
+                        android:text="@string/no_value" />
                 </RadioGroup>
             </android.support.design.widget.TextInputLayout>
 
@@ -436,7 +436,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/adoptionform_aftermarriage"
+                    android:text="@string/hint_marriage_plan"
                     android:textSize="17dp" />
 
                 <RadioGroup
@@ -451,7 +451,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:layout_marginTop="4dp"
-                        android:text="@string/adoptionform_yesvalue" />
+                        android:text="@string/yes_value" />
 
                     <RadioButton
                         android:id="@+id/adoptionform_aftermarriage_no"
@@ -459,7 +459,7 @@
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:text="@string/adoptionform_novalue" />
+                        android:text="@string/no_value" />
                 </RadioGroup>
             </android.support.design.widget.TextInputLayout>
 
@@ -471,7 +471,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/adoptionform_kidsinhouse"
+                    android:text="@string/hint_kids"
                     android:textSize="17dp" />
 
                 <RadioGroup
@@ -486,7 +486,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:layout_marginTop="4dp"
-                        android:text="@string/adoptionform_yesvalue" />
+                        android:text="@string/yes_value" />
 
                     <RadioButton
                         android:id="@+id/adoptionform_kidsinhouse_no"
@@ -494,7 +494,7 @@
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:text="@string/adoptionform_novalue" />
+                        android:text="@string/no_value" />
                 </RadioGroup>
             </android.support.design.widget.TextInputLayout>
 
@@ -506,7 +506,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/adoptionform_financialplan"
+                    android:text="@string/hint_financial_plan"
                     android:textSize="17dp" />
 
                 <RadioGroup
@@ -521,7 +521,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:layout_marginTop="4dp"
-                        android:text="@string/adoptionform_yesvalue" />
+                        android:text="@string/yes_value" />
 
                     <RadioButton
                         android:id="@+id/adoptionform_financialplan_no"
@@ -529,7 +529,7 @@
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:text="@string/adoptionform_novalue" />
+                        android:text="@string/no_value" />
                 </RadioGroup>
             </android.support.design.widget.TextInputLayout>
 
@@ -547,7 +547,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/colorPrimary"
-                    android:text="@string/adoptionform_submit"
+                    android:text="@string/apply"
                     android:textColor="@android:color/black"
                     android:textStyle="bold" />
             </LinearLayout>

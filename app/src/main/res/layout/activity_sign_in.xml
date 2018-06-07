@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:gravity="center"
-            android:text="@string/main_sign_in"
+            android:text="@string/sign_in_user"
             android:textSize="24dp"
             android:textStyle="bold" />
 
@@ -78,7 +78,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:background="@color/colorPrimary"
-            android:text="@string/action_sign_in"
+            android:text="@string/sign_in"
             android:textColor="@android:color/black"
             android:textStyle="bold" />
 
@@ -89,7 +89,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dip"
             android:background="@null"
-            android:text="@string/intent_reset_password"
+            android:text="@string/reset_password_ask"
             android:textAllCaps="false"
             android:textColor="@color/black" />
     </LinearLayout>

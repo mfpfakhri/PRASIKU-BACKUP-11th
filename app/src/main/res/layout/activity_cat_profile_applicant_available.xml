@@ -63,31 +63,17 @@
                         android:layout_alignParentStart="true"
                         android:layout_alignParentTop="true"
                         android:padding="12dp"
-                        android:text="@string/catprofile_name"
+                        android:text="@string/hint_cat_name"
                         android:textColor="@color/colorPrimaryText"
                         android:textSize="16dp"
                         android:textStyle="bold" />
-
-                    <View
-                        android:id="@+id/view_catname"
-                        android:layout_width="1dp"
-                        android:layout_height="match_parent"
-                        android:layout_margin="10dp"
-                        android:layout_toRightOf="@id/cpa_available_catnamevalue"
-                        android:background="@color/dark_gray" />
-
-                    <View
-                        android:id="@+id/view_catcontact"
-                        android:layout_width="1dp"
-                        android:layout_height="match_parent"
-                        android:layout_margin="10dp"
-                        android:layout_toLeftOf="@id/cpa_available_button"
-                        android:background="@color/dark_gray" />
 
                     <Button
                         android:id="@+id/cpa_available_button"
                         android:layout_width="wrap_content"
                         android:layout_height="32dp"
+                        android:paddingLeft="4dp"
+                        android:paddingRight="4dp"
                         android:layout_alignParentRight="true"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="8dp"
@@ -105,7 +91,7 @@
                     android:paddingBottom="12dp"
                     android:paddingLeft="12dp"
                     android:paddingTop="12dp"
-                    android:text="@string/catprofile_ownerlabel"
+                    android:text="@string/hint_cat_owner"
                     android:textSize="16sp" />
 
                 <TextView
@@ -132,7 +118,7 @@
                     android:paddingBottom="12dp"
                     android:paddingLeft="12dp"
                     android:paddingTop="12dp"
-                    android:text="@string/catprofile_citylabel"
+                    android:text="@string/hint_cat_owner_city"
                     android:textSize="16sp" />
 
                 <TextView
@@ -159,7 +145,7 @@
                     android:paddingBottom="12dp"
                     android:paddingLeft="12dp"
                     android:paddingTop="12dp"
-                    android:text="@string/catprofile_genderlabel"
+                    android:text="@string/hint_cat_gender"
                     android:textSize="16sp" />
 
                 <TextView
@@ -186,7 +172,7 @@
                     android:paddingBottom="12dp"
                     android:paddingLeft="12dp"
                     android:paddingTop="12dp"
-                    android:text="@string/catprofile_doblabel"
+                    android:text="@string/hint_cat_dob"
                     android:textSize="16sp" />
 
                 <TextView
@@ -213,7 +199,7 @@
                     android:paddingBottom="12dp"
                     android:paddingLeft="12dp"
                     android:paddingTop="12dp"
-                    android:text="@string/catprofile_descriptionlabel"
+                    android:text="@string/hint_cat_description"
                     android:textSize="16sp" />
 
                 <TextView
@@ -241,7 +227,7 @@
                     android:paddingBottom="12dp"
                     android:paddingLeft="12dp"
                     android:paddingTop="12dp"
-                    android:text="@string/catprofile_medicallabel"
+                    android:text="@string/hint_cat_medical"
                     android:textSize="16sp" />
 
                 <TextView
@@ -269,7 +255,7 @@
                     android:paddingBottom="12dp"
                     android:paddingLeft="12dp"
                     android:paddingTop="12dp"
-                    android:text="@string/catprofile_vaccinelabel"
+                    android:text="@string/hint_cat_vaccine"
                     android:textSize="16sp" />
 
                 <TextView
@@ -296,7 +282,7 @@
                     android:paddingBottom="12dp"
                     android:paddingLeft="12dp"
                     android:paddingTop="12dp"
-                    android:text="@string/catprofile_spayneuterlabel"
+                    android:text="@string/hint_cat_spay_neuter"
                     android:textSize="16sp" />
 
                 <TextView
@@ -323,7 +309,7 @@
                     android:paddingBottom="12dp"
                     android:paddingLeft="12dp"
                     android:paddingTop="12dp"
-                    android:text="@string/catprofile_adoptreasonlabel"
+                    android:text="@string/hint_cat_owner_reason"
                     android:textSize="16sp" />
 
                 <TextView
@@ -350,7 +336,7 @@
                     android:paddingBottom="12dp"
                     android:paddingLeft="12dp"
                     android:paddingTop="12dp"
-                    android:text="@string/catprofile_adoptstatuslabel"
+                    android:text="@string/hint_cat_adoption_status"
                     android:textSize="16sp" />
 
                 <TextView

@@ -23,7 +23,7 @@
                 android:layout_marginBottom="8dp"
                 android:layout_marginTop="24dp"
                 android:gravity="center"
-                android:text="@string/main_sign_up"
+                android:text="@string/sign_up_user"
                 android:textSize="24dp"
                 android:textStyle="bold" />
 
@@ -46,7 +46,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:gravity="center"
-                    android:text="@string/userPhotosText"
+                    android:text="@string/hint_photo"
                     android:textColor="@color/black"/>
 
                 <ImageView
@@ -146,7 +146,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:ms_baseColor="@color/black"
-                app:ms_hint="@string/hint_city" />
+                app:ms_hint="@string/hint_city_regency" />
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
@@ -195,7 +195,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:background="@color/colorPrimary"
-                    android:text="@string/action_sign_up"
+                    android:text="@string/sign_up"
                     android:textColor="@android:color/black"
                     android:textStyle="bold" />
 

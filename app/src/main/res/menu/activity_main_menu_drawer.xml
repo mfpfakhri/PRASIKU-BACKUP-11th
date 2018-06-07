@@ -32,7 +32,7 @@
             <item
                 android:id="@+id/nav_app_submitted"
                 android:icon="@drawable/assignment_turned_in_black_48x48"
-                android:title="@string/app_submitted" />
+                android:title="@string/app_accepted" />
             <item
                 android:id="@+id/nav_app_rejected"
                 android:icon="@drawable/assignment_late_black_48x48"

@@ -59,7 +59,7 @@
                     android:paddingBottom="12dp"
                     android:paddingLeft="12dp"
                     android:paddingTop="12dp"
-                    android:text="@string/name_profile"
+                    android:text="@string/hint_name_home"
                     android:textSize="16sp" />
 
                 <TextView
@@ -86,7 +86,7 @@
                     android:paddingBottom="12dp"
                     android:paddingLeft="12dp"
                     android:paddingTop="12dp"
-                    android:text="@string/dob_profile"
+                    android:text="@string/hint_dob"
                     android:textSize="16sp" />
 
                 <TextView
@@ -113,7 +113,7 @@
                     android:paddingBottom="12dp"
                     android:paddingLeft="12dp"
                     android:paddingTop="12dp"
-                    android:text="@string/gender_profile"
+                    android:text="@string/hint_gender"
                     android:textSize="16sp" />
 
                 <TextView
@@ -140,7 +140,7 @@
                     android:paddingBottom="12dp"
                     android:paddingLeft="12dp"
                     android:paddingTop="12dp"
-                    android:text="@string/province_profile"
+                    android:text="@string/hint_province"
                     android:textSize="16sp" />
 
                 <TextView
@@ -167,7 +167,7 @@
                     android:paddingBottom="12dp"
                     android:paddingLeft="12dp"
                     android:paddingTop="12dp"
-                    android:text="@string/city_profile"
+                    android:text="@string/hint_city_regency"
                     android:textSize="16sp" />
 
                 <TextView
@@ -194,7 +194,7 @@
                     android:paddingBottom="12dp"
                     android:paddingLeft="12dp"
                     android:paddingTop="12dp"
-                    android:text="@string/address_profile"
+                    android:text="@string/hint_address"
                     android:textSize="16sp" />
 
                 <TextView
@@ -221,7 +221,7 @@
                     android:paddingBottom="12dp"
                     android:paddingLeft="12dp"
                     android:paddingTop="12dp"
-                    android:text="@string/phone_profile"
+                    android:text="@string/hint_cp"
                     android:textSize="16sp" />
 
                 <TextView
@@ -249,7 +249,7 @@
                     android:paddingBottom="12dp"
                     android:paddingLeft="12dp"
                     android:paddingTop="12dp"
-                    android:text="@string/email_profile"
+                    android:text="@string/hint_email"
                     android:textSize="16sp" />
 
                 <TextView

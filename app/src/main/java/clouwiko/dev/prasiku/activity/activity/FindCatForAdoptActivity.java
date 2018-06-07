@@ -267,10 +267,53 @@ public class FindCatForAdoptActivity extends AppCompatActivity {
             final String cStat = catData.getCatAdoptedStatus().toString().trim();
             final String cName = catData.getCatName().toString().trim();
             final String cPhoto = catData.getCatProfilePhoto().toString().trim();
-
+            String gender = catData.getCatGender();
+            String setgender = null;
+            switch (gender) {
+                case "Male":
+                    setgender = "Jantan";
+                    break;
+                case "Female":
+                    setgender = "Betina";
+                    break;
+                case "Unknown":
+                    setgender = "Tidak Diketahui";
+                    break;
+            }
+            String reason = catData.getCatReason();
+            String setreason = null;
+            switch (reason) {
+                case "Stray":
+                    setreason = "Liar";
+                    break;
+                case "Abandoned":
+                    setreason = "Terlantar";
+                    break;
+                case "Abused":
+                    setreason = "Disiksa";
+                    break;
+                case "Owner Dead":
+                    setreason = "Pemilik Meninggal";
+                    break;
+                case "Owner Give Up":
+                    setreason = "Pemilik Menyerah";
+                    break;
+                case "House Moving":
+                    setreason = "Pindah Rumah";
+                    break;
+                case "Financial":
+                    setreason = "Keuangan";
+                    break;
+                case "Medical Problem":
+                    setreason = "Masalah Kesehatan";
+                    break;
+                case "Others":
+                    setreason = "Lainnya";
+                    break;
+            }
             holder.name.setText(catData.getCatName());
-            holder.reason.setText(catData.getCatReason());
-            holder.gender.setText(catData.getCatGender());
+            holder.reason.setText(setreason);
+            holder.gender.setText(setgender);
             Picasso.get().load(catData.getCatProfilePhoto()).resize(128, 128).into(holder.photo);
 
             holder.layoutroot.setOnClickListener(new View.OnClickListener() {

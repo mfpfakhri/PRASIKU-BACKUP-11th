@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="clouwiko.dev.prasiku.activity.activity.EditUserProfileActivity">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -42,6 +43,7 @@
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
+
                     <com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout
                         android:id="@+id/edituserprofile_photo_view"
                         android:layout_width="wrap_content"
@@ -56,8 +58,8 @@
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
                             android:gravity="center"
-                            android:text="@string/hint_photo"
-                            android:textColor="@color/black"/>
+                            android:text="@string/hint_photo_edit"
+                            android:textColor="@color/black" />
 
                         <ImageView
                             android:id="@+id/edituserprofile_photo_imageview"
@@ -75,21 +77,21 @@
                         android:id="@+id/edituserprofile_photo_edit_button"
                         android:layout_width="28dp"
                         android:layout_height="28dp"
-                        android:src="@drawable/round_edit_black_24dp"
-                        android:background="@drawable/circlebg_transparent"
-                        android:layout_toRightOf="@id/edituserprofile_photo_view"
+                        android:layout_marginLeft="4dp"
                         android:layout_marginTop="80dp"
-                        android:layout_marginLeft="4dp"/>
+                        android:layout_toRightOf="@id/edituserprofile_photo_view"
+                        android:background="@drawable/circlebg_transparent"
+                        android:src="@drawable/round_edit_black_24dp" />
 
                     <ImageView
                         android:id="@+id/edituserprofile_photo_delete_button"
                         android:layout_width="28dp"
                         android:layout_height="28dp"
-                        android:src="@drawable/round_delete_forever_black_24dp"
-                        android:background="@drawable/circlebg_transparent"
-                        android:layout_toRightOf="@id/edituserprofile_photo_view"
+                        android:layout_marginLeft="4dp"
                         android:layout_marginTop="80dp"
-                        android:layout_marginLeft="4dp"/>
+                        android:layout_toRightOf="@id/edituserprofile_photo_view"
+                        android:background="@drawable/circlebg_transparent"
+                        android:src="@drawable/round_delete_forever_black_24dp" />
                 </RelativeLayout>
 
                 <android.support.design.widget.TextInputLayout
@@ -142,7 +144,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:ms_baseColor="@color/black"
-                    app:ms_hint="@string/hint_city" />
+                    app:ms_hint="@string/hint_city_regency" />
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
@@ -191,7 +193,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
                         android:background="@color/colorPrimary"
-                        android:text="@string/edituserprofile_update"
+                        android:text="@string/update"
                         android:textColor="@android:color/black"
                         android:textStyle="bold" />
                 </LinearLayout>

@@ -251,7 +251,7 @@ public class SignUpActivity extends AppCompatActivity {
                 if (userPhotoIv.getDrawable() != null) {
 
                 } else {
-                    Toast.makeText(getApplicationContext(), "Choose Your Profile Photo", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Pilih foto profil Anda", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -265,14 +265,14 @@ public class SignUpActivity extends AppCompatActivity {
                         ")+";
                 String email = inputEmail.getText().toString().trim();
                 if (TextUtils.isEmpty(email)) {
-                    Toast.makeText(getApplicationContext(), "Enter Email Address", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Ketik alamat email Anda", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 Matcher matcherEmail = Pattern.compile(validEmail).matcher(email);
                 if (matcherEmail.matches()) {
 
                 } else {
-                    Toast.makeText(getApplicationContext(), "Enter Valid Email", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Ketik alamat email yang valid", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -280,32 +280,32 @@ public class SignUpActivity extends AppCompatActivity {
                 final String validPassword = "^(?=\\S+$).{4,}$";
                 String password = inputPassword.getText().toString().trim();
                 if (TextUtils.isEmpty(password)) {
-                    Toast.makeText(getApplicationContext(), "Enter Password", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Ketik kata sandi Anda", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (password.length() < 6) {
-                    Toast.makeText(getApplicationContext(), "Password too Short, Enter Minimum 6 Characters", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Kata sandi terlalu pendek, minimal 6 karakter", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 Matcher matcherPassword = Pattern.compile(validPassword).matcher(password);
                 if (matcherPassword.matches()) {
 
                 } else {
-                    Toast.makeText(getApplicationContext(), "Enter Valid Password", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Ketik kata sandi yang valid", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 //Full Name Validation
                 String fName = inputFullName.getText().toString().trim();
                 if (TextUtils.isEmpty(fName)) {
-                    Toast.makeText(getApplicationContext(), "Enter Your Full Name", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Ketik nama lengkap Anda", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 //DOB Validation
                 String dobDate = inputDob.getText().toString().trim();
                 if (TextUtils.isEmpty(dobDate)) {
-                    Toast.makeText(getApplicationContext(), "Enter Your Birth Date", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Ketik tanggal lahir Anda", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -314,7 +314,7 @@ public class SignUpActivity extends AppCompatActivity {
                 if (spinnerGenderPosition != 0) {
 
                 } else {
-                    Toast.makeText(SignUpActivity.this, "Pick Your Gender", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SignUpActivity.this, "Pilih jenis kelamin Anda", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -323,7 +323,7 @@ public class SignUpActivity extends AppCompatActivity {
                 if (spinnerProvincePosition != 0) {
 
                 } else {
-                    Toast.makeText(getApplicationContext(), "Select Your Province", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Pilih provinsi Anda", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -332,7 +332,7 @@ public class SignUpActivity extends AppCompatActivity {
                 if (spinnerCityPosition != 0) {
 
                 } else {
-                    Toast.makeText(getApplicationContext(), "Select Your City", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Pilih kota/ kabupaten Anda", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -340,21 +340,21 @@ public class SignUpActivity extends AppCompatActivity {
                 final String validPhone = "^[+]?[0-9]{10,13}$";
                 String phone = inputPhone.getText().toString().trim();
                 if (TextUtils.isEmpty(phone)) {
-                    Toast.makeText(getApplicationContext(), "Enter Your Phone Number", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Ketik nomor telepon Anda", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 Matcher matcherPhone = Pattern.compile(validPhone).matcher(phone);
                 if (matcherPhone.matches()) {
 
                 } else {
-                    Toast.makeText(getApplicationContext(), "Enter Valid Phone Number", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Ketik nomor telepon yang valid", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 //Address Validation
                 String address = inputAddress.getText().toString().trim();
                 if (TextUtils.isEmpty(address)) {
-                    Toast.makeText(getApplicationContext(), "Enter Your Address", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Ketik alamat Anda", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 emailExistFirebase();
@@ -370,14 +370,14 @@ public class SignUpActivity extends AppCompatActivity {
                                 addUserData();
                                 final FirebaseUser user = auth.getCurrentUser();
                                 user.sendEmailVerification();
-                                Toast.makeText(getApplicationContext(), "Your Account has been Created, Check Your Email to Verified", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "Akun SIKUCING Anda telah dibuat, periksa email untuk verifikasi akun", Toast.LENGTH_SHORT).show();
 //                                startActivity(new Intent(SignUpActivity.this, LandingActivity.class));
 //                                finish();
                                 if (task.isComplete()) {
                                     startActivity(new Intent(SignUpActivity.this, LandingActivity.class));
                                     finish();
                                 } else {
-                                    Toast.makeText(SignUpActivity.this, "Authentication Failed" + task.getException(), Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(SignUpActivity.this, "Autentikasi gagal" + task.getException(), Toast.LENGTH_SHORT).show();
                                     finish();
                                 }
                             }
@@ -397,7 +397,7 @@ public class SignUpActivity extends AppCompatActivity {
                         if (!checkEmail) {
 
                         } else {
-                            Toast.makeText(getApplicationContext(), "Email Already Used", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Email telah digunakan", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -405,7 +405,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     private void userPhotosMediaOpen() {
         Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(Intent.createChooser(galleryIntent, "Select Image from Gallery"), 2);
+        startActivityForResult(Intent.createChooser(galleryIntent, "Pilih gambar dari galeri"), 2);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package clouwiko.dev.prasiku.activity.activity;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -72,26 +73,103 @@ public class CatProfileApplicantAdoptedActivity extends AppCompatActivity {
                 String catname = dataSnapshot.child("catName").getValue(String.class);
                 String city = dataSnapshot.child("catCity").getValue(String.class);
                 String gender = dataSnapshot.child("catGender").getValue(String.class);
+                String setgender = null;
+                switch (gender) {
+                    case "Male":
+                        setgender = "Jantan";
+                        break;
+                    case "Female":
+                        setgender = "Betina";
+                        break;
+                    case "Unknown":
+                        setgender = "Tidak Diketahui";
+                        break;
+                }
                 String desc = dataSnapshot.child("catDescription").getValue(String.class);
                 String dob = dataSnapshot.child("catDob").getValue(String.class);
                 String mednote = dataSnapshot.child("catMedNote").getValue(String.class);
                 String vaccine = dataSnapshot.child("catVaccStat").getValue(String.class);
+                String setvaccine = null;
+                switch (vaccine){
+                    case "Yes, Already Vaccinated":
+                        setvaccine = "Ya, Sudah Divaksin";
+                        break;
+                    case "Not Yet":
+                        setvaccine = "Belum Divaksin";
+                        break;
+                }
                 String spayneuter = dataSnapshot.child("catSpayNeuterStat").getValue(String.class);
+                String setspayneuter = null;
+                switch (spayneuter){
+                    case "Yes, Already Spayed/ Neutered":
+                        setspayneuter = "Ya, Sudah Dikastrasi";
+                        break;
+                    case "Not Yet":
+                        setspayneuter = "Belum Dikastrasi";
+                        break;
+                }
                 String reason = dataSnapshot.child("catReason").getValue(String.class);
+                String setreason = null;
+                switch (reason) {
+                    case "Stray":
+                        setreason = "Liar";
+                        break;
+                    case "Abandoned":
+                        setreason = "Terlantar";
+                        break;
+                    case "Abused":
+                        setreason = "Disiksa";
+                        break;
+                    case "Owner Dead":
+                        setreason = "Pemilik Meninggal";
+                        break;
+                    case "Owner Give Up":
+                        setreason = "Pemilik Menyerah";
+                        break;
+                    case "House Moving":
+                        setreason = "Pindah Rumah";
+                        break;
+                    case "Financial":
+                        setreason = "Keuangan";
+                        break;
+                    case "Medical Problem":
+                        setreason = "Masalah Kesehatan";
+                        break;
+                    case "Others":
+                        setreason = "Lainnya";
+                        break;
+                }
                 String adoptionstatus = dataSnapshot.child("catAdoptedStatus").getValue(String.class);
+                String setadoptionstatus = null;
+                switch (adoptionstatus){
+                    case "Available":
+                        setadoptionstatus = "Belum Diadopsi";
+                        break;
+                    case "Adopted":
+                        setadoptionstatus = "Sudah Diadopsi";
+                        break;
+                }
                 String catphotouri = dataSnapshot.child("catProfilePhoto").getValue(String.class);
 
                 tvCatName.setText(catname);
                 tvCity.setText(city);
-                tvGender.setText(gender);
+                tvGender.setText(setgender);
                 tvDesc.setText(desc);
                 tvDob.setText(dob);
                 tvMed.setText(mednote);
-                tvVacc.setText(vaccine);
-                tvSpNeu.setText(spayneuter);
-                tvReason.setText(reason);
-                tvAdoptionStatus.setText(adoptionstatus);
-                Picasso.get().load(catphotouri).centerCrop().resize(192, 192).into(imCatPhoto);
+                tvVacc.setText(setvaccine);
+                tvSpNeu.setText(setspayneuter);
+                tvReason.setText(setreason);
+                tvAdoptionStatus.setText(setadoptionstatus);
+                if (catphotouri.equals("")) {
+                    String noPhoto = "@drawable/no_image";
+                    int imageResource = getResources().getIdentifier(noPhoto, null, getPackageName());
+                    Drawable res = getResources().getDrawable(imageResource);
+                    imCatPhoto.setImageDrawable(res);
+                    imCatPhoto.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+                } else {
+                    Picasso.get().load(catphotouri).centerCrop().resize(256, 256).into(imCatPhoto);
+                }
 
                 databaseUsers.addValueEventListener(new ValueEventListener() {
                     @Override

@@ -221,7 +221,7 @@ public class MainMenuActivity extends AppCompatActivity
             case R.id.action_sign_out:
                 auth.signOut();
                 progressBar.setVisibility(View.GONE);
-                Toast.makeText(this, "Signed Out", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Keluar Akun", Toast.LENGTH_SHORT).show();
                 finish();
                 startActivity(new Intent(MainMenuActivity.this, LandingActivity.class));
                 break;
@@ -270,7 +270,7 @@ public class MainMenuActivity extends AppCompatActivity
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         } else {
-            backToast = Toast.makeText(getBaseContext(), "Press Back Again to Exit", Toast.LENGTH_SHORT);
+            backToast = Toast.makeText(getBaseContext(), "Tekan 'kembali' untuk keluar ", Toast.LENGTH_SHORT);
             backToast.show();
         }
         backPressedTime = System.currentTimeMillis();

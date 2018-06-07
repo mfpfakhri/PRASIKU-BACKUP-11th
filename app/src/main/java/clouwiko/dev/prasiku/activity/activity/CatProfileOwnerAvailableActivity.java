@@ -170,25 +170,94 @@ public class CatProfileOwnerAvailableActivity extends AppCompatActivity {
                 String catname = catData.getCatName();
                 String city = catData.getCatCity();
                 String gender = catData.getCatGender();
+                String setgender = null;
+                switch (gender) {
+                    case "Male":
+                        setgender = "Jantan";
+                        break;
+                    case "Female":
+                        setgender = "Betina";
+                        break;
+                    case "Unknown":
+                        setgender = "Tidak Diketahui";
+                        break;
+                }
                 String desc = catData.getCatDescription();
                 String dob = catData.getCatDob();
                 String mednote = catData.getCatMedNote();
                 String vaccine = catData.getCatVaccStat();
+                String setvaccine = null;
+                switch (vaccine){
+                    case "Yes, Already Vaccinated":
+                        setvaccine = "Ya, Sudah Divaksin";
+                        break;
+                    case "Not Yet":
+                        setvaccine = "Belum Divaksin";
+                        break;
+                }
                 String spayneuter = catData.getCatSpayNeuterStat();
+                String setspayneuter = null;
+                switch (spayneuter){
+                    case "Yes, Already Spayed/ Neutered":
+                        setspayneuter = "Ya, Sudah Dikastrasi";
+                        break;
+                    case "Not Yet":
+                        setspayneuter = "Belum Dikastrasi";
+                        break;
+                }
                 String reason = catData.getCatReason();
-                String catphotouri = catData.getCatProfilePhoto();
+                String setreason = null;
+                switch (reason) {
+                    case "Stray":
+                        setreason = "Liar";
+                        break;
+                    case "Abandoned":
+                        setreason = "Terlantar";
+                        break;
+                    case "Abused":
+                        setreason = "Disiksa";
+                        break;
+                    case "Owner Dead":
+                        setreason = "Pemilik Meninggal";
+                        break;
+                    case "Owner Give Up":
+                        setreason = "Pemilik Menyerah";
+                        break;
+                    case "House Moving":
+                        setreason = "Pindah Rumah";
+                        break;
+                    case "Financial":
+                        setreason = "Keuangan";
+                        break;
+                    case "Medical Problem":
+                        setreason = "Masalah Kesehatan";
+                        break;
+                    case "Others":
+                        setreason = "Lainnya";
+                        break;
+                }
                 String adoptionstatus = catData.getCatAdoptedStatus();
+                String setadoptionstatus = null;
+                switch (adoptionstatus){
+                    case "Available":
+                        setadoptionstatus = "Belum Diadopsi";
+                        break;
+                    case "Adopted":
+                        setadoptionstatus = "Sudah Diadopsi";
+                        break;
+                }
+                String catphotouri = catData.getCatProfilePhoto();
 
                 tvCatName.setText(catname);
                 tvCity.setText(city);
-                tvGender.setText(gender);
+                tvGender.setText(setgender);
                 tvDesc.setText(desc);
                 tvDob.setText(dob);
                 tvMed.setText(mednote);
-                tvVacc.setText(vaccine);
-                tvSpNeu.setText(spayneuter);
-                tvReason.setText(reason);
-                tvAdoptStatus.setText(adoptionstatus);
+                tvVacc.setText(setvaccine);
+                tvSpNeu.setText(setspayneuter);
+                tvReason.setText(setreason);
+                tvAdoptStatus.setText(setadoptionstatus);
                 if (catData.getCatProfilePhoto().equals("")) {
                     String noPhoto = "@drawable/no_image";
                     int imageResource = getResources().getIdentifier(noPhoto, null, getPackageName());
@@ -223,20 +292,24 @@ public class CatProfileOwnerAvailableActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        String pActivity = getIntent().getStringExtra("previousActivity");
-        Intent intentAdoptionList = new Intent(getApplicationContext(), UserCatListActivity.class);
-        Intent intentFindCat = new Intent(getApplicationContext(), FindCatForAdoptActivity.class);
-        Intent intentMainMenu = new Intent(getApplicationContext(), MainMenuActivity.class);
-
-        if (pActivity.equals("adoptionlist")){
-            startActivity(intentAdoptionList);
-            finish();
-        } else if (pActivity.equals("findcat")){
-            startActivity(intentFindCat);
-            finish();
+        if (fam.isOpened()){
+            fam.close(true);
         } else {
-            startActivity(intentMainMenu);
-            finish();
+            String pActivity = getIntent().getStringExtra("previousActivity");
+            Intent intentAdoptionList = new Intent(getApplicationContext(), UserCatListActivity.class);
+            Intent intentFindCat = new Intent(getApplicationContext(), FindCatForAdoptActivity.class);
+            Intent intentMainMenu = new Intent(getApplicationContext(), MainMenuActivity.class);
+
+            if (pActivity.equals("adoptionlist")){
+                startActivity(intentAdoptionList);
+                finish();
+            } else if (pActivity.equals("findcat")){
+                startActivity(intentFindCat);
+                finish();
+            } else {
+                startActivity(intentMainMenu);
+                finish();
+            }
         }
     }
 }

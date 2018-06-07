@@ -35,13 +35,13 @@ public class EditCatDataAdoptedActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.editcatadopted_toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Change Adoption Status");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Ubah Status Adopsi");
 
         spinnerAdoptionStatus = findViewById(R.id.editcatadopted_adoptionstatus);
         btnDoneEditing = findViewById(R.id.editcatadopted_done_button);
 
         final String catId = getIntent().getStringExtra("cat_id");
+        final String ownerId = getIntent().getStringExtra("owner_id");
 
         databaseCats = FirebaseDatabase.getInstance().getReference().child("cats").child(catId);
         databaseCats.addValueEventListener(new ValueEventListener() {
@@ -50,14 +50,11 @@ public class EditCatDataAdoptedActivity extends AppCompatActivity {
                 String adoptedstatus = dataSnapshot.child("catAdoptedStatus").getValue(String.class);
 
                 switch (adoptedstatus) {
-                    case "Available":
-                        spinnerAdoptionStatus.setSelection(2);
-                        break;
                     case "Adopted":
                         spinnerAdoptionStatus.setSelection(1);
                         break;
-                    case "Not Available":
-                        spinnerAdoptionStatus.setSelection(3);
+                    case "Available":
+                        spinnerAdoptionStatus.setSelection(2);
                         break;
                     default:
 
@@ -104,7 +101,7 @@ public class EditCatDataAdoptedActivity extends AppCompatActivity {
                             String catdelete = dataSnapshot.child("catDeleteStatus").getValue(String.class);
                             String ownercatdelete = dataSnapshot.child("catOwnerDeleteStatus").getValue(String.class);
                             String catcitydeletestatus = dataSnapshot.child("catCityDeleteStatus").getValue(String.class);
-                            String adoptedstatusupdate = spinnerAdoptionStatus.getSelectedItem().toString().trim();
+                            String adoptedstatusupdate = "Available";
 
                             updateCatData(catidupdate, ownerupdate, photoupdate, nameupdate, dobupdate, genderupdate, descriptionupdate, mednoteupdate, vaccstatupdate, spayneuterstatupdate, reasonupdate, catprovinceupdate, catcityupdate, adoptedstatusupdate, catdelete, ownercatdelete, catcitydeletestatus);
                         }
@@ -226,8 +223,8 @@ public class EditCatDataAdoptedActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         AlertDialog.Builder builder = new AlertDialog.Builder(EditCatDataAdoptedActivity.this);
-        builder.setMessage("Are You sure want to quit editing?")
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+        builder.setMessage("Apakah Anda yakin ingin keluar?")
+                .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         String pActivity = getIntent().getStringExtra("previousActivity");
@@ -249,7 +246,7 @@ public class EditCatDataAdoptedActivity extends AppCompatActivity {
                         }
                     }
                 })
-                .setNegativeButton("No", null);
+                .setNegativeButton("Tidak", null);
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }

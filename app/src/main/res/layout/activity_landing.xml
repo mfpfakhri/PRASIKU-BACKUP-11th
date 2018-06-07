@@ -10,97 +10,97 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
         android:layout_alignParentTop="true"
-        android:orientation="vertical"
-        android:layout_marginTop="96dp">
+        android:layout_centerInParent="true"
+        android:layout_marginTop="96dp"
+        android:orientation="vertical">
 
         <ImageView
             android:layout_width="192dp"
             android:layout_height="144dp"
-            android:src="@drawable/logo_01"
-            android:layout_gravity="center"/>
+            android:layout_gravity="center"
+            android:src="@drawable/logo_01" />
 
         <TextView
             android:id="@+id/textSlogan"
             android:layout_width="256dp"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:textSize="16sp"
-            android:text= "@string/slogan"
-            android:textColor="@android:color/black" />
+            android:text="@string/slogan"
+            android:textColor="@android:color/black"
+            android:textSize="16sp" />
     </LinearLayout>
 
     <!--<LinearLayout-->
-        <!--android:orientation="horizontal"-->
-        <!--android:layout_alignParentTop="true"-->
-        <!--android:weightSum="2"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content">-->
+    <!--android:orientation="horizontal"-->
+    <!--android:layout_alignParentTop="true"-->
+    <!--android:weightSum="2"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content">-->
 
-        <!--<info.hoang8f.widget.FButton-->
-            <!--android:id="@+id/main_province_intent_button"-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_margin="8dp"-->
-            <!--android:layout_weight="1"-->
-            <!--android:text="Add Province"-->
-            <!--android:textColor="@android:color/black"-->
-            <!--app:cornerRadius="4dp"-->
-            <!--app:fButtonColor="@color/btnSignUpMain"-->
-            <!--app:shadowColor="@android:color/black"-->
-            <!--app:shadowEnabled="true"-->
-            <!--app:shadowHeight="5dp" />-->
+    <!--<info.hoang8f.widget.FButton-->
+    <!--android:id="@+id/main_province_intent_button"-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_margin="8dp"-->
+    <!--android:layout_weight="1"-->
+    <!--android:text="Add Province"-->
+    <!--android:textColor="@android:color/black"-->
+    <!--app:cornerRadius="4dp"-->
+    <!--app:fButtonColor="@color/btnSignUpMain"-->
+    <!--app:shadowColor="@android:color/black"-->
+    <!--app:shadowEnabled="true"-->
+    <!--app:shadowHeight="5dp" />-->
 
-        <!--<info.hoang8f.widget.FButton-->
-            <!--android:id="@+id/main_city_intent_button"-->
-            <!--android:text="Add City"-->
-            <!--android:textColor="@android:color/black"-->
-            <!--android:layout_weight="1"-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_margin="8dp"-->
-            <!--app:fButtonColor="@color/btnSignInMain"-->
-            <!--app:shadowColor="@android:color/black"-->
-            <!--app:shadowEnabled="true"-->
-            <!--app:shadowHeight="5dp"-->
-            <!--app:cornerRadius="4dp"/>-->
+    <!--<info.hoang8f.widget.FButton-->
+    <!--android:id="@+id/main_city_intent_button"-->
+    <!--android:text="Add City"-->
+    <!--android:textColor="@android:color/black"-->
+    <!--android:layout_weight="1"-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_margin="8dp"-->
+    <!--app:fButtonColor="@color/btnSignInMain"-->
+    <!--app:shadowColor="@android:color/black"-->
+    <!--app:shadowEnabled="true"-->
+    <!--app:shadowHeight="5dp"-->
+    <!--app:cornerRadius="4dp"/>-->
     <!--</LinearLayout>-->
 
     <LinearLayout
         android:id="@+id/main_button"
-        android:orientation="horizontal"
-        android:background="@android:color/transparent"
-        android:layout_alignParentBottom="true"
-        android:weightSum="2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@android:color/transparent"
+        android:orientation="horizontal"
+        android:weightSum="2">
 
         <Button
             android:id="@+id/main_sign_up_button"
-            android:text="@string/main_sign_up"
-            android:textColor="@android:color/black"
-            android:background="@color/btnSignUpMain"
-            android:layout_weight="1"
+            style="?android:textAppearanceSmall"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            style="?android:textAppearanceSmall"
-            android:textStyle="bold"
-            android:textSize="16sp"/>
+            android:layout_weight="1"
+            android:background="@color/btnSignUpMain"
+            android:text="@string/sign_up"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/main_sign_in_button"
-            android:text="@string/main_sign_in"
-            android:textColor="@android:color/black"
-            android:background="@color/btnSignInMain"
-            android:layout_weight="1"
+            style="?android:textAppearanceSmall"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            style="?android:textAppearanceSmall"
-            android:textStyle="bold"
-            android:textSize="16sp"/>
+            android:layout_weight="1"
+            android:background="@color/btnSignInMain"
+            android:text="@string/sign_in"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
     </LinearLayout>
 
 </RelativeLayout>

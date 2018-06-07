@@ -4,17 +4,17 @@
     <item
         android:id="@+id/action_edit_profile"
         android:orderInCategory="1"
-        android:title="@string/action_edit_profile"
+        android:title="@string/edit_profile"
         app:showAsAction="never" />
     <item
         android:id="@+id/action_edit_password"
         android:orderInCategory="1"
-        android:title="@string/action_change_password"
+        android:title="@string/change_password"
         app:showAsAction="never" />
 
     <item
         android:id="@+id/action_sign_out"
         android:orderInCategory="2"
-        android:title="@string/action_sign_out"
+        android:title="@string/sign_out"
         app:showAsAction="never" />
 </menu>

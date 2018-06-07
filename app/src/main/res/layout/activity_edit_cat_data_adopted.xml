@@ -46,7 +46,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:entries="@array/adoptionstatus"
-                app:ms_hint="@string/hint_adoptionstatus" />
+                app:ms_hint="@string/hint_cat_adoption_status" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -62,7 +62,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/colorPrimary"
-                    android:text="@string/editcatadopted_done_button"
+                    android:text="@string/update_adoption_status"
                     android:textColor="@android:color/black"
                     android:textStyle="bold" />
             </LinearLayout>

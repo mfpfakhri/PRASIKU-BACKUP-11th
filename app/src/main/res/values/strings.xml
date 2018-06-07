@@ -1,24 +1,105 @@
 <resources>
+    <!--Landing-->
     <string name="app_name">PRASIKU</string>
     <string name="slogan">Let us find your catmate here and take it home</string>
-    <string name="main_sign_up">Sign Up</string>
-    <string name="main_sign_in">Sign In</string>
+
+    <!--Sign Up-->
+    <string name="sign_up">Daftar</string>
+    <string name="sign_up_user">Daftar Pengguna</string>
+    <string name="sign_in">Masuk</string>
+    <string name="sign_in_user">Masuk Pengguna</string>
+    <string name="hint_photo">Sentuh Untuk \nMemilih Foto \nProfil Anda</string>
     <string name="hint_email">Email</string>
-    <string name="hint_password">Password</string>
-    <string name="action_sign_up">Register</string>
-    <string name="intent_sign_in">Already registered. Login Here!</string>
-    <string name="action_sign_in">Sign In</string>
-    <string name="intent_reset_password">Forgot your password?</string>
-    <string name="lbl_forgot_password">Forgot password?</string>
-    <string name="forgot_password_msg">We just need your registered Email Id to sent you password reset instructions.</string>
-    <string name="action_reset_password">Reset Password</string>
-    <string name="action_back"><![CDATA[<< Back]]></string>
-    <string name="minimum_password">Password too short, enter minimum 6 characters!</string>
-    <string name="auth_failed">Authentication failed, check your email and password or sign up</string>
-    <string name="action_sign_out">Sign Out</string>
-    <string name="action_change_password">Change Password</string>
-    <string name="new_password">Your New Password</string>
-    <string name="current_password">Your Current Password</string>
+    <string name="hint_password">Kata Sandi</string>
+    <string name="hint_full_name">Nama Lengkap (sesuai KTP)</string>
+    <string name="hint_dob">Tanggal Lahir</string>
+    <string name="hint_gender">Jenis Kelamin</string>
+    <string name="hint_province">Provinsi</string>
+    <string name="hint_city_regency">Kota/ Kabupaten</string>
+    <string name="hint_cp">Nomor Telepon</string>
+    <string name="hint_address">Alamat</string>
+    <string name="intent_sign_in">Sudah memiliki akun? Masuk disini.</string>
+
+    <!--Sign In-->
+    <string name="reset_password_ask">Lupa Kata Sandi?</string>
+    <string name="reset_password_msg">Ketik email yang terdaftar milik Anda di bawah, Kami akan kirimkan instruksi pasang ulang kata sandi Anda.</string>
+    <string name="reset_password_action">Pasang Ulang Kata Sandi</string>
+
+    <!--Main Menu-->
+    <string name="upload_cat_data">Unggah Data Kucing</string>
+    <string name="upload_cat_data_desc">Unggah data kucing yang ingin dilepas adopsi\nagar bertemu dengan pemilik barunya</string>
+    <string name="find_cat_to_adopt">Temukan Kucing Untuk Diadopsi</string>
+    <string name="find_cat_for_adopt_desc">Temukan kucing disini untuk menjadi\nkeluarga baru Anda</string>
+    <!--Navigation Drawer-->
+    <string name="main_menu">Menu Utama</string>
+    <string name="my_cat">Kucing Saya</string>
+    <string name="my_app_list">Pengajuan Saya</string>
+    <string name="nav_app_root">Pengajuan</string>
+    <string name="app_received">Diterima</string>
+    <string name="app_accepted">Disetujui</string>
+    <string name="app_rejected">Ditolak</string>
+    <string name="nav_others_root">Lainnya</string>
+    <string name="tutorial">Tutorial</string>
+    <string name="about_us">Tentang SIKUCING</string>
+    <!--Three Dots Menu-->
+    <!--Edit Profile-->
+    <string name="edit_profile">Edit Profil</string>
+    <string name="hint_photo_edit">Sentuh Ikon \ndi Samping \nUntuk Memilih \nFoto Profil \nAnda</string>
+    <string name="update">Perbarui</string>
+    <!--Change Password-->
+    <string name="change_password">Ubah Kata Sandi</string>
+    <string name="current_password">Kata Sandi Saat Ini</string>
+    <string name="new_password">Kata Sandi Baru</string>
+    <!--Sign Out-->
+    <string name="sign_out">Keluar</string>
+
+    <!--User Home-->
+    <string name="hint_name_home">Nama Lengkap</string>
+
+    <!--Cat Profile-->
+    <!--Owner/ Applicant Available-->
+    <string name="hint_cat_name">Nama Kucing</string>
+    <string name="hint_cat_owner">Pemilik Kucing</string>
+    <string name="hint_cat_owner_city">Kota/ Kabupaten Pemilik</string>
+    <string name="hint_cat_gender">Jenis Kelamin Kucing</string>
+    <string name="hint_cat_dob">Tanggal Lahir Kucing</string>
+    <string name="hint_cat_description">Tentang Kucing</string>
+    <string name="hint_cat_medical">Catatan Medis Kucing</string>
+    <string name="hint_cat_vaccine">Status Vaksin Kucing</string>
+    <string name="hint_cat_spay_neuter">Status Kastrasi Kucing</string>
+    <string name="hint_cat_owner_reason">Alasan Pemilik Lepas Adopsi</string>
+    <string name="hint_cat_adoption_status">Status Adopsi</string>
+    <string name="available">Adopsi Aku!</string>
+    <string name="edit_cat_data">Edit</string>
+    <string name="delete_cat_data">Hapus</string>
+    <!--Owner/ Available Adopted-->
+    <string name="adopted">Sudah Diadopsi</string>
+
+    <!--Yes & No Value-->
+    <string name="yes_value">Yes</string>
+    <string name="no_value">No</string>
+
+    <!--Adoption Form-->
+    <string name="adoption_form">Formulir Pengajuan Adopsi</string>
+    <string name="hint_cp_adoption_form">Nomor Telepon Anda</string>
+    <string name="hint_address_adoption_form">Alamat Anda</string>
+    <string name="hint_job">Pekerjaan Anda</string>
+    <string name="hint_reason_why">Kenapa Anda Ingin Mengadopsi?</string>
+    <string name="hint_noa">Jumlah Peliharaan yang Dimiliki?</string>
+    <string name="hint_house_type">Pilih Tipe Rumah</string>
+    <string name="hint_house_size">Luas Rumah (dalam m2)</string>
+    <string name="hint_family_number">Jumlah Orang yang Tinggal di Rumah</string>
+    <string name="hint_cat_place">Dimana Kucing Akan Dipelihara?</string>
+    <string name="hint_considered">Sebelum mengajukan adopsi, apakah Anda sudah memikirkan hal-hal berikut?</string>
+    <string name="hint_house_member_permission">Izin dari Orang yang Tinggal Bersama</string>
+    <string name="hint_moving_plan">Rencana Pindah Rumah</string>
+    <string name="hint_marriage_plan">Rencana Setelah Menikah</string>
+    <string name="hint_kids">Kondisi Anak Kecil di Rumah</string>
+    <string name="hint_financial_plan">Kondisi Keuangan</string>
+    <string name="apply">Ajukan Adopsi</string>
+
+    <!--Edit Cat Adopted-->
+    <string name="update_adoption_status">Perbarui Status Adopsi</string>
 
     <!--NAVIGATION DRAWER-->
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -27,36 +108,8 @@
     <string name="closeDrawer">close_drawer</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="app_submitted">Accepted</string>
-    <string name="app_received">Received</string>
-    <string name="about_us">About Us</string>
-    <string name="tutorial">Tutorial</string>
-    <string name="sign_out">Sign Out</string>
-    <string name="home">Home</string>
-    <string name="hint_username">Username</string>
-    <string name="hint_cp">Phone Number</string>
-    <string name="hint_full_name">Full Name (according to KTP)</string>
-    <string name="hint_dob">Date of Birth</string>
-    <string name="user_registration_header">User Registration</string>
-    <string name="hint_province">Province</string>
-    <string name="hint_regency">Regency</string>
-    <string name="hint_sub_district">Sub-district</string>
-    <string name="hint_city">City</string>
-    <string name="hint_address">Address</string>
-    <string name="userPhotosText">Tap \nto choose \nYour photo</string>
-    <string name="main_menu">Main Menu</string>
-    <string name="cat_breeds_standards">Cat Breeds Standards</string>
-    <string name="upload_cat_data">Upload Cat Data</string>
-    <string name="find_cat_to_adopt">Find Cat to Adopt</string>
-    <string name="applications">Applications</string>
-    <string name="upload_cat_data_desc">Upload your cat data \nto find new owners</string>
-    <string name="find_cat_for_adopt_desc">Find a cat to become your new family</string>
-    <string name="cat_breeds_standards_desc">Find out information of cats breed</string>
-    <string name="applications_desc">See your cat adoption application</string>
     <string name="upload_cat_data_header">Upload Cat Data</string>
     <string name="catPhotosText">Tap \nto select \nYour cat \nphoto</string>
-    <string name="hint_cat_name">Cat"'"s Name</string>
     <string name="hint_catDesc">Description</string>
     <string name="hint_catMedicalNote">Medical Note</string>
     <string name="stat_vaccine">Vaccine Status</string>
@@ -77,58 +130,17 @@
     <string name="userhomeprofile_citylabel">City</string>
     <string name="userhomeprofile_phonelabel">Phone</string>
     <string name="userhomeprofile_emaillabel">Email</string>
-    <string name="hint_gender">Select Gender</string>
     <string name="hint_usertype">Type</string>
     <string name="userhomeprofile_addresslabel">Address</string>
     <string name="userhome_catname">Cat Name</string>
     <string name="userhome_catreason">Reason for Open Adopt</string>
-    <string name="my_cat">My Cat</string>
     <string name="findcat_province">Select Province</string>
     <string name="findcat_city">Select City</string>
 
-    <string name="catprofile_name">Cat Name</string>
-    <string name="catprofile_gender">Cat Gender</string>
-    <string name="catprofile_ownerlabel">Owner</string>
-    <string name="catprofile_citylabel">City</string>
-    <string name="catprofile_doblabel">Date of Birth</string>
-    <string name="catprofile_descriptionlabel">About Me</string>
-    <string name="catprofile_medicallabel">Medical Note</string>
-    <string name="catprofile_vaccinelabel">Vaccine Status</string>
-    <string name="catprofile_spayneuterlabel">Spayed/ Neutered Status</string>
-    <string name="catprofile_adoptreasonlabel">Reasons for Open Adoption</string>
-    <string name="adopted">ADOPTED</string>
     <string name="userhome_catgender">Gender</string>
     <string name="find_cat">Search Cat</string>
-    <string name="catprofile_genderlabel">Gender</string>
-    <string name="available">Adopt Me!</string>
-    <string name="adoption_form">Adoption Form</string>
-    <string name="hint_adoptionform_phone">Your phone number</string>
-    <string name="hint_adoptionform_address">Your address</string>
-    <string name="hint_adoptionform_job">Your job</string>
-    <string name="hint_adoptionform_reasonwhy">Why You want to adopt?</string>
-    <string name="hint_adoptionform_animal">Number of Animal(s) You have?</string>
-    <string name="hint_housetype">Select Your house type</string>
-    <string name="hint_adoptionform_housesize">Your house size (in m2)</string>
-    <string name="hint_adoptionform_familynumber">Number of people in Your house</string>
-    <string name="hint_adoptionform_animallive">where the cat will stay?</string>
-    <string name="adoptionform_consideredthings">Before submitting the application, have You considered this conditions?</string>
-    <string name="adoptionform_housememberpermission">House member permission</string>
-    <string name="adoptionform_movingplan">Plan to move</string>
-    <string name="adoptionform_aftermarriage">After marriage plan</string>
-    <string name="adoptionform_kidsinhouse">Kids in Your house</string>
-    <string name="adoptionform_financialplan">Your financial plan</string>
-    <string name="adoptionform_submit">Submit</string>
     <string name="editcatavailable_textphoto">Tap \nto change \nYour cat \nphoto</string>
     <string name="editcatavailable_done_button">Done</string>
-    <string name="hint_adoptionstatus">Adoption Status</string>
-    <string name="editcatadopted_done_button">Change Adoption Status</string>
-    <string name="catprofile_adoptstatuslabel">Adoption Status</string>
-    <string name="adoptionform_yesvalue">Yes</string>
-    <string name="adoptionform_novalue">No</string>
-    <string name="nav_app_root">Applications</string>
-    <string name="app_rejected">Rejected</string>
-    <string name="nav_others_root">Others</string>
-    <string name="my_app_list">My Application List</string>
     <string name="application_status">Status :</string>
     <string name="adoptionreview_adoption_form_label">Adoption Application for :</string>
     <string name="adoptionreview_applicant_phone_label">Phone Number</string>
@@ -150,24 +162,11 @@
     <string name="application_status_stat_label">Status :</string>
     <string name="adoptionreview_contact_status_label">You can contact me on :</string>
     <string name="appacceptedreview_agreement">Adoption Agreement</string>
-    <string name="edit_cat_data">Edit</string>
-    <string name="delete_cat_data">Delete</string>
-    <string name="action_edit_profile">Edit Profile</string>
-    <string name="edituserprofile_update">Update</string>
     <string name="verify_order">Check Your email to verify your account</string>
     <string name="verify_send_text">Send Verification</string>
     <string name="verify_email_text">Go to Your Email</string>
     <string name="verify_landing_button"><![CDATA[<< Back to Homepage]]></string>
     <string name="banned_information">Your account has been Banned. \nPlease contact Administrator for further information. \n(adm.sikucing@gmail.com)</string>
-    <string name="hint_photo">Choose \nYour Photo</string>
-    <string name="name_profile">Name</string>
-    <string name="dob_profile">Date of Birth</string>
-    <string name="gender_profile">Gender</string>
-    <string name="province_profile">Province</string>
-    <string name="city_profile">City</string>
-    <string name="address_profile">Address</string>
-    <string name="phone_profile">Phone</string>
-    <string name="email_profile">Email</string>
     <string name="report">Report</string>
     <string name="your_name">Your name :</string>
     <string name="report_message">Report Message</string>
@@ -213,7 +212,7 @@
         <item>Others</item>
     </string-array>
     <string-array name="adoptionstatus">
-        <item>Adopted</item>
-        <item>Available</item>
+        <item>Sudah Diadopsi</item>
+        <item>Belum Diadopsi</item>
     </string-array>
 </resources>

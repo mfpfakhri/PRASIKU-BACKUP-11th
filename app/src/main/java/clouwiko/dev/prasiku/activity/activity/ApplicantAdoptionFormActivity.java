@@ -92,30 +92,30 @@ public class ApplicantAdoptionFormActivity extends AppCompatActivity {
                 //Applicant Phone Validation
                 String phoneValidation = etPhone.getText().toString();
                 if (TextUtils.isEmpty(phoneValidation)) {
-                    Toast.makeText(getApplicationContext(), "Enter Your phone number", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Anda Belum Mengisi Nomor Telepon Anda", Toast.LENGTH_SHORT).show();
                 }
                 final String validPhone = "^[+]?[0-9]{10,13}$";
                 Matcher matcherPhone = Pattern.compile(validPhone).matcher(phoneValidation);
                 if (matcherPhone.matches()) {
 
                 } else {
-                    Toast.makeText(getApplicationContext(), "Enter Valid Phone Number", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Ketik Nomor Telepon yang Valid", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 //Applicant Address Validation
                 String addressValidation = etAddress.getText().toString();
                 if (TextUtils.isEmpty(addressValidation)) {
-                    Toast.makeText(getApplicationContext(), "Enter Your address", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Anda Belum Mengisi Alamat Anda", Toast.LENGTH_SHORT).show();
                 }
                 //Applicant Reason Validation
                 String reasonValidation = etReason.getText().toString();
                 if (TextUtils.isEmpty(reasonValidation)) {
-                    Toast.makeText(getApplicationContext(), "Enter Your reason to adopt", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Anda Belum Mengisi Alasan untuk Mengadopsi", Toast.LENGTH_SHORT).show();
                 }
                 //Applicant Number of Animal Validation
                 String noAnimalValidation = etAnimalNumber.getText().toString();
                 if (TextUtils.isEmpty(noAnimalValidation)) {
-                    Toast.makeText(getApplicationContext(), "Enter the Number of animal You have", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Anda Belum Mengisi Jumlah Peliharaan yang Dimiliki", Toast.LENGTH_SHORT).show();
                 }
                 String validNoa = "^\\d{1,3}$";
                 Matcher matcherNoa= Pattern.compile(validNoa).matcher(noAnimalValidation);
@@ -123,7 +123,7 @@ public class ApplicantAdoptionFormActivity extends AppCompatActivity {
 
                 } else {
 //                    Toast.makeText(getApplicationContext(), "Enter Number Only", Toast.LENGTH_SHORT).show();
-                    etAnimalNumber.setError("Enter Number Only");
+                    etAnimalNumber.setError("Hanya Bisa diisi Angka");
                     return;
                 }
                 //House Type Validation
@@ -131,13 +131,13 @@ public class ApplicantAdoptionFormActivity extends AppCompatActivity {
                 if (houseTypePosition != 0) {
 
                 } else {
-                    Toast.makeText(getApplicationContext(), "Choose Your house type", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Anda Belum Memilih Tipe Rumah Anda", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 //Applicant House Size Validation
                 String houseSizeValidation = etHouseSize.getText().toString();
                 if (TextUtils.isEmpty(houseSizeValidation)) {
-                    Toast.makeText(getApplicationContext(), "Enter the size of House Where You lived", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Anda Belum Mengisi Luas Rumah Anda", Toast.LENGTH_SHORT).show();
                 }
                 String validHouseSize = "^\\d{1,5}$";
                 Matcher matcherHouseSize = Pattern.compile(validHouseSize).matcher(houseSizeValidation);
@@ -145,66 +145,66 @@ public class ApplicantAdoptionFormActivity extends AppCompatActivity {
 
                 } else {
 //                    Toast.makeText(getApplicationContext(), "Enter Number Only", Toast.LENGTH_SHORT).show();
-                    etHouseSize.setError("Enter Number Only");
+                    etHouseSize.setError("Hanya Bisa diisi Angka");
                     return;
                 }
                 //Number of People Validation
                 String peopleNumberValidation = etPeopleNumber.getText().toString();
                 if (TextUtils.isEmpty(peopleNumberValidation)) {
-                    Toast.makeText(getApplicationContext(), "Enter Number of People who lived in the House", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Anda Belum Mengisi Jumlah Orang yang Tinggal Bersama", Toast.LENGTH_SHORT).show();
                 }
                 String validNop = "^\\d{1,3}$";
                 Matcher matcherNop = Pattern.compile(validNop).matcher(peopleNumberValidation);
                 if (matcherNop.matches()) {
 
                 } else {
-                    etPeopleNumber.setError("Enter Number Only");
+                    etPeopleNumber.setError("Hanya Bisa diisi Angka");
                     return;
                 }
                 //Applicant Animal will Live Validation
                 String animalPlaceValidation = etAnimalLive.getText().toString();
                 if (TextUtils.isEmpty(animalPlaceValidation)) {
-                    Toast.makeText(getApplicationContext(), "Enter the Place Where the Cats Will Stay", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Anda Belum Mengisi Tempat Kucing Dipelihara", Toast.LENGTH_SHORT).show();
                 }
                 String validCatPlace = "(?<=\\s|^)[a-zA-Z]*(?=[.,;:]?\\s|$)";
                 Matcher matcherCatPlace = Pattern.compile(validCatPlace).matcher(animalPlaceValidation);
                 if (matcherCatPlace.matches()) {
 
                 } else {
-                    etAnimalLive.setError("Enter Alphabet Only");
+                    etAnimalLive.setError("Hanya Bisa diisi Huruf");
                     return;
                 }
                 //Family Permission Validation
                 if (rgFamilyPermission.getCheckedRadioButtonId() == -1) {
-                    Toast.makeText(getApplicationContext(), "Pick Family Permission option", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Anda Belum Memilih opsi Izin dari Orang Rumah", Toast.LENGTH_SHORT).show();
                     return;
                 } else {
 
                 }
                 //Moving Plan Validation
                 if (rgMovingPlan.getCheckedRadioButtonId() == -1) {
-                    Toast.makeText(getApplicationContext(), "Pick Your moving plan option", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Anda Belum Memilih opsi Rencana Pindah Rumah", Toast.LENGTH_SHORT).show();
                     return;
                 } else {
 
                 }
                 //Marriage Plan Validation
                 if (rgMarriagePlan.getCheckedRadioButtonId() == -1) {
-                    Toast.makeText(getApplicationContext(), "Pick Your marriage plan option", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Anda Belum Memilih opsi Rencana Setelah Menikah", Toast.LENGTH_SHORT).show();
                     return;
                 } else {
 
                 }
                 //Kids in The House Validation
                 if (rgKids.getCheckedRadioButtonId() == -1) {
-                    Toast.makeText(getApplicationContext(), "Pick kids in Your house condition option", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Anda Belum Memilih opsi Kondisi Anak Kecil di Rumah", Toast.LENGTH_SHORT).show();
                     return;
                 } else {
 
                 }
                 //Financial Plan Validation
                 if (rgFinancial.getCheckedRadioButtonId() == -1) {
-                    Toast.makeText(getApplicationContext(), "Pick Your financial plan option", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Anda Belum Memilih opsi Kondisi Keuangan", Toast.LENGTH_SHORT).show();
                     return;
                 } else {
 
@@ -217,7 +217,7 @@ public class ApplicantAdoptionFormActivity extends AppCompatActivity {
 
     private void backToMainMenu() {
         Intent intent = new Intent(getApplicationContext(), MainMenuActivity.class);
-        Toast.makeText(getApplicationContext(), "Your Adoption Application has been Sent", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "Formulir pengajuan Anda sudah dikirim", Toast.LENGTH_SHORT).show();
         startActivity(intent);
         finish();
     }
@@ -273,8 +273,8 @@ public class ApplicantAdoptionFormActivity extends AppCompatActivity {
         final String catId = getIntent().getStringExtra("cat_id");
         final String ownerId = getIntent().getStringExtra("owner_id");
         AlertDialog.Builder builder = new AlertDialog.Builder(ApplicantAdoptionFormActivity.this);
-        builder.setMessage("Are You sure want to quit?")
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+        builder.setMessage("Apakah Anda yakin ingin kembali?")
+                .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Intent intent = new Intent(getApplicationContext(), CatProfileApplicantAvailableActivity.class);
@@ -285,7 +285,7 @@ public class ApplicantAdoptionFormActivity extends AppCompatActivity {
                         finish();
                     }
                 })
-                .setNegativeButton("No", null);
+                .setNegativeButton("Tidak", null);
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }

@@ -65,6 +65,10 @@ public class EditCatDataAvailableActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_cat_data_available);
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.editcatavailable_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Perbarui Informasi Kucing");
+
         ivPhoto = findViewById(R.id.editcatavailable_photo_imageview);
         btnUpdatePhoto = findViewById(R.id.editcatavailable_photo_edit_button);
         btnDeletePhoto = findViewById(R.id.editcatavailable_photo_delete_button);
@@ -398,7 +402,7 @@ public class EditCatDataAvailableActivity extends AppCompatActivity {
                                                                 String updMedicalNoteChange = etMedNote.getText().toString().trim();
                                                                 String updGenderChange = msGender.getSelectedItem().toString().trim();
                                                                 String updReasonChange = msReason.getSelectedItem().toString().trim();
-                                                                String updAdoptionStatusChange = msAdoptionStatus.getSelectedItem().toString().trim();
+                                                                String updAdoptionStatusChange = "Adopted";
                                                                 int updVaccineId = rgVaccine.getCheckedRadioButtonId();
                                                                 rbVaccine = findViewById(updVaccineId);
                                                                 String updVaccineChange = rbVaccine.getText().toString().trim();
@@ -446,7 +450,7 @@ public class EditCatDataAvailableActivity extends AppCompatActivity {
 
                                                             }
                                                         });
-                                                        backToCatPick();
+                                                        backToMainMenu();
                                                         finish();
                                                         break;
                                                     case 2:
@@ -461,7 +465,7 @@ public class EditCatDataAvailableActivity extends AppCompatActivity {
                                                                 String updMedicalNote = etMedNote.getText().toString().trim();
                                                                 String updGender = msGender.getSelectedItem().toString().trim();
                                                                 String updReason = msReason.getSelectedItem().toString().trim();
-                                                                String updAdoptionStatus = msAdoptionStatus.getSelectedItem().toString().trim();
+                                                                String updAdoptionStatus = "Available";
                                                                 int updVaccineId = rgVaccine.getCheckedRadioButtonId();
                                                                 rbVaccine = findViewById(updVaccineId);
                                                                 String updVaccine = rbVaccine.getText().toString().trim();
@@ -506,7 +510,7 @@ public class EditCatDataAvailableActivity extends AppCompatActivity {
 
                                                             }
                                                         });
-                                                        backToCatPick();
+                                                        backToMainMenu();
                                                         finish();
                                                         break;
                                                 }
@@ -549,7 +553,7 @@ public class EditCatDataAvailableActivity extends AppCompatActivity {
                         String updMedicalNoteChange = etMedNote.getText().toString().trim();
                         String updGenderChange = msGender.getSelectedItem().toString().trim();
                         String updReasonChange = msReason.getSelectedItem().toString().trim();
-                        String updAdoptionStatusChange = msAdoptionStatus.getSelectedItem().toString().trim();
+                        String updAdoptionStatusChange = "Adopted";
                         int updVaccineId = rgVaccine.getCheckedRadioButtonId();
                         rbVaccine = findViewById(updVaccineId);
                         String updVaccineChange = rbVaccine.getText().toString().trim();
@@ -593,7 +597,7 @@ public class EditCatDataAvailableActivity extends AppCompatActivity {
 
                     }
                 });
-                backToCatPick();
+                backToMainMenu();
                 finish();
                 break;
             case 2:
@@ -607,7 +611,7 @@ public class EditCatDataAvailableActivity extends AppCompatActivity {
                         String updMedicalNoteIdle = etMedNote.getText().toString().trim();
                         String updGenderIdle = msGender.getSelectedItem().toString().trim();
                         String updReasonIdle = msReason.getSelectedItem().toString().trim();
-                        String updAdoptionStatusIdle = msAdoptionStatus.getSelectedItem().toString().trim();
+                        String updAdoptionStatusIdle = "Available";
                         int updVaccineId = rgVaccine.getCheckedRadioButtonId();
                         rbVaccine = findViewById(updVaccineId);
                         String updVaccineIdle = rbVaccine.getText().toString().trim();
@@ -648,7 +652,7 @@ public class EditCatDataAvailableActivity extends AppCompatActivity {
 
                     }
                 });
-                backToCatPick();
+                backToMainMenu();
                 finish();
                 break;
         }
@@ -730,31 +734,18 @@ public class EditCatDataAvailableActivity extends AppCompatActivity {
 //        finish();
 //    }
 
-    private void backToCatPick(){
-        String pActivity = getIntent().getStringExtra("previousActivity");
-        String catId = getIntent().getStringExtra("cat_id");
-        String ownerId = getIntent().getStringExtra("owner_id");
-        Intent intent = new Intent(getApplicationContext(), CatProfileOwnerAvailableActivity.class);
-        if (pActivity.equals("findcat")) {
-            intent.putExtra("previousActivity", pActivity);
-            intent.putExtra("cat_id", catId);
-            intent.putExtra("owner_id", ownerId);
-            startActivity(intent);
-            finish();
-        } else if (pActivity.equals("adoptionlist")) {
-            intent.putExtra("previousActivity", pActivity);
-            intent.putExtra("cat_id", catId);
-            intent.putExtra("owner_id", ownerId);
-            startActivity(intent);
-            finish();
-        }
+    private void backToMainMenu(){
+        Toast.makeText(getApplicationContext(), "Cat Data Successfully Edited", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(getApplicationContext(), MainMenuActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     @Override
     public void onBackPressed() {
         AlertDialog.Builder builder = new AlertDialog.Builder(EditCatDataAvailableActivity.this);
-        builder.setMessage("Are You sure want to quit editing?")
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+        builder.setMessage("Apakah Anda yakin ingin keluar?")
+                .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         String pActivity = getIntent().getStringExtra("previousActivity");
@@ -776,7 +767,7 @@ public class EditCatDataAvailableActivity extends AppCompatActivity {
                         }
                     }
                 })
-                .setNegativeButton("No", null);
+                .setNegativeButton("Tidak", null);
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }

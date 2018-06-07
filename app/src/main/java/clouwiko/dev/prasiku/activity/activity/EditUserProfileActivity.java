@@ -137,8 +137,8 @@ public class EditUserProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(EditUserProfileActivity.this);
-                builder.setMessage("Are You sure want to remove Your profile photo?")
-                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                builder.setMessage("Apakah Anda yakin ingin menghapus foto profil?")
+                        .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 databaseUsers = FirebaseDatabase.getInstance().getReference().child("users").child(uId);
@@ -149,13 +149,13 @@ public class EditUserProfileActivity extends AppCompatActivity {
                                         String photo = userData.getUserProfilePhoto();
                                         try {
                                             if (photo.equals("")) {
-                                                Toast.makeText(getApplicationContext(), "There is no photo available", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(getApplicationContext(), "Tidak ada foto dipasang", Toast.LENGTH_SHORT).show();
                                             } else {
                                                 StorageReference photoRef = FirebaseStorage.getInstance().getReferenceFromUrl(photo);
                                                 photoRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                                                     @Override
                                                     public void onSuccess(Void aVoid) {
-                                                        Toast.makeText(getApplicationContext(), "You do not have a profile picture now", Toast.LENGTH_SHORT).show();
+                                                        Toast.makeText(getApplicationContext(), "Anda tidak memiliki foto profil saat ini", Toast.LENGTH_SHORT).show();
                                                     }
                                                 });
                                                 userData.setUserProfilePhoto("");
@@ -178,7 +178,7 @@ public class EditUserProfileActivity extends AppCompatActivity {
                                 });
                             }
                         })
-                        .setNegativeButton("No", null);
+                        .setNegativeButton("Tidak", null);
                 AlertDialog alertDialog = builder.create();
                 alertDialog.show();
             }
@@ -300,7 +300,7 @@ public class EditUserProfileActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String valName = etName.getText().toString().trim();
                 if (valName.isEmpty()) {
-                    Toast.makeText(getApplicationContext(), "Enter User Name", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Ketik nama lengkap Anda", Toast.LENGTH_SHORT).show();
                     return;
                 } else {
 
@@ -308,7 +308,7 @@ public class EditUserProfileActivity extends AppCompatActivity {
 
                 String valDob = etDob.getText().toString().trim();
                 if (valDob.isEmpty()) {
-                    Toast.makeText(getApplicationContext(), "Enter User Dob", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Ketik tanggal lahir Anda", Toast.LENGTH_SHORT).show();
                     return;
                 } else {
 
@@ -318,7 +318,7 @@ public class EditUserProfileActivity extends AppCompatActivity {
                 if (valGender != 0) {
 
                 } else {
-                    Toast.makeText(getApplicationContext(), "Select User Gender", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Pilih jenis kelamin Anda", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -326,7 +326,7 @@ public class EditUserProfileActivity extends AppCompatActivity {
                 if (valProvince != 0) {
 
                 } else {
-                    Toast.makeText(getApplicationContext(), "Select User Province", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Pilih provinsi Anda", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -334,21 +334,29 @@ public class EditUserProfileActivity extends AppCompatActivity {
                 if (valCity != 0) {
 
                 } else {
-                    Toast.makeText(getApplicationContext(), "Select User City", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Pilih kota/ kabupaten Anda", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
+                final String validPhone = "^[+]?[0-9]{10,13}$";
                 String valPhone = etPhone.getText().toString().trim();
                 if (valPhone.isEmpty()) {
-                    Toast.makeText(getApplicationContext(), "Enter User Phone Number", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Ketik nomor telepon Anda", Toast.LENGTH_SHORT).show();
                     return;
                 } else {
 
                 }
+                Matcher matcherPhone = Pattern.compile(validPhone).matcher(valPhone);
+                if (matcherPhone.matches()) {
+
+                } else {
+                    Toast.makeText(getApplicationContext(), "Ketik nomor telepon yang valid", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
                 String valAddress = etAddress.getText().toString().trim();
                 if (valAddress.isEmpty()) {
-                    Toast.makeText(getApplicationContext(), "Enter User Address", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Ketik alamat Anda", Toast.LENGTH_SHORT).show();
                     return;
                 } else {
 
@@ -437,7 +445,7 @@ public class EditUserProfileActivity extends AppCompatActivity {
 
                                                     }
                                                 });
-                                                Toast.makeText(getApplicationContext(), "Successfully update User data", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(getApplicationContext(), "Profil Anda telah diperbarui", Toast.LENGTH_SHORT).show();
                                             }
                                         })
                                         .addOnFailureListener(new OnFailureListener() {
@@ -514,7 +522,7 @@ public class EditUserProfileActivity extends AppCompatActivity {
 
                                     }
                                 });
-                                Toast.makeText(getApplicationContext(), "Successfully update User data", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "Profil Anda telah diperbarui", Toast.LENGTH_SHORT).show();
                             }
                         }
 
@@ -591,7 +599,6 @@ public class EditUserProfileActivity extends AppCompatActivity {
 
                         }
                     });
-                    Toast.makeText(getApplicationContext(), "Successfully update User data", Toast.LENGTH_SHORT).show();
                 }
                 backToMainMenu();
             }
@@ -600,7 +607,7 @@ public class EditUserProfileActivity extends AppCompatActivity {
 
     private void mediaOpen() {
         Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(Intent.createChooser(galleryIntent, "Select Image from Gallery"), 2);
+        startActivityForResult(Intent.createChooser(galleryIntent, "Pilih gambar dari galeri"), 2);
     }
 
     @Override
@@ -648,7 +655,7 @@ public class EditUserProfileActivity extends AppCompatActivity {
 
     private void backToMainMenu() {
         Intent intent = new Intent(getApplicationContext(), MainMenuActivity.class);
-        Toast.makeText(getApplicationContext(), "Your Information Successfully Updated", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "Profil Anda telah diperbarui", Toast.LENGTH_SHORT).show();
         startActivity(intent);
         finish();
     }
@@ -656,7 +663,7 @@ public class EditUserProfileActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         AlertDialog.Builder builder = new AlertDialog.Builder(EditUserProfileActivity.this);
-        builder.setMessage("Are You sure want to quit editing?")
+        builder.setMessage("Apakah Anda yakin ingin membatalkan pengeditan?")
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

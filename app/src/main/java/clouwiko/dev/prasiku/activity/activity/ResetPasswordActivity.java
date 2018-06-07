@@ -1,5 +1,6 @@
 package clouwiko.dev.prasiku.activity.activity;
 
+import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -19,6 +21,7 @@ import clouwiko.dev.prasiku.R;
 public class ResetPasswordActivity extends AppCompatActivity {
 
     private EditText inputEmail;
+    private TextView etMsg;
     private Button btnResetPassword;
     private FirebaseAuth auth;
     private ProgressBar progressBar;
@@ -29,6 +32,9 @@ public class ResetPasswordActivity extends AppCompatActivity {
         setContentView(R.layout.activity_reset_password);
 
         inputEmail = (EditText) findViewById(R.id.email);
+        etMsg = findViewById(R.id.reset_password_msg);
+        Typeface typemsg = Typeface.createFromAsset(getAssets(), "fonts/segoeuil.ttf");
+        etMsg.setTypeface(typemsg);
         btnResetPassword = (Button) findViewById(R.id.action_reset_password_button);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
