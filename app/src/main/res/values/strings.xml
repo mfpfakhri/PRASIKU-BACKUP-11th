@@ -50,11 +50,22 @@
     <string name="change_password">Ubah Kata Sandi</string>
     <string name="current_password">Kata Sandi Saat Ini</string>
     <string name="new_password">Kata Sandi Baru</string>
+    <string name="help_password">*Kata Sandi Bisa Beragam Karakter dan Minimal 6 Karakter</string>
     <!--Sign Out-->
     <string name="sign_out">Keluar</string>
 
     <!--User Home-->
     <string name="hint_name_home">Nama Lengkap</string>
+
+    <!--Upload Cat Data-->
+    <string name="yes_vaccine">Ya, Sudah Divaksin</string>
+    <string name="no_vaccine">Belum Divaksin</string>
+    <string name="yes_spayneuter">Ya, Sudah Dikastrasi</string>
+    <string name="no_spayneuter">Belum Dikastrasi</string>
+    <string name="hint_photo_upload_cat">Sentuh Untuk \nMemilih Foto \nProfil Kucing \nAnda</string>
+
+    <!--Find Cat-->
+    <string name="find_cat">Cari Kucing</string>
 
     <!--My Application List-->
     <string name="hint_applicant">Nama Calon Pengadopsi</string>
@@ -88,6 +99,9 @@
     <!--Owner/ Available Adopted-->
     <string name="adopted">Sudah Diadopsi</string>
 
+    <!--Adoption Accepted-->
+    <string name="adoption_agreement">Unduh Surat Perjanjian</string>
+
     <!--Yes, No & Save-->
     <string name="yes_value">Yes</string>
     <string name="no_value">No</string>
@@ -114,58 +128,34 @@
 
     <!--Edit Cat Adopted-->
     <string name="update_adoption_status">Perbarui Status Adopsi</string>
+    <!--Edit Cat Available-->
+    <string name="update_cat_info">Perbarui Profil Kucing</string>
+    <string name="hint_photo_edit_cat">Sentuh Ikon \ndi Samping \nUntuk Memilih \nFoto Profil \nKucing Anda</string>
 
     <!--No Result, Verification, Banned & Report-->
     <string name="noresult">Tidak ada hasil yang sesuai dengan pencarian</string>
     <string name="report">Laporkan</string>
+    <string name="banned_information">Akun Anda diblokir. \nSilakan hubungi Administrator untuk informasi lebih lanjut. \n(adm.sikucing@gmail.com)</string>
+    <string name="verify_landing_button"><![CDATA[<< Kembali ke Halaman Utama]]></string>
+    <string name="verify_order">Periksa Email Anda untuk Verifikasi Akun</string>
+    <string name="verify_send_text">Kirim Verifikasi</string>
+    <string name="verify_email_text">Buka Email</string>
 
-    <!--NAVIGATION DRAWER-->
+    <!--Report Form-->
+    <string name="report_message">Pesan Laporan</string>
+    <string name="send_report">Laporkan Pengadopsi</string>
+    <string name="owner">Pemilik</string>
+    <string name="adopter">Pengadopsi</string>
+
+    <!--Navigation Drawer-->
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="openDrawer">open_drawer</string>
     <string name="closeDrawer">close_drawer</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="catPhotosText">Tap \nto select \nYour cat \nphoto</string>
-    <string name="hint_catDesc">Description</string>
-    <string name="hint_catMedicalNote">Medical Note</string>
-    <string name="stat_vaccine">Vaccine Status</string>
-    <string name="stat_spay_neuter">Spay/ Neuter Status</string>
-    <string name="yes_vaccine_textview">Yes, Already Vaccinated</string>
-    <string name="no_vaccine_textview">Not Yet</string>
-    <string name="yes_spayneuter_textview">Yes, Already Spayed/ Neutered</string>
-    <string name="no_spayneuter_textview">Not Yet</string>
-    <string name="action_upload_cat">Upload</string>
-    <string name="hint_catGender">Choose Cat"'"s Gender</string>
-    <string name="hint_catReasonOpenAdoption">Select Reason for Open Adopt</string>
-    <string name="hint_catDob">Cat"'"s Date of Birth</string>
-
-    <string name="iduser">clouwiko.dev.prasiku.activity.activity.iduser</string>
-    <string name="user_cats_tab">Cats</string>
-    <string name="user_profile_tab">Profile</string>
-    <string name="userhomeprofile_citylabel">City</string>
-    <string name="userhomeprofile_phonelabel">Phone</string>
-    <string name="userhomeprofile_emaillabel">Email</string>
-    <string name="hint_usertype">Type</string>
-    <string name="userhomeprofile_addresslabel">Address</string>
-    <string name="findcat_province">Select Province</string>
-    <string name="findcat_city">Select City</string>
-
-    <string name="find_cat">Search Cat</string>
-    <string name="editcatavailable_textphoto">Tap \nto change \nYour cat \nphoto</string>
-    <string name="editcatavailable_done_button">Done</string>
-    <string name="appacceptedreview_agreement">Adoption Agreement</string>
-    <string name="verify_order">Check Your email to verify your account</string>
-    <string name="verify_send_text">Send Verification</string>
-    <string name="verify_email_text">Go to Your Email</string>
-    <string name="verify_landing_button"><![CDATA[<< Back to Homepage]]></string>
-    <string name="banned_information">Your account has been Banned. \nPlease contact Administrator for further information. \n(adm.sikucing@gmail.com)</string>
-    <string name="your_name">Your name :</string>
-    <string name="report_message">Report Message</string>
-    <string name="send_report">Report this Person</string>
-    <string name="owner">Owner</string>
-    <string name="adopter">Adopter</string>
-    <string name="help_password">*Kata Sandi Bisa Beragam Karakter dan Minimal 6 Karakter</string>
+    <string name="findcat_province">Pilih Province</string>
+    <string name="findcat_city">Pilih City</string>
 
     <string-array name="gender">
         <item>Male</item>

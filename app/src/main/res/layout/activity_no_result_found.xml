@@ -12,10 +12,10 @@
         android:gravity="center">
         <ImageView
             android:id="@+id/noresult_image"
-            android:layout_width="128dp"
-            android:layout_height="128dp"
+            android:layout_width="192dp"
+            android:layout_height="192dp"
             android:layout_gravity="center"
-            android:src="@drawable/sad_emoji_emoticon_by_vexels" />
+            android:src="@drawable/sad_cat" />
         <TextView
             android:id="@+id/noresult_text"
             android:layout_width="wrap_content"

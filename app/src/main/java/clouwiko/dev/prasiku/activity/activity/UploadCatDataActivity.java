@@ -213,7 +213,25 @@ public class UploadCatDataActivity extends AppCompatActivity {
                         String desc = inputCatDesc.getText().toString().trim();
                         String medNote = inputCatMedNote.getText().toString().trim();
                         String vacc = radioButtonVacc.getText().toString().trim();
+                        String setvacc = null;
+                        switch (vacc){
+                            case "Ya, Sudah Divaksin":
+                                setvacc = "Yes, Already Vaccinated";
+                                break;
+                            case "Belum Divaksin":
+                                setvacc = "Not Yet";
+                                break;
+                        }
                         String spayNeuter = radioButtonSpayNeuter.getText().toString().trim();
+                        String setspayneuter = null;
+                        switch (spayNeuter){
+                            case "Ya, Sudah Dikastrasi":
+                                setspayneuter = "Yes, Already Spayed/ Neutered";
+                                break;
+                            case "Belum Dikastrasi":
+                                setspayneuter = "Not Yet";
+                                break;
+                        }
                         String spinnerReason = spinnerCatReasonOpenAdoption.getSelectedItem().toString().trim();
                         String province = provincesNameArray.get(0).toString().trim();
                         String city = citiesNameArray.get(0).toString().trim();
@@ -222,7 +240,7 @@ public class UploadCatDataActivity extends AppCompatActivity {
                         String ownerdeletestatus = ownerId + "_0";
                         String citydeletestatus = city + "_0";
 
-                        Cat cat = new Cat(id, ownerId, cPhotoUrl, name, dob, spinnerGender, desc, medNote, vacc, spayNeuter, spinnerReason, province, city, status, deletestatus, ownerdeletestatus, citydeletestatus);
+                        Cat cat = new Cat(id, ownerId, cPhotoUrl, name, dob, spinnerGender, desc, medNote, setvacc, setspayneuter, spinnerReason, province, city, status, deletestatus, ownerdeletestatus, citydeletestatus);
 
                         databaseCats.child(id).setValue(cat);
                     }

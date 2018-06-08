@@ -57,7 +57,8 @@
                         android:layout_centerInParent="true"
                         android:gravity="center"
                         android:textColor="@color/black"
-                        android:text="@string/catPhotosText" />
+                        android:textSize="10dp"
+                        android:text="@string/hint_photo_upload_cat" />
 
                     <ImageView
                         android:id="@+id/userPhotos"
@@ -98,7 +99,7 @@
                         android:clickable="true"
                         android:editable="false"
                         android:focusable="false"
-                        android:hint="@string/hint_catDob"
+                        android:hint="@string/hint_cat_dob"
                         android:textColor="@color/black"/>
 
                 </android.support.design.widget.TextInputLayout>
@@ -108,7 +109,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:entries="@array/catGender"
-                    app:ms_hint="@string/hint_catGender" />
+                    app:ms_hint="@string/hint_cat_gender" />
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
@@ -120,7 +121,7 @@
                         android:layout_height="wrap_content"
                         android:ems="10"
                         android:gravity="top"
-                        android:hint="@string/hint_catDesc"
+                        android:hint="@string/hint_cat_description"
                         android:inputType="textMultiLine"
                         android:lines="5"
                         android:textColor="@color/black"/>
@@ -136,7 +137,7 @@
                         android:layout_height="wrap_content"
                         android:ems="10"
                         android:gravity="top"
-                        android:hint="@string/hint_catMedicalNote"
+                        android:hint="@string/hint_cat_medical"
                         android:inputType="textMultiLine"
                         android:lines="3"
                         android:textColor="@color/black"/>
@@ -153,7 +154,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="4dp"
                         android:layout_marginTop="4dp"
-                        android:text="@string/stat_vaccine"
+                        android:text="@string/hint_cat_vaccine"
                         android:textSize="18sp" />
 
                     <RadioGroup
@@ -167,14 +168,14 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
-                            android:text="@string/yes_vaccine_textview" />
+                            android:text="@string/yes_vaccine" />
 
                         <RadioButton
                             android:id="@+id/no_vaccine"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
-                            android:text="@string/no_vaccine_textview" />
+                            android:text="@string/no_vaccine" />
                     </RadioGroup>
                 </android.support.design.widget.TextInputLayout>
 
@@ -188,7 +189,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="4dp"
                         android:layout_marginTop="4dp"
-                        android:text="@string/stat_spay_neuter"
+                        android:text="@string/hint_cat_spay_neuter"
                         android:textSize="18sp" />
 
                     <RadioGroup
@@ -202,14 +203,14 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
-                            android:text="@string/yes_spayneuter_textview" />
+                            android:text="@string/yes_spayneuter" />
 
                         <RadioButton
                             android:id="@+id/no_spayneuter"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
-                            android:text="@string/no_spayneuter_textview" />
+                            android:text="@string/no_spayneuter" />
                     </RadioGroup>
                 </android.support.design.widget.TextInputLayout>
 
@@ -218,7 +219,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:entries="@array/catReasonOpenAdoption"
-                    app:ms_hint="@string/hint_catReasonOpenAdoption" />
+                    app:ms_hint="@string/hint_cat_owner_reason" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -234,7 +235,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@color/colorPrimary"
-                        android:text="@string/action_upload_cat"
+                        android:text="@string/upload_cat_data"
                         android:textColor="@android:color/black"
                         android:textStyle="bold" />
                 </LinearLayout>
