@@ -78,6 +78,10 @@ public class EditUserProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_user_profile);
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.edituserprofile_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Edit Profil");
+
         ivPhoto = findViewById(R.id.edituserprofile_photo_imageview);
         btnUpdatePhoto = findViewById(R.id.edituserprofile_photo_edit_button);
         btnDeletePhoto = findViewById(R.id.edituserprofile_photo_delete_button);

@@ -1,6 +1,7 @@
 package clouwiko.dev.prasiku.activity.activity;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -254,7 +255,7 @@ public class FindCatForAdoptActivity extends AppCompatActivity {
 
         @Override
         public FindCatForAdoptActivity.FindCatAdapter.AdoptCatViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.rv_adoption_list_layout, parent, false);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.rv_cat_list_layout, parent, false);
 
             return new FindCatForAdoptActivity.FindCatAdapter.AdoptCatViewHolder(view);
         }
@@ -314,7 +315,15 @@ public class FindCatForAdoptActivity extends AppCompatActivity {
             holder.name.setText(catData.getCatName());
             holder.reason.setText(setreason);
             holder.gender.setText(setgender);
-            Picasso.get().load(catData.getCatProfilePhoto()).resize(128, 128).into(holder.photo);
+//            Picasso.get().load(catData.getCatProfilePhoto()).resize(128, 128).into(holder.photo);
+            if (catData.getCatProfilePhoto().equals("")) {
+                String noPhoto = "@drawable/no_image";
+                int imageResource = getResources().getIdentifier(noPhoto, null, getPackageName());
+                Drawable res = getResources().getDrawable(imageResource);
+                holder.photo.setImageDrawable(res);
+            } else {
+                Picasso.get().load(cPhoto).resize(64, 64).into(holder.photo);
+            }
 
             holder.layoutroot.setOnClickListener(new View.OnClickListener() {
                 @Override

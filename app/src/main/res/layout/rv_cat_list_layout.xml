@@ -11,7 +11,7 @@
     android:background="@color/white">
 
     <LinearLayout
-        android:id="@+id/application_root"
+        android:id="@+id/adoptionlist_root"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/selectableItemBackground"
@@ -21,7 +21,7 @@
         android:padding="16dp">
 
         <ImageView
-            android:id="@+id/application_catphotos"
+            android:id="@+id/adoptionlist_catphotos"
             android:layout_width="92sp"
             android:layout_height="92sp"
             android:background="@color/colorPrimaryDarkTransparant"
@@ -34,33 +34,39 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/application_catname"
+                android:id="@+id/adoptionlist_catname"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:text=""
+                android:text="@string/hint_cat_name"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:orientation="horizontal"
+                android:layout_weight="1">
+                <TextView
+                    android:id="@+id/userhome_catgender"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="@string/hint_cat_gender"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
             <TextView
-                android:id="@+id/application_status"
-                android:layout_width="wrap_content"
+                android:id="@+id/adoptionlist_catreason"
+                android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:text="@string/application_status"
+                android:text="@string/hint_cat_owner_reason"
+                android:textStyle="bold"
                 android:textSize="16sp" />
-
-            <TextView
-                android:id="@+id/application_statusvalue"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:text=""
-                android:textSize="16sp"
-                android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>
 </android.support.v7.widget.CardView>

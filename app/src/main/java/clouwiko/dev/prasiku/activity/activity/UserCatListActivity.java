@@ -117,7 +117,7 @@ public class UserCatListActivity extends AppCompatActivity {
 
         @Override
         public AdoptCatAdapter.AdoptCatViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.rv_adoption_list_layout, parent, false);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.rv_cat_list_layout, parent, false);
 
             return new AdoptCatViewHolder(view);
         }

@@ -51,7 +51,7 @@ public class UserApplicationListActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("My Application List");
+        getSupportActionBar().setTitle("Pengajuan Adopsi Saya");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         applicationRecyclerView = (RecyclerView) findViewById(R.id.main_applicationlist);
@@ -120,7 +120,7 @@ public class UserApplicationListActivity extends AppCompatActivity {
 
         @Override
         public UserApplicationListActivity.ApplicationListAdapter.ApplicationListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.rv_application_list_layout, parent, false);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.rv_applicant_appon_list_layout, parent, false);
 
             return new UserApplicationListActivity.ApplicationListAdapter.ApplicationListViewHolder(view);
         }
@@ -134,24 +134,28 @@ public class UserApplicationListActivity extends AppCompatActivity {
             final String appId = adoptionData.getAdoptionId().toString().trim();
             String cPhoto = adoptionData.getAdoptionCatPhoto();
             String aStatus = adoptionData.getAdoptionApplicationStatus();
+            String setstatus = null;
             switch (aStatus){
                 case "Received":
+                    setstatus = "Diterima";
                     SpannableStringBuilder receivedBuilder = new SpannableStringBuilder();
-                    SpannableString receivedSpannable = new SpannableString(aStatus);
+                    SpannableString receivedSpannable = new SpannableString(setstatus);
                     receivedSpannable.setSpan(new ForegroundColorSpan(Color.BLUE),0, receivedSpannable.length(), 0);
                     receivedBuilder.append(receivedSpannable);
                     holder.status.setText(receivedBuilder, TextView.BufferType.SPANNABLE);
                     break;
                 case "Accepted":
+                    setstatus = "Disetujui";
                     SpannableStringBuilder acceptedBuilder = new SpannableStringBuilder();
-                    SpannableString acceptedSpannable = new SpannableString(aStatus);
+                    SpannableString acceptedSpannable = new SpannableString(setstatus);
                     acceptedSpannable.setSpan(new ForegroundColorSpan(Color.GREEN),0, acceptedSpannable.length(), 0);
                     acceptedBuilder.append(acceptedSpannable);
                     holder.status.setText(acceptedBuilder, TextView.BufferType.SPANNABLE);
                     break;
                 case "Rejected":
+                    setstatus = "Ditolak";
                     SpannableStringBuilder rejectedBuilder = new SpannableStringBuilder();
-                    SpannableString rejectedSpannable = new SpannableString(aStatus);
+                    SpannableString rejectedSpannable = new SpannableString(setstatus);
                     rejectedSpannable.setSpan(new ForegroundColorSpan(Color.RED),0, rejectedSpannable.length(), 0);
                     rejectedBuilder.append(rejectedSpannable);
                     holder.status.setText(rejectedBuilder, TextView.BufferType.SPANNABLE);

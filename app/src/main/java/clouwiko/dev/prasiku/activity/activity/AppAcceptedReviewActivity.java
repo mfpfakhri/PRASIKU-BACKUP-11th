@@ -7,6 +7,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.ContactsContract;
@@ -17,6 +19,9 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
+import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -108,8 +113,43 @@ public class AppAcceptedReviewActivity extends AppCompatActivity {
                 String appkids = dataSnapshot.child("adoptionApplicantKids").getValue(String.class);
                 String appfinancial = dataSnapshot.child("adoptionApplicantFinancial").getValue(String.class);
                 String appstatus = dataSnapshot.child("adoptionApplicationStatus").getValue(String.class);
-
-                Picasso.get().load(catphoto).centerCrop().resize(128, 128).into(imCatPhoto);
+                String setstatus = null;
+                switch (appstatus) {
+                    case "Received":
+                        setstatus = "Diterima";
+                        SpannableStringBuilder receivedBuilder = new SpannableStringBuilder();
+                        SpannableString receivedSpannable = new SpannableString(setstatus);
+                        receivedSpannable.setSpan(new ForegroundColorSpan(Color.BLUE), 0, receivedSpannable.length(), 0);
+                        receivedBuilder.append(receivedSpannable);
+                        tvAppStatus.setText(receivedBuilder, TextView.BufferType.SPANNABLE);
+                        break;
+                    case "Accepted":
+                        setstatus = "Disetujui";
+                        SpannableStringBuilder acceptedBuilder = new SpannableStringBuilder();
+                        SpannableString acceptedSpannable = new SpannableString(setstatus);
+                        acceptedSpannable.setSpan(new ForegroundColorSpan(Color.GREEN), 0, acceptedSpannable.length(), 0);
+                        acceptedBuilder.append(acceptedSpannable);
+                        tvAppStatus.setText(acceptedBuilder, TextView.BufferType.SPANNABLE);
+                        break;
+                    case "Rejected":
+                        setstatus = "Ditolak";
+                        SpannableStringBuilder rejectedBuilder = new SpannableStringBuilder();
+                        SpannableString rejectedSpannable = new SpannableString(setstatus);
+                        rejectedSpannable.setSpan(new ForegroundColorSpan(Color.RED), 0, rejectedSpannable.length(), 0);
+                        rejectedBuilder.append(rejectedSpannable);
+                        tvAppStatus.setText(rejectedBuilder, TextView.BufferType.SPANNABLE);
+                        break;
+                }
+//                Picasso.get().load(catphoto).centerCrop().resize(128, 128).into(imCatPhoto);
+                if (catphoto.equals("")) {
+                    String noPhoto = "@drawable/no_image";
+                    int imageResource = getResources().getIdentifier(noPhoto, null, getPackageName());
+                    Drawable res = getResources().getDrawable(imageResource);
+                    imCatPhoto.setImageDrawable(res);
+                    imCatPhoto.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+                } else {
+                    Picasso.get().load(catphoto).resize(256, 256).into(imCatPhoto);
+                }
                 tvAppName.setText(appname);
                 tvCatName.setText(catname);
                 tvPhone.setText(appphone);
@@ -126,7 +166,6 @@ public class AppAcceptedReviewActivity extends AppCompatActivity {
                 tvMarriagePlan.setText(appmarriageplan);
                 tvKids.setText(appkids);
                 tvFinancial.setText(appfinancial);
-                tvAppStatus.setText(appstatus);
             }
 
             @Override
@@ -191,7 +230,7 @@ public class AppAcceptedReviewActivity extends AppCompatActivity {
             public void onClick(View v) {
                 try {
                     String cname = getIntent().getStringExtra("cat_name");
-                    String wamessage = "Hi, I saw " + cname + " on the SIKU application, does " + cname + " still available to adopt? I am interested for adopting " + cname + ". Thank You";
+                    String wamessage = "Hi, Saya melihat " + cname + " melalui aplikasi SIKUCING, apakah " + cname + " masih bisa untuk diadopsi? Saya tertarik untuk mengadopsi " + cname + ". Terimakasih";
                     Intent sendIntent = new Intent("android.intent.action.MAIN");
                     sendIntent.setAction(Intent.ACTION_SEND);
                     sendIntent.putExtra(Intent.EXTRA_TEXT, wamessage);
@@ -199,7 +238,7 @@ public class AppAcceptedReviewActivity extends AppCompatActivity {
                     sendIntent.setPackage("com.whatsapp");
                     startActivity(sendIntent);
                 } catch (android.content.ActivityNotFoundException ex) {
-                    Toast.makeText(getApplicationContext(), "Whatsapp have not been installed.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Whatsapp belum dipasang pada perangkat.", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.whatsapp")));
                 }
             }
@@ -215,8 +254,7 @@ public class AppAcceptedReviewActivity extends AppCompatActivity {
                         Adoption adoption = dataSnapshot.getValue(Adoption.class);
                         String appphone = adoption.getAdoptionApplicantPhone().toString().trim();
                         String cname = getIntent().getStringExtra("cat_name");
-                        String message = "Hi, I saw " + cname + " on the SIKU application, does " + cname + " still available to adopt? I am interested for adopting " + cname + ". Thank You";
-
+                        String message = "Hi, Saya melihat " + cname + " melalui aplikasi SIKUCING, apakah " + cname + " masih bisa untuk diadopsi? Saya tertarik untuk mengadopsi " + cname + ". Terimakasih";
                         String defaultSmsPackageName = Telephony.Sms.getDefaultSmsPackage(getApplicationContext());
                         Uri uri = Uri.parse("tel:" + appphone);
                         Intent sendIntent = new Intent(Intent.ACTION_VIEW, uri);

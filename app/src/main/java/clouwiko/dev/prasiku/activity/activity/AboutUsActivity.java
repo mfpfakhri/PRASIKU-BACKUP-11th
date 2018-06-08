@@ -15,7 +15,7 @@ public class AboutUsActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("About Us");
+        getSupportActionBar().setTitle("Tentang SIKUCING");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 }

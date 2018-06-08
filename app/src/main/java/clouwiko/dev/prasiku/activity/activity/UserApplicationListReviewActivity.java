@@ -1,8 +1,13 @@
 package clouwiko.dev.prasiku.activity.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
+import android.text.style.ForegroundColorSpan;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -76,8 +81,43 @@ public class UserApplicationListReviewActivity extends AppCompatActivity {
                 String appkids = dataSnapshot.child("adoptionApplicantKids").getValue(String.class);
                 String appfinancial = dataSnapshot.child("adoptionApplicantFinancial").getValue(String.class);
                 String appstatus = dataSnapshot.child("adoptionApplicationStatus").getValue(String.class);
-
-                Picasso.get().load(catphoto).centerCrop().resize(128, 128).into(imCatPhoto);
+                String setstatus = null;
+                switch (appstatus) {
+                    case "Received":
+                        setstatus = "Diterima";
+                        SpannableStringBuilder receivedBuilder = new SpannableStringBuilder();
+                        SpannableString receivedSpannable = new SpannableString(setstatus);
+                        receivedSpannable.setSpan(new ForegroundColorSpan(Color.BLUE), 0, receivedSpannable.length(), 0);
+                        receivedBuilder.append(receivedSpannable);
+                        tvAppStatus.setText(receivedBuilder, TextView.BufferType.SPANNABLE);
+                        break;
+                    case "Accepted":
+                        setstatus = "Disetujui";
+                        SpannableStringBuilder acceptedBuilder = new SpannableStringBuilder();
+                        SpannableString acceptedSpannable = new SpannableString(setstatus);
+                        acceptedSpannable.setSpan(new ForegroundColorSpan(Color.GREEN), 0, acceptedSpannable.length(), 0);
+                        acceptedBuilder.append(acceptedSpannable);
+                        tvAppStatus.setText(acceptedBuilder, TextView.BufferType.SPANNABLE);
+                        break;
+                    case "Rejected":
+                        setstatus = "Ditolak";
+                        SpannableStringBuilder rejectedBuilder = new SpannableStringBuilder();
+                        SpannableString rejectedSpannable = new SpannableString(setstatus);
+                        rejectedSpannable.setSpan(new ForegroundColorSpan(Color.RED), 0, rejectedSpannable.length(), 0);
+                        rejectedBuilder.append(rejectedSpannable);
+                        tvAppStatus.setText(rejectedBuilder, TextView.BufferType.SPANNABLE);
+                        break;
+                }
+//                Picasso.get().load(catphoto).centerCrop().resize(128, 128).into(imCatPhoto);
+                if (catphoto.equals("")) {
+                    String noPhoto = "@drawable/no_image";
+                    int imageResource = getResources().getIdentifier(noPhoto, null, getPackageName());
+                    Drawable res = getResources().getDrawable(imageResource);
+                    imCatPhoto.setImageDrawable(res);
+                    imCatPhoto.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+                } else {
+                    Picasso.get().load(catphoto).resize(256, 256).into(imCatPhoto);
+                }
                 tvAppName.setText(appname);
                 tvCatName.setText(catname);
                 tvPhone.setText(appphone);
@@ -94,7 +134,6 @@ public class UserApplicationListReviewActivity extends AppCompatActivity {
                 tvMarriagePlan.setText(appmarriageplan);
                 tvKids.setText(appkids);
                 tvFinancial.setText(appfinancial);
-                tvAppStatus.setText(appstatus);
             }
 
             @Override

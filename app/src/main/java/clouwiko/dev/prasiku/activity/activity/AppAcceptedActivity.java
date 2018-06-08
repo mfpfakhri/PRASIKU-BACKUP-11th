@@ -2,6 +2,7 @@ package clouwiko.dev.prasiku.activity.activity;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -50,7 +51,7 @@ public class AppAcceptedActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Application Accepted");
+        getSupportActionBar().setTitle("Pengajuan Disetujui");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         appAcceptedRecyclerView = (RecyclerView) findViewById(R.id.main_appacceptedlist);
@@ -119,7 +120,7 @@ public class AppAcceptedActivity extends AppCompatActivity {
 
         @Override
         public AppAcceptedAdapter.AppAcceptedViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.rv_app_status_layout, parent, false);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.rv_owner_appon_list_layout, parent, false);
 
             return new AppAcceptedViewHolder(view);
         }
@@ -132,17 +133,53 @@ public class AppAcceptedActivity extends AppCompatActivity {
             String apponstatus = receivedData.getAdoptionApplicationStatus().toString().trim();
             final String applicationid = receivedData.getAdoptionId().toString().trim();
             final String catid = receivedData.getAdoptionCatId().toString().trim();
+            String setstatus = null;
+            switch (apponstatus){
+                case "Received":
+                    setstatus = "Diterima";
+                    SpannableStringBuilder receivedBuilder = new SpannableStringBuilder();
+                    SpannableString receivedSpannable = new SpannableString(setstatus);
+                    receivedSpannable.setSpan(new ForegroundColorSpan(Color.BLUE),0, receivedSpannable.length(), 0);
+                    receivedBuilder.append(receivedSpannable);
+                    holder.apponstatus.setText(receivedBuilder, TextView.BufferType.SPANNABLE);
+                    break;
+                case "Accepted":
+                    setstatus = "Disetujui";
+                    SpannableStringBuilder acceptedBuilder = new SpannableStringBuilder();
+                    SpannableString acceptedSpannable = new SpannableString(setstatus);
+                    acceptedSpannable.setSpan(new ForegroundColorSpan(Color.GREEN),0, acceptedSpannable.length(), 0);
+                    acceptedBuilder.append(acceptedSpannable);
+                    holder.apponstatus.setText(acceptedBuilder, TextView.BufferType.SPANNABLE);
+                    break;
+                case "Rejected":
+                    setstatus = "Ditolak";
+                    SpannableStringBuilder rejectedBuilder = new SpannableStringBuilder();
+                    SpannableString rejectedSpannable = new SpannableString(setstatus);
+                    rejectedSpannable.setSpan(new ForegroundColorSpan(Color.RED),0, rejectedSpannable.length(), 0);
+                    rejectedBuilder.append(rejectedSpannable);
+                    holder.apponstatus.setText(rejectedBuilder, TextView.BufferType.SPANNABLE);
+                    break;
+            }
 
             holder.appname.setText(applicantname);
             holder.catname.setText(catname);
 
-            SpannableStringBuilder acceptedBuilder = new SpannableStringBuilder();
-            SpannableString acceptedSpannable = new SpannableString(apponstatus);
-            acceptedSpannable.setSpan(new ForegroundColorSpan(Color.GREEN),0, acceptedSpannable.length(), 0);
-            acceptedBuilder.append(acceptedSpannable);
-            holder.apponstatus.setText(acceptedBuilder, TextView.BufferType.SPANNABLE);
+//            SpannableStringBuilder acceptedBuilder = new SpannableStringBuilder();
+//            SpannableString acceptedSpannable = new SpannableString(apponstatus);
+//            acceptedSpannable.setSpan(new ForegroundColorSpan(Color.GREEN),0, acceptedSpannable.length(), 0);
+//            acceptedBuilder.append(acceptedSpannable);
+//            holder.apponstatus.setText(acceptedBuilder, TextView.BufferType.SPANNABLE);
 
-            Picasso.get().load(receivedData.getAdoptionCatPhoto()).centerCrop().resize(128, 128).into(holder.photo);
+//            Picasso.get().load(receivedData.getAdoptionCatPhoto()).centerCrop().resize(128, 128).into(holder.photo);
+            if (receivedData.getAdoptionCatPhoto().equals("")) {
+                String noPhoto = "@drawable/no_image";
+                int imageResource = getResources().getIdentifier(noPhoto, null, getPackageName());
+                Drawable res = getResources().getDrawable(imageResource);
+                holder.photo.setImageDrawable(res);
+                holder.photo.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+            } else {
+                Picasso.get().load(receivedData.getAdoptionCatPhoto()).resize(256, 256).into(holder.photo);
+            }
 
             holder.layoutroot.setOnClickListener(new View.OnClickListener() {
                 @Override

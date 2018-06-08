@@ -1,6 +1,6 @@
 <resources>
     <!--Landing-->
-    <string name="app_name">PRASIKU</string>
+    <string name="app_name">SIKUCING</string>
     <string name="slogan">Let us find your catmate here and take it home</string>
 
     <!--Sign Up-->
@@ -56,6 +56,19 @@
     <!--User Home-->
     <string name="hint_name_home">Nama Lengkap</string>
 
+    <!--My Application List-->
+    <string name="hint_applicant">Nama Calon Pengadopsi</string>
+    <string name="hint_adoption_for">Pengajuan Adopsi untuk :</string>
+    <string name="hint_application_status_simple">Status :</string>
+    <string name="hint_adoption_for_simple">Untuk Adopsi :</string>
+    <string name="hint_job_applicant">Pekerjaan</string>
+    <string name="hint_reason_applicant">Alasan Ingin Mengadopsi</string>
+    <string name="hint_noa_applicant">Jumlah Peliharaan yang Dimiliki</string>
+    <string name="hint_house_type_applicant">Tipe Rumah</string>
+    <string name="hint_house_size_applicant">Luas Rumah</string>
+    <string name="hint_cat_place_applicant">Tempat Kucing Akan Dipelihara</string>
+    <string name="hint_application_status">Status Pengajuan Adopsi :</string>
+
     <!--Cat Profile-->
     <!--Owner/ Applicant Available-->
     <string name="hint_cat_name">Nama Kucing</string>
@@ -75,9 +88,10 @@
     <!--Owner/ Available Adopted-->
     <string name="adopted">Sudah Diadopsi</string>
 
-    <!--Yes & No Value-->
+    <!--Yes, No & Save-->
     <string name="yes_value">Yes</string>
     <string name="no_value">No</string>
+    <string name="save">Simpan</string>
 
     <!--Adoption Form-->
     <string name="adoption_form">Formulir Pengajuan Adopsi</string>
@@ -101,6 +115,10 @@
     <!--Edit Cat Adopted-->
     <string name="update_adoption_status">Perbarui Status Adopsi</string>
 
+    <!--No Result, Verification, Banned & Report-->
+    <string name="noresult">Tidak ada hasil yang sesuai dengan pencarian</string>
+    <string name="report">Laporkan</string>
+
     <!--NAVIGATION DRAWER-->
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -108,7 +126,6 @@
     <string name="closeDrawer">close_drawer</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="upload_cat_data_header">Upload Cat Data</string>
     <string name="catPhotosText">Tap \nto select \nYour cat \nphoto</string>
     <string name="hint_catDesc">Description</string>
     <string name="hint_catMedicalNote">Medical Note</string>
@@ -122,7 +139,6 @@
     <string name="hint_catGender">Choose Cat"'"s Gender</string>
     <string name="hint_catReasonOpenAdoption">Select Reason for Open Adopt</string>
     <string name="hint_catDob">Cat"'"s Date of Birth</string>
-    <string name="action_sign_up_next"><![CDATA[Next >>]]></string>
 
     <string name="iduser">clouwiko.dev.prasiku.activity.activity.iduser</string>
     <string name="user_cats_tab">Cats</string>
@@ -132,48 +148,23 @@
     <string name="userhomeprofile_emaillabel">Email</string>
     <string name="hint_usertype">Type</string>
     <string name="userhomeprofile_addresslabel">Address</string>
-    <string name="userhome_catname">Cat Name</string>
-    <string name="userhome_catreason">Reason for Open Adopt</string>
     <string name="findcat_province">Select Province</string>
     <string name="findcat_city">Select City</string>
 
-    <string name="userhome_catgender">Gender</string>
     <string name="find_cat">Search Cat</string>
     <string name="editcatavailable_textphoto">Tap \nto change \nYour cat \nphoto</string>
     <string name="editcatavailable_done_button">Done</string>
-    <string name="application_status">Status :</string>
-    <string name="adoptionreview_adoption_form_label">Adoption Application for :</string>
-    <string name="adoptionreview_applicant_phone_label">Phone Number</string>
-    <string name="adoptionreview_applicant_job_label">Job</string>
-    <string name="adoptionreview_applicant_address_label">Address</string>
-    <string name="adoptionreview_applicant_reson_label">Reason for Adopt</string>
-    <string name="adoptionreview_applicant_noa_label">Number of animal(s) I have</string>
-    <string name="adoptionreview_applicant_housetype_label">My House Type</string>
-    <string name="adoptionreview_applicant_housesize_label">My House Size</string>
-    <string name="adoptionreview_applicant_nop_label">Number of people(s) in My house</string>
-    <string name="adoptionreview_applicant_housemember_label">House member permission</string>
-    <string name="adoptionreview_applicant_movingplan_label">Plan to move</string>
-    <string name="adoptionreview_applicant_marriageplan_label">After marriage plan</string>
-    <string name="adoptionreview_applicant_kids_label">Kids in My house</string>
-    <string name="adoptionreview_applicant_financial_label">My financial plan</string>
-    <string name="adoptionreview_applicant_catplace_label">Place for cat(s) to stay</string>
-    <string name="adoptionreview_applicant_status_label">Application Status :</string>
-    <string name="application_status_adopt_label">For Adopt :</string>
-    <string name="application_status_stat_label">Status :</string>
-    <string name="adoptionreview_contact_status_label">You can contact me on :</string>
     <string name="appacceptedreview_agreement">Adoption Agreement</string>
     <string name="verify_order">Check Your email to verify your account</string>
     <string name="verify_send_text">Send Verification</string>
     <string name="verify_email_text">Go to Your Email</string>
     <string name="verify_landing_button"><![CDATA[<< Back to Homepage]]></string>
     <string name="banned_information">Your account has been Banned. \nPlease contact Administrator for further information. \n(adm.sikucing@gmail.com)</string>
-    <string name="report">Report</string>
     <string name="your_name">Your name :</string>
     <string name="report_message">Report Message</string>
     <string name="send_report">Report this Person</string>
     <string name="owner">Owner</string>
     <string name="adopter">Adopter</string>
-    <string name="noresult">No Results for Search</string>
     <string name="help_password">*Kata Sandi Bisa Beragam Karakter dan Minimal 6 Karakter</string>
 
     <string-array name="gender">

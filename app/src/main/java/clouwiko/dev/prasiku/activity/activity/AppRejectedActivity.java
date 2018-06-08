@@ -2,6 +2,7 @@ package clouwiko.dev.prasiku.activity.activity;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -48,9 +49,9 @@ public class AppRejectedActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_app_rejected);
 
-        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Application Rejected");
+        getSupportActionBar().setTitle("Pengajuan Ditolak");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         appRejectedRecyclerView = (RecyclerView) findViewById(R.id.main_apprejectedlist);
@@ -76,7 +77,7 @@ public class AppRejectedActivity extends AppCompatActivity {
     void getAppRejectedData() {
         //Firebase Current User UID
         String userId = auth.getCurrentUser().getUid();
-        String useridapponstatus = userId+"_Rejected";
+        String useridapponstatus = userId + "_Rejected";
 
         //Database Reference
         databaseAdoptions = firebaseDatabase.getReference().child("adoptions");
@@ -110,17 +111,17 @@ public class AppRejectedActivity extends AppCompatActivity {
         });
     }
 
-    public class AppRejectedAdapter extends RecyclerView.Adapter<AppRejectedAdapter.AppRejectedViewHolder>{
+    public class AppRejectedAdapter extends RecyclerView.Adapter<AppRejectedAdapter.AppRejectedViewHolder> {
         List<Adoption> adoptionList;
 
-        public AppRejectedAdapter(List<Adoption> List){
+        public AppRejectedAdapter(List<Adoption> List) {
             this.adoptionList = List;
         }
 
 
         @Override
         public AppRejectedAdapter.AppRejectedViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.rv_app_status_layout, parent, false);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.rv_owner_appon_list_layout, parent, false);
 
             return new AppRejectedViewHolder(view);
         }
@@ -133,17 +134,53 @@ public class AppRejectedActivity extends AppCompatActivity {
             String apponstatus = receivedData.getAdoptionApplicationStatus().toString().trim();
             final String applicationid = receivedData.getAdoptionId().toString().trim();
             final String catid = receivedData.getAdoptionCatId().toString().trim();
+            String setstatus = null;
+            switch (apponstatus) {
+                case "Received":
+                    setstatus = "Diterima";
+                    SpannableStringBuilder receivedBuilder = new SpannableStringBuilder();
+                    SpannableString receivedSpannable = new SpannableString(setstatus);
+                    receivedSpannable.setSpan(new ForegroundColorSpan(Color.BLUE), 0, receivedSpannable.length(), 0);
+                    receivedBuilder.append(receivedSpannable);
+                    holder.apponstatus.setText(receivedBuilder, TextView.BufferType.SPANNABLE);
+                    break;
+                case "Accepted":
+                    setstatus = "Disetujui";
+                    SpannableStringBuilder acceptedBuilder = new SpannableStringBuilder();
+                    SpannableString acceptedSpannable = new SpannableString(setstatus);
+                    acceptedSpannable.setSpan(new ForegroundColorSpan(Color.GREEN), 0, acceptedSpannable.length(), 0);
+                    acceptedBuilder.append(acceptedSpannable);
+                    holder.apponstatus.setText(acceptedBuilder, TextView.BufferType.SPANNABLE);
+                    break;
+                case "Rejected":
+                    setstatus = "Ditolak";
+                    SpannableStringBuilder rejectedBuilder = new SpannableStringBuilder();
+                    SpannableString rejectedSpannable = new SpannableString(setstatus);
+                    rejectedSpannable.setSpan(new ForegroundColorSpan(Color.RED), 0, rejectedSpannable.length(), 0);
+                    rejectedBuilder.append(rejectedSpannable);
+                    holder.apponstatus.setText(rejectedBuilder, TextView.BufferType.SPANNABLE);
+                    break;
+            }
 
             holder.appname.setText(applicantname);
             holder.catname.setText(catname);
 
-            SpannableStringBuilder rejectedBuilder = new SpannableStringBuilder();
-            SpannableString rejectedSpannable = new SpannableString(apponstatus);
-            rejectedSpannable.setSpan(new ForegroundColorSpan(Color.RED),0, rejectedSpannable.length(), 0);
-            rejectedBuilder.append(rejectedSpannable);
-            holder.apponstatus.setText(rejectedBuilder, TextView.BufferType.SPANNABLE);
+//            SpannableStringBuilder rejectedBuilder = new SpannableStringBuilder();
+//            SpannableString rejectedSpannable = new SpannableString(apponstatus);
+//            rejectedSpannable.setSpan(new ForegroundColorSpan(Color.RED),0, rejectedSpannable.length(), 0);
+//            rejectedBuilder.append(rejectedSpannable);
+//            holder.apponstatus.setText(rejectedBuilder, TextView.BufferType.SPANNABLE);
 
-            Picasso.get().load(receivedData.getAdoptionCatPhoto()).centerCrop().resize(128,128).into(holder.photo);
+//            Picasso.get().load(receivedData.getAdoptionCatPhoto()).centerCrop().resize(128,128).into(holder.photo);
+            if (receivedData.getAdoptionCatPhoto().equals("")) {
+                String noPhoto = "@drawable/no_image";
+                int imageResource = getResources().getIdentifier(noPhoto, null, getPackageName());
+                Drawable res = getResources().getDrawable(imageResource);
+                holder.photo.setImageDrawable(res);
+                holder.photo.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+            } else {
+                Picasso.get().load(receivedData.getAdoptionCatPhoto()).resize(256, 256).into(holder.photo);
+            }
 
             holder.layoutroot.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -167,7 +204,7 @@ public class AppRejectedActivity extends AppCompatActivity {
             ImageView photo;
             LinearLayout layoutroot;
 
-            public AppRejectedViewHolder (View itemView){
+            public AppRejectedViewHolder(View itemView) {
                 super(itemView);
 
                 appname = (TextView) itemView.findViewById(R.id.application_status_appname);

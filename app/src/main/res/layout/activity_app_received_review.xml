@@ -9,9 +9,7 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="214dp">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -50,19 +48,19 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:gravity="center_vertical"
-                            android:text="Applicant Name"
-                            android:textSize="16sp"
+                            android:text="@string/hint_applicant"
                             android:textColor="@color/dark_blue"
+                            android:textSize="16sp"
                             android:textStyle="bold" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:gravity="center_vertical"
-                            android:text="'s"
-                            android:textColor="@color/dark_blue"
-                            android:textSize="16sp"
-                            android:textStyle="bold" />
+                        <!--<TextView-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="match_parent"-->
+                        <!--android:gravity="center_vertical"-->
+                        <!--android:text="'s"-->
+                        <!--android:textColor="@color/dark_blue"-->
+                        <!--android:textSize="16sp"-->
+                        <!--android:textStyle="bold" />-->
                     </LinearLayout>
 
                     <TextView
@@ -71,7 +69,7 @@
                         android:layout_height="0dp"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:text="@string/adoptionreview_adoption_form_label"
+                        android:text="@string/hint_adoption_for"
                         android:textSize="16sp" />
 
                     <TextView
@@ -80,7 +78,7 @@
                         android:layout_height="0dp"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:text="Cat Name"
+                        android:text="@string/hint_cat_name"
                         android:textSize="16sp"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -116,7 +114,7 @@
                         android:layout_height="0dp"
                         android:layout_weight="1"
                         android:paddingBottom="8dp"
-                        android:text="@string/adoptionreview_applicant_phone_label"
+                        android:text="@string/hint_cp"
                         android:textSize="16sp" />
 
                     <TextView
@@ -134,7 +132,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
-                    android:text="Save" />
+                    android:text="@string/save" />
             </LinearLayout>
 
             <LinearLayout
@@ -167,7 +165,7 @@
                         android:layout_height="0dp"
                         android:layout_weight="1"
                         android:paddingBottom="8dp"
-                        android:text="@string/adoptionreview_applicant_address_label"
+                        android:text="@string/hint_address"
                         android:textSize="16sp" />
 
                     <TextView
@@ -211,7 +209,7 @@
                         android:layout_height="0dp"
                         android:layout_weight="1"
                         android:paddingBottom="8dp"
-                        android:text="@string/adoptionreview_applicant_job_label"
+                        android:text="@string/hint_job_applicant"
                         android:textSize="16sp" />
 
                     <TextView
@@ -255,7 +253,7 @@
                         android:layout_height="0dp"
                         android:layout_weight="1"
                         android:paddingBottom="8dp"
-                        android:text="@string/adoptionreview_applicant_reson_label"
+                        android:text="@string/hint_reason_applicant"
                         android:textSize="16sp" />
 
                     <TextView
@@ -299,7 +297,7 @@
                         android:layout_height="0dp"
                         android:layout_weight="1"
                         android:paddingBottom="8dp"
-                        android:text="@string/adoptionreview_applicant_noa_label"
+                        android:text="@string/hint_noa_applicant"
                         android:textSize="16sp" />
 
                     <TextView
@@ -343,7 +341,7 @@
                         android:layout_height="0dp"
                         android:layout_weight="1"
                         android:paddingBottom="8dp"
-                        android:text="@string/adoptionreview_applicant_housetype_label"
+                        android:text="@string/hint_house_type_applicant"
                         android:textSize="16sp" />
 
                     <TextView
@@ -387,7 +385,7 @@
                         android:layout_height="0dp"
                         android:layout_weight="1"
                         android:paddingBottom="8dp"
-                        android:text="@string/adoptionreview_applicant_housesize_label"
+                        android:text="@string/hint_house_size_applicant"
                         android:textSize="16sp" />
 
                     <TextView
@@ -431,7 +429,7 @@
                         android:layout_height="0dp"
                         android:layout_weight="1"
                         android:paddingBottom="8dp"
-                        android:text="@string/adoptionreview_applicant_nop_label"
+                        android:text="@string/hint_family_number"
                         android:textSize="16sp" />
 
                     <TextView
@@ -475,7 +473,7 @@
                         android:layout_height="0dp"
                         android:layout_weight="1"
                         android:paddingBottom="8dp"
-                        android:text="@string/adoptionreview_applicant_catplace_label"
+                        android:text="@string/hint_cat_place_applicant"
                         android:textSize="16sp" />
 
                     <TextView
@@ -510,7 +508,7 @@
                         android:layout_height="0dp"
                         android:layout_weight="1"
                         android:paddingBottom="8dp"
-                        android:text="@string/adoptionreview_applicant_housemember_label"
+                        android:text="@string/hint_house_member_permission"
                         android:textSize="16sp" />
 
                     <TextView
@@ -545,7 +543,7 @@
                         android:layout_height="0dp"
                         android:layout_weight="1"
                         android:paddingBottom="8dp"
-                        android:text="@string/adoptionreview_applicant_movingplan_label"
+                        android:text="@string/hint_moving_plan"
                         android:textSize="16sp" />
 
                     <TextView
@@ -580,7 +578,7 @@
                         android:layout_height="0dp"
                         android:layout_weight="1"
                         android:paddingBottom="8dp"
-                        android:text="@string/adoptionreview_applicant_marriageplan_label"
+                        android:text="@string/hint_marriage_plan"
                         android:textSize="16sp" />
 
                     <TextView
@@ -615,7 +613,7 @@
                         android:layout_height="0dp"
                         android:layout_weight="1"
                         android:paddingBottom="8dp"
-                        android:text="@string/adoptionreview_applicant_kids_label"
+                        android:text="@string/hint_kids"
                         android:textSize="16sp" />
 
                     <TextView
@@ -650,7 +648,7 @@
                         android:layout_height="0dp"
                         android:layout_weight="1"
                         android:paddingBottom="8dp"
-                        android:text="@string/adoptionreview_applicant_financial_label"
+                        android:text="@string/hint_financial_plan"
                         android:textSize="16sp" />
 
                     <TextView
@@ -684,7 +682,7 @@
                         android:layout_height="wrap_content"
                         android:paddingBottom="8dp"
                         android:paddingRight="4dp"
-                        android:text="@string/adoptionreview_applicant_status_label"
+                        android:text="@string/hint_application_status"
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
@@ -692,6 +690,7 @@
                         android:id="@+id/appreceivedreview_applicant_status"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textStyle="bold"
                         android:text=""
                         android:textSize="16sp" />
                 </LinearLayout>
@@ -700,56 +699,41 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
+                android:orientation="horizontal"
                 android:paddingBottom="16dp"
                 android:paddingTop="16dp">
 
-                <TextView
-                    android:id="@+id/adoptionreview_contact_status_label"
-                    android:layout_width="wrap_content"
+                <Button
+                    android:id="@+id/appreceivedreview_whatsapp_button"
+                    style="?android:textAppearanceSmall"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:paddingBottom="8dp"
-                    android:text="@string/adoptionreview_contact_status_label"
-                    android:textSize="16sp"
+                    android:layout_marginRight="16dp"
+                    android:layout_weight="1"
+                    android:background="@color/colorPrimary"
+                    android:drawableLeft="@drawable/whatsapp"
+                    android:paddingLeft="24dp"
+                    android:paddingRight="12dp"
+                    android:text="Whatsapp"
+                    android:textAllCaps="false"
+                    android:textColor="@android:color/black"
                     android:textStyle="bold" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <Button
+                    android:id="@+id/appreceivedreview_message_button"
+                    style="?android:textAppearanceSmall"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <Button
-                        android:id="@+id/appreceivedreview_whatsapp_button"
-                        style="?android:textAppearanceSmall"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="16dp"
-                        android:layout_weight="1"
-                        android:background="@color/colorPrimary"
-                        android:drawableLeft="@drawable/whatsapp"
-                        android:paddingLeft="24dp"
-                        android:paddingRight="12dp"
-                        android:text="Whatsapp"
-                        android:textAllCaps="false"
-                        android:textColor="@android:color/black"
-                        android:textStyle="bold" />
-
-                    <Button
-                        android:id="@+id/appreceivedreview_message_button"
-                        style="?android:textAppearanceSmall"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="16dp"
-                        android:layout_weight="1"
-                        android:background="@color/colorPrimary"
-                        android:drawableLeft="@drawable/message_text"
-                        android:paddingLeft="24dp"
-                        android:paddingRight="12dp"
-                        android:text="Message"
-                        android:textAllCaps="false"
-                        android:textColor="@android:color/black"
-                        android:textStyle="bold" />
-                </LinearLayout>
+                    android:layout_marginLeft="16dp"
+                    android:layout_weight="1"
+                    android:background="@color/colorPrimary"
+                    android:drawableLeft="@drawable/message_text"
+                    android:paddingLeft="24dp"
+                    android:paddingRight="12dp"
+                    android:text="Message"
+                    android:textAllCaps="false"
+                    android:textColor="@android:color/black"
+                    android:textStyle="bold" />
             </LinearLayout>
 
             <LinearLayout
