@@ -401,25 +401,85 @@ public class EditCatDataAvailableActivity extends AppCompatActivity {
                                                                 String updDescriptionChange = etDesc.getText().toString().trim();
                                                                 String updMedicalNoteChange = etMedNote.getText().toString().trim();
                                                                 String updGenderChange = msGender.getSelectedItem().toString().trim();
-                                                                String updReasonChange = msReason.getSelectedItem().toString().trim();
+                                                                String setUpdGender = null;
+                                                                switch (updGenderChange) {
+                                                                    case "Jantan":
+                                                                        setUpdGender = "Male";
+                                                                        break;
+                                                                    case "Betina":
+                                                                        setUpdGender = "Female";
+                                                                        break;
+                                                                    case "Tidak Diketahui":
+                                                                        setUpdGender = "Unknown";
+                                                                        break;
+                                                                }
                                                                 String updAdoptionStatusChange = "Adopted";
                                                                 int updVaccineId = rgVaccine.getCheckedRadioButtonId();
                                                                 rbVaccine = findViewById(updVaccineId);
                                                                 String updVaccineChange = rbVaccine.getText().toString().trim();
+                                                                String setUpdVacc = null;
+                                                                switch (updVaccineChange) {
+                                                                    case "Ya, Sudah Divaksin":
+                                                                        setUpdVacc = "Yes, Already Vaccinated";
+                                                                        break;
+                                                                    case "Belum Divaksin":
+                                                                        setUpdVacc = "Not Yet";
+                                                                        break;
+                                                                }
                                                                 int updSpayNeuterId = rgSpayNeuter.getCheckedRadioButtonId();
                                                                 rbSpayNeuter = findViewById(updSpayNeuterId);
                                                                 String updSpayNeuterChange = rbSpayNeuter.getText().toString().trim();
+                                                                String setUpdSpayNeuter = null;
+                                                                switch (updSpayNeuterChange) {
+                                                                    case "Ya, Sudah Dikastrasi":
+                                                                        setUpdSpayNeuter = "Yes, Already Spayed/ Neutered";
+                                                                        break;
+                                                                    case "Belum Dikastrasi":
+                                                                        setUpdSpayNeuter = "Not Yet";
+                                                                        break;
+                                                                }
+                                                                String updReasonChange = msReason.getSelectedItem().toString().trim();
+                                                                String setUpdReason = null;
+                                                                switch (updReasonChange) {
+                                                                    case "Liar":
+                                                                        setUpdReason = "Stray";
+                                                                        break;
+                                                                    case "Terlantar":
+                                                                        setUpdReason = "Abandoned";
+                                                                        break;
+                                                                    case "Disiksa":
+                                                                        setUpdReason = "Abused";
+                                                                        break;
+                                                                    case "Pemilik Meninggal":
+                                                                        setUpdReason = "Owner Dead";
+                                                                        break;
+                                                                    case "Pemilik Menyerah":
+                                                                        setUpdReason = "Owner Give Up";
+                                                                        break;
+                                                                    case "Pindah Rumah":
+                                                                        setUpdReason = "House Moving";
+                                                                        break;
+                                                                    case "Keuangan":
+                                                                        setUpdReason = "Financial";
+                                                                        break;
+                                                                    case "Masalah Kesehatan":
+                                                                        setUpdReason = "Medical Problem";
+                                                                        break;
+                                                                    case "Lainnya":
+                                                                        setUpdReason = "Others";
+                                                                        break;
+                                                                }
 
                                                                 catUpdate.setCatProfilePhoto(updPhotoChange);
                                                                 catUpdate.setCatName(updNameChange);
                                                                 catUpdate.setCatDob(updDobChange);
                                                                 catUpdate.setCatDescription(updDescriptionChange);
                                                                 catUpdate.setCatMedNote(updMedicalNoteChange);
-                                                                catUpdate.setCatGender(updGenderChange);
-                                                                catUpdate.setCatReason(updReasonChange);
+                                                                catUpdate.setCatGender(setUpdGender);
                                                                 catUpdate.setCatAdoptedStatus(updAdoptionStatusChange);
-                                                                catUpdate.setCatVaccStat(updVaccineChange);
-                                                                catUpdate.setCatSpayNeuterStat(updSpayNeuterChange);
+                                                                catUpdate.setCatVaccStat(setUpdVacc);
+                                                                catUpdate.setCatSpayNeuterStat(setUpdSpayNeuter);
+                                                                catUpdate.setCatReason(setUpdReason);
                                                                 databaseCats.setValue(catUpdate);
                                                             }
 
@@ -464,25 +524,85 @@ public class EditCatDataAvailableActivity extends AppCompatActivity {
                                                                 String updDescription = etDesc.getText().toString().trim();
                                                                 String updMedicalNote = etMedNote.getText().toString().trim();
                                                                 String updGender = msGender.getSelectedItem().toString().trim();
-                                                                String updReason = msReason.getSelectedItem().toString().trim();
+                                                                String setGender = null;
+                                                                switch (updGender) {
+                                                                    case "Jantan":
+                                                                        setGender = "Male";
+                                                                        break;
+                                                                    case "Betina":
+                                                                        setGender = "Female";
+                                                                        break;
+                                                                    case "Tidak Diketahui":
+                                                                        setGender = "Unknown";
+                                                                        break;
+                                                                }
                                                                 String updAdoptionStatus = "Available";
                                                                 int updVaccineId = rgVaccine.getCheckedRadioButtonId();
                                                                 rbVaccine = findViewById(updVaccineId);
                                                                 String updVaccine = rbVaccine.getText().toString().trim();
+                                                                String setVacc = null;
+                                                                switch (updVaccine) {
+                                                                    case "Ya, Sudah Divaksin":
+                                                                        setVacc = "Yes, Already Vaccinated";
+                                                                        break;
+                                                                    case "Belum Divaksin":
+                                                                        setVacc = "Not Yet";
+                                                                        break;
+                                                                }
                                                                 int updSpayNeuterId = rgSpayNeuter.getCheckedRadioButtonId();
                                                                 rbSpayNeuter = findViewById(updSpayNeuterId);
                                                                 String updSpayNeuter = rbSpayNeuter.getText().toString().trim();
+                                                                String setSpayNeuter = null;
+                                                                switch (updSpayNeuter) {
+                                                                    case "Ya, Sudah Dikastrasi":
+                                                                        setSpayNeuter = "Yes, Already Spayed/ Neutered";
+                                                                        break;
+                                                                    case "Belum Dikastrasi":
+                                                                        setSpayNeuter = "Not Yet";
+                                                                        break;
+                                                                }
+                                                                String updReason = msReason.getSelectedItem().toString().trim();
+                                                                String setReason = null;
+                                                                switch (updReason) {
+                                                                    case "Liar":
+                                                                        setReason = "Stray";
+                                                                        break;
+                                                                    case "Terlantar":
+                                                                        setReason = "Abandoned";
+                                                                        break;
+                                                                    case "Disiksa":
+                                                                        setReason = "Abused";
+                                                                        break;
+                                                                    case "Pemilik Meninggal":
+                                                                        setReason = "Owner Dead";
+                                                                        break;
+                                                                    case "Pemilik Menyerah":
+                                                                        setReason = "Owner Give Up";
+                                                                        break;
+                                                                    case "Pindah Rumah":
+                                                                        setReason = "House Moving";
+                                                                        break;
+                                                                    case "Keuangan":
+                                                                        setReason = "Financial";
+                                                                        break;
+                                                                    case "Masalah Kesehatan":
+                                                                        setReason = "Medical Problem";
+                                                                        break;
+                                                                    case "Lainnya":
+                                                                        setReason = "Others";
+                                                                        break;
+                                                                }
 
                                                                 catUpdate.setCatProfilePhoto(updPhotoIdle);
                                                                 catUpdate.setCatName(updNameIdle);
                                                                 catUpdate.setCatDob(updDob);
                                                                 catUpdate.setCatDescription(updDescription);
                                                                 catUpdate.setCatMedNote(updMedicalNote);
-                                                                catUpdate.setCatGender(updGender);
-                                                                catUpdate.setCatReason(updReason);
+                                                                catUpdate.setCatGender(setGender);
+                                                                catUpdate.setCatReason(setReason);
                                                                 catUpdate.setCatAdoptedStatus(updAdoptionStatus);
-                                                                catUpdate.setCatVaccStat(updVaccine);
-                                                                catUpdate.setCatSpayNeuterStat(updSpayNeuter);
+                                                                catUpdate.setCatVaccStat(setVacc);
+                                                                catUpdate.setCatSpayNeuterStat(setSpayNeuter);
                                                                 databaseCats.setValue(catUpdate);
                                                             }
 
@@ -734,7 +854,7 @@ public class EditCatDataAvailableActivity extends AppCompatActivity {
 //        finish();
 //    }
 
-    private void backToMainMenu(){
+    private void backToMainMenu() {
         Toast.makeText(getApplicationContext(), "Cat Data Successfully Edited", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(getApplicationContext(), MainMenuActivity.class);
         startActivity(intent);

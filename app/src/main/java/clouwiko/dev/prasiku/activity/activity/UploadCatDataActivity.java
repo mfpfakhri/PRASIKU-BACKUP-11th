@@ -210,6 +210,18 @@ public class UploadCatDataActivity extends AppCompatActivity {
                         String name = inputCatName.getText().toString().trim();
                         String dob = inputCatDob.getText().toString().trim();
                         String spinnerGender = spinnerCatGender.getSelectedItem().toString().trim();
+                        String setcatgender = null;
+                        switch (spinnerGender){
+                            case "Jantan":
+                                setcatgender = "Male";
+                                break;
+                            case "Betina":
+                                setcatgender = "Female";
+                                break;
+                            case "Tidak Diketahui":
+                                setcatgender = "Unknown";
+                                break;
+                        }
                         String desc = inputCatDesc.getText().toString().trim();
                         String medNote = inputCatMedNote.getText().toString().trim();
                         String vacc = radioButtonVacc.getText().toString().trim();
@@ -233,14 +245,44 @@ public class UploadCatDataActivity extends AppCompatActivity {
                                 break;
                         }
                         String spinnerReason = spinnerCatReasonOpenAdoption.getSelectedItem().toString().trim();
+                        String setreason = null;
+                        switch (spinnerReason) {
+                            case "Liar":
+                                setreason = "Stray";
+                                break;
+                            case "Terlantar":
+                                setreason = "Abandoned";
+                                break;
+                            case "Disiksa":
+                                setreason = "Abused";
+                                break;
+                            case "Pemilik Meninggal":
+                                setreason = "Owner Dead";
+                                break;
+                            case "Pemilik Menyerah":
+                                setreason = "Owner Give Up";
+                                break;
+                            case "Pindah Rumah":
+                                setreason = "House Moving";
+                                break;
+                            case "Keuangan":
+                                setreason = "Financial";
+                                break;
+                            case "Masalah Kesehatan":
+                                setreason = "Medical Problem";
+                                break;
+                            case "Lainnya":
+                                setreason = "Others";
+                                break;
+                        }
                         String province = provincesNameArray.get(0).toString().trim();
                         String city = citiesNameArray.get(0).toString().trim();
-                        String status = "Available";
+                        String adoptedstatus = "Available";
                         String deletestatus = "0";
                         String ownerdeletestatus = ownerId + "_0";
                         String citydeletestatus = city + "_0";
 
-                        Cat cat = new Cat(id, ownerId, cPhotoUrl, name, dob, spinnerGender, desc, medNote, setvacc, setspayneuter, spinnerReason, province, city, status, deletestatus, ownerdeletestatus, citydeletestatus);
+                        Cat cat = new Cat(id, ownerId, cPhotoUrl, name, dob, setcatgender, desc, medNote, setvacc, setspayneuter, setreason, province, city, adoptedstatus, deletestatus, ownerdeletestatus, citydeletestatus);
 
                         databaseCats.child(id).setValue(cat);
                     }

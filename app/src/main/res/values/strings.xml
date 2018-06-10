@@ -154,35 +154,28 @@
     <string name="closeDrawer">close_drawer</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="findcat_province">Pilih Province</string>
-    <string name="findcat_city">Pilih City</string>
+    <string name="findcat_province">Pilih Provinsi</string>
+    <string name="findcat_city">Pilih Kota</string>
 
     <string-array name="gender">
-        <item>Male</item>
-        <item>Female</item>
+        <item>Pria</item>
+        <item>Wanita</item>
     </string-array>
     <string-array name="catGender">
-        <item>Male</item>
-        <item>Female</item>
-        <item>Unknown</item>
+        <item>Jantan</item>
+        <item>Betina</item>
+        <item>Tidak Diketahui</item>
     </string-array>
     <string-array name="catReasonOpenAdoption">
-        <item>Stray</item>
-        <item>Abandoned</item>
-        <item>Abused</item>
-        <item>Owner Dead</item>
-        <item>Owner Give Up</item>
-        <item>House Moving</item>
-        <item>Financial</item>
-        <item>Medical Problem</item>
-        <item>Others</item>
-    </string-array>
-    <string-array name="userType">
-        <item>Individual</item>
-        <item>Government</item>
-        <item>Organization</item>
-        <item>Shelter</item>
-        <item>Others</item>
+        <item>Liar</item>
+        <item>Terlantar</item>
+        <item>Disiksa</item>
+        <item>Pemilik Meninggal</item>
+        <item>Pemilik Menyerah</item>
+        <item>Pindah Rumah</item>
+        <item>Keuangan</item>
+        <item>Masalah Kesehatan</item>
+        <item>Lainnya</item>
     </string-array>
     <string-array name="housetype">
         <item>Home</item>
@@ -195,5 +188,12 @@
     <string-array name="adoptionstatus">
         <item>Sudah Diadopsi</item>
         <item>Belum Diadopsi</item>
+    </string-array>
+    <string-array name="userType">
+        <item>Individual</item>
+        <item>Government</item>
+        <item>Organization</item>
+        <item>Shelter</item>
+        <item>Others</item>
     </string-array>
 </resources>

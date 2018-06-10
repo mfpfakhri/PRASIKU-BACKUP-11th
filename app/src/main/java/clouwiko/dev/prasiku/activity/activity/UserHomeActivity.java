@@ -51,6 +51,15 @@ public class UserHomeActivity extends AppCompatActivity {
                 String name = userData.getUserFname();
                 String dob = userData.getUserDob();
                 String gender = userData.getUserGender();
+                String setgender = null;
+                switch (gender){
+                    case "Male":
+                        setgender = "Pria";
+                        break;
+                    case "Female":
+                        setgender = "Wanita";
+                        break;
+                }
                 String province = userData.getUserProvince();
                 String city = userData.getUserCity();
                 String address = userData.getUserAddress();
@@ -60,7 +69,7 @@ public class UserHomeActivity extends AppCompatActivity {
 
                 tvName.setText(name);
                 tvDob.setText(dob);
-                tvGender.setText(gender);
+                tvGender.setText(setgender);
                 tvProvince.setText(province);
                 tvCity.setText(city);
                 tvAddress.setText(address);

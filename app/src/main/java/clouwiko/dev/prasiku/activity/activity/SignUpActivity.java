@@ -463,7 +463,16 @@ public class SignUpActivity extends AppCompatActivity {
                         String userUid = auth.getCurrentUser().getUid();
                         String fName = inputFullName.getText().toString().trim();
                         String dobDate = inputDob.getText().toString().trim();
-                        String spinnerValue = spinnerGender.getSelectedItem().toString().trim();
+                        String gender = spinnerGender.getSelectedItem().toString().trim();
+                        String setgender = null;
+                        switch (gender){
+                            case "Pria":
+                                setgender = "Male";
+                                break;
+                            case "Perempuan":
+                                setgender = "Female";
+                                break;
+                        }
                         String pPhotoUrl = taskSnapshot.getDownloadUrl().toString();
                         String province = spinnerProvinces.getSelectedItem().toString().trim();
                         String city = spinnerCities.getSelectedItem().toString().trim();
@@ -472,7 +481,7 @@ public class SignUpActivity extends AppCompatActivity {
                         String status = "0";
                         String citystatus = city+"_0";
 
-                        User user = new User(email, userUid, fName, dobDate, spinnerValue, pPhotoUrl, province, city, phone, address, status, citystatus);
+                        User user = new User(email, userUid, fName, dobDate, setgender, pPhotoUrl, province, city, phone, address, status, citystatus);
 
                         databaseUsers.child(userUid).setValue(user);
                         finish();

@@ -61,6 +61,15 @@ public class UserHomeAcceptedActivity extends AppCompatActivity {
                 String name = userData.getUserFname();
                 String dob = userData.getUserDob();
                 String gender = userData.getUserGender();
+                String setgender = null;
+                switch (gender){
+                    case "Male":
+                        setgender = "Pria";
+                        break;
+                    case "Female":
+                        setgender = "Wanita";
+                        break;
+                }
                 String province = userData.getUserProvince();
                 String city = userData.getUserCity();
                 String address = userData.getUserAddress();
@@ -70,7 +79,7 @@ public class UserHomeAcceptedActivity extends AppCompatActivity {
 
                 tvName.setText(name);
                 tvDob.setText(dob);
-                tvGender.setText(gender);
+                tvGender.setText(setgender);
                 tvProvince.setText(province);
                 tvCity.setText(city);
                 tvAddress.setText(address);
@@ -97,8 +106,8 @@ public class UserHomeAcceptedActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(UserHomeAcceptedActivity.this);
-                builder.setMessage("Are You sure want to report this adopter?")
-                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                builder.setMessage("Apakah Anda yakin ingin melaporkan pengadopsi ini?")
+                        .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 String applicationid = getIntent().getStringExtra("application_id");
@@ -108,7 +117,7 @@ public class UserHomeAcceptedActivity extends AppCompatActivity {
                                 startActivity(intent);
                             }
                         })
-                        .setNegativeButton("No", null);
+                        .setNegativeButton("Tidak", null);
                 AlertDialog alertDialog = builder.create();
                 alertDialog.show();
             }

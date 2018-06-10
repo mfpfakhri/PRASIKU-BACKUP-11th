@@ -65,7 +65,7 @@ public class VerificationActivity extends AppCompatActivity {
                 user.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        Toast.makeText(VerificationActivity.this, "Verification email sent, check Your email to verify", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(VerificationActivity.this, "Email Verifikasi Telah Dikirim, Periksa Email untuk Verifikasi", Toast.LENGTH_SHORT).show();
                     }
                 });
             }
