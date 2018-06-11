@@ -198,8 +198,8 @@ public class EditCatDataAvailableActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(EditCatDataAvailableActivity.this);
-                builder.setMessage("Are You sure want to remove this cat photo?")
-                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                builder.setMessage("Apakah Kamu yakin Ingin Menghapus Foto Kucing Kamu?")
+                        .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 databaseCats = FirebaseDatabase.getInstance().getReference().child("cats").child(cId);
@@ -210,13 +210,13 @@ public class EditCatDataAvailableActivity extends AppCompatActivity {
                                         String photo = catData.getCatProfilePhoto();
                                         try {
                                             if (photo.equals("")) {
-                                                Toast.makeText(getApplicationContext(), "There is no photo available", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(getApplicationContext(), "Tidak ada Foto yang Terpasang", Toast.LENGTH_SHORT).show();
                                             } else {
                                                 StorageReference photoRef = FirebaseStorage.getInstance().getReferenceFromUrl(photo);
                                                 photoRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                                                     @Override
                                                     public void onSuccess(Void aVoid) {
-                                                        Toast.makeText(getApplicationContext(), "This cat does not have photo now", Toast.LENGTH_SHORT).show();
+                                                        Toast.makeText(getApplicationContext(), "Kucing Kamu Tidak Memiliki Foto Sekarang", Toast.LENGTH_SHORT).show();
                                                     }
                                                 });
                                                 catData.setCatProfilePhoto("");
@@ -256,7 +256,7 @@ public class EditCatDataAvailableActivity extends AppCompatActivity {
                                 });
                             }
                         })
-                        .setNegativeButton("No", null);
+                        .setNegativeButton("Tidak", null);
                 AlertDialog alertDialog = builder.create();
                 alertDialog.show();
             }
@@ -307,13 +307,13 @@ public class EditCatDataAvailableActivity extends AppCompatActivity {
 
                 String valName = etName.getText().toString().trim();
                 if (valName.isEmpty()) {
-                    Toast.makeText(getApplicationContext(), "Enter Cat Name", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Ketikkan Nama Kucing", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 String valDob = etDob.getText().toString().trim();
                 if (valDob.isEmpty()) {
-                    Toast.makeText(getApplicationContext(), "Enter Cat Dob", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Masukkan Tanggal Lahir Kucing", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -321,7 +321,7 @@ public class EditCatDataAvailableActivity extends AppCompatActivity {
                 if (valGender != 0) {
 
                 } else {
-                    Toast.makeText(getApplicationContext(), "Select Cat Gender", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Pilih Jenis Kelamin Kucing", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -335,21 +335,21 @@ public class EditCatDataAvailableActivity extends AppCompatActivity {
 
                 String valMedicalNote = etMedNote.getText().toString().trim();
                 if (valMedicalNote.isEmpty()) {
-                    Toast.makeText(getApplicationContext(), "Describe Cat Health Condition", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Berikan Catatan Medis Kucing", Toast.LENGTH_SHORT).show();
                     return;
                 } else {
 
                 }
 
                 if (rgVaccine.getCheckedRadioButtonId() == -1) {
-                    Toast.makeText(getApplicationContext(), "Choose Cat's Vaccine Status", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Pilih Status Vaksin", Toast.LENGTH_SHORT).show();
                     return;
                 } else {
 
                 }
 
                 if (rgSpayNeuter.getCheckedRadioButtonId() == -1) {
-                    Toast.makeText(getApplicationContext(), "Choose Cat's Spay/ Neuter Status", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Pilih Status Kastrasi Kucing", Toast.LENGTH_SHORT).show();
                     return;
                 } else {
 
@@ -359,7 +359,7 @@ public class EditCatDataAvailableActivity extends AppCompatActivity {
                 if (valReason != 0) {
 
                 } else {
-                    Toast.makeText(getApplicationContext(), "Select Reason for Open Adopt", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Pilih Alasan untuk Lepas Adopsi", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -367,7 +367,7 @@ public class EditCatDataAvailableActivity extends AppCompatActivity {
                 if (valAdoptionStatus != 0) {
 
                 } else {
-                    Toast.makeText(getApplicationContext(), "Select Cat Adoption Status", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Pilih Status Adopsi", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -388,7 +388,7 @@ public class EditCatDataAvailableActivity extends AppCompatActivity {
                                                 String cId = getIntent().getStringExtra("cat_id");
                                                 switch (adoptionStatusSpinner) {
                                                     case 0:
-                                                        Toast.makeText(getApplicationContext(), "Choose Adoption Status", Toast.LENGTH_SHORT).show();
+                                                        Toast.makeText(getApplicationContext(), "Pilih Status Adopsi", Toast.LENGTH_SHORT).show();
                                                         return;
                                                     case 1:
                                                         databaseCats.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -660,7 +660,7 @@ public class EditCatDataAvailableActivity extends AppCompatActivity {
         databaseAdoptions = FirebaseDatabase.getInstance().getReference().child("adoptions");
         switch (adoptionStatusSpinner) {
             case 0:
-                Toast.makeText(getApplicationContext(), "Choose Adoption Status", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Pilih Status Adopsi", Toast.LENGTH_SHORT).show();
                 return;
             case 1:
                 databaseCats.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -672,24 +672,84 @@ public class EditCatDataAvailableActivity extends AppCompatActivity {
                         String updDescriptionChange = etDesc.getText().toString().trim();
                         String updMedicalNoteChange = etMedNote.getText().toString().trim();
                         String updGenderChange = msGender.getSelectedItem().toString().trim();
-                        String updReasonChange = msReason.getSelectedItem().toString().trim();
+                        String setUpdGender = null;
+                        switch (updGenderChange) {
+                            case "Jantan":
+                                setUpdGender = "Male";
+                                break;
+                            case "Betina":
+                                setUpdGender = "Female";
+                                break;
+                            case "Tidak Diketahui":
+                                setUpdGender = "Unknown";
+                                break;
+                        }
                         String updAdoptionStatusChange = "Adopted";
                         int updVaccineId = rgVaccine.getCheckedRadioButtonId();
                         rbVaccine = findViewById(updVaccineId);
                         String updVaccineChange = rbVaccine.getText().toString().trim();
+                        String setUpdVacc = null;
+                        switch (updVaccineChange) {
+                            case "Ya, Sudah Divaksin":
+                                setUpdVacc = "Yes, Already Vaccinated";
+                                break;
+                            case "Belum Divaksin":
+                                setUpdVacc = "Not Yet";
+                                break;
+                        }
                         int updSpayNeuterId = rgSpayNeuter.getCheckedRadioButtonId();
                         rbSpayNeuter = findViewById(updSpayNeuterId);
                         String updSpayNeuterChange = rbSpayNeuter.getText().toString().trim();
+                        String setUpdSpayNeuter = null;
+                        switch (updSpayNeuterChange) {
+                            case "Ya, Sudah Dikastrasi":
+                                setUpdSpayNeuter = "Yes, Already Spayed/ Neutered";
+                                break;
+                            case "Belum Dikastrasi":
+                                setUpdSpayNeuter = "Not Yet";
+                                break;
+                        }
+                        String updReasonChange = msReason.getSelectedItem().toString().trim();
+                        String setUpdReason = null;
+                        switch (updReasonChange) {
+                            case "Liar":
+                                setUpdReason = "Stray";
+                                break;
+                            case "Terlantar":
+                                setUpdReason = "Abandoned";
+                                break;
+                            case "Disiksa":
+                                setUpdReason = "Abused";
+                                break;
+                            case "Pemilik Meninggal":
+                                setUpdReason = "Owner Dead";
+                                break;
+                            case "Pemilik Menyerah":
+                                setUpdReason = "Owner Give Up";
+                                break;
+                            case "Pindah Rumah":
+                                setUpdReason = "House Moving";
+                                break;
+                            case "Keuangan":
+                                setUpdReason = "Financial";
+                                break;
+                            case "Masalah Kesehatan":
+                                setUpdReason = "Medical Problem";
+                                break;
+                            case "Lainnya":
+                                setUpdReason = "Others";
+                                break;
+                        }
 
                         catUpdate.setCatName(updNameChange);
                         catUpdate.setCatDob(updDobChange);
                         catUpdate.setCatDescription(updDescriptionChange);
                         catUpdate.setCatMedNote(updMedicalNoteChange);
-                        catUpdate.setCatGender(updGenderChange);
-                        catUpdate.setCatReason(updReasonChange);
+                        catUpdate.setCatGender(setUpdGender);
+                        catUpdate.setCatReason(setUpdReason);
                         catUpdate.setCatAdoptedStatus(updAdoptionStatusChange);
-                        catUpdate.setCatVaccStat(updVaccineChange);
-                        catUpdate.setCatSpayNeuterStat(updSpayNeuterChange);
+                        catUpdate.setCatVaccStat(setUpdVacc);
+                        catUpdate.setCatSpayNeuterStat(setUpdSpayNeuter);
                         databaseCats.setValue(catUpdate);
                     }
 
@@ -730,24 +790,84 @@ public class EditCatDataAvailableActivity extends AppCompatActivity {
                         String updDescriptionIdle = etDesc.getText().toString().trim();
                         String updMedicalNoteIdle = etMedNote.getText().toString().trim();
                         String updGenderIdle = msGender.getSelectedItem().toString().trim();
-                        String updReasonIdle = msReason.getSelectedItem().toString().trim();
+                        String setGender = null;
+                        switch (updGenderIdle) {
+                            case "Jantan":
+                                setGender = "Male";
+                                break;
+                            case "Betina":
+                                setGender = "Female";
+                                break;
+                            case "Tidak Diketahui":
+                                setGender = "Unknown";
+                                break;
+                        }
                         String updAdoptionStatusIdle = "Available";
                         int updVaccineId = rgVaccine.getCheckedRadioButtonId();
                         rbVaccine = findViewById(updVaccineId);
                         String updVaccineIdle = rbVaccine.getText().toString().trim();
+                        String setVacc = null;
+                        switch (updVaccineIdle) {
+                            case "Ya, Sudah Divaksin":
+                                setVacc = "Yes, Already Vaccinated";
+                                break;
+                            case "Belum Divaksin":
+                                setVacc = "Not Yet";
+                                break;
+                        }
                         int updSpayNeuterId = rgSpayNeuter.getCheckedRadioButtonId();
                         rbSpayNeuter = findViewById(updSpayNeuterId);
                         String updSpayNeuterIdle = rbSpayNeuter.getText().toString().trim();
+                        String setSpayNeuter = null;
+                        switch (updSpayNeuterIdle) {
+                            case "Ya, Sudah Dikastrasi":
+                                setSpayNeuter = "Yes, Already Spayed/ Neutered";
+                                break;
+                            case "Belum Dikastrasi":
+                                setSpayNeuter = "Not Yet";
+                                break;
+                        }
+                        String updReasonIdle = msReason.getSelectedItem().toString().trim();
+                        String setReason = null;
+                        switch (updReasonIdle) {
+                            case "Liar":
+                                setReason = "Stray";
+                                break;
+                            case "Terlantar":
+                                setReason = "Abandoned";
+                                break;
+                            case "Disiksa":
+                                setReason = "Abused";
+                                break;
+                            case "Pemilik Meninggal":
+                                setReason = "Owner Dead";
+                                break;
+                            case "Pemilik Menyerah":
+                                setReason = "Owner Give Up";
+                                break;
+                            case "Pindah Rumah":
+                                setReason = "House Moving";
+                                break;
+                            case "Keuangan":
+                                setReason = "Financial";
+                                break;
+                            case "Masalah Kesehatan":
+                                setReason = "Medical Problem";
+                                break;
+                            case "Lainnya":
+                                setReason = "Others";
+                                break;
+                        }
 
                         catUpdate.setCatName(updNameIdle);
                         catUpdate.setCatDob(updDobIdle);
                         catUpdate.setCatDescription(updDescriptionIdle);
                         catUpdate.setCatMedNote(updMedicalNoteIdle);
-                        catUpdate.setCatGender(updGenderIdle);
-                        catUpdate.setCatReason(updReasonIdle);
+                        catUpdate.setCatGender(setGender);
+                        catUpdate.setCatReason(setReason);
                         catUpdate.setCatAdoptedStatus(updAdoptionStatusIdle);
-                        catUpdate.setCatVaccStat(updVaccineIdle);
-                        catUpdate.setCatSpayNeuterStat(updSpayNeuterIdle);
+                        catUpdate.setCatVaccStat(setVacc);
+                        catUpdate.setCatSpayNeuterStat(setSpayNeuter);
                         databaseCats.setValue(catUpdate);
                     }
 
@@ -780,7 +900,7 @@ public class EditCatDataAvailableActivity extends AppCompatActivity {
 
     private void mediaOpen() {
         Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(Intent.createChooser(galleryIntent, "Select Image from Gallery"), 2);
+        startActivityForResult(Intent.createChooser(galleryIntent, "Pilih Gambar dari Galeri"), 2);
     }
 
     @Override
@@ -855,7 +975,7 @@ public class EditCatDataAvailableActivity extends AppCompatActivity {
 //    }
 
     private void backToMainMenu() {
-        Toast.makeText(getApplicationContext(), "Cat Data Successfully Edited", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "Profil Kucing berhasil Diperbarui", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(getApplicationContext(), MainMenuActivity.class);
         startActivity(intent);
         finish();

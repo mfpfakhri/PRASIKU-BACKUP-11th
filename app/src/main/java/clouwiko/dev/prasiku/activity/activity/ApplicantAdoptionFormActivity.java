@@ -166,14 +166,6 @@ public class ApplicantAdoptionFormActivity extends AppCompatActivity {
                 if (TextUtils.isEmpty(animalPlaceValidation)) {
                     Toast.makeText(getApplicationContext(), "Anda Belum Mengisi Tempat Kucing Dipelihara", Toast.LENGTH_SHORT).show();
                 }
-                String validCatPlace = "(?<=\\s|^)[a-zA-Z]*(?=[.,;:]?\\s|$)";
-                Matcher matcherCatPlace = Pattern.compile(validCatPlace).matcher(animalPlaceValidation);
-                if (matcherCatPlace.matches()) {
-
-                } else {
-                    etAnimalLive.setError("Hanya Bisa diisi Huruf");
-                    return;
-                }
                 //Family Permission Validation
                 if (rgFamilyPermission.getCheckedRadioButtonId() == -1) {
                     Toast.makeText(getApplicationContext(), "Anda Belum Memilih opsi Izin dari Orang Rumah", Toast.LENGTH_SHORT).show();
@@ -252,18 +244,84 @@ public class ApplicantAdoptionFormActivity extends AppCompatActivity {
         String familynumber = etPeopleNumber.getText().toString().trim();
         String animallive = etAnimalLive.getText().toString().trim();
         String housetype = msHouseType.getSelectedItem().toString().trim();
+        String sethousetype = null;
+        switch (housetype){
+            case "Milik Sendiri":
+                sethousetype = "Home";
+                break;
+            case "Kontrak":
+                sethousetype = "Rent";
+                break;
+            case "Kos":
+                sethousetype = "Boarding House";
+                break;
+            case "Apartemen":
+                sethousetype = "Apartement/ Condotel";
+                break;
+            case "Mess":
+                sethousetype = "Warehouse";
+                break;
+            case "Lainnya":
+                sethousetype = "Others";
+                break;
+        }
         String familypermission = rbFamilyPermission.getText().toString().trim();
+        String setfamilypermission = null;
+        switch (familypermission){
+            case "Sudah":
+                setfamilypermission = "Yes";
+                break;
+            case "Belum":
+                setfamilypermission = "No";
+                break;
+        }
         String movingplan = rbMovingPlan.getText().toString().trim();
+        String setmovingplan= null;
+        switch (movingplan){
+            case "Sudah":
+                setmovingplan = "Yes";
+                break;
+            case "Belum":
+                setmovingplan = "No";
+                break;
+        }
         String marriageplan = rbMarriagePlan.getText().toString().trim();
+        String setmarriageplan = null;
+        switch (marriageplan){
+            case "Sudah":
+                setmarriageplan = "Yes";
+                break;
+            case "Belum":
+                setmarriageplan = "No";
+                break;
+        }
         String kidsinhouse = rbKids.getText().toString().trim();
+        String setkids = null;
+        switch (kidsinhouse){
+            case "Sudah":
+                setkids = "Yes";
+                break;
+            case "Belum":
+                setkids = "No";
+                break;
+        }
         String financial = rbFinancial.getText().toString().trim();
+        String setfinancial = null;
+        switch (financial){
+            case "Sudah":
+                setfinancial = "Yes";
+                break;
+            case "Belum":
+                setfinancial = "No";
+                break;
+        }
         String status = "Received";
         String owner_status = ownerId + "_" + status;
         String delete_status = "0";
         String applicantIdDelete = applicantId + "_" + delete_status;
 //        String owner_delete_status = ownerId + delete_status;
         String cat_status = catId + "_" + status;
-        Adoption adoption = new Adoption(adoptionId, catId, ownerId, applicantId, applicantIdDelete, phone, address, job, reasonwhy, numberofanimal, housetype, houseize, familynumber, animallive, familypermission, movingplan, marriageplan, kidsinhouse, financial, status, catname, catphoto, applicantname, owner_status, delete_status, cat_status);
+        Adoption adoption = new Adoption(adoptionId, catId, ownerId, applicantId, applicantIdDelete, phone, address, job, reasonwhy, numberofanimal, sethousetype, houseize, familynumber, animallive, setfamilypermission, setmovingplan, setmarriageplan, setkids, setfinancial, status, catname, catphoto, applicantname, owner_status, delete_status, cat_status);
 
         databaseAdoption.child(adoptionId).setValue(adoption);
     }

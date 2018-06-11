@@ -103,8 +103,8 @@
     <string name="adoption_agreement">Unduh Surat Perjanjian</string>
 
     <!--Yes, No & Save-->
-    <string name="yes_value">Yes</string>
-    <string name="no_value">No</string>
+    <string name="yes_value">Sudah</string>
+    <string name="no_value">Belum</string>
     <string name="save">Simpan</string>
 
     <!--Adoption Form-->
@@ -177,17 +177,17 @@
         <item>Masalah Kesehatan</item>
         <item>Lainnya</item>
     </string-array>
-    <string-array name="housetype">
-        <item>Home</item>
-        <item>Rent</item>
-        <item>Boarding House</item>
-        <item>Apartement/ Condotel</item>
-        <item>Warehouse</item>
-        <item>Others</item>
-    </string-array>
     <string-array name="adoptionstatus">
         <item>Sudah Diadopsi</item>
         <item>Belum Diadopsi</item>
+    </string-array>
+    <string-array name="housetype">
+        <item>Milik Sendiri</item>
+        <item>Kontrak</item>
+        <item>Kos</item>
+        <item>Apartemen</item>
+        <item>Mess</item>
+        <item>Lainnya</item>
     </string-array>
     <string-array name="userType">
         <item>Individual</item>

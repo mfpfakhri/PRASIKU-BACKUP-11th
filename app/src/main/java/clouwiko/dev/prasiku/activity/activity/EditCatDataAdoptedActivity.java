@@ -74,10 +74,10 @@ public class EditCatDataAdoptedActivity extends AppCompatActivity {
                 //Cat's Gender Validation
                 int adoptionStatusSpinner = spinnerAdoptionStatus.getSelectedItemPosition();
                 if (adoptionStatusSpinner == 0) {
-                    Toast.makeText(getApplicationContext(), "Choose Adoption Status", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Pilih Status Adopsi", Toast.LENGTH_SHORT).show();
                     return;
                 } else if (adoptionStatusSpinner == 1) {
-                    Toast.makeText(getApplicationContext(), "This Cat has been Adopted", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Status Kucing Ini telah Diadopsi", Toast.LENGTH_SHORT).show();
                     return;
                 } else {
                     String cId = getIntent().getStringExtra("cat_id");
@@ -146,7 +146,7 @@ public class EditCatDataAdoptedActivity extends AppCompatActivity {
                             String catidapponstatus = catid + "_" + apponstatus;
 
                             updateAcceptedAdoptionData(adoptionid, catid, owid, appid, applicantiddelete, appphone, appaddress, appjob, appreason, appnoanimal, apphousetype, apphousesize, appnopeople, appcatplace, appfampermission, appmove, appmarriage, appkids, appfinancial, apponstatus, catname, catphoto, appname, owneridapponstatus, catdelete, catidapponstatus);
-                            Toast.makeText(getApplicationContext(), "Successfully changed cat adopt status", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Profil Kucing berhasil Diperbarui", Toast.LENGTH_SHORT).show();
                         }
 
                         @Override
@@ -169,7 +169,7 @@ public class EditCatDataAdoptedActivity extends AppCompatActivity {
 
                         }
                     });
-                    Toast.makeText(getApplicationContext(), "Cat Data Successfully Edited", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Profil Kucing berhasil Diperbarui", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(getApplicationContext(), MainMenuActivity.class);
                     startActivity(intent);
                     finish();
