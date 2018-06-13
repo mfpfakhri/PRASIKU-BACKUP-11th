@@ -391,6 +391,15 @@ public class EditUserProfileActivity extends AppCompatActivity {
                                                         String phone = etPhone.getText().toString().trim();
                                                         String address = etAddress.getText().toString().trim();
                                                         String gender = msGender.getSelectedItem().toString().trim();
+                                                        String setgender = null;
+                                                        switch (gender){
+                                                            case "Pria":
+                                                                setgender = "Male";
+                                                                break;
+                                                            case "Wanita":
+                                                                setgender = "Female";
+                                                                break;
+                                                        }
                                                         String province = msProvince.getSelectedItem().toString().trim();
                                                         String city = msCity.getSelectedItem().toString().trim();
 
@@ -399,7 +408,7 @@ public class EditUserProfileActivity extends AppCompatActivity {
                                                         userUpdate.setUserDob(dob);
                                                         userUpdate.setUserPhone(phone);
                                                         userUpdate.setUserAddress(address);
-                                                        userUpdate.setUserGender(gender);
+                                                        userUpdate.setUserGender(setgender);
                                                         userUpdate.setUserProvince(province);
                                                         userUpdate.setUserCity(city);
                                                         userUpdate.setUserCityStatus(city + "_" + userUpdate.getUserStatus());
@@ -469,6 +478,15 @@ public class EditUserProfileActivity extends AppCompatActivity {
                                         String phone = etPhone.getText().toString().trim();
                                         String address = etAddress.getText().toString().trim();
                                         String gender = msGender.getSelectedItem().toString().trim();
+                                        String setgender = null;
+                                        switch (gender){
+                                            case "Pria":
+                                                setgender = "Male";
+                                                break;
+                                            case "Wanita":
+                                                setgender = "Female";
+                                                break;
+                                        }
                                         String province = msProvince.getSelectedItem().toString().trim();
                                         String city = msCity.getSelectedItem().toString().trim();
 
@@ -476,7 +494,7 @@ public class EditUserProfileActivity extends AppCompatActivity {
                                         userUpdate.setUserDob(dob);
                                         userUpdate.setUserPhone(phone);
                                         userUpdate.setUserAddress(address);
-                                        userUpdate.setUserGender(gender);
+                                        userUpdate.setUserGender(setgender);
                                         userUpdate.setUserProvince(province);
                                         userUpdate.setUserCity(city);
                                         userUpdate.setUserCityStatus(city + "_" + userUpdate.getUserStatus());
@@ -546,6 +564,15 @@ public class EditUserProfileActivity extends AppCompatActivity {
                             String phone = etPhone.getText().toString().trim();
                             String address = etAddress.getText().toString().trim();
                             String gender = msGender.getSelectedItem().toString().trim();
+                            String setgender = null;
+                            switch (gender){
+                                case "Pria":
+                                    setgender = "Male";
+                                    break;
+                                case "Wanita":
+                                    setgender = "Female";
+                                    break;
+                            }
                             String province = msProvince.getSelectedItem().toString().trim();
                             String city = msCity.getSelectedItem().toString().trim();
 
@@ -553,7 +580,7 @@ public class EditUserProfileActivity extends AppCompatActivity {
                             userUpdate.setUserDob(dob);
                             userUpdate.setUserPhone(phone);
                             userUpdate.setUserAddress(address);
-                            userUpdate.setUserGender(gender);
+                            userUpdate.setUserGender(setgender);
                             userUpdate.setUserProvince(province);
                             userUpdate.setUserCity(city);
                             userUpdate.setUserCityStatus(city + "_" + userUpdate.getUserStatus());
@@ -668,7 +695,7 @@ public class EditUserProfileActivity extends AppCompatActivity {
     public void onBackPressed() {
         AlertDialog.Builder builder = new AlertDialog.Builder(EditUserProfileActivity.this);
         builder.setMessage("Apakah Anda yakin ingin membatalkan pengeditan?")
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         String uId = getIntent().getStringExtra("userId");
@@ -677,7 +704,7 @@ public class EditUserProfileActivity extends AppCompatActivity {
                         startActivity(intent);
                     }
                 })
-                .setNegativeButton("No", null);
+                .setNegativeButton("Tidak", null);
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }

@@ -714,7 +714,7 @@
                     android:drawableLeft="@drawable/whatsapp"
                     android:paddingLeft="24dp"
                     android:paddingRight="12dp"
-                    android:text="Whatsapp"
+                    android:text="@string/whatsapp"
                     android:textAllCaps="false"
                     android:textColor="@android:color/black"
                     android:textStyle="bold" />
@@ -730,7 +730,7 @@
                     android:drawableLeft="@drawable/message_text"
                     android:paddingLeft="24dp"
                     android:paddingRight="12dp"
-                    android:text="Message"
+                    android:text="@string/sms"
                     android:textAllCaps="false"
                     android:textColor="@android:color/black"
                     android:textStyle="bold" />
@@ -756,7 +756,7 @@
                         android:layout_marginRight="16dp"
                         android:layout_weight="1"
                         android:background="@color/colorPrimary"
-                        android:text="Accept"
+                        android:text="@string/acceptasadopter"
                         android:textColor="@android:color/black"
                         android:textStyle="bold" />
 
@@ -768,7 +768,7 @@
                         android:layout_marginLeft="16dp"
                         android:layout_weight="1"
                         android:background="@color/colorPrimary"
-                        android:text="Reject"
+                        android:text="@string/rejectadopter"
                         android:textColor="@android:color/black"
                         android:textStyle="bold" />
                 </LinearLayout>

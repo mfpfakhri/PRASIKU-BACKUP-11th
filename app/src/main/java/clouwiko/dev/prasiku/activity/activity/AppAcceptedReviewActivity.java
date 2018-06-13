@@ -107,11 +107,56 @@ public class AppAcceptedReviewActivity extends AppCompatActivity {
                 String apphousesize = dataSnapshot.child("adoptionApplicantHouseSize").getValue(String.class);
                 String appnop = dataSnapshot.child("adoptionApplicantNoPeople").getValue(String.class);
                 String catplace = dataSnapshot.child("adoptionApplicantCatPlace").getValue(String.class);
-                String apphousemember = dataSnapshot.child("adoptionApplicantFamPermission").getValue(String.class);
-                String appmovingplan = dataSnapshot.child("adoptionApplicantMove").getValue(String.class);
-                String appmarriageplan = dataSnapshot.child("adoptionApplicantMarriage").getValue(String.class);
-                String appkids = dataSnapshot.child("adoptionApplicantKids").getValue(String.class);
-                String appfinancial = dataSnapshot.child("adoptionApplicantFinancial").getValue(String.class);
+                String housememberpermission = dataSnapshot.child("adoptionApplicantFamPermission").getValue(String.class);
+                String sethousememberpermission = null;
+                switch (housememberpermission){
+                    case "Yes":
+                        sethousememberpermission = "Sudah";
+                        break;
+                    case "No":
+                        sethousememberpermission = "Belum";
+                        break;
+                }
+                String movingplan = dataSnapshot.child("adoptionApplicantMove").getValue(String.class);
+                String setmovingplan= null;
+                switch (movingplan){
+                    case "Yes":
+                        setmovingplan = "Sudah";
+                        break;
+                    case "No":
+                        setmovingplan = "Belum";
+                        break;
+                }
+                String marriageplan = dataSnapshot.child("adoptionApplicantMarriage").getValue(String.class);
+                String setmarriageplan = null;
+                switch (marriageplan){
+                    case "Yes":
+                        setmarriageplan = "Sudah";
+                        break;
+                    case "No":
+                        setmarriageplan = "Belum";
+                        break;
+                }
+                String kids = dataSnapshot.child("adoptionApplicantKids").getValue(String.class);
+                String setkids = null;
+                switch (kids){
+                    case "Yes":
+                        setkids= "Sudah";
+                        break;
+                    case "No":
+                        setkids = "Belum";
+                        break;
+                }
+                String financial = dataSnapshot.child("adoptionApplicantFinancial").getValue(String.class);
+                String setfinancial = null;
+                switch (financial){
+                    case "Yes":
+                        setfinancial= "Sudah";
+                        break;
+                    case "No":
+                        setfinancial= "Belum";
+                        break;
+                }
                 String appstatus = dataSnapshot.child("adoptionApplicationStatus").getValue(String.class);
                 String setstatus = null;
                 switch (appstatus) {
@@ -161,11 +206,11 @@ public class AppAcceptedReviewActivity extends AppCompatActivity {
                 tvHouseSize.setText(apphousesize);
                 tvNoP.setText(appnop);
                 tvCatPlace.setText(catplace);
-                tvHouseMember.setText(apphousemember);
-                tvMovingPlan.setText(appmovingplan);
-                tvMarriagePlan.setText(appmarriageplan);
-                tvKids.setText(appkids);
-                tvFinancial.setText(appfinancial);
+                tvHouseMember.setText(sethousememberpermission);
+                tvMovingPlan.setText(setmovingplan);
+                tvMarriagePlan.setText(setmarriageplan);
+                tvKids.setText(setkids);
+                tvFinancial.setText(setfinancial);
             }
 
             @Override

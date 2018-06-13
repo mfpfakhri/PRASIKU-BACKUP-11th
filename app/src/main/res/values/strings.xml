@@ -156,6 +156,10 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="findcat_province">Pilih Provinsi</string>
     <string name="findcat_city">Pilih Kota</string>
+    <string name="whatsapp">Whatsapp</string>
+    <string name="sms">Kirim Pesan</string>
+    <string name="acceptasadopter">Terima</string>
+    <string name="rejectadopter">Tolak</string>
 
     <string-array name="gender">
         <item>Pria</item>
@@ -189,11 +193,11 @@
         <item>Mess</item>
         <item>Lainnya</item>
     </string-array>
-    <string-array name="userType">
-        <item>Individual</item>
-        <item>Government</item>
-        <item>Organization</item>
-        <item>Shelter</item>
-        <item>Others</item>
-    </string-array>
+    <!--<string-array name="userType">-->
+        <!--<item>Individual</item>-->
+        <!--<item>Government</item>-->
+        <!--<item>Organization</item>-->
+        <!--<item>Shelter</item>-->
+        <!--<item>Others</item>-->
+    <!--</string-array>-->
 </resources>
