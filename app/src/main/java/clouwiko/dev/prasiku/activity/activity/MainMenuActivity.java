@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -32,6 +33,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import clouwiko.dev.prasiku.R;
+import clouwiko.dev.prasiku.activity.model.User;
 import clouwiko.dev.prasiku.activity.other.CircleTransform;
 import clouwiko.dev.prasiku.activity.other.RoundedCornersTransform;
 
@@ -84,22 +86,84 @@ public class MainMenuActivity extends AppCompatActivity
         final FirebaseUser user = auth.getCurrentUser();
         final String userUID = user.getUid();
 
-        authStateListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                if (user != null) {
-                    if (user.isEmailVerified()) {
-
-                    } else {
-                        startActivity(new Intent(MainMenuActivity.this, VerificationActivity.class));
-                        finish();
+        if (user != null) {
+            if (user.isEmailVerified()) {
+                databaseUsers = FirebaseDatabase.getInstance().getReference().child("users").child(userUID);
+                databaseUsers.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        User userData = dataSnapshot.getValue(User.class);
+                        String status = userData.getUserStatus();
+                        switch (status){
+                            case "0":
+                                break;
+                            case "1":
+                                Toast.makeText(getApplicationContext(), "Akun Anda diblokir", Toast.LENGTH_SHORT).show();
+                                Intent intentBanned = new Intent(getApplicationContext(), UserBannedActivity.class);
+                                startActivity(intentBanned);
+                                break;
+                            case "2":
+                                Toast.makeText(getApplicationContext(), "Anda tidak bisa masuk menggunakan Akun ini", Toast.LENGTH_SHORT).show();
+                                auth.signOut();
+                                break;
+                        }
                     }
-                } else {
-                    startActivity(new Intent(MainMenuActivity.this, LandingActivity.class));
-                    finish();
-                }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+            } else {
+                startActivity(new Intent(MainMenuActivity.this, VerificationActivity.class));
+                finish();
             }
-        };
+        } else {
+            startActivity(new Intent(MainMenuActivity.this, LandingActivity.class));
+            finish();
+        }
+
+//        authStateListener = new FirebaseAuth.AuthStateListener() {
+//            @Override
+//            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+//                if (user != null) {
+//                    if (user.isEmailVerified()) {
+//                        databaseUsers = FirebaseDatabase.getInstance().getReference().child("users").child(userUID);
+//                        databaseUsers.addValueEventListener(new ValueEventListener() {
+//                            @Override
+//                            public void onDataChange(DataSnapshot dataSnapshot) {
+//                                User userData = dataSnapshot.getValue(User.class);
+//                                String status = userData.getUserStatus();
+//                                switch (status){
+//                                    case "0":
+//                                        break;
+//                                    case "1":
+//                                        Toast.makeText(getApplicationContext(), "Akun Anda diblokir", Toast.LENGTH_SHORT).show();
+//                                        Intent intentBanned = new Intent(getApplicationContext(), UserBannedActivity.class);
+//                                        startActivity(intentBanned);
+//                                        break;
+//                                    case "2":
+//                                        Toast.makeText(getApplicationContext(), "Anda tidak bisa masuk menggunakan Akun ini", Toast.LENGTH_SHORT).show();
+//                                        auth.signOut();
+//                                        break;
+//                                }
+//                            }
+//
+//                            @Override
+//                            public void onCancelled(DatabaseError databaseError) {
+//
+//                            }
+//                        });
+//                    } else {
+//                        startActivity(new Intent(MainMenuActivity.this, VerificationActivity.class));
+//                        finish();
+//                    }
+//                } else {
+//                    startActivity(new Intent(MainMenuActivity.this, LandingActivity.class));
+//                    finish();
+//                }
+//            }
+//        };
 
         userPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
