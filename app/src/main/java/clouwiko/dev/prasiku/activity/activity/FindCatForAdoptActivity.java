@@ -61,7 +61,7 @@ public class FindCatForAdoptActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_findcat);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Find Cat to Adopt");
+        getSupportActionBar().setTitle("Cari Kucing");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //Initialize RecyclerView

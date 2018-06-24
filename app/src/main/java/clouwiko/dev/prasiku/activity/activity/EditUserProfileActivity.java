@@ -80,7 +80,7 @@ public class EditUserProfileActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.edituserprofile_toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Edit Profil");
+        getSupportActionBar().setTitle("Sunting Profil");
 
         ivPhoto = findViewById(R.id.edituserprofile_photo_imageview);
         btnUpdatePhoto = findViewById(R.id.edituserprofile_photo_edit_button);

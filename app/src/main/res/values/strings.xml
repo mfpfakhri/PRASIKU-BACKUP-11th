@@ -43,7 +43,7 @@
     <string name="about_us">Tentang SIKUCING</string>
     <!--Three Dots Menu-->
     <!--Edit Profile-->
-    <string name="edit_profile">Edit Profil</string>
+    <string name="edit_profile">Sunting Profil</string>
     <string name="hint_photo_edit">Sentuh Ikon \ndi Samping \nUntuk Memilih \nFoto Profil \nAnda</string>
     <string name="update">Perbarui</string>
     <!--Change Password-->

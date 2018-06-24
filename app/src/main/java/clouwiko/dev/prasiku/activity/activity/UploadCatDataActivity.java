@@ -75,7 +75,7 @@ public class UploadCatDataActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_uploadcat);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Upload Cat Data");
+        getSupportActionBar().setTitle("Unggah Data Kucing");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
