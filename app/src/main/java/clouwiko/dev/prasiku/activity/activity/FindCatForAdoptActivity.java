@@ -173,11 +173,11 @@ public class FindCatForAdoptActivity extends AppCompatActivity {
                 int valProvince = spinnerProvinces.getSelectedItemPosition();
                 int valCity = spinnerCities.getSelectedItemPosition();
                 if (valProvince == 0) {
-                    Toast.makeText(getApplicationContext(), "Select Cat Province", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Silahkan Pilih Provinsi", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (valCity == 0) {
-                    Toast.makeText(getApplicationContext(), "Select Cat City", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Silahkan Pilih Kota", Toast.LENGTH_SHORT).show();
                     return;
                 } else {
                     String cityKey = spinnerCities.getSelectedItem().toString().trim();
