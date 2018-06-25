@@ -67,7 +67,7 @@ public class EditCatDataAvailableActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.editcatavailable_toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Perbarui Informasi Kucing");
+        getSupportActionBar().setTitle("Sunting Profil Kucing");
 
         ivPhoto = findViewById(R.id.editcatavailable_photo_imageview);
         btnUpdatePhoto = findViewById(R.id.editcatavailable_photo_edit_button);

@@ -94,7 +94,7 @@
     <string name="hint_cat_owner_reason">Alasan Pemilik Lepas Adopsi</string>
     <string name="hint_cat_adoption_status">Status Adopsi</string>
     <string name="available">Adopsi Aku!</string>
-    <string name="edit_cat_data">Edit</string>
+    <string name="edit_cat_data">Sunting</string>
     <string name="delete_cat_data">Hapus</string>
     <!--Owner/ Available Adopted-->
     <string name="adopted">Sudah Diadopsi</string>
