@@ -71,10 +71,10 @@ public class UserApplicationListActivity extends AppCompatActivity {
         //Firebase Database
         firebaseDatabase = FirebaseDatabase.getInstance();
 
-        getCatData();
+        getAdoptionData();
     }
 
-    void getCatData() {
+    void getAdoptionData() {
         //Firebase Current User UID
         String userUID = auth.getUid();
         String applicantdeletestatus = userUID + "_0";

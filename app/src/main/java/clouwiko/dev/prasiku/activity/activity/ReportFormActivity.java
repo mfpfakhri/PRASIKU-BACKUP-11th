@@ -86,50 +86,94 @@ public class ReportFormActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String valMessage = etMessage.getText().toString();
                 if (valMessage.isEmpty()){
-                    etMessage.setError("You should fill report message");
+                    etMessage.setError("Isi pesan laporan pengaduan Anda");
                     return;
                 } else {
 
                 }
                 if (valMessage.length()<100){
-                    Toast.makeText(getApplicationContext(), "Please describe Your report with more sentences", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Jelaskan pesan pengaduan dengan lebih rinci", Toast.LENGTH_SHORT).show();
                     return;
                 } else {
 
                 }
-                databaseReports = FirebaseDatabase.getInstance().getReference().child("reports");
-                String applicationid = getIntent().getStringExtra("application_id");
+                reportAdopter();
+//                databaseReports = FirebaseDatabase.getInstance().getReference().child("reports");
+//                String applicationid = getIntent().getStringExtra("application_id");
+//                String userId = getIntent().getStringExtra("userId");
+//                databaseAdoptions = FirebaseDatabase.getInstance().getReference().child("adoptions").child(applicationid);
+//                databaseAdoptions.addListenerForSingleValueEvent(new ValueEventListener() {
+//                    @Override
+//                    public void onDataChange(DataSnapshot dataSnapshot) {
+//                        Adoption adoptionData = dataSnapshot.getValue(Adoption.class);
+//                        final String reportedname = adoptionData.getAdoptionApplicantName();
+//                        final String reportcat = adoptionData.getAdoptionCatId();
+//                        final String reportadoptions = adoptionData.getAdoptionId();
+//                        databaseOwner.addListenerForSingleValueEvent(new ValueEventListener() {
+//                            @Override
+//                            public void onDataChange(DataSnapshot dataSnapshot) {
+//                                User userData = dataSnapshot.getValue(User.class);
+//                                String reporterid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+//                                String reportedid = getIntent().getStringExtra("userId");
+//                                String reportername = userData.getUserFname();
+//                                String reportmessage = etMessage.getText().toString();
+//                                String reportstatus = "Received";
+//                                String reportkey = databaseReports.push().getKey();
+//                                Date date = Calendar.getInstance().getTime();
+//                                SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
+//                                String reportdate = dateFormat.format(date);
+//                                Report report = new Report(reportkey, reportdate, reporterid, reportername, reportedid, reportedname, reportmessage, reportstatus, reportcat, reportadoptions);
+//                                databaseReports.child(reportkey).setValue(report);
+//                            }
+//
+//                            @Override
+//                            public void onCancelled(DatabaseError databaseError) {
+//
+//                            }
+//                        });
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(DatabaseError databaseError) {
+//
+//                    }
+//                });
                 String userId = getIntent().getStringExtra("userId");
-                databaseAdoptions = FirebaseDatabase.getInstance().getReference().child("adoptions").child(applicationid);
-                databaseAdoptions.addListenerForSingleValueEvent(new ValueEventListener() {
+                String applicationid = getIntent().getStringExtra("application_id");
+                Intent intent = new Intent(getApplicationContext(), UserHomeAcceptedActivity.class);
+                intent.putExtra("userId", userId);
+                intent.putExtra("application_id", applicationid);
+                startActivity(intent);
+            }
+        });
+    }
+
+    private void reportAdopter(){
+        databaseReports = FirebaseDatabase.getInstance().getReference().child("reports");
+        String applicationid = getIntent().getStringExtra("application_id");
+        databaseAdoptions = FirebaseDatabase.getInstance().getReference().child("adoptions").child(applicationid);
+        databaseAdoptions.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Adoption adoptionData = dataSnapshot.getValue(Adoption.class);
+                final String reportedname = adoptionData.getAdoptionApplicantName();
+                final String reportcat = adoptionData.getAdoptionCatId();
+                final String reportadoptions = adoptionData.getAdoptionId();
+                databaseOwner.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        Adoption adoptionData = dataSnapshot.getValue(Adoption.class);
-                        final String reportedname = adoptionData.getAdoptionApplicantName();
-                        final String reportcat = adoptionData.getAdoptionCatId();
-                        final String reportadoptions = adoptionData.getAdoptionId();
-                        databaseOwner.addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(DataSnapshot dataSnapshot) {
-                                User userData = dataSnapshot.getValue(User.class);
-                                String reporterid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                                String reportedid = getIntent().getStringExtra("userId");
-                                String reportername = userData.getUserFname();
-                                String reportmessage = etMessage.getText().toString();
-                                String reportstatus = "Received";
-                                String reportkey = databaseReports.push().getKey();
-                                Date date = Calendar.getInstance().getTime();
-                                SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
-                                String reportdate = dateFormat.format(date);
-                                Report report = new Report(reportkey, reportdate, reporterid, reportername, reportedid, reportedname, reportmessage, reportstatus, reportcat, reportadoptions);
-                                databaseReports.child(reportkey).setValue(report);
-                            }
-
-                            @Override
-                            public void onCancelled(DatabaseError databaseError) {
-
-                            }
-                        });
+                        User userData = dataSnapshot.getValue(User.class);
+                        String reporterid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                        String reportedid = getIntent().getStringExtra("userId");
+                        String reportername = userData.getUserFname();
+                        String reportmessage = etMessage.getText().toString();
+                        String reportstatus = "Received";
+                        String reportkey = databaseReports.push().getKey();
+                        Date date = Calendar.getInstance().getTime();
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
+                        String reportdate = dateFormat.format(date);
+                        Report report = new Report(reportkey, reportdate, reporterid, reportername, reportedid, reportedname, reportmessage, reportstatus, reportcat, reportadoptions);
+                        databaseReports.child(reportkey).setValue(report);
                     }
 
                     @Override
@@ -137,10 +181,11 @@ public class ReportFormActivity extends AppCompatActivity {
 
                     }
                 });
-                Intent intent = new Intent(getApplicationContext(), UserHomeAcceptedActivity.class);
-                intent.putExtra("userId", userId);
-                intent.putExtra("application_id", applicationid);
-                startActivity(intent);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
             }
         });
     }

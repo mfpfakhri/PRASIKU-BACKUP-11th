@@ -334,28 +334,29 @@ public class AppAcceptedReviewActivity extends AppCompatActivity {
         btnAgreement.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                downloadAsset("Surat Perjanjian Adopsi SIKUCING.pdf");
-                AgreementNotificationGenerator.openPdfNotification(getApplicationContext());
-                AlertDialog.Builder builder = new AlertDialog.Builder(AppAcceptedReviewActivity.this);
-                builder.setMessage("Do You want to open adoption agreement?")
-                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                File pdfFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath()+File.separator+"Surat Perjanjian Adopsi SIKUCING.pdf");
-                                Uri path = Uri.fromFile(pdfFile);
-                                Intent pdfOpenIntent = new Intent(Intent.ACTION_VIEW);
-                                pdfOpenIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                pdfOpenIntent.setDataAndType(path, "application/pdf");
-                                try{
-                                    AppAcceptedReviewActivity.this.startActivity(pdfOpenIntent);
-                                } catch (ActivityNotFoundException e) {
-                                    Toast.makeText(getApplicationContext(), "No apps can perform this action, open the directory where adoption agreement manually", Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        })
-                        .setNegativeButton("No", null);
-                AlertDialog alertDialog = builder.create();
-                alertDialog.show();
+                downloadAgreement();
+//                downloadAsset("Surat Perjanjian Adopsi SIKUCING.pdf");
+//                AgreementNotificationGenerator.openPdfNotification(getApplicationContext());
+//                AlertDialog.Builder builder = new AlertDialog.Builder(AppAcceptedReviewActivity.this);
+//                builder.setMessage("Do You want to open adoption agreement?")
+//                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialog, int which) {
+//                                File pdfFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath()+File.separator+"Surat Perjanjian Adopsi SIKUCING.pdf");
+//                                Uri path = Uri.fromFile(pdfFile);
+//                                Intent pdfOpenIntent = new Intent(Intent.ACTION_VIEW);
+//                                pdfOpenIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                                pdfOpenIntent.setDataAndType(path, "application/pdf");
+//                                try{
+//                                    AppAcceptedReviewActivity.this.startActivity(pdfOpenIntent);
+//                                } catch (ActivityNotFoundException e) {
+//                                    Toast.makeText(getApplicationContext(), "No apps can perform this action, open the directory where adoption agreement manually", Toast.LENGTH_SHORT).show();
+//                                }
+//                            }
+//                        })
+//                        .setNegativeButton("No", null);
+//                AlertDialog alertDialog = builder.create();
+//                alertDialog.show();
 
                 //Another Option : open downloaded file directory
 //                AlertDialog.Builder builder = new AlertDialog.Builder(AppAcceptedReviewActivity.this);
@@ -391,6 +392,31 @@ public class AppAcceptedReviewActivity extends AppCompatActivity {
         });
     }
 
+    private void downloadAgreement(){
+        downloadAsset("Surat Perjanjian Adopsi SIKUCING.pdf");
+        AgreementNotificationGenerator.openPdfNotification(getApplicationContext());
+        AlertDialog.Builder builder = new AlertDialog.Builder(AppAcceptedReviewActivity.this);
+        builder.setMessage("Apakah Anda ingin membuka surat perjanjian adopsi?")
+                .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        File pdfFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath()+File.separator+"Surat Perjanjian Adopsi SIKUCING.pdf");
+                        Uri path = Uri.fromFile(pdfFile);
+                        Intent pdfOpenIntent = new Intent(Intent.ACTION_VIEW);
+                        pdfOpenIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        pdfOpenIntent.setDataAndType(path, "application/pdf");
+                        try{
+                            AppAcceptedReviewActivity.this.startActivity(pdfOpenIntent);
+                        } catch (ActivityNotFoundException e) {
+                            Toast.makeText(getApplicationContext(), "Tidak ada aplikasi yang dapat membuka surat perjanjian adopsi", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                })
+                .setNegativeButton("Tidak", null);
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {
@@ -400,7 +426,7 @@ public class AppAcceptedReviewActivity extends AppCompatActivity {
 
                     }
                 } else {
-                    Toast.makeText(getApplicationContext(), "No Permission Granted", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Tidak ada ijin yang diperbolehkan", Toast.LENGTH_SHORT).show();
                 }
             }
         }
@@ -424,10 +450,10 @@ public class AppAcceptedReviewActivity extends AppCompatActivity {
             File outfile = new File(dirPath, filename);
             out = new FileOutputStream(outfile);
             downloadFile(in, out);
-            Toast.makeText(this, "Adoption Agreement Downloaded, Check on Your Storage SIKUCING Folder", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Surat perjanjian telah diunduh, periksa memori penyimpanan Anda", Toast.LENGTH_SHORT).show();
         } catch (IOException e) {
             e.printStackTrace();
-            Toast.makeText(this, "Failed to Download Adoption Agreement", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Gagal mengunduh surat perjanjian", Toast.LENGTH_SHORT).show();
         } finally {
             if (in != null) {
                 try {

@@ -257,8 +257,8 @@ public class AppReceivedReviewActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(AppReceivedReviewActivity.this);
-                builder.setMessage("Are You sure want to set this person as adopter?")
-                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                builder.setMessage("Apakah Anda yakin ingin menetapkan pengguna ini sebagai pengadopsi?")
+                        .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 String applicationid = getIntent().getStringExtra("application_id");
@@ -319,7 +319,7 @@ public class AppReceivedReviewActivity extends AppCompatActivity {
 
                                                 updateAcceptedCatData(catidupdate, ownerupdate, photoupdate, nameupdate, dobupdate, genderupdate, descriptionupdate, mednoteupdate, vaccstatupdate, spayneuterstatupdate, reasonupdate, catprovinceupdate, catcityupdate, adoptedstatusupdate, catdelete, ownercatdelete, citydeletestatus);
                                                 Intent intent = new Intent(getApplicationContext(), MainMenuActivity.class);
-                                                Toast.makeText(getApplicationContext(), "Check your accepted Application to Download the terms", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(getApplicationContext(), "Periksa opsi Pengajuan Diterima untuk mengunduh surat perjanjian adopsi", Toast.LENGTH_SHORT).show();
                                                 startActivity(intent);
                                                 finish();
                                             }
@@ -358,7 +358,7 @@ public class AppReceivedReviewActivity extends AppCompatActivity {
                                 });
                             }
                         })
-                        .setNegativeButton("No", null);
+                        .setNegativeButton("Tidak", null);
                 AlertDialog alertDialog = builder.create();
                 alertDialog.show();
             }
@@ -368,8 +368,8 @@ public class AppReceivedReviewActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(AppReceivedReviewActivity.this);
-                builder.setMessage("Are You sure want to reject this person as adoption application?")
-                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                builder.setMessage("Apakah Anda yakin ingin menolak pengguna ini sebagai pengadopsi?")
+                        .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 String applicationid = getIntent().getStringExtra("application_id");
@@ -417,7 +417,7 @@ public class AppReceivedReviewActivity extends AppCompatActivity {
                                 });
                             }
                         })
-                        .setNegativeButton("No", null);
+                        .setNegativeButton("Tidak", null);
                 AlertDialog alertDialog = builder.create();
                 alertDialog.show();
             }
@@ -436,7 +436,7 @@ public class AppReceivedReviewActivity extends AppCompatActivity {
                     sendIntent.setPackage("com.whatsapp");
                     startActivity(sendIntent);
                 } catch (android.content.ActivityNotFoundException ex){
-                    Toast.makeText(getApplicationContext(), "Whatsapp have not been installed.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Whatsapp belum dipasang pada perangkat ini.", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.whatsapp")));
                 }
             }

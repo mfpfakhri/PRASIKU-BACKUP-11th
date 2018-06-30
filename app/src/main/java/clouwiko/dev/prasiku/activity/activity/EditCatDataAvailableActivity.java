@@ -229,12 +229,7 @@ public class EditCatDataAvailableActivity extends AppCompatActivity {
                                                         for (DataSnapshot adoptionDeletePhotoSnapshot : dataSnapshot.getChildren()) {
                                                             Adoption adoptionData = adoptionDeletePhotoSnapshot.getValue(Adoption.class);
                                                             adoptionData.setAdoptionCatPhoto("");
-                                                            databaseAdoptions.child(adoptionData.getAdoptionId()).setValue(adoptionData).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                                @Override
-                                                                public void onSuccess(Void aVoid) {
-                                                                    startActivity(getIntent());
-                                                                }
-                                                            });
+                                                            databaseAdoptions.child(adoptionData.getAdoptionId()).setValue(adoptionData);
                                                         }
                                                     }
 
@@ -243,6 +238,7 @@ public class EditCatDataAvailableActivity extends AppCompatActivity {
 
                                                     }
                                                 });
+                                                startActivity(getIntent());
                                             }
                                         } catch (NullPointerException e) {
                                             e.printStackTrace();
@@ -371,286 +367,569 @@ public class EditCatDataAvailableActivity extends AppCompatActivity {
                     return;
                 }
 
-                if (ivPhoto.getDrawable() != null) {
-                    databaseCats.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            Cat catCheck = dataSnapshot.getValue(Cat.class);
-                            String catPhotoCheck = catCheck.getCatProfilePhoto();
-                            if (catPhotoCheck.equals("")) {
-                                storageCats = FirebaseStorage.getInstance().getReference();
-                                StorageReference reference = storageCats.child(STORAGE_PATH + System.currentTimeMillis() + "." + getActualImage(uriCatPhoto));
-                                reference.putFile(uriCatPhoto)
-                                        .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                                            @Override
-                                            public void onSuccess(final UploadTask.TaskSnapshot taskSnapshot) {
-                                                int adoptionStatusSpinner = msAdoptionStatus.getSelectedItemPosition();
-                                                String cId = getIntent().getStringExtra("cat_id");
-                                                switch (adoptionStatusSpinner) {
-                                                    case 0:
-                                                        Toast.makeText(getApplicationContext(), "Pilih Status Adopsi", Toast.LENGTH_SHORT).show();
-                                                        return;
-                                                    case 1:
-                                                        databaseCats.addListenerForSingleValueEvent(new ValueEventListener() {
-                                                            @Override
-                                                            public void onDataChange(DataSnapshot dataSnapshot) {
-                                                                Cat catUpdate = dataSnapshot.getValue(Cat.class);
-                                                                String updPhotoChange = taskSnapshot.getDownloadUrl().toString();
-                                                                String updNameChange = etName.getText().toString().trim();
-                                                                String updDobChange = etDob.getText().toString().trim();
-                                                                String updDescriptionChange = etDesc.getText().toString().trim();
-                                                                String updMedicalNoteChange = etMedNote.getText().toString().trim();
-                                                                String updGenderChange = msGender.getSelectedItem().toString().trim();
-                                                                String setUpdGender = null;
-                                                                switch (updGenderChange) {
-                                                                    case "Jantan":
-                                                                        setUpdGender = "Male";
-                                                                        break;
-                                                                    case "Betina":
-                                                                        setUpdGender = "Female";
-                                                                        break;
-                                                                    case "Tidak Diketahui":
-                                                                        setUpdGender = "Unknown";
-                                                                        break;
-                                                                }
-                                                                String updAdoptionStatusChange = "Adopted";
-                                                                int updVaccineId = rgVaccine.getCheckedRadioButtonId();
-                                                                rbVaccine = findViewById(updVaccineId);
-                                                                String updVaccineChange = rbVaccine.getText().toString().trim();
-                                                                String setUpdVacc = null;
-                                                                switch (updVaccineChange) {
-                                                                    case "Ya, Sudah Divaksin":
-                                                                        setUpdVacc = "Yes, Already Vaccinated";
-                                                                        break;
-                                                                    case "Belum Divaksin":
-                                                                        setUpdVacc = "Not Yet";
-                                                                        break;
-                                                                }
-                                                                int updSpayNeuterId = rgSpayNeuter.getCheckedRadioButtonId();
-                                                                rbSpayNeuter = findViewById(updSpayNeuterId);
-                                                                String updSpayNeuterChange = rbSpayNeuter.getText().toString().trim();
-                                                                String setUpdSpayNeuter = null;
-                                                                switch (updSpayNeuterChange) {
-                                                                    case "Ya, Sudah Dikastrasi":
-                                                                        setUpdSpayNeuter = "Yes, Already Spayed/ Neutered";
-                                                                        break;
-                                                                    case "Belum Dikastrasi":
-                                                                        setUpdSpayNeuter = "Not Yet";
-                                                                        break;
-                                                                }
-                                                                String updReasonChange = msReason.getSelectedItem().toString().trim();
-                                                                String setUpdReason = null;
-                                                                switch (updReasonChange) {
-                                                                    case "Liar":
-                                                                        setUpdReason = "Stray";
-                                                                        break;
-                                                                    case "Terlantar":
-                                                                        setUpdReason = "Abandoned";
-                                                                        break;
-                                                                    case "Disiksa":
-                                                                        setUpdReason = "Abused";
-                                                                        break;
-                                                                    case "Pemilik Meninggal":
-                                                                        setUpdReason = "Owner Dead";
-                                                                        break;
-                                                                    case "Pemilik Menyerah":
-                                                                        setUpdReason = "Owner Give Up";
-                                                                        break;
-                                                                    case "Pindah Rumah":
-                                                                        setUpdReason = "House Moving";
-                                                                        break;
-                                                                    case "Keuangan":
-                                                                        setUpdReason = "Financial";
-                                                                        break;
-                                                                    case "Masalah Kesehatan":
-                                                                        setUpdReason = "Medical Problem";
-                                                                        break;
-                                                                    case "Lainnya":
-                                                                        setUpdReason = "Others";
-                                                                        break;
-                                                                }
+                updateCat();
 
-                                                                catUpdate.setCatProfilePhoto(updPhotoChange);
-                                                                catUpdate.setCatName(updNameChange);
-                                                                catUpdate.setCatDob(updDobChange);
-                                                                catUpdate.setCatDescription(updDescriptionChange);
-                                                                catUpdate.setCatMedNote(updMedicalNoteChange);
-                                                                catUpdate.setCatGender(setUpdGender);
-                                                                catUpdate.setCatAdoptedStatus(updAdoptionStatusChange);
-                                                                catUpdate.setCatVaccStat(setUpdVacc);
-                                                                catUpdate.setCatSpayNeuterStat(setUpdSpayNeuter);
-                                                                catUpdate.setCatReason(setUpdReason);
-                                                                databaseCats.setValue(catUpdate);
-                                                            }
-
-                                                            @Override
-                                                            public void onCancelled(DatabaseError databaseError) {
-
-                                                            }
-                                                        });
-                                                        databaseAdoptions.orderByChild("adoptionCatId").equalTo(cId).addListenerForSingleValueEvent(new ValueEventListener() {
-                                                            @Override
-                                                            public void onDataChange(DataSnapshot dataSnapshot) {
-                                                                for (DataSnapshot updateSnapshot : dataSnapshot.getChildren()) {
-                                                                    Adoption adoptionUpdate = updateSnapshot.getValue(Adoption.class);
-                                                                    String updPhotoChange = taskSnapshot.getDownloadUrl().toString();
-                                                                    String updNameChange = etName.getText().toString().trim();
-
-                                                                    adoptionUpdate.setAdoptionCatPhoto(updPhotoChange);
-                                                                    adoptionUpdate.setAdoptionCatName(updNameChange);
-                                                                    adoptionUpdate.setAdoptionApplicationStatus("Rejected");
-                                                                    adoptionUpdate.setAdoptionCatIdApponStatus(adoptionUpdate.getAdoptionCatId() + "_Rejected");
-                                                                    adoptionUpdate.setAdoptionOwnerIdApponStatus(adoptionUpdate.getAdoptionOwnerId() + "_Rejected");
-                                                                    databaseAdoptions.child(adoptionUpdate.getAdoptionId()).setValue(adoptionUpdate);
-                                                                }
-                                                            }
-
-                                                            @Override
-                                                            public void onCancelled(DatabaseError databaseError) {
-
-                                                            }
-                                                        });
-                                                        backToMainMenu();
-                                                        finish();
-                                                        break;
-                                                    case 2:
-                                                        databaseCats.addListenerForSingleValueEvent(new ValueEventListener() {
-                                                            @Override
-                                                            public void onDataChange(DataSnapshot dataSnapshot) {
-                                                                Cat catUpdate = dataSnapshot.getValue(Cat.class);
-                                                                String updPhotoIdle = taskSnapshot.getDownloadUrl().toString();
-                                                                String updNameIdle = etName.getText().toString().trim();
-                                                                String updDob = etDob.getText().toString().trim();
-                                                                String updDescription = etDesc.getText().toString().trim();
-                                                                String updMedicalNote = etMedNote.getText().toString().trim();
-                                                                String updGender = msGender.getSelectedItem().toString().trim();
-                                                                String setGender = null;
-                                                                switch (updGender) {
-                                                                    case "Jantan":
-                                                                        setGender = "Male";
-                                                                        break;
-                                                                    case "Betina":
-                                                                        setGender = "Female";
-                                                                        break;
-                                                                    case "Tidak Diketahui":
-                                                                        setGender = "Unknown";
-                                                                        break;
-                                                                }
-                                                                String updAdoptionStatus = "Available";
-                                                                int updVaccineId = rgVaccine.getCheckedRadioButtonId();
-                                                                rbVaccine = findViewById(updVaccineId);
-                                                                String updVaccine = rbVaccine.getText().toString().trim();
-                                                                String setVacc = null;
-                                                                switch (updVaccine) {
-                                                                    case "Ya, Sudah Divaksin":
-                                                                        setVacc = "Yes, Already Vaccinated";
-                                                                        break;
-                                                                    case "Belum Divaksin":
-                                                                        setVacc = "Not Yet";
-                                                                        break;
-                                                                }
-                                                                int updSpayNeuterId = rgSpayNeuter.getCheckedRadioButtonId();
-                                                                rbSpayNeuter = findViewById(updSpayNeuterId);
-                                                                String updSpayNeuter = rbSpayNeuter.getText().toString().trim();
-                                                                String setSpayNeuter = null;
-                                                                switch (updSpayNeuter) {
-                                                                    case "Ya, Sudah Dikastrasi":
-                                                                        setSpayNeuter = "Yes, Already Spayed/ Neutered";
-                                                                        break;
-                                                                    case "Belum Dikastrasi":
-                                                                        setSpayNeuter = "Not Yet";
-                                                                        break;
-                                                                }
-                                                                String updReason = msReason.getSelectedItem().toString().trim();
-                                                                String setReason = null;
-                                                                switch (updReason) {
-                                                                    case "Liar":
-                                                                        setReason = "Stray";
-                                                                        break;
-                                                                    case "Terlantar":
-                                                                        setReason = "Abandoned";
-                                                                        break;
-                                                                    case "Disiksa":
-                                                                        setReason = "Abused";
-                                                                        break;
-                                                                    case "Pemilik Meninggal":
-                                                                        setReason = "Owner Dead";
-                                                                        break;
-                                                                    case "Pemilik Menyerah":
-                                                                        setReason = "Owner Give Up";
-                                                                        break;
-                                                                    case "Pindah Rumah":
-                                                                        setReason = "House Moving";
-                                                                        break;
-                                                                    case "Keuangan":
-                                                                        setReason = "Financial";
-                                                                        break;
-                                                                    case "Masalah Kesehatan":
-                                                                        setReason = "Medical Problem";
-                                                                        break;
-                                                                    case "Lainnya":
-                                                                        setReason = "Others";
-                                                                        break;
-                                                                }
-
-                                                                catUpdate.setCatProfilePhoto(updPhotoIdle);
-                                                                catUpdate.setCatName(updNameIdle);
-                                                                catUpdate.setCatDob(updDob);
-                                                                catUpdate.setCatDescription(updDescription);
-                                                                catUpdate.setCatMedNote(updMedicalNote);
-                                                                catUpdate.setCatGender(setGender);
-                                                                catUpdate.setCatReason(setReason);
-                                                                catUpdate.setCatAdoptedStatus(updAdoptionStatus);
-                                                                catUpdate.setCatVaccStat(setVacc);
-                                                                catUpdate.setCatSpayNeuterStat(setSpayNeuter);
-                                                                databaseCats.setValue(catUpdate);
-                                                            }
-
-                                                            @Override
-                                                            public void onCancelled(DatabaseError databaseError) {
-
-                                                            }
-                                                        });
-                                                        databaseAdoptions.orderByChild("adoptionCatId").equalTo(cId).addListenerForSingleValueEvent(new ValueEventListener() {
-                                                            @Override
-                                                            public void onDataChange(DataSnapshot dataSnapshot) {
-                                                                for (DataSnapshot updateSnapshot : dataSnapshot.getChildren()) {
-                                                                    Adoption adoptionUpdate = updateSnapshot.getValue(Adoption.class);
-                                                                    String updPhotoIdle = taskSnapshot.getDownloadUrl().toString();
-                                                                    String updNameIdle = etName.getText().toString().trim();
-
-                                                                    adoptionUpdate.setAdoptionCatPhoto(updPhotoIdle);
-                                                                    adoptionUpdate.setAdoptionCatName(updNameIdle);
-                                                                    databaseAdoptions.child(adoptionUpdate.getAdoptionId()).setValue(adoptionUpdate);
-                                                                }
-                                                            }
-
-                                                            @Override
-                                                            public void onCancelled(DatabaseError databaseError) {
-
-                                                            }
-                                                        });
-                                                        backToMainMenu();
-                                                        finish();
-                                                        break;
-                                                }
-                                            }
-                                        });
-                            } else {
-                                updateCheckSpinner();
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
-                        }
-                    });
-                } else {
-                    updateCheckSpinner();
-                }
+//                if (ivPhoto.getDrawable() != null) {
+//                    databaseCats.addListenerForSingleValueEvent(new ValueEventListener() {
+//                        @Override
+//                        public void onDataChange(DataSnapshot dataSnapshot) {
+//                            Cat catCheck = dataSnapshot.getValue(Cat.class);
+//                            String catPhotoCheck = catCheck.getCatProfilePhoto();
+//                            if (catPhotoCheck.equals("")) {
+//                                storageCats = FirebaseStorage.getInstance().getReference();
+//                                StorageReference reference = storageCats.child(STORAGE_PATH + System.currentTimeMillis() + "." + getActualImage(uriCatPhoto));
+//                                reference.putFile(uriCatPhoto)
+//                                        .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+//                                            @Override
+//                                            public void onSuccess(final UploadTask.TaskSnapshot taskSnapshot) {
+//                                                int adoptionStatusSpinner = msAdoptionStatus.getSelectedItemPosition();
+//                                                String cId = getIntent().getStringExtra("cat_id");
+//                                                switch (adoptionStatusSpinner) {
+//                                                    case 0:
+//                                                        Toast.makeText(getApplicationContext(), "Pilih Status Adopsi", Toast.LENGTH_SHORT).show();
+//                                                        return;
+//                                                    case 1:
+//                                                        databaseCats.addListenerForSingleValueEvent(new ValueEventListener() {
+//                                                            @Override
+//                                                            public void onDataChange(DataSnapshot dataSnapshot) {
+//                                                                Cat catUpdate = dataSnapshot.getValue(Cat.class);
+//                                                                String updPhotoChange = taskSnapshot.getDownloadUrl().toString();
+//                                                                String updNameChange = etName.getText().toString().trim();
+//                                                                String updDobChange = etDob.getText().toString().trim();
+//                                                                String updDescriptionChange = etDesc.getText().toString().trim();
+//                                                                String updMedicalNoteChange = etMedNote.getText().toString().trim();
+//                                                                String updGenderChange = msGender.getSelectedItem().toString().trim();
+//                                                                String setUpdGender = null;
+//                                                                switch (updGenderChange) {
+//                                                                    case "Jantan":
+//                                                                        setUpdGender = "Male";
+//                                                                        break;
+//                                                                    case "Betina":
+//                                                                        setUpdGender = "Female";
+//                                                                        break;
+//                                                                    case "Tidak Diketahui":
+//                                                                        setUpdGender = "Unknown";
+//                                                                        break;
+//                                                                }
+//                                                                String updAdoptionStatusChange = "Adopted";
+//                                                                int updVaccineId = rgVaccine.getCheckedRadioButtonId();
+//                                                                rbVaccine = findViewById(updVaccineId);
+//                                                                String updVaccineChange = rbVaccine.getText().toString().trim();
+//                                                                String setUpdVacc = null;
+//                                                                switch (updVaccineChange) {
+//                                                                    case "Ya, Sudah Divaksin":
+//                                                                        setUpdVacc = "Yes, Already Vaccinated";
+//                                                                        break;
+//                                                                    case "Belum Divaksin":
+//                                                                        setUpdVacc = "Not Yet";
+//                                                                        break;
+//                                                                }
+//                                                                int updSpayNeuterId = rgSpayNeuter.getCheckedRadioButtonId();
+//                                                                rbSpayNeuter = findViewById(updSpayNeuterId);
+//                                                                String updSpayNeuterChange = rbSpayNeuter.getText().toString().trim();
+//                                                                String setUpdSpayNeuter = null;
+//                                                                switch (updSpayNeuterChange) {
+//                                                                    case "Ya, Sudah Dikastrasi":
+//                                                                        setUpdSpayNeuter = "Yes, Already Spayed/ Neutered";
+//                                                                        break;
+//                                                                    case "Belum Dikastrasi":
+//                                                                        setUpdSpayNeuter = "Not Yet";
+//                                                                        break;
+//                                                                }
+//                                                                String updReasonChange = msReason.getSelectedItem().toString().trim();
+//                                                                String setUpdReason = null;
+//                                                                switch (updReasonChange) {
+//                                                                    case "Liar":
+//                                                                        setUpdReason = "Stray";
+//                                                                        break;
+//                                                                    case "Terlantar":
+//                                                                        setUpdReason = "Abandoned";
+//                                                                        break;
+//                                                                    case "Disiksa":
+//                                                                        setUpdReason = "Abused";
+//                                                                        break;
+//                                                                    case "Pemilik Meninggal":
+//                                                                        setUpdReason = "Owner Dead";
+//                                                                        break;
+//                                                                    case "Pemilik Menyerah":
+//                                                                        setUpdReason = "Owner Give Up";
+//                                                                        break;
+//                                                                    case "Pindah Rumah":
+//                                                                        setUpdReason = "House Moving";
+//                                                                        break;
+//                                                                    case "Keuangan":
+//                                                                        setUpdReason = "Financial";
+//                                                                        break;
+//                                                                    case "Masalah Kesehatan":
+//                                                                        setUpdReason = "Medical Problem";
+//                                                                        break;
+//                                                                    case "Lainnya":
+//                                                                        setUpdReason = "Others";
+//                                                                        break;
+//                                                                }
+//
+//                                                                catUpdate.setCatProfilePhoto(updPhotoChange);
+//                                                                catUpdate.setCatName(updNameChange);
+//                                                                catUpdate.setCatDob(updDobChange);
+//                                                                catUpdate.setCatDescription(updDescriptionChange);
+//                                                                catUpdate.setCatMedNote(updMedicalNoteChange);
+//                                                                catUpdate.setCatGender(setUpdGender);
+//                                                                catUpdate.setCatAdoptedStatus(updAdoptionStatusChange);
+//                                                                catUpdate.setCatVaccStat(setUpdVacc);
+//                                                                catUpdate.setCatSpayNeuterStat(setUpdSpayNeuter);
+//                                                                catUpdate.setCatReason(setUpdReason);
+//                                                                databaseCats.setValue(catUpdate);
+//                                                            }
+//
+//                                                            @Override
+//                                                            public void onCancelled(DatabaseError databaseError) {
+//
+//                                                            }
+//                                                        });
+//                                                        databaseAdoptions.orderByChild("adoptionCatId").equalTo(cId).addListenerForSingleValueEvent(new ValueEventListener() {
+//                                                            @Override
+//                                                            public void onDataChange(DataSnapshot dataSnapshot) {
+//                                                                for (DataSnapshot updateSnapshot : dataSnapshot.getChildren()) {
+//                                                                    Adoption adoptionUpdate = updateSnapshot.getValue(Adoption.class);
+//                                                                    String updPhotoChange = taskSnapshot.getDownloadUrl().toString();
+//                                                                    String updNameChange = etName.getText().toString().trim();
+//
+//                                                                    adoptionUpdate.setAdoptionCatPhoto(updPhotoChange);
+//                                                                    adoptionUpdate.setAdoptionCatName(updNameChange);
+//                                                                    adoptionUpdate.setAdoptionApplicationStatus("Rejected");
+//                                                                    adoptionUpdate.setAdoptionCatIdApponStatus(adoptionUpdate.getAdoptionCatId() + "_Rejected");
+//                                                                    adoptionUpdate.setAdoptionOwnerIdApponStatus(adoptionUpdate.getAdoptionOwnerId() + "_Rejected");
+//                                                                    databaseAdoptions.child(adoptionUpdate.getAdoptionId()).setValue(adoptionUpdate);
+//                                                                }
+//                                                            }
+//
+//                                                            @Override
+//                                                            public void onCancelled(DatabaseError databaseError) {
+//
+//                                                            }
+//                                                        });
+//                                                        backToMainMenu();
+//                                                        finish();
+//                                                        break;
+//                                                    case 2:
+//                                                        databaseCats.addListenerForSingleValueEvent(new ValueEventListener() {
+//                                                            @Override
+//                                                            public void onDataChange(DataSnapshot dataSnapshot) {
+//                                                                Cat catUpdate = dataSnapshot.getValue(Cat.class);
+//                                                                String updPhotoIdle = taskSnapshot.getDownloadUrl().toString();
+//                                                                String updNameIdle = etName.getText().toString().trim();
+//                                                                String updDob = etDob.getText().toString().trim();
+//                                                                String updDescription = etDesc.getText().toString().trim();
+//                                                                String updMedicalNote = etMedNote.getText().toString().trim();
+//                                                                String updGender = msGender.getSelectedItem().toString().trim();
+//                                                                String setGender = null;
+//                                                                switch (updGender) {
+//                                                                    case "Jantan":
+//                                                                        setGender = "Male";
+//                                                                        break;
+//                                                                    case "Betina":
+//                                                                        setGender = "Female";
+//                                                                        break;
+//                                                                    case "Tidak Diketahui":
+//                                                                        setGender = "Unknown";
+//                                                                        break;
+//                                                                }
+//                                                                String updAdoptionStatus = "Available";
+//                                                                int updVaccineId = rgVaccine.getCheckedRadioButtonId();
+//                                                                rbVaccine = findViewById(updVaccineId);
+//                                                                String updVaccine = rbVaccine.getText().toString().trim();
+//                                                                String setVacc = null;
+//                                                                switch (updVaccine) {
+//                                                                    case "Ya, Sudah Divaksin":
+//                                                                        setVacc = "Yes, Already Vaccinated";
+//                                                                        break;
+//                                                                    case "Belum Divaksin":
+//                                                                        setVacc = "Not Yet";
+//                                                                        break;
+//                                                                }
+//                                                                int updSpayNeuterId = rgSpayNeuter.getCheckedRadioButtonId();
+//                                                                rbSpayNeuter = findViewById(updSpayNeuterId);
+//                                                                String updSpayNeuter = rbSpayNeuter.getText().toString().trim();
+//                                                                String setSpayNeuter = null;
+//                                                                switch (updSpayNeuter) {
+//                                                                    case "Ya, Sudah Dikastrasi":
+//                                                                        setSpayNeuter = "Yes, Already Spayed/ Neutered";
+//                                                                        break;
+//                                                                    case "Belum Dikastrasi":
+//                                                                        setSpayNeuter = "Not Yet";
+//                                                                        break;
+//                                                                }
+//                                                                String updReason = msReason.getSelectedItem().toString().trim();
+//                                                                String setReason = null;
+//                                                                switch (updReason) {
+//                                                                    case "Liar":
+//                                                                        setReason = "Stray";
+//                                                                        break;
+//                                                                    case "Terlantar":
+//                                                                        setReason = "Abandoned";
+//                                                                        break;
+//                                                                    case "Disiksa":
+//                                                                        setReason = "Abused";
+//                                                                        break;
+//                                                                    case "Pemilik Meninggal":
+//                                                                        setReason = "Owner Dead";
+//                                                                        break;
+//                                                                    case "Pemilik Menyerah":
+//                                                                        setReason = "Owner Give Up";
+//                                                                        break;
+//                                                                    case "Pindah Rumah":
+//                                                                        setReason = "House Moving";
+//                                                                        break;
+//                                                                    case "Keuangan":
+//                                                                        setReason = "Financial";
+//                                                                        break;
+//                                                                    case "Masalah Kesehatan":
+//                                                                        setReason = "Medical Problem";
+//                                                                        break;
+//                                                                    case "Lainnya":
+//                                                                        setReason = "Others";
+//                                                                        break;
+//                                                                }
+//
+//                                                                catUpdate.setCatProfilePhoto(updPhotoIdle);
+//                                                                catUpdate.setCatName(updNameIdle);
+//                                                                catUpdate.setCatDob(updDob);
+//                                                                catUpdate.setCatDescription(updDescription);
+//                                                                catUpdate.setCatMedNote(updMedicalNote);
+//                                                                catUpdate.setCatGender(setGender);
+//                                                                catUpdate.setCatReason(setReason);
+//                                                                catUpdate.setCatAdoptedStatus(updAdoptionStatus);
+//                                                                catUpdate.setCatVaccStat(setVacc);
+//                                                                catUpdate.setCatSpayNeuterStat(setSpayNeuter);
+//                                                                databaseCats.setValue(catUpdate);
+//                                                            }
+//
+//                                                            @Override
+//                                                            public void onCancelled(DatabaseError databaseError) {
+//
+//                                                            }
+//                                                        });
+//                                                        databaseAdoptions.orderByChild("adoptionCatId").equalTo(cId).addListenerForSingleValueEvent(new ValueEventListener() {
+//                                                            @Override
+//                                                            public void onDataChange(DataSnapshot dataSnapshot) {
+//                                                                for (DataSnapshot updateSnapshot : dataSnapshot.getChildren()) {
+//                                                                    Adoption adoptionUpdate = updateSnapshot.getValue(Adoption.class);
+//                                                                    String updPhotoIdle = taskSnapshot.getDownloadUrl().toString();
+//                                                                    String updNameIdle = etName.getText().toString().trim();
+//
+//                                                                    adoptionUpdate.setAdoptionCatPhoto(updPhotoIdle);
+//                                                                    adoptionUpdate.setAdoptionCatName(updNameIdle);
+//                                                                    databaseAdoptions.child(adoptionUpdate.getAdoptionId()).setValue(adoptionUpdate);
+//                                                                }
+//                                                            }
+//
+//                                                            @Override
+//                                                            public void onCancelled(DatabaseError databaseError) {
+//
+//                                                            }
+//                                                        });
+//                                                        backToMainMenu();
+//                                                        finish();
+//                                                        break;
+//                                                }
+//                                            }
+//                                        });
+//                            } else {
+//                                updateCheckSpinner();
+//                            }
+//                        }
+//
+//                        @Override
+//                        public void onCancelled(DatabaseError databaseError) {
+//
+//                        }
+//                    });
+//                } else {
+//                    updateCheckSpinner();
+//                }
             }
         });
+    }
+
+    private void updateCat(){
+        if (ivPhoto.getDrawable() != null) {
+            databaseCats.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    Cat catCheck = dataSnapshot.getValue(Cat.class);
+                    String catPhotoCheck = catCheck.getCatProfilePhoto();
+                    if (catPhotoCheck.equals("")) {
+                        storageCats = FirebaseStorage.getInstance().getReference();
+                        StorageReference reference = storageCats.child(STORAGE_PATH + System.currentTimeMillis() + "." + getActualImage(uriCatPhoto));
+                        reference.putFile(uriCatPhoto)
+                                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                    @Override
+                                    public void onSuccess(final UploadTask.TaskSnapshot taskSnapshot) {
+                                        int adoptionStatusSpinner = msAdoptionStatus.getSelectedItemPosition();
+                                        String cId = getIntent().getStringExtra("cat_id");
+                                        switch (adoptionStatusSpinner) {
+                                            case 0:
+                                                Toast.makeText(getApplicationContext(), "Pilih Status Adopsi", Toast.LENGTH_SHORT).show();
+                                                return;
+                                            case 1:
+                                                databaseCats.addListenerForSingleValueEvent(new ValueEventListener() {
+                                                    @Override
+                                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                                        Cat catUpdate = dataSnapshot.getValue(Cat.class);
+                                                        String updPhotoChange = taskSnapshot.getDownloadUrl().toString();
+                                                        String updNameChange = etName.getText().toString().trim();
+                                                        String updDobChange = etDob.getText().toString().trim();
+                                                        String updDescriptionChange = etDesc.getText().toString().trim();
+                                                        String updMedicalNoteChange = etMedNote.getText().toString().trim();
+                                                        String updGenderChange = msGender.getSelectedItem().toString().trim();
+                                                        String setUpdGender = null;
+                                                        switch (updGenderChange) {
+                                                            case "Jantan":
+                                                                setUpdGender = "Male";
+                                                                break;
+                                                            case "Betina":
+                                                                setUpdGender = "Female";
+                                                                break;
+                                                            case "Tidak Diketahui":
+                                                                setUpdGender = "Unknown";
+                                                                break;
+                                                        }
+                                                        String updAdoptionStatusChange = "Adopted";
+                                                        int updVaccineId = rgVaccine.getCheckedRadioButtonId();
+                                                        rbVaccine = findViewById(updVaccineId);
+                                                        String updVaccineChange = rbVaccine.getText().toString().trim();
+                                                        String setUpdVacc = null;
+                                                        switch (updVaccineChange) {
+                                                            case "Ya, Sudah Divaksin":
+                                                                setUpdVacc = "Yes, Already Vaccinated";
+                                                                break;
+                                                            case "Belum Divaksin":
+                                                                setUpdVacc = "Not Yet";
+                                                                break;
+                                                        }
+                                                        int updSpayNeuterId = rgSpayNeuter.getCheckedRadioButtonId();
+                                                        rbSpayNeuter = findViewById(updSpayNeuterId);
+                                                        String updSpayNeuterChange = rbSpayNeuter.getText().toString().trim();
+                                                        String setUpdSpayNeuter = null;
+                                                        switch (updSpayNeuterChange) {
+                                                            case "Ya, Sudah Dikastrasi":
+                                                                setUpdSpayNeuter = "Yes, Already Spayed/ Neutered";
+                                                                break;
+                                                            case "Belum Dikastrasi":
+                                                                setUpdSpayNeuter = "Not Yet";
+                                                                break;
+                                                        }
+                                                        String updReasonChange = msReason.getSelectedItem().toString().trim();
+                                                        String setUpdReason = null;
+                                                        switch (updReasonChange) {
+                                                            case "Liar":
+                                                                setUpdReason = "Stray";
+                                                                break;
+                                                            case "Terlantar":
+                                                                setUpdReason = "Abandoned";
+                                                                break;
+                                                            case "Disiksa":
+                                                                setUpdReason = "Abused";
+                                                                break;
+                                                            case "Pemilik Meninggal":
+                                                                setUpdReason = "Owner Dead";
+                                                                break;
+                                                            case "Pemilik Menyerah":
+                                                                setUpdReason = "Owner Give Up";
+                                                                break;
+                                                            case "Pindah Rumah":
+                                                                setUpdReason = "House Moving";
+                                                                break;
+                                                            case "Keuangan":
+                                                                setUpdReason = "Financial";
+                                                                break;
+                                                            case "Masalah Kesehatan":
+                                                                setUpdReason = "Medical Problem";
+                                                                break;
+                                                            case "Lainnya":
+                                                                setUpdReason = "Others";
+                                                                break;
+                                                        }
+
+                                                        catUpdate.setCatProfilePhoto(updPhotoChange);
+                                                        catUpdate.setCatName(updNameChange);
+                                                        catUpdate.setCatDob(updDobChange);
+                                                        catUpdate.setCatDescription(updDescriptionChange);
+                                                        catUpdate.setCatMedNote(updMedicalNoteChange);
+                                                        catUpdate.setCatGender(setUpdGender);
+                                                        catUpdate.setCatAdoptedStatus(updAdoptionStatusChange);
+                                                        catUpdate.setCatVaccStat(setUpdVacc);
+                                                        catUpdate.setCatSpayNeuterStat(setUpdSpayNeuter);
+                                                        catUpdate.setCatReason(setUpdReason);
+                                                        databaseCats.setValue(catUpdate);
+                                                    }
+
+                                                    @Override
+                                                    public void onCancelled(DatabaseError databaseError) {
+
+                                                    }
+                                                });
+                                                databaseAdoptions.orderByChild("adoptionCatId").equalTo(cId).addListenerForSingleValueEvent(new ValueEventListener() {
+                                                    @Override
+                                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                                        for (DataSnapshot updateSnapshot : dataSnapshot.getChildren()) {
+                                                            Adoption adoptionUpdate = updateSnapshot.getValue(Adoption.class);
+                                                            String updPhotoChange = taskSnapshot.getDownloadUrl().toString();
+                                                            String updNameChange = etName.getText().toString().trim();
+
+                                                            adoptionUpdate.setAdoptionCatPhoto(updPhotoChange);
+                                                            adoptionUpdate.setAdoptionCatName(updNameChange);
+                                                            adoptionUpdate.setAdoptionApplicationStatus("Rejected");
+                                                            adoptionUpdate.setAdoptionCatIdApponStatus(adoptionUpdate.getAdoptionCatId() + "_Rejected");
+                                                            adoptionUpdate.setAdoptionOwnerIdApponStatus(adoptionUpdate.getAdoptionOwnerId() + "_Rejected");
+                                                            databaseAdoptions.child(adoptionUpdate.getAdoptionId()).setValue(adoptionUpdate);
+                                                        }
+                                                    }
+
+                                                    @Override
+                                                    public void onCancelled(DatabaseError databaseError) {
+
+                                                    }
+                                                });
+                                                backToMainMenu();
+                                                finish();
+                                                break;
+                                            case 2:
+                                                databaseCats.addListenerForSingleValueEvent(new ValueEventListener() {
+                                                    @Override
+                                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                                        Cat catUpdate = dataSnapshot.getValue(Cat.class);
+                                                        String updPhotoIdle = taskSnapshot.getDownloadUrl().toString();
+                                                        String updNameIdle = etName.getText().toString().trim();
+                                                        String updDob = etDob.getText().toString().trim();
+                                                        String updDescription = etDesc.getText().toString().trim();
+                                                        String updMedicalNote = etMedNote.getText().toString().trim();
+                                                        String updGender = msGender.getSelectedItem().toString().trim();
+                                                        String setGender = null;
+                                                        switch (updGender) {
+                                                            case "Jantan":
+                                                                setGender = "Male";
+                                                                break;
+                                                            case "Betina":
+                                                                setGender = "Female";
+                                                                break;
+                                                            case "Tidak Diketahui":
+                                                                setGender = "Unknown";
+                                                                break;
+                                                        }
+                                                        String updAdoptionStatus = "Available";
+                                                        int updVaccineId = rgVaccine.getCheckedRadioButtonId();
+                                                        rbVaccine = findViewById(updVaccineId);
+                                                        String updVaccine = rbVaccine.getText().toString().trim();
+                                                        String setVacc = null;
+                                                        switch (updVaccine) {
+                                                            case "Ya, Sudah Divaksin":
+                                                                setVacc = "Yes, Already Vaccinated";
+                                                                break;
+                                                            case "Belum Divaksin":
+                                                                setVacc = "Not Yet";
+                                                                break;
+                                                        }
+                                                        int updSpayNeuterId = rgSpayNeuter.getCheckedRadioButtonId();
+                                                        rbSpayNeuter = findViewById(updSpayNeuterId);
+                                                        String updSpayNeuter = rbSpayNeuter.getText().toString().trim();
+                                                        String setSpayNeuter = null;
+                                                        switch (updSpayNeuter) {
+                                                            case "Ya, Sudah Dikastrasi":
+                                                                setSpayNeuter = "Yes, Already Spayed/ Neutered";
+                                                                break;
+                                                            case "Belum Dikastrasi":
+                                                                setSpayNeuter = "Not Yet";
+                                                                break;
+                                                        }
+                                                        String updReason = msReason.getSelectedItem().toString().trim();
+                                                        String setReason = null;
+                                                        switch (updReason) {
+                                                            case "Liar":
+                                                                setReason = "Stray";
+                                                                break;
+                                                            case "Terlantar":
+                                                                setReason = "Abandoned";
+                                                                break;
+                                                            case "Disiksa":
+                                                                setReason = "Abused";
+                                                                break;
+                                                            case "Pemilik Meninggal":
+                                                                setReason = "Owner Dead";
+                                                                break;
+                                                            case "Pemilik Menyerah":
+                                                                setReason = "Owner Give Up";
+                                                                break;
+                                                            case "Pindah Rumah":
+                                                                setReason = "House Moving";
+                                                                break;
+                                                            case "Keuangan":
+                                                                setReason = "Financial";
+                                                                break;
+                                                            case "Masalah Kesehatan":
+                                                                setReason = "Medical Problem";
+                                                                break;
+                                                            case "Lainnya":
+                                                                setReason = "Others";
+                                                                break;
+                                                        }
+
+                                                        catUpdate.setCatProfilePhoto(updPhotoIdle);
+                                                        catUpdate.setCatName(updNameIdle);
+                                                        catUpdate.setCatDob(updDob);
+                                                        catUpdate.setCatDescription(updDescription);
+                                                        catUpdate.setCatMedNote(updMedicalNote);
+                                                        catUpdate.setCatGender(setGender);
+                                                        catUpdate.setCatReason(setReason);
+                                                        catUpdate.setCatAdoptedStatus(updAdoptionStatus);
+                                                        catUpdate.setCatVaccStat(setVacc);
+                                                        catUpdate.setCatSpayNeuterStat(setSpayNeuter);
+                                                        databaseCats.setValue(catUpdate);
+                                                    }
+
+                                                    @Override
+                                                    public void onCancelled(DatabaseError databaseError) {
+
+                                                    }
+                                                });
+                                                databaseAdoptions.orderByChild("adoptionCatId").equalTo(cId).addListenerForSingleValueEvent(new ValueEventListener() {
+                                                    @Override
+                                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                                        for (DataSnapshot updateSnapshot : dataSnapshot.getChildren()) {
+                                                            Adoption adoptionUpdate = updateSnapshot.getValue(Adoption.class);
+                                                            String updPhotoIdle = taskSnapshot.getDownloadUrl().toString();
+                                                            String updNameIdle = etName.getText().toString().trim();
+
+                                                            adoptionUpdate.setAdoptionCatPhoto(updPhotoIdle);
+                                                            adoptionUpdate.setAdoptionCatName(updNameIdle);
+                                                            databaseAdoptions.child(adoptionUpdate.getAdoptionId()).setValue(adoptionUpdate);
+                                                        }
+                                                    }
+
+                                                    @Override
+                                                    public void onCancelled(DatabaseError databaseError) {
+
+                                                    }
+                                                });
+                                                backToMainMenu();
+                                                finish();
+                                                break;
+                                        }
+                                    }
+                                });
+                    } else {
+                        updateCheckSpinner();
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+        } else {
+            updateCheckSpinner();
+        }
     }
 
     private void updateCheckSpinner() {

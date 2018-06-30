@@ -366,274 +366,544 @@ public class EditUserProfileActivity extends AppCompatActivity {
 
                 }
 
-                if (ivPhoto.getDrawable() != null) {
-                    databaseUsers = FirebaseDatabase.getInstance().getReference().child("users").child(uId);
-                    databaseUsers.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            User userCheck = dataSnapshot.getValue(User.class);
-                            String photoCheck = userCheck.getUserProfilePhoto();
-                            if (photoCheck.equals("")) {
-                                storageUsers = FirebaseStorage.getInstance().getReference();
-                                StorageReference reference = storageUsers.child(STORAGE_PATH + System.currentTimeMillis() + "." + getActualImage(uriUserPhoto));
-                                reference.putFile(uriUserPhoto)
-                                        .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                                            @Override
-                                            public void onSuccess(final UploadTask.TaskSnapshot taskSnapshot) {
-                                                databaseUsers = FirebaseDatabase.getInstance().getReference().child("users").child(uId);
-                                                databaseUsers.addListenerForSingleValueEvent(new ValueEventListener() {
-                                                    @Override
-                                                    public void onDataChange(DataSnapshot dataSnapshot) {
-                                                        User userUpdate = dataSnapshot.getValue(User.class);
-                                                        String photo = taskSnapshot.getDownloadUrl().toString();
-                                                        String name = etName.getText().toString().trim();
-                                                        String dob = etDob.getText().toString().trim();
-                                                        String phone = etPhone.getText().toString().trim();
-                                                        String address = etAddress.getText().toString().trim();
-                                                        String gender = msGender.getSelectedItem().toString().trim();
-                                                        String setgender = null;
-                                                        switch (gender){
-                                                            case "Pria":
-                                                                setgender = "Male";
-                                                                break;
-                                                            case "Wanita":
-                                                                setgender = "Female";
-                                                                break;
-                                                        }
-                                                        String province = msProvince.getSelectedItem().toString().trim();
-                                                        String city = msCity.getSelectedItem().toString().trim();
-
-                                                        userUpdate.setUserProfilePhoto(photo);
-                                                        userUpdate.setUserFname(name);
-                                                        userUpdate.setUserDob(dob);
-                                                        userUpdate.setUserPhone(phone);
-                                                        userUpdate.setUserAddress(address);
-                                                        userUpdate.setUserGender(setgender);
-                                                        userUpdate.setUserProvince(province);
-                                                        userUpdate.setUserCity(city);
-                                                        userUpdate.setUserCityStatus(city + "_" + userUpdate.getUserStatus());
-                                                        databaseUsers.setValue(userUpdate);
-                                                    }
-
-                                                    @Override
-                                                    public void onCancelled(DatabaseError databaseError) {
-
-                                                    }
-                                                });
-                                                databaseCats = FirebaseDatabase.getInstance().getReference().child("cats");
-                                                databaseCats.orderByChild("catOwnerId").equalTo(uId).addListenerForSingleValueEvent(new ValueEventListener() {
-                                                    @Override
-                                                    public void onDataChange(DataSnapshot dataSnapshot) {
-                                                        for (DataSnapshot catUpdateSnapshot : dataSnapshot.getChildren()) {
-                                                            Cat catUpdate = catUpdateSnapshot.getValue(Cat.class);
-                                                            String province = msProvince.getSelectedItem().toString().trim();
-                                                            String city = msCity.getSelectedItem().toString().trim();
-
-                                                            catUpdate.setCatProvince(province);
-                                                            catUpdate.setCatCity(city);
-                                                            catUpdate.setCatCityDeleteStatus(city + "_" + catUpdate.getCatDeleteStatus());
-                                                            databaseCats.child(catUpdate.getCatId()).setValue(catUpdate);
-                                                        }
-                                                    }
-
-                                                    @Override
-                                                    public void onCancelled(DatabaseError databaseError) {
-
-                                                    }
-                                                });
-                                                databaseAdoptions = FirebaseDatabase.getInstance().getReference().child("adoptions");
-                                                databaseAdoptions.orderByChild("adoptionApplicantId").equalTo(uId).addListenerForSingleValueEvent(new ValueEventListener() {
-                                                    @Override
-                                                    public void onDataChange(DataSnapshot dataSnapshot) {
-                                                        for (DataSnapshot adoptionUpdateSnapshot : dataSnapshot.getChildren()) {
-                                                            Adoption adoptionUpdate = adoptionUpdateSnapshot.getValue(Adoption.class);
-                                                            String name = etName.getText().toString().trim();
-                                                            adoptionUpdate.setAdoptionApplicantName(name);
-                                                            databaseAdoptions.child(adoptionUpdate.getAdoptionId()).setValue(adoptionUpdate);
-                                                        }
-                                                    }
-
-                                                    @Override
-                                                    public void onCancelled(DatabaseError databaseError) {
-
-                                                    }
-                                                });
-                                                Toast.makeText(getApplicationContext(), "Profil Anda telah diperbarui", Toast.LENGTH_SHORT).show();
-                                            }
-                                        })
-                                        .addOnFailureListener(new OnFailureListener() {
-                                            @Override
-                                            public void onFailure(@NonNull Exception e) {
-                                                Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
-                                            }
-                                        });
-                            } else {
-                                databaseUsers = FirebaseDatabase.getInstance().getReference().child("users").child(uId);
-                                databaseUsers.addListenerForSingleValueEvent(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(DataSnapshot dataSnapshot) {
-                                        User userUpdate = dataSnapshot.getValue(User.class);
-                                        String name = etName.getText().toString().trim();
-                                        String dob = etDob.getText().toString().trim();
-                                        String phone = etPhone.getText().toString().trim();
-                                        String address = etAddress.getText().toString().trim();
-                                        String gender = msGender.getSelectedItem().toString().trim();
-                                        String setgender = null;
-                                        switch (gender){
-                                            case "Pria":
-                                                setgender = "Male";
-                                                break;
-                                            case "Wanita":
-                                                setgender = "Female";
-                                                break;
-                                        }
-                                        String province = msProvince.getSelectedItem().toString().trim();
-                                        String city = msCity.getSelectedItem().toString().trim();
-
-                                        userUpdate.setUserFname(name);
-                                        userUpdate.setUserDob(dob);
-                                        userUpdate.setUserPhone(phone);
-                                        userUpdate.setUserAddress(address);
-                                        userUpdate.setUserGender(setgender);
-                                        userUpdate.setUserProvince(province);
-                                        userUpdate.setUserCity(city);
-                                        userUpdate.setUserCityStatus(city + "_" + userUpdate.getUserStatus());
-                                        databaseUsers.setValue(userUpdate);
-                                    }
-
-                                    @Override
-                                    public void onCancelled(DatabaseError databaseError) {
-
-                                    }
-                                });
-                                databaseCats = FirebaseDatabase.getInstance().getReference().child("cats");
-                                databaseCats.orderByChild("catOwnerId").equalTo(uId).addListenerForSingleValueEvent(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(DataSnapshot dataSnapshot) {
-                                        for (DataSnapshot catUpdateSnapshot : dataSnapshot.getChildren()) {
-                                            Cat catUpdate = catUpdateSnapshot.getValue(Cat.class);
-                                            String province = msProvince.getSelectedItem().toString().trim();
-                                            String city = msCity.getSelectedItem().toString().trim();
-
-                                            catUpdate.setCatProvince(province);
-                                            catUpdate.setCatCity(city);
-                                            catUpdate.setCatCityDeleteStatus(city + "_" + catUpdate.getCatDeleteStatus());
-                                            databaseCats.child(catUpdate.getCatId()).setValue(catUpdate);
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onCancelled(DatabaseError databaseError) {
-
-                                    }
-                                });
-                                databaseAdoptions = FirebaseDatabase.getInstance().getReference().child("adoptions");
-                                databaseAdoptions.orderByChild("adoptionApplicantId").equalTo(uId).addListenerForSingleValueEvent(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(DataSnapshot dataSnapshot) {
-                                        for (DataSnapshot adoptionUpdateSnapshot : dataSnapshot.getChildren()) {
-                                            Adoption adoptionUpdate = adoptionUpdateSnapshot.getValue(Adoption.class);
-                                            String name = etName.getText().toString().trim();
-                                            adoptionUpdate.setAdoptionApplicantName(name);
-                                            databaseAdoptions.child(adoptionUpdate.getAdoptionId()).setValue(adoptionUpdate);
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onCancelled(DatabaseError databaseError) {
-
-                                    }
-                                });
-                                Toast.makeText(getApplicationContext(), "Profil Anda telah diperbarui", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
-                        }
-                    });
-                } else {
-                    databaseUsers = FirebaseDatabase.getInstance().getReference().child("users").child(uId);
-                    databaseUsers.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            User userUpdate = dataSnapshot.getValue(User.class);
-                            String name = etName.getText().toString().trim();
-                            String dob = etDob.getText().toString().trim();
-                            String phone = etPhone.getText().toString().trim();
-                            String address = etAddress.getText().toString().trim();
-                            String gender = msGender.getSelectedItem().toString().trim();
-                            String setgender = null;
-                            switch (gender){
-                                case "Pria":
-                                    setgender = "Male";
-                                    break;
-                                case "Wanita":
-                                    setgender = "Female";
-                                    break;
-                            }
-                            String province = msProvince.getSelectedItem().toString().trim();
-                            String city = msCity.getSelectedItem().toString().trim();
-
-                            userUpdate.setUserFname(name);
-                            userUpdate.setUserDob(dob);
-                            userUpdate.setUserPhone(phone);
-                            userUpdate.setUserAddress(address);
-                            userUpdate.setUserGender(setgender);
-                            userUpdate.setUserProvince(province);
-                            userUpdate.setUserCity(city);
-                            userUpdate.setUserCityStatus(city + "_" + userUpdate.getUserStatus());
-                            databaseUsers.setValue(userUpdate);
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
-                        }
-                    });
-                    databaseCats = FirebaseDatabase.getInstance().getReference().child("cats");
-                    databaseCats.orderByChild("catOwnerId").equalTo(uId).addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            for (DataSnapshot catUpdateSnapshot : dataSnapshot.getChildren()) {
-                                Cat catUpdate = catUpdateSnapshot.getValue(Cat.class);
-                                String province = msProvince.getSelectedItem().toString().trim();
-                                String city = msCity.getSelectedItem().toString().trim();
-
-                                catUpdate.setCatProvince(province);
-                                catUpdate.setCatCity(city);
-                                catUpdate.setCatCityDeleteStatus(city + "_" + catUpdate.getCatDeleteStatus());
-                                databaseCats.child(catUpdate.getCatId()).setValue(catUpdate);
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
-                        }
-                    });
-                    databaseAdoptions = FirebaseDatabase.getInstance().getReference().child("adoptions");
-                    databaseAdoptions.orderByChild("adoptionApplicantId").equalTo(uId).addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            for (DataSnapshot adoptionUpdateSnapshot : dataSnapshot.getChildren()) {
-                                Adoption adoptionUpdate = adoptionUpdateSnapshot.getValue(Adoption.class);
-                                String name = etName.getText().toString().trim();
-                                adoptionUpdate.setAdoptionApplicantName(name);
-                                databaseAdoptions.child(adoptionUpdate.getAdoptionId()).setValue(adoptionUpdate);
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
-                        }
-                    });
-                }
+                updateUser();
+//                if (ivPhoto.getDrawable() != null) {
+//                    databaseUsers = FirebaseDatabase.getInstance().getReference().child("users").child(uId);
+//                    databaseUsers.addListenerForSingleValueEvent(new ValueEventListener() {
+//                        @Override
+//                        public void onDataChange(DataSnapshot dataSnapshot) {
+//                            User userCheck = dataSnapshot.getValue(User.class);
+//                            String photoCheck = userCheck.getUserProfilePhoto();
+//                            if (photoCheck.equals("")) {
+//                                storageUsers = FirebaseStorage.getInstance().getReference();
+//                                StorageReference reference = storageUsers.child(STORAGE_PATH + System.currentTimeMillis() + "." + getActualImage(uriUserPhoto));
+//                                reference.putFile(uriUserPhoto)
+//                                        .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+//                                            @Override
+//                                            public void onSuccess(final UploadTask.TaskSnapshot taskSnapshot) {
+//                                                databaseUsers = FirebaseDatabase.getInstance().getReference().child("users").child(uId);
+//                                                databaseUsers.addListenerForSingleValueEvent(new ValueEventListener() {
+//                                                    @Override
+//                                                    public void onDataChange(DataSnapshot dataSnapshot) {
+//                                                        User userUpdate = dataSnapshot.getValue(User.class);
+//                                                        String photo = taskSnapshot.getDownloadUrl().toString();
+//                                                        String name = etName.getText().toString().trim();
+//                                                        String dob = etDob.getText().toString().trim();
+//                                                        String phone = etPhone.getText().toString().trim();
+//                                                        String address = etAddress.getText().toString().trim();
+//                                                        String gender = msGender.getSelectedItem().toString().trim();
+//                                                        String setgender = null;
+//                                                        switch (gender){
+//                                                            case "Pria":
+//                                                                setgender = "Male";
+//                                                                break;
+//                                                            case "Wanita":
+//                                                                setgender = "Female";
+//                                                                break;
+//                                                        }
+//                                                        String province = msProvince.getSelectedItem().toString().trim();
+//                                                        String city = msCity.getSelectedItem().toString().trim();
+//
+//                                                        userUpdate.setUserProfilePhoto(photo);
+//                                                        userUpdate.setUserFname(name);
+//                                                        userUpdate.setUserDob(dob);
+//                                                        userUpdate.setUserPhone(phone);
+//                                                        userUpdate.setUserAddress(address);
+//                                                        userUpdate.setUserGender(setgender);
+//                                                        userUpdate.setUserProvince(province);
+//                                                        userUpdate.setUserCity(city);
+//                                                        userUpdate.setUserCityStatus(city + "_" + userUpdate.getUserStatus());
+//                                                        databaseUsers.setValue(userUpdate);
+//                                                    }
+//
+//                                                    @Override
+//                                                    public void onCancelled(DatabaseError databaseError) {
+//
+//                                                    }
+//                                                });
+//                                                databaseCats = FirebaseDatabase.getInstance().getReference().child("cats");
+//                                                databaseCats.orderByChild("catOwnerId").equalTo(uId).addListenerForSingleValueEvent(new ValueEventListener() {
+//                                                    @Override
+//                                                    public void onDataChange(DataSnapshot dataSnapshot) {
+//                                                        for (DataSnapshot catUpdateSnapshot : dataSnapshot.getChildren()) {
+//                                                            Cat catUpdate = catUpdateSnapshot.getValue(Cat.class);
+//                                                            String province = msProvince.getSelectedItem().toString().trim();
+//                                                            String city = msCity.getSelectedItem().toString().trim();
+//
+//                                                            catUpdate.setCatProvince(province);
+//                                                            catUpdate.setCatCity(city);
+//                                                            catUpdate.setCatCityDeleteStatus(city + "_" + catUpdate.getCatDeleteStatus());
+//                                                            databaseCats.child(catUpdate.getCatId()).setValue(catUpdate);
+//                                                        }
+//                                                    }
+//
+//                                                    @Override
+//                                                    public void onCancelled(DatabaseError databaseError) {
+//
+//                                                    }
+//                                                });
+//                                                databaseAdoptions = FirebaseDatabase.getInstance().getReference().child("adoptions");
+//                                                databaseAdoptions.orderByChild("adoptionApplicantId").equalTo(uId).addListenerForSingleValueEvent(new ValueEventListener() {
+//                                                    @Override
+//                                                    public void onDataChange(DataSnapshot dataSnapshot) {
+//                                                        for (DataSnapshot adoptionUpdateSnapshot : dataSnapshot.getChildren()) {
+//                                                            Adoption adoptionUpdate = adoptionUpdateSnapshot.getValue(Adoption.class);
+//                                                            String name = etName.getText().toString().trim();
+//                                                            adoptionUpdate.setAdoptionApplicantName(name);
+//                                                            databaseAdoptions.child(adoptionUpdate.getAdoptionId()).setValue(adoptionUpdate);
+//                                                        }
+//                                                    }
+//
+//                                                    @Override
+//                                                    public void onCancelled(DatabaseError databaseError) {
+//
+//                                                    }
+//                                                });
+//                                                Toast.makeText(getApplicationContext(), "Profil Anda telah diperbarui", Toast.LENGTH_SHORT).show();
+//                                            }
+//                                        })
+//                                        .addOnFailureListener(new OnFailureListener() {
+//                                            @Override
+//                                            public void onFailure(@NonNull Exception e) {
+//                                                Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+//                                            }
+//                                        });
+//                            } else {
+//                                databaseUsers = FirebaseDatabase.getInstance().getReference().child("users").child(uId);
+//                                databaseUsers.addListenerForSingleValueEvent(new ValueEventListener() {
+//                                    @Override
+//                                    public void onDataChange(DataSnapshot dataSnapshot) {
+//                                        User userUpdate = dataSnapshot.getValue(User.class);
+//                                        String name = etName.getText().toString().trim();
+//                                        String dob = etDob.getText().toString().trim();
+//                                        String phone = etPhone.getText().toString().trim();
+//                                        String address = etAddress.getText().toString().trim();
+//                                        String gender = msGender.getSelectedItem().toString().trim();
+//                                        String setgender = null;
+//                                        switch (gender){
+//                                            case "Pria":
+//                                                setgender = "Male";
+//                                                break;
+//                                            case "Wanita":
+//                                                setgender = "Female";
+//                                                break;
+//                                        }
+//                                        String province = msProvince.getSelectedItem().toString().trim();
+//                                        String city = msCity.getSelectedItem().toString().trim();
+//
+//                                        userUpdate.setUserFname(name);
+//                                        userUpdate.setUserDob(dob);
+//                                        userUpdate.setUserPhone(phone);
+//                                        userUpdate.setUserAddress(address);
+//                                        userUpdate.setUserGender(setgender);
+//                                        userUpdate.setUserProvince(province);
+//                                        userUpdate.setUserCity(city);
+//                                        userUpdate.setUserCityStatus(city + "_" + userUpdate.getUserStatus());
+//                                        databaseUsers.setValue(userUpdate);
+//                                    }
+//
+//                                    @Override
+//                                    public void onCancelled(DatabaseError databaseError) {
+//
+//                                    }
+//                                });
+//                                databaseCats = FirebaseDatabase.getInstance().getReference().child("cats");
+//                                databaseCats.orderByChild("catOwnerId").equalTo(uId).addListenerForSingleValueEvent(new ValueEventListener() {
+//                                    @Override
+//                                    public void onDataChange(DataSnapshot dataSnapshot) {
+//                                        for (DataSnapshot catUpdateSnapshot : dataSnapshot.getChildren()) {
+//                                            Cat catUpdate = catUpdateSnapshot.getValue(Cat.class);
+//                                            String province = msProvince.getSelectedItem().toString().trim();
+//                                            String city = msCity.getSelectedItem().toString().trim();
+//
+//                                            catUpdate.setCatProvince(province);
+//                                            catUpdate.setCatCity(city);
+//                                            catUpdate.setCatCityDeleteStatus(city + "_" + catUpdate.getCatDeleteStatus());
+//                                            databaseCats.child(catUpdate.getCatId()).setValue(catUpdate);
+//                                        }
+//                                    }
+//
+//                                    @Override
+//                                    public void onCancelled(DatabaseError databaseError) {
+//
+//                                    }
+//                                });
+//                                databaseAdoptions = FirebaseDatabase.getInstance().getReference().child("adoptions");
+//                                databaseAdoptions.orderByChild("adoptionApplicantId").equalTo(uId).addListenerForSingleValueEvent(new ValueEventListener() {
+//                                    @Override
+//                                    public void onDataChange(DataSnapshot dataSnapshot) {
+//                                        for (DataSnapshot adoptionUpdateSnapshot : dataSnapshot.getChildren()) {
+//                                            Adoption adoptionUpdate = adoptionUpdateSnapshot.getValue(Adoption.class);
+//                                            String name = etName.getText().toString().trim();
+//                                            adoptionUpdate.setAdoptionApplicantName(name);
+//                                            databaseAdoptions.child(adoptionUpdate.getAdoptionId()).setValue(adoptionUpdate);
+//                                        }
+//                                    }
+//
+//                                    @Override
+//                                    public void onCancelled(DatabaseError databaseError) {
+//
+//                                    }
+//                                });
+//                                Toast.makeText(getApplicationContext(), "Profil Anda telah diperbarui", Toast.LENGTH_SHORT).show();
+//                            }
+//                        }
+//
+//                        @Override
+//                        public void onCancelled(DatabaseError databaseError) {
+//
+//                        }
+//                    });
+//                } else {
+//                    databaseUsers = FirebaseDatabase.getInstance().getReference().child("users").child(uId);
+//                    databaseUsers.addListenerForSingleValueEvent(new ValueEventListener() {
+//                        @Override
+//                        public void onDataChange(DataSnapshot dataSnapshot) {
+//                            User userUpdate = dataSnapshot.getValue(User.class);
+//                            String name = etName.getText().toString().trim();
+//                            String dob = etDob.getText().toString().trim();
+//                            String phone = etPhone.getText().toString().trim();
+//                            String address = etAddress.getText().toString().trim();
+//                            String gender = msGender.getSelectedItem().toString().trim();
+//                            String setgender = null;
+//                            switch (gender){
+//                                case "Pria":
+//                                    setgender = "Male";
+//                                    break;
+//                                case "Wanita":
+//                                    setgender = "Female";
+//                                    break;
+//                            }
+//                            String province = msProvince.getSelectedItem().toString().trim();
+//                            String city = msCity.getSelectedItem().toString().trim();
+//
+//                            userUpdate.setUserFname(name);
+//                            userUpdate.setUserDob(dob);
+//                            userUpdate.setUserPhone(phone);
+//                            userUpdate.setUserAddress(address);
+//                            userUpdate.setUserGender(setgender);
+//                            userUpdate.setUserProvince(province);
+//                            userUpdate.setUserCity(city);
+//                            userUpdate.setUserCityStatus(city + "_" + userUpdate.getUserStatus());
+//                            databaseUsers.setValue(userUpdate);
+//                        }
+//
+//                        @Override
+//                        public void onCancelled(DatabaseError databaseError) {
+//
+//                        }
+//                    });
+//                    databaseCats = FirebaseDatabase.getInstance().getReference().child("cats");
+//                    databaseCats.orderByChild("catOwnerId").equalTo(uId).addListenerForSingleValueEvent(new ValueEventListener() {
+//                        @Override
+//                        public void onDataChange(DataSnapshot dataSnapshot) {
+//                            for (DataSnapshot catUpdateSnapshot : dataSnapshot.getChildren()) {
+//                                Cat catUpdate = catUpdateSnapshot.getValue(Cat.class);
+//                                String province = msProvince.getSelectedItem().toString().trim();
+//                                String city = msCity.getSelectedItem().toString().trim();
+//
+//                                catUpdate.setCatProvince(province);
+//                                catUpdate.setCatCity(city);
+//                                catUpdate.setCatCityDeleteStatus(city + "_" + catUpdate.getCatDeleteStatus());
+//                                databaseCats.child(catUpdate.getCatId()).setValue(catUpdate);
+//                            }
+//                        }
+//
+//                        @Override
+//                        public void onCancelled(DatabaseError databaseError) {
+//
+//                        }
+//                    });
+//                    databaseAdoptions = FirebaseDatabase.getInstance().getReference().child("adoptions");
+//                    databaseAdoptions.orderByChild("adoptionApplicantId").equalTo(uId).addListenerForSingleValueEvent(new ValueEventListener() {
+//                        @Override
+//                        public void onDataChange(DataSnapshot dataSnapshot) {
+//                            for (DataSnapshot adoptionUpdateSnapshot : dataSnapshot.getChildren()) {
+//                                Adoption adoptionUpdate = adoptionUpdateSnapshot.getValue(Adoption.class);
+//                                String name = etName.getText().toString().trim();
+//                                adoptionUpdate.setAdoptionApplicantName(name);
+//                                databaseAdoptions.child(adoptionUpdate.getAdoptionId()).setValue(adoptionUpdate);
+//                            }
+//                        }
+//
+//                        @Override
+//                        public void onCancelled(DatabaseError databaseError) {
+//
+//                        }
+//                    });
+//                }
                 backToMainMenu();
             }
         });
+    }
+
+    private void updateUser(){
+        final String uId = getIntent().getStringExtra("userId");
+        if (ivPhoto.getDrawable() != null) {
+            databaseUsers = FirebaseDatabase.getInstance().getReference().child("users").child(uId);
+            databaseUsers.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    User userCheck = dataSnapshot.getValue(User.class);
+                    String photoCheck = userCheck.getUserProfilePhoto();
+                    if (photoCheck.equals("")) {
+                        storageUsers = FirebaseStorage.getInstance().getReference();
+                        StorageReference reference = storageUsers.child(STORAGE_PATH + System.currentTimeMillis() + "." + getActualImage(uriUserPhoto));
+                        reference.putFile(uriUserPhoto)
+                                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                    @Override
+                                    public void onSuccess(final UploadTask.TaskSnapshot taskSnapshot) {
+                                        databaseUsers = FirebaseDatabase.getInstance().getReference().child("users").child(uId);
+                                        databaseUsers.addListenerForSingleValueEvent(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                                User userUpdate = dataSnapshot.getValue(User.class);
+                                                String photo = taskSnapshot.getDownloadUrl().toString();
+                                                String name = etName.getText().toString().trim();
+                                                String dob = etDob.getText().toString().trim();
+                                                String phone = etPhone.getText().toString().trim();
+                                                String address = etAddress.getText().toString().trim();
+                                                String gender = msGender.getSelectedItem().toString().trim();
+                                                String setgender = null;
+                                                switch (gender){
+                                                    case "Pria":
+                                                        setgender = "Male";
+                                                        break;
+                                                    case "Wanita":
+                                                        setgender = "Female";
+                                                        break;
+                                                }
+                                                String province = msProvince.getSelectedItem().toString().trim();
+                                                String city = msCity.getSelectedItem().toString().trim();
+
+                                                userUpdate.setUserProfilePhoto(photo);
+                                                userUpdate.setUserFname(name);
+                                                userUpdate.setUserDob(dob);
+                                                userUpdate.setUserPhone(phone);
+                                                userUpdate.setUserAddress(address);
+                                                userUpdate.setUserGender(setgender);
+                                                userUpdate.setUserProvince(province);
+                                                userUpdate.setUserCity(city);
+                                                userUpdate.setUserCityStatus(city + "_" + userUpdate.getUserStatus());
+                                                databaseUsers.setValue(userUpdate);
+                                            }
+
+                                            @Override
+                                            public void onCancelled(DatabaseError databaseError) {
+
+                                            }
+                                        });
+                                        databaseCats = FirebaseDatabase.getInstance().getReference().child("cats");
+                                        databaseCats.orderByChild("catOwnerId").equalTo(uId).addListenerForSingleValueEvent(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                                for (DataSnapshot catUpdateSnapshot : dataSnapshot.getChildren()) {
+                                                    Cat catUpdate = catUpdateSnapshot.getValue(Cat.class);
+                                                    String province = msProvince.getSelectedItem().toString().trim();
+                                                    String city = msCity.getSelectedItem().toString().trim();
+
+                                                    catUpdate.setCatProvince(province);
+                                                    catUpdate.setCatCity(city);
+                                                    catUpdate.setCatCityDeleteStatus(city + "_" + catUpdate.getCatDeleteStatus());
+                                                    databaseCats.child(catUpdate.getCatId()).setValue(catUpdate);
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onCancelled(DatabaseError databaseError) {
+
+                                            }
+                                        });
+                                        databaseAdoptions = FirebaseDatabase.getInstance().getReference().child("adoptions");
+                                        databaseAdoptions.orderByChild("adoptionApplicantId").equalTo(uId).addListenerForSingleValueEvent(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                                for (DataSnapshot adoptionUpdateSnapshot : dataSnapshot.getChildren()) {
+                                                    Adoption adoptionUpdate = adoptionUpdateSnapshot.getValue(Adoption.class);
+                                                    String name = etName.getText().toString().trim();
+                                                    adoptionUpdate.setAdoptionApplicantName(name);
+                                                    databaseAdoptions.child(adoptionUpdate.getAdoptionId()).setValue(adoptionUpdate);
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onCancelled(DatabaseError databaseError) {
+
+                                            }
+                                        });
+                                        Toast.makeText(getApplicationContext(), "Profil Anda telah diperbarui", Toast.LENGTH_SHORT).show();
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                    } else {
+                        databaseUsers = FirebaseDatabase.getInstance().getReference().child("users").child(uId);
+                        databaseUsers.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                User userUpdate = dataSnapshot.getValue(User.class);
+                                String name = etName.getText().toString().trim();
+                                String dob = etDob.getText().toString().trim();
+                                String phone = etPhone.getText().toString().trim();
+                                String address = etAddress.getText().toString().trim();
+                                String gender = msGender.getSelectedItem().toString().trim();
+                                String setgender = null;
+                                switch (gender){
+                                    case "Pria":
+                                        setgender = "Male";
+                                        break;
+                                    case "Wanita":
+                                        setgender = "Female";
+                                        break;
+                                }
+                                String province = msProvince.getSelectedItem().toString().trim();
+                                String city = msCity.getSelectedItem().toString().trim();
+
+                                userUpdate.setUserFname(name);
+                                userUpdate.setUserDob(dob);
+                                userUpdate.setUserPhone(phone);
+                                userUpdate.setUserAddress(address);
+                                userUpdate.setUserGender(setgender);
+                                userUpdate.setUserProvince(province);
+                                userUpdate.setUserCity(city);
+                                userUpdate.setUserCityStatus(city + "_" + userUpdate.getUserStatus());
+                                databaseUsers.setValue(userUpdate);
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+                        databaseCats = FirebaseDatabase.getInstance().getReference().child("cats");
+                        databaseCats.orderByChild("catOwnerId").equalTo(uId).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                for (DataSnapshot catUpdateSnapshot : dataSnapshot.getChildren()) {
+                                    Cat catUpdate = catUpdateSnapshot.getValue(Cat.class);
+                                    String province = msProvince.getSelectedItem().toString().trim();
+                                    String city = msCity.getSelectedItem().toString().trim();
+
+                                    catUpdate.setCatProvince(province);
+                                    catUpdate.setCatCity(city);
+                                    catUpdate.setCatCityDeleteStatus(city + "_" + catUpdate.getCatDeleteStatus());
+                                    databaseCats.child(catUpdate.getCatId()).setValue(catUpdate);
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+                        databaseAdoptions = FirebaseDatabase.getInstance().getReference().child("adoptions");
+                        databaseAdoptions.orderByChild("adoptionApplicantId").equalTo(uId).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                for (DataSnapshot adoptionUpdateSnapshot : dataSnapshot.getChildren()) {
+                                    Adoption adoptionUpdate = adoptionUpdateSnapshot.getValue(Adoption.class);
+                                    String name = etName.getText().toString().trim();
+                                    adoptionUpdate.setAdoptionApplicantName(name);
+                                    databaseAdoptions.child(adoptionUpdate.getAdoptionId()).setValue(adoptionUpdate);
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+                        Toast.makeText(getApplicationContext(), "Profil Anda telah diperbarui", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+        } else {
+            databaseUsers = FirebaseDatabase.getInstance().getReference().child("users").child(uId);
+            databaseUsers.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    User userUpdate = dataSnapshot.getValue(User.class);
+                    String name = etName.getText().toString().trim();
+                    String dob = etDob.getText().toString().trim();
+                    String phone = etPhone.getText().toString().trim();
+                    String address = etAddress.getText().toString().trim();
+                    String gender = msGender.getSelectedItem().toString().trim();
+                    String setgender = null;
+                    switch (gender){
+                        case "Pria":
+                            setgender = "Male";
+                            break;
+                        case "Wanita":
+                            setgender = "Female";
+                            break;
+                    }
+                    String province = msProvince.getSelectedItem().toString().trim();
+                    String city = msCity.getSelectedItem().toString().trim();
+
+                    userUpdate.setUserFname(name);
+                    userUpdate.setUserDob(dob);
+                    userUpdate.setUserPhone(phone);
+                    userUpdate.setUserAddress(address);
+                    userUpdate.setUserGender(setgender);
+                    userUpdate.setUserProvince(province);
+                    userUpdate.setUserCity(city);
+                    userUpdate.setUserCityStatus(city + "_" + userUpdate.getUserStatus());
+                    databaseUsers.setValue(userUpdate);
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+            databaseCats = FirebaseDatabase.getInstance().getReference().child("cats");
+            databaseCats.orderByChild("catOwnerId").equalTo(uId).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    for (DataSnapshot catUpdateSnapshot : dataSnapshot.getChildren()) {
+                        Cat catUpdate = catUpdateSnapshot.getValue(Cat.class);
+                        String province = msProvince.getSelectedItem().toString().trim();
+                        String city = msCity.getSelectedItem().toString().trim();
+
+                        catUpdate.setCatProvince(province);
+                        catUpdate.setCatCity(city);
+                        catUpdate.setCatCityDeleteStatus(city + "_" + catUpdate.getCatDeleteStatus());
+                        databaseCats.child(catUpdate.getCatId()).setValue(catUpdate);
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+            databaseAdoptions = FirebaseDatabase.getInstance().getReference().child("adoptions");
+            databaseAdoptions.orderByChild("adoptionApplicantId").equalTo(uId).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    for (DataSnapshot adoptionUpdateSnapshot : dataSnapshot.getChildren()) {
+                        Adoption adoptionUpdate = adoptionUpdateSnapshot.getValue(Adoption.class);
+                        String name = etName.getText().toString().trim();
+                        adoptionUpdate.setAdoptionApplicantName(name);
+                        databaseAdoptions.child(adoptionUpdate.getAdoptionId()).setValue(adoptionUpdate);
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+        }
     }
 
     private void mediaOpen() {

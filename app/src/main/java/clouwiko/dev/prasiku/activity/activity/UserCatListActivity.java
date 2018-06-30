@@ -44,7 +44,7 @@ public class UserCatListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_adoption_list);
+        setContentView(R.layout.activity_user_cat_list);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -68,10 +68,10 @@ public class UserCatListActivity extends AppCompatActivity {
         //Firebase Database
         firebaseDatabase = FirebaseDatabase.getInstance();
 
-        getCatData();
+        getCatList();
     }
 
-    void getCatData() {
+    void getCatList() {
         //Firebase Current User UID
         String userId = auth.getCurrentUser().getUid();
         String ownerdeletestat = userId + "_0";
