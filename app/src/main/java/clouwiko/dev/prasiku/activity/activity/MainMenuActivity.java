@@ -287,7 +287,7 @@ public class MainMenuActivity extends AppCompatActivity
                 progressBar.setVisibility(View.GONE);
                 Toast.makeText(this, "Keluar Akun", Toast.LENGTH_SHORT).show();
                 finish();
-                startActivity(new Intent(MainMenuActivity.this, LandingActivity.class));
+                startActivity(new Intent(MainMenuActivity.this, SignInActivity.class));
                 break;
         }
         return super.onOptionsItemSelected(menuItem);
