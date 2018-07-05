@@ -13,15 +13,15 @@ public class User {
     private String userProfilePhoto;
     private String userProvince;
     private String userCity;
-    private String userPhone;
+    private Long userPhone;
     private String userAddress;
-    private String userStatus;
+    private Long userStatus;
     private String userCityStatus;
 
     public User() {
     }
 
-    public User(String userEmail, String userUid, String userFname, String userDob, String userGender, String userProfilePhoto, String userProvince, String userCity, String userPhone, String userAddress, String userStatus, String userCityStatus) {
+    public User(String userEmail, String userUid, String userFname, String userDob, String userGender, String userProfilePhoto, String userProvince, String userCity, Long userPhone, String userAddress, Long userStatus, String userCityStatus) {
         this.userEmail = userEmail;
         this.userUid = userUid;
         this.userFname = userFname;
@@ -100,11 +100,11 @@ public class User {
         this.userCity = userCity;
     }
 
-    public String getUserPhone() {
+    public Long getUserPhone() {
         return userPhone;
     }
 
-    public void setUserPhone(String userPhone) {
+    public void setUserPhone(Long userPhone) {
         this.userPhone = userPhone;
     }
 
@@ -116,11 +116,11 @@ public class User {
         this.userAddress = userAddress;
     }
 
-    public String getUserStatus() {
+    public Long getUserStatus() {
         return userStatus;
     }
 
-    public void setUserStatus(String userStatus) {
+    public void setUserStatus(Long userStatus) {
         this.userStatus = userStatus;
     }
 

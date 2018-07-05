@@ -73,7 +73,7 @@ public class UserHomeAcceptedActivity extends AppCompatActivity {
                 String province = userData.getUserProvince();
                 String city = userData.getUserCity();
                 String address = userData.getUserAddress();
-                String phone = userData.getUserPhone();
+                Long phone = userData.getUserPhone();
                 String email = userData.getUserEmail();
                 String photo = userData.getUserProfilePhoto();
 
@@ -83,7 +83,7 @@ public class UserHomeAcceptedActivity extends AppCompatActivity {
                 tvProvince.setText(province);
                 tvCity.setText(city);
                 tvAddress.setText(address);
-                tvPhone.setText(phone);
+                tvPhone.setText(String.valueOf(phone));
                 tvEmail.setText(email);
                 if (userData.getUserProfilePhoto().equals("")) {
                     String noPhoto = "@drawable/no_image";

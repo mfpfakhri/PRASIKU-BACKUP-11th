@@ -105,7 +105,7 @@ public class EditUserProfileActivity extends AppCompatActivity {
                 User userData = dataSnapshot.getValue(User.class);
                 String name = userData.getUserFname();
                 String dob = userData.getUserDob();
-                String phone = userData.getUserPhone();
+                Long phone = userData.getUserPhone();
                 String address = userData.getUserAddress();
                 String gender = userData.getUserGender();
                 String photo = userData.getUserProfilePhoto();
@@ -127,7 +127,7 @@ public class EditUserProfileActivity extends AppCompatActivity {
                 }
                 etName.setText(name);
                 etDob.setText(dob);
-                etPhone.setText(phone);
+                etPhone.setText("0"+String.valueOf(phone));
                 etAddress.setText(address);
             }
 
@@ -661,7 +661,7 @@ public class EditUserProfileActivity extends AppCompatActivity {
                                                 String photo = taskSnapshot.getDownloadUrl().toString();
                                                 String name = etName.getText().toString().trim();
                                                 String dob = etDob.getText().toString().trim();
-                                                String phone = etPhone.getText().toString().trim();
+                                                Long phone = Long.valueOf(etPhone.getText().toString().trim());
                                                 String address = etAddress.getText().toString().trim();
                                                 String gender = msGender.getSelectedItem().toString().trim();
                                                 String setgender = null;
@@ -748,7 +748,7 @@ public class EditUserProfileActivity extends AppCompatActivity {
                                 User userUpdate = dataSnapshot.getValue(User.class);
                                 String name = etName.getText().toString().trim();
                                 String dob = etDob.getText().toString().trim();
-                                String phone = etPhone.getText().toString().trim();
+                                Long phone = Long.valueOf(etPhone.getText().toString().trim());
                                 String address = etAddress.getText().toString().trim();
                                 String gender = msGender.getSelectedItem().toString().trim();
                                 String setgender = null;
@@ -834,7 +834,7 @@ public class EditUserProfileActivity extends AppCompatActivity {
                     User userUpdate = dataSnapshot.getValue(User.class);
                     String name = etName.getText().toString().trim();
                     String dob = etDob.getText().toString().trim();
-                    String phone = etPhone.getText().toString().trim();
+                    Long phone = Long.valueOf(etPhone.getText().toString().trim());
                     String address = etAddress.getText().toString().trim();
                     String gender = msGender.getSelectedItem().toString().trim();
                     String setgender = null;

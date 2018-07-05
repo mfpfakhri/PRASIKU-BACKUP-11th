@@ -93,7 +93,7 @@ public class MainMenuActivity extends AppCompatActivity
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         User userData = dataSnapshot.getValue(User.class);
-                        String status = userData.getUserStatus();
+                        String status = String.valueOf(userData.getUserStatus());
                         switch (status){
                             case "0":
                                 break;
