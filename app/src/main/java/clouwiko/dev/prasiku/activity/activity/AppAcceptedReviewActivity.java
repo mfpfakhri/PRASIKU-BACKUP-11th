@@ -98,14 +98,14 @@ public class AppAcceptedReviewActivity extends AppCompatActivity {
                 String catphoto = dataSnapshot.child("adoptionCatPhoto").getValue(String.class);
                 String appname = dataSnapshot.child("adoptionApplicantName").getValue(String.class);
                 String catname = dataSnapshot.child("adoptionCatName").getValue(String.class);
-                String appphone = dataSnapshot.child("adoptionApplicantPhone").getValue(String.class);
+                Long appphone = dataSnapshot.child("adoptionApplicantPhone").getValue(Long.class);
                 String appaddress = dataSnapshot.child("adoptionApplicantAddress").getValue(String.class);
                 String appjob = dataSnapshot.child("adoptionApplicantJob").getValue(String.class);
                 String appreason = dataSnapshot.child("adoptionApplicantReason").getValue(String.class);
-                String appnoa = dataSnapshot.child("adoptionApplicantNoAnimal").getValue(String.class);
+                Long appnoa = dataSnapshot.child("adoptionApplicantNoAnimal").getValue(Long.class);
                 String apphousetype = dataSnapshot.child("adoptionApplicantHouseType").getValue(String.class);
-                String apphousesize = dataSnapshot.child("adoptionApplicantHouseSize").getValue(String.class);
-                String appnop = dataSnapshot.child("adoptionApplicantNoPeople").getValue(String.class);
+                Long apphousesize = dataSnapshot.child("adoptionApplicantHouseSize").getValue(Long.class);
+                Long appnop = dataSnapshot.child("adoptionApplicantNoPeople").getValue(Long.class);
                 String catplace = dataSnapshot.child("adoptionApplicantCatPlace").getValue(String.class);
                 String housememberpermission = dataSnapshot.child("adoptionApplicantFamPermission").getValue(String.class);
                 String sethousememberpermission = null;
@@ -197,14 +197,14 @@ public class AppAcceptedReviewActivity extends AppCompatActivity {
                 }
                 tvAppName.setText(appname);
                 tvCatName.setText(catname);
-                tvPhone.setText(appphone);
+                tvPhone.setText(String.valueOf(appphone));
                 tvAddress.setText(appaddress);
                 tvJob.setText(appjob);
                 tvReason.setText(appreason);
-                tvNoA.setText(appnoa);
+                tvNoA.setText(String.valueOf(appnoa));
                 tvHouseType.setText(apphousetype);
-                tvHouseSize.setText(apphousesize);
-                tvNoP.setText(appnop);
+                tvHouseSize.setText(String.valueOf(apphousesize));
+                tvNoP.setText(String.valueOf(appnop));
                 tvCatPlace.setText(catplace);
                 tvHouseMember.setText(sethousememberpermission);
                 tvMovingPlan.setText(setmovingplan);
@@ -258,7 +258,7 @@ public class AppAcceptedReviewActivity extends AppCompatActivity {
                         intent.setType(ContactsContract.Contacts.CONTENT_TYPE);
 
                         intent.putExtra(ContactsContract.Intents.Insert.NAME, "SIKU " + appname);
-                        intent.putExtra(ContactsContract.Intents.Insert.PHONE, appphone);
+                        intent.putExtra(ContactsContract.Intents.Insert.PHONE, ("0"+appphone));
                         startActivity(intent);
                     }
 
@@ -303,7 +303,7 @@ public class AppAcceptedReviewActivity extends AppCompatActivity {
                         String defaultSmsPackageName = Telephony.Sms.getDefaultSmsPackage(getApplicationContext());
                         Uri uri = Uri.parse("tel:" + appphone);
                         Intent sendIntent = new Intent(Intent.ACTION_VIEW, uri);
-                        sendIntent.putExtra("address", appphone);
+                        sendIntent.putExtra("address", ("0"+appphone));
                         sendIntent.putExtra("sms_body", message);
                         sendIntent.setPackage(defaultSmsPackageName);
                         sendIntent.setType("vnd.android-dir/mms-sms");

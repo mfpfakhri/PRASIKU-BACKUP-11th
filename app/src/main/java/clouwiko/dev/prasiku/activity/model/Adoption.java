@@ -11,14 +11,14 @@ public class Adoption {
     private String adoptionOwnerId;
     private String adoptionApplicantId;
     private String adoptionApplicantIdDeleteStatus;
-    private String adoptionApplicantPhone;
+    private Long adoptionApplicantPhone;
     private String adoptionApplicantAddress;
     private String adoptionApplicantJob;
     private String adoptionApplicantReason;
-    private String adoptionApplicantNoAnimal;
+    private Long adoptionApplicantNoAnimal;
     private String adoptionApplicantHouseType;
-    private String adoptionApplicantHouseSize;
-    private String adoptionApplicantNoPeople;
+    private Long adoptionApplicantHouseSize;
+    private Long adoptionApplicantNoPeople;
     private String adoptionApplicantCatPlace;
     private String adoptionApplicantFamPermission;
     private String adoptionApplicantMove;
@@ -36,7 +36,8 @@ public class Adoption {
     public Adoption() {
     }
 
-    public Adoption(String adoptionId, String adoptionCatId, String adoptionOwnerId, String adoptionApplicantId, String adoptionApplicantIdDeleteStatus, String adoptionApplicantPhone, String adoptionApplicantAddress, String adoptionApplicantJob, String adoptionApplicantReason, String adoptionApplicantNoAnimal, String adoptionApplicantHouseType, String adoptionApplicantHouseSize, String adoptionApplicantNoPeople, String adoptionApplicantCatPlace, String adoptionApplicantFamPermission, String adoptionApplicantMove, String adoptionApplicantMarriage, String adoptionApplicantKids, String adoptionApplicantFinancial, String adoptionApplicationStatus, String adoptionCatName, String adoptionCatPhoto, String adoptionApplicantName, String adoptionOwnerIdApponStatus, String adoptionDeleteStatus, String adoptionCatIdApponStatus) {
+    public Adoption(String adoptionDeleteStatus, String adoptionId, String adoptionCatId, String adoptionOwnerId, String adoptionApplicantId, String adoptionApplicantIdDeleteStatus, Long adoptionApplicantPhone, String adoptionApplicantAddress, String adoptionApplicantJob, String adoptionApplicantReason, Long adoptionApplicantNoAnimal, String adoptionApplicantHouseType, Long adoptionApplicantHouseSize, Long adoptionApplicantNoPeople, String adoptionApplicantCatPlace, String adoptionApplicantFamPermission, String adoptionApplicantMove, String adoptionApplicantMarriage, String adoptionApplicantKids, String adoptionApplicantFinancial, String adoptionApplicationStatus, String adoptionCatName, String adoptionCatPhoto, String adoptionApplicantName, String adoptionOwnerIdApponStatus, String adoptionCatIdApponStatus) {
+        this.adoptionDeleteStatus = adoptionDeleteStatus;
         this.adoptionId = adoptionId;
         this.adoptionCatId = adoptionCatId;
         this.adoptionOwnerId = adoptionOwnerId;
@@ -61,8 +62,15 @@ public class Adoption {
         this.adoptionCatPhoto = adoptionCatPhoto;
         this.adoptionApplicantName = adoptionApplicantName;
         this.adoptionOwnerIdApponStatus = adoptionOwnerIdApponStatus;
-        this.adoptionDeleteStatus = adoptionDeleteStatus;
         this.adoptionCatIdApponStatus = adoptionCatIdApponStatus;
+    }
+
+    public String getAdoptionDeleteStatus() {
+        return adoptionDeleteStatus;
+    }
+
+    public void setAdoptionDeleteStatus(String adoptionDeleteStatus) {
+        this.adoptionDeleteStatus = adoptionDeleteStatus;
     }
 
     public String getAdoptionId() {
@@ -105,11 +113,11 @@ public class Adoption {
         this.adoptionApplicantIdDeleteStatus = adoptionApplicantIdDeleteStatus;
     }
 
-    public String getAdoptionApplicantPhone() {
+    public Long getAdoptionApplicantPhone() {
         return adoptionApplicantPhone;
     }
 
-    public void setAdoptionApplicantPhone(String adoptionApplicantPhone) {
+    public void setAdoptionApplicantPhone(Long adoptionApplicantPhone) {
         this.adoptionApplicantPhone = adoptionApplicantPhone;
     }
 
@@ -137,11 +145,11 @@ public class Adoption {
         this.adoptionApplicantReason = adoptionApplicantReason;
     }
 
-    public String getAdoptionApplicantNoAnimal() {
+    public Long getAdoptionApplicantNoAnimal() {
         return adoptionApplicantNoAnimal;
     }
 
-    public void setAdoptionApplicantNoAnimal(String adoptionApplicantNoAnimal) {
+    public void setAdoptionApplicantNoAnimal(Long adoptionApplicantNoAnimal) {
         this.adoptionApplicantNoAnimal = adoptionApplicantNoAnimal;
     }
 
@@ -153,19 +161,19 @@ public class Adoption {
         this.adoptionApplicantHouseType = adoptionApplicantHouseType;
     }
 
-    public String getAdoptionApplicantHouseSize() {
+    public Long getAdoptionApplicantHouseSize() {
         return adoptionApplicantHouseSize;
     }
 
-    public void setAdoptionApplicantHouseSize(String adoptionApplicantHouseSize) {
+    public void setAdoptionApplicantHouseSize(Long adoptionApplicantHouseSize) {
         this.adoptionApplicantHouseSize = adoptionApplicantHouseSize;
     }
 
-    public String getAdoptionApplicantNoPeople() {
+    public Long getAdoptionApplicantNoPeople() {
         return adoptionApplicantNoPeople;
     }
 
-    public void setAdoptionApplicantNoPeople(String adoptionApplicantNoPeople) {
+    public void setAdoptionApplicantNoPeople(Long adoptionApplicantNoPeople) {
         this.adoptionApplicantNoPeople = adoptionApplicantNoPeople;
     }
 
@@ -255,14 +263,6 @@ public class Adoption {
 
     public void setAdoptionOwnerIdApponStatus(String adoptionOwnerIdApponStatus) {
         this.adoptionOwnerIdApponStatus = adoptionOwnerIdApponStatus;
-    }
-
-    public String getAdoptionDeleteStatus() {
-        return adoptionDeleteStatus;
-    }
-
-    public void setAdoptionDeleteStatus(String adoptionDeleteStatus) {
-        this.adoptionDeleteStatus = adoptionDeleteStatus;
     }
 
     public String getAdoptionCatIdApponStatus() {

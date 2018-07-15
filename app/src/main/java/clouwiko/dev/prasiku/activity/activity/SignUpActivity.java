@@ -478,7 +478,7 @@ public class SignUpActivity extends AppCompatActivity {
                         String city = spinnerCities.getSelectedItem().toString().trim();
                         Long phone = Long.valueOf(inputPhone.getText().toString());
                         String address = inputAddress.getText().toString().trim();
-                        Long status = Long.valueOf(0);
+                        String status = "0";
                         String citystatus = city+"_0";
 
                         User user = new User(email, userUid, fName, dobDate, setgender, pPhotoUrl, province, city, phone, address, status, citystatus);

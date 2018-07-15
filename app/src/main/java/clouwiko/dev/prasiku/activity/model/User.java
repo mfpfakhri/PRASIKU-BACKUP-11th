@@ -15,13 +15,13 @@ public class User {
     private String userCity;
     private Long userPhone;
     private String userAddress;
-    private Long userStatus;
+    private String userStatus;
     private String userCityStatus;
 
     public User() {
     }
 
-    public User(String userEmail, String userUid, String userFname, String userDob, String userGender, String userProfilePhoto, String userProvince, String userCity, Long userPhone, String userAddress, Long userStatus, String userCityStatus) {
+    public User(String userEmail, String userUid, String userFname, String userDob, String userGender, String userProfilePhoto, String userProvince, String userCity, Long userPhone, String userAddress, String userStatus, String userCityStatus) {
         this.userEmail = userEmail;
         this.userUid = userUid;
         this.userFname = userFname;
@@ -116,11 +116,11 @@ public class User {
         this.userAddress = userAddress;
     }
 
-    public Long getUserStatus() {
+    public String getUserStatus() {
         return userStatus;
     }
 
-    public void setUserStatus(Long userStatus) {
+    public void setUserStatus(String userStatus) {
         this.userStatus = userStatus;
     }
 

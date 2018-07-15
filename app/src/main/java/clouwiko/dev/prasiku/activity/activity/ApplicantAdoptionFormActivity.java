@@ -235,13 +235,13 @@ public class ApplicantAdoptionFormActivity extends AppCompatActivity {
         String catphoto = getIntent().getStringExtra("cat_photo");
         String applicantname = getIntent().getStringExtra("applicant_name");
         String applicantId = auth.getCurrentUser().getUid().toString().trim();
-        String phone = etPhone.getText().toString().trim();
+        Long phone = Long.valueOf(etPhone.getText().toString().trim());
         String address = etAddress.getText().toString().trim();
         String job = etJob.getText().toString().trim();
         String reasonwhy = etReason.getText().toString().trim();
-        String numberofanimal = etAnimalNumber.getText().toString().trim();
-        String houseize = etHouseSize.getText().toString().trim();
-        String familynumber = etPeopleNumber.getText().toString().trim();
+        Long numberofanimal = Long.valueOf(etAnimalNumber.getText().toString().trim());
+        Long housesize = Long.valueOf(etHouseSize.getText().toString().trim());
+        Long familynumber = Long.valueOf(etPeopleNumber.getText().toString().trim());
         String animallive = etAnimalLive.getText().toString().trim();
         String housetype = msHouseType.getSelectedItem().toString().trim();
         String sethousetype = null;
@@ -321,7 +321,7 @@ public class ApplicantAdoptionFormActivity extends AppCompatActivity {
         String applicantIdDelete = applicantId + "_" + delete_status;
 //        String owner_delete_status = ownerId + delete_status;
         String cat_status = catId + "_" + status;
-        Adoption adoption = new Adoption(adoptionId, catId, ownerId, applicantId, applicantIdDelete, phone, address, job, reasonwhy, numberofanimal, sethousetype, houseize, familynumber, animallive, setfamilypermission, setmovingplan, setmarriageplan, setkids, setfinancial, status, catname, catphoto, applicantname, owner_status, delete_status, cat_status);
+        Adoption adoption = new Adoption(delete_status, adoptionId, catId, ownerId, applicantId, applicantIdDelete, phone, address, job, reasonwhy, numberofanimal, housetype, housesize, familynumber, animallive, setfamilypermission, setmovingplan, setmarriageplan, setkids, setfinancial, status, catname, catphoto, applicantname, owner_status, cat_status);
 
         databaseAdoption.child(adoptionId).setValue(adoption);
     }
