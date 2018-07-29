@@ -1516,7 +1516,7 @@ public class EditCatDataAvailableActivity extends AppCompatActivity {
 //    }
 
     private void backToMainMenu() {
-        Toast.makeText(getApplicationContext(), "Profil Kucing berhasil Diperbarui", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "Profil Kucing Berhasil Diperbarui", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(getApplicationContext(), MainMenuActivity.class);
         startActivity(intent);
         finish();
@@ -1525,7 +1525,7 @@ public class EditCatDataAvailableActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         AlertDialog.Builder builder = new AlertDialog.Builder(EditCatDataAvailableActivity.this);
-        builder.setMessage("Apakah Anda yakin ingin keluar?")
+        builder.setMessage("Apakah Anda Yakin Ingin Kembali?")
                 .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

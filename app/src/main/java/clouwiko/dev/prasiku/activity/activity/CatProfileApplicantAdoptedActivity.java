@@ -52,7 +52,7 @@ public class CatProfileApplicantAdoptedActivity extends AppCompatActivity {
         btnAdopted.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "This cat has been adopted", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Kucing Ini Telah Diadopsi", Toast.LENGTH_SHORT).show();
             }
         });
 

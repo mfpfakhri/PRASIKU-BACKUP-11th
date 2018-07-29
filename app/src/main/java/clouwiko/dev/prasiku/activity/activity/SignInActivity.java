@@ -97,15 +97,15 @@ public class SignInActivity extends AppCompatActivity {
                 final String password = inputPassword.getText().toString();
 
                 if (TextUtils.isEmpty(email)) {
-                        Toast.makeText(getApplicationContext(), "Ketik alamat email Anda", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Ketik Alamat Email Anda", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (TextUtils.isEmpty(password)) {
-                    Toast.makeText(getApplicationContext(), "Ketik kata sandi Anda", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Ketik Kata Sandi Anda", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (password.length() < 6) {
-                    inputPassword.setError("Kata sandi terlalu pendek, minimal 6 karakter");
+                    inputPassword.setError("Kata Sandi Terlalu Pendek, Minimal 6 Karakter");
                 }
 
                 progressBar.setVisibility(View.VISIBLE);
@@ -136,13 +136,13 @@ public class SignInActivity extends AppCompatActivity {
                                                         break;
                                                     case "1":
                                                         progressBar.setVisibility(View.GONE);
-                                                        Toast.makeText(getApplicationContext(), "Akun Anda diblokir", Toast.LENGTH_SHORT).show();
+                                                        Toast.makeText(getApplicationContext(), "Status Akun Anda Diblokir", Toast.LENGTH_SHORT).show();
                                                         Intent intentBanned = new Intent(getApplicationContext(), UserBannedActivity.class);
                                                         startActivity(intentBanned);
                                                         break;
                                                     case "2":
                                                         progressBar.setVisibility(View.GONE);
-                                                        Toast.makeText(getApplicationContext(), "Anda tidak bisa masuk menggunakan Akun ini", Toast.LENGTH_SHORT).show();
+                                                        Toast.makeText(getApplicationContext(), "Anda Tidak Bisa Masuk Menggunakan Akun Ini", Toast.LENGTH_SHORT).show();
                                                         auth.signOut();
                                                         break;
                                                 }
@@ -161,7 +161,7 @@ public class SignInActivity extends AppCompatActivity {
                                     }
                                 } else {
                                     progressBar.setVisibility(View.GONE);
-                                    Toast.makeText(SignInActivity.this, "Autentikasi gagal, periksa email dan kata sandi Anda", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(SignInActivity.this, "Autentikasi Gagal, Periksa Email dan Kata Sandi Anda", Toast.LENGTH_SHORT).show();
                                     return;
                                 }
                             }

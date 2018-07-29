@@ -132,6 +132,10 @@ public class UploadCatDataActivity extends AppCompatActivity {
                         android.R.style.Theme_Holo_Light_Dialog_MinWidth,
                         catDobSetListener,
                         day, month, year);
+                dialog.getDatePicker().setMaxDate(cal.getTimeInMillis());
+                cal.add(Calendar.YEAR, -25);
+                dialog.getDatePicker().setMinDate(cal.getTimeInMillis());
+                dialog.updateDate(year, month, day);
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 dialog.show();
             }
@@ -143,7 +147,7 @@ public class UploadCatDataActivity extends AppCompatActivity {
                 month = month + 1;
                 Log.d("onDateSet: date: " + dayOfMonth + "/" + month + "/" + year, catDobSetListener.toString());
 
-                String date = dayOfMonth + "/" + month + "/" + year;
+                String date = dayOfMonth + "-" + month + "-" + year;
                 inputCatDob.setText(date);
             }
         };

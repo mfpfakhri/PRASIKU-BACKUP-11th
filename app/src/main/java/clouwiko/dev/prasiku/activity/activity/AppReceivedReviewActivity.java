@@ -257,7 +257,7 @@ public class AppReceivedReviewActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(AppReceivedReviewActivity.this);
-                builder.setMessage("Apakah Anda yakin ingin menetapkan pengguna ini sebagai pengadopsi?")
+                builder.setMessage("Apakah Anda Yakin Ingin Menetapkan Pengguna ini Sebagai Pengadopsi?")
                         .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -369,7 +369,7 @@ public class AppReceivedReviewActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(AppReceivedReviewActivity.this);
-                builder.setMessage("Apakah Anda yakin ingin menolak pengguna ini sebagai pengadopsi?")
+                builder.setMessage("Apakah Anda Yakin Ingin Menolak Pengguna ini Sebagai Pengadopsi?")
                         .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {

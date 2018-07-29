@@ -85,7 +85,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
                 String userNewPassword = newPassword.getText().toString().trim();
                 String validPassword = "^(?=\\S+$).{4,}$";
                 if (userCurrentPassword.isEmpty()) {
-                    currentPassword.setError("Ketik kata sandi Anda saat ini");
+                    currentPassword.setError("Ketik Kata Sandi Anda Saat Ini");
                     progressBar.setVisibility(View.GONE);
                     return;
                 } else {
@@ -95,14 +95,14 @@ public class ChangePasswordActivity extends AppCompatActivity {
                 if (matcherCurrentPassword.matches()) {
 
                 } else {
-                    currentPassword.setError("Ketik kata sandi yang valid");
+                    currentPassword.setError("Ketik Kata Sandi yang Valid");
                     progressBar.setVisibility(View.GONE);
                     return;
                 }
 
                 if (userNewPassword.isEmpty()) {
                     helpPassword.setVisibility(View.VISIBLE);
-                    newPassword.setError("Ketik kata sandi baru");
+                    newPassword.setError("Ketik Kata Sandi Baru");
                     progressBar.setVisibility(View.GONE);
                     return;
                 } else {
@@ -110,7 +110,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
                 }
                 if (userNewPassword.length() < 6) {
                     helpPassword.setVisibility(View.VISIBLE);
-                    newPassword.setError("Kata sandi terlalu pendek, minimal 6 karakter");
+                    newPassword.setError("Kata Sandi Terlalu Pendek, Minimal 6 Karakter");
                     progressBar.setVisibility(View.GONE);
                     return;
                 }
@@ -119,7 +119,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
 
                 } else {
                     helpPassword.setVisibility(View.VISIBLE);
-                    newPassword.setError("Ketik kata sandi yang valid");
+                    newPassword.setError("Ketik Kata Sandi yang Valid");
                     progressBar.setVisibility(View.GONE);
                     return;
                 }
@@ -135,20 +135,20 @@ public class ChangePasswordActivity extends AppCompatActivity {
                                                 @Override
                                                 public void onComplete(@NonNull Task<Void> task) {
                                                     if (task.isSuccessful()) {
-                                                        Toast.makeText(getApplicationContext(), "Kata sandi telah diperbarui, silakan masuk dengan kata sandi baru", Toast.LENGTH_SHORT).show();
+                                                        Toast.makeText(getApplicationContext(), "Kata Sandi Telah Diperbarui, Silakan Masuk Dengan Kata Sandi Baru", Toast.LENGTH_SHORT).show();
                                                         auth.signOut();
                                                         startActivity(new Intent(getApplicationContext(), SignInActivity.class));
                                                         progressBar.setVisibility(View.GONE);
                                                         finish();
                                                     } else {
-                                                        Toast.makeText(getApplicationContext(), "Gagal memperbarui kata sandi", Toast.LENGTH_SHORT).show();
+                                                        Toast.makeText(getApplicationContext(), "Gagal Memperbarui Kata Sandi", Toast.LENGTH_SHORT).show();
                                                         progressBar.setVisibility(View.GONE);
                                                         startActivity(getIntent());
                                                     }
                                                 }
                                             });
                                 } else {
-                                    currentPassword.setError("Kata sandi saat ini yang Anda masukkan salah");
+                                    currentPassword.setError("Kata Sandi Saat Ini yang Anda Masukkan Salah");
                                     progressBar.setVisibility(View.GONE);
                                 }
                             }

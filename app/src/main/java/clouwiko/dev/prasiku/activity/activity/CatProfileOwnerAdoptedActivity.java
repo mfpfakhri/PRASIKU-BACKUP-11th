@@ -60,48 +60,43 @@ public class CatProfileOwnerAdoptedActivity extends AppCompatActivity {
         fabEdit = findViewById(R.id.cpo_adopted_fab_edit);
         fabDelete = findViewById(R.id.cpo_adopted_fab_delete);
 
+        final String pActivity = getIntent().getStringExtra("previousActivity");
+        final String catId = getIntent().getStringExtra("cat_id");
+        final String ownerId = getIntent().getStringExtra("owner_id");
+        final String apponstatus = catId + "_Accepted";
+
         btnAdopted.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "This cat has been adopted", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Kucing Ini Telah Diadopsi", Toast.LENGTH_SHORT).show();
             }
         });
 
         fabEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final String pActivity = getIntent().getStringExtra("previousActivity");
-                final String catId = getIntent().getStringExtra("cat_id");
-                final String ownerId = getIntent().getStringExtra("owner_id");
-                final String apponstatus = catId + "_Accepted";
                 databaseAdoptions = FirebaseDatabase.getInstance().getReference().child("adoptions");
-                databaseAdoptions.orderByChild("adoptionCatIdApponStatus").equalTo(apponstatus).addChildEventListener(new ChildEventListener() {
+                databaseAdoptions.orderByChild("adoptionCatIdApponStatus").equalTo(apponstatus).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
-                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                        Adoption adoption = dataSnapshot.getValue(Adoption.class);
-                        String appid = adoption.getAdoptionId();
-                        Intent intent = new Intent(getApplicationContext(), EditCatDataAdoptedActivity.class);
-                        intent.putExtra("previousActivity", pActivity);
-                        intent.putExtra("cat_id", catId);
-                        intent.putExtra("owner_id", ownerId);
-                        intent.putExtra("application_id", appid);
-                        startActivity(intent);
-                        finish();
-                    }
-
-                    @Override
-                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-                    }
-
-                    @Override
-                    public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-                    }
-
-                    @Override
-                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.exists()){
+                            Adoption adoption = dataSnapshot.getValue(Adoption.class);
+                            String appid = adoption.getAdoptionId();
+                            Intent intent = new Intent(getApplicationContext(), EditCatDataAdoptedActivity.class);
+                            intent.putExtra("previousActivity", pActivity);
+                            intent.putExtra("cat_id", catId);
+                            intent.putExtra("owner_id", ownerId);
+                            intent.putExtra("application_id", appid);
+                            startActivity(intent);
+                            finish();
+                        } else {
+                            Intent intent = new Intent(getApplicationContext(), EditCatDataAdoptedActivity.class);
+                            intent.putExtra("previousActivity", pActivity);
+                            intent.putExtra("cat_id", catId);
+                            intent.putExtra("owner_id", ownerId);
+                            startActivity(intent);
+                            finish();
+                        }
                     }
 
                     @Override
@@ -109,6 +104,50 @@ public class CatProfileOwnerAdoptedActivity extends AppCompatActivity {
 
                     }
                 });
+//                databaseAdoptions.orderByChild("adoptionCatIdApponStatus").equalTo(apponstatus).addChildEventListener(new ChildEventListener() {
+//                    @Override
+//                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+//                        if (dataSnapshot.exists()){
+//                            Adoption adoption = dataSnapshot.getValue(Adoption.class);
+//                            String appid = adoption.getAdoptionId();
+//                            Intent intent = new Intent(getApplicationContext(), EditCatDataAdoptedActivity.class);
+//                            intent.putExtra("previousActivity", pActivity);
+//                            intent.putExtra("cat_id", catId);
+//                            intent.putExtra("owner_id", ownerId);
+//                            intent.putExtra("application_id", appid);
+//                            startActivity(intent);
+//                            finish();
+//                        } else {
+//                            Intent intent = new Intent(getApplicationContext(), EditCatDataAdoptedActivity.class);
+//                            intent.putExtra("previousActivity", pActivity);
+//                            intent.putExtra("cat_id", catId);
+//                            intent.putExtra("owner_id", ownerId);
+//                            startActivity(intent);
+//                            finish();
+//                        }
+//
+//                    }
+//
+//                    @Override
+//                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onChildRemoved(DataSnapshot dataSnapshot) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(DatabaseError databaseError) {
+//
+//                    }
+//                });
             }
         });
 
@@ -116,8 +155,8 @@ public class CatProfileOwnerAdoptedActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(CatProfileOwnerAdoptedActivity.this);
-                builder.setMessage("Are You sure want to delete this cat?")
-                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                builder.setMessage("Apakah Anda Yakin Ingin Menghapus Kucing Ini?")
+                        .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 String catId = getIntent().getStringExtra("cat_id");
@@ -175,7 +214,7 @@ public class CatProfileOwnerAdoptedActivity extends AppCompatActivity {
                                 }
                             }
                         })
-                        .setNegativeButton("No", null);
+                        .setNegativeButton("Tidak", null);
                 AlertDialog alertDialog = builder.create();
                 alertDialog.show();
             }

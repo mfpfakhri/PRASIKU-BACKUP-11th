@@ -77,7 +77,7 @@ public class EditCatDataAdoptedActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Pilih Status Adopsi", Toast.LENGTH_SHORT).show();
                     return;
                 } else if (adoptionStatusSpinner == 1) {
-                    Toast.makeText(getApplicationContext(), "Status Kucing Ini telah Diadopsi", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Status Kucing Ini Telah Diadopsi", Toast.LENGTH_SHORT).show();
                     return;
                 } else {
                     String cId = getIntent().getStringExtra("cat_id");
@@ -121,14 +121,14 @@ public class EditCatDataAdoptedActivity extends AppCompatActivity {
                             String catid = dataSnapshot.child("adoptionCatId").getValue(String.class);
                             String owid = dataSnapshot.child("adoptionOwnerId").getValue(String.class);
                             String appid = dataSnapshot.child("adoptionApplicantId").getValue(String.class);
-                            Long appphone = Long.valueOf(dataSnapshot.child("adoptionApplicantPhone").getValue(String.class));
+                            Long appphone = Long.valueOf(dataSnapshot.child("adoptionApplicantPhone").getValue(Long.class));
                             String appaddress = dataSnapshot.child("adoptionApplicantAddress").getValue(String.class);
                             String appjob = dataSnapshot.child("adoptionApplicantJob").getValue(String.class);
                             String appreason = dataSnapshot.child("adoptionApplicantReason").getValue(String.class);
-                            Long appnoanimal = Long.valueOf(dataSnapshot.child("adoptionApplicantNoAnimal").getValue(String.class));
+                            Long appnoanimal = Long.valueOf(dataSnapshot.child("adoptionApplicantNoAnimal").getValue(Long.class));
                             String apphousetype = dataSnapshot.child("adoptionApplicantHouseType").getValue(String.class);
-                            Long apphousesize = Long.valueOf(dataSnapshot.child("adoptionApplicantHouseSize").getValue(String.class));
-                            Long appnopeople = Long.valueOf(dataSnapshot.child("adoptionApplicantNoPeople").getValue(String.class));
+                            Long apphousesize = Long.valueOf(dataSnapshot.child("adoptionApplicantHouseSize").getValue(Long.class));
+                            Long appnopeople = Long.valueOf(dataSnapshot.child("adoptionApplicantNoPeople").getValue(Long.class));
                             String appcatplace = dataSnapshot.child("adoptionApplicantCatPlace").getValue(String.class);
                             String appfampermission = dataSnapshot.child("adoptionApplicantFamPermission").getValue(String.class);
                             String appmove = dataSnapshot.child("adoptionApplicantMove").getValue(String.class);
@@ -146,7 +146,7 @@ public class EditCatDataAdoptedActivity extends AppCompatActivity {
                             String catidapponstatus = catid + "_" + apponstatus;
 
                             updateAcceptedAdoptionData(catdelete, adoptionid, catid, ownerId, appid, applicantiddelete, appphone, appaddress, appjob, appreason, appnoanimal, apphousetype, apphousesize, appnopeople, appcatplace, appfampermission, appmove, appmarriage, appkids, appfinancial, apponstatus, catname, catphoto, appname, owneridapponstatus, catidapponstatus);
-                            Toast.makeText(getApplicationContext(), "Profil Kucing berhasil Diperbarui", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(getApplicationContext(), "Profil Kucing Berhasil Diperbarui", Toast.LENGTH_SHORT).show();
                         }
 
                         @Override
@@ -169,7 +169,7 @@ public class EditCatDataAdoptedActivity extends AppCompatActivity {
 
                         }
                     });
-                    Toast.makeText(getApplicationContext(), "Profil Kucing berhasil Diperbarui", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Profil Kucing Berhasil Diperbarui", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(getApplicationContext(), MainMenuActivity.class);
                     startActivity(intent);
                     finish();
@@ -223,7 +223,7 @@ public class EditCatDataAdoptedActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         AlertDialog.Builder builder = new AlertDialog.Builder(EditCatDataAdoptedActivity.this);
-        builder.setMessage("Apakah Anda yakin ingin keluar?")
+        builder.setMessage("Apakah Anda Yakin Ingin Kembali?")
                 .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

@@ -213,7 +213,6 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Calendar cal = Calendar.getInstance();
-//                cal.setTimeZone(TimeZone.getTimeZone("UTC"));
                 int day = cal.get(Calendar.DAY_OF_MONTH);
                 int month = cal.get(Calendar.MONTH);
                 int year = cal.get(Calendar.YEAR);
@@ -226,7 +225,7 @@ public class SignUpActivity extends AppCompatActivity {
                 dialog.getDatePicker().setMaxDate(cal.getTimeInMillis());
                 cal.add(Calendar.YEAR, -70);
                 dialog.getDatePicker().setMinDate(cal.getTimeInMillis());
-                dialog.updateDate(2010, 0, 1);
+                dialog.updateDate(year, month, day);
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 dialog.show();
             }
@@ -236,37 +235,12 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onDateSet(DatePicker datePicker, int dayOfMonth, int month, int year) {
                 month = month + 1;
-                Log.d("onDateSet: date: " + dayOfMonth + "-" + month + "-" + year, dobSetListener.toString());
+//                Log.d("onDateSet: date: " + dayOfMonth + "-" + month + "-" + year, dobSetListener.toString());
 
                 String date = dayOfMonth + "-" + month + "-" + year;
                 inputDob.setText(date);
             }
         };
-
-//        inputDob.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (mDatePickerDialog == null) {
-//                    mDatePickerDialog = new DatePickerDialog(SignUpActivity.this,
-//                            new DatePickerDialog.OnDateSetListener() {
-//                                @Override
-//                                public void onDateSet(DatePicker view, int dayOfMonth, int month, int year) {
-//                                    inputDob.setText(String.format("%04d-%02d-%02d", dayOfMonth, month + 1, year));
-//
-//                                    mCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-//                                    mCalendar.set(Calendar.MONTH, month);
-//                                    mCalendar.set(Calendar.YEAR, year);
-//                                }
-//                            }, 2000, 1, 1);
-//                    mCalendar.set(Calendar.DAY_OF_MONTH, 1);
-//                    mCalendar.set(Calendar.MONTH, 1);
-//                    mCalendar.set(Calendar.YEAR, 2000);
-//                    mDatePickerDialog.setCanceledOnTouchOutside(true);
-//                    mDatePickerDialog.setTitle("Tanggal Lahir");
-//                }
-//                mDatePickerDialog.show();
-//            }
-//        });
 
         userPhotoIv.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -294,7 +268,7 @@ public class SignUpActivity extends AppCompatActivity {
                         "\\." +
                         "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +
                         ")+";
-                String email = inputEmail.getText().toString().trim();
+                final String email = inputEmail.getText().toString().trim();
                 if (TextUtils.isEmpty(email)) {
                     Toast.makeText(getApplicationContext(), "Ketik Alamat Email Anda", Toast.LENGTH_SHORT).show();
                     return;
@@ -309,7 +283,7 @@ public class SignUpActivity extends AppCompatActivity {
 
                 //Password Validation
                 final String validPassword = "^(?=\\S+$).{4,}$";
-                String password = inputPassword.getText().toString().trim();
+                final String password = inputPassword.getText().toString().trim();
                 if (TextUtils.isEmpty(password)) {
                     Toast.makeText(getApplicationContext(), "Ketik Kata Sandi Anda", Toast.LENGTH_SHORT).show();
                     return;
@@ -388,28 +362,79 @@ public class SignUpActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Ketik Alamat Anda", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                isEmailExist();
-
-                //Create User
-                auth.createUserWithEmailAndPassword(email, password)
-                        .addOnCompleteListener(SignUpActivity.this, new OnCompleteListener<AuthResult>() {
+//                isEmailExist(email);
+                auth.fetchProvidersForEmail(email)
+                        .addOnCompleteListener(new OnCompleteListener<ProviderQueryResult>() {
                             @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                // If sign in fails, display a message to the user. If sign in succeeds
-                                // the auth state listener will be notified and logic to handle the
-                                // signed in user can be handled in the listener.
-                                addUserData();
-                                final FirebaseUser user = auth.getCurrentUser();
-                                user.sendEmailVerification();
-                                Toast.makeText(getApplicationContext(), "Akun SIKUCING Anda Telah Dibuat, Periksa Email Untuk Verifikasi Akun", Toast.LENGTH_SHORT).show();
-//                                startActivity(new Intent(SignUpActivity.this, LandingActivity.class));
-//                                finish();
-                                if (task.isComplete()) {
-                                    startActivity(new Intent(SignUpActivity.this, LandingActivity.class));
-                                    finish();
+                            public void onComplete(@NonNull Task<ProviderQueryResult> task) {
+                                boolean checkEmail = !task.getResult().getProviders().isEmpty();
+                                if (!checkEmail) {
+                                    //Create User
+                                    auth.createUserWithEmailAndPassword(email, password)
+                                            .addOnCompleteListener(SignUpActivity.this, new OnCompleteListener<AuthResult>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                                    // If sign in fails, display a message to the user. If sign in succeeds
+                                                    // the auth state listener will be notified and logic to handle the
+                                                    // signed in user can be handled in the listener.
+//                                                    addUserData();
+                                                    databaseUsers = FirebaseDatabase.getInstance().getReference().child("users");
+                                                    storageUsers = FirebaseStorage.getInstance().getReference();
+                                                    StorageReference reference = storageUsers.child(STORAGE_PATH + System.currentTimeMillis() + "." + getActualImage(uriUserPhoto));
+                                                    reference.putFile(uriUserPhoto)
+                                                            .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                                                @Override
+                                                                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                                                    String email = inputEmail.getText().toString().trim();
+                                                                    String userUid = auth.getCurrentUser().getUid();
+                                                                    String fName = inputFullName.getText().toString().trim();
+                                                                    String dobDate = inputDob.getText().toString().trim();
+                                                                    String gender = spinnerGender.getSelectedItem().toString().trim();
+                                                                    String setgender = null;
+                                                                    switch (gender) {
+                                                                        case "Pria":
+                                                                            setgender = "Male";
+                                                                            break;
+                                                                        case "Perempuan":
+                                                                            setgender = "Female";
+                                                                            break;
+                                                                    }
+                                                                    String pPhotoUrl = taskSnapshot.getDownloadUrl().toString();
+                                                                    String province = spinnerProvinces.getSelectedItem().toString().trim();
+                                                                    String city = spinnerCities.getSelectedItem().toString().trim();
+                                                                    Long phone = Long.valueOf(inputPhone.getText().toString());
+                                                                    String address = inputAddress.getText().toString().trim();
+                                                                    String status = "0";
+                                                                    String citystatus = city + "_0";
+
+                                                                    User user = new User(email, userUid, fName, dobDate, setgender, pPhotoUrl, province, city, phone, address, status, citystatus);
+
+                                                                    databaseUsers.child(userUid).setValue(user);
+                                                                    finish();
+                                                                }
+                                                            })
+                                                            .addOnFailureListener(new OnFailureListener() {
+                                                                @Override
+                                                                public void onFailure(@NonNull Exception e) {
+                                                                    Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                                                                }
+                                                            });
+                                                    final FirebaseUser user = auth.getCurrentUser();
+                                                    user.sendEmailVerification();
+                                                    Toast.makeText(getApplicationContext(), "Akun SIKUCING Anda Telah Dibuat, Periksa Email Untuk Verifikasi Akun", Toast.LENGTH_SHORT).show();
+//                                                  startActivity(new Intent(SignUpActivity.this, LandingActivity.class));
+//                                                  finish();
+                                                    if (task.isComplete()) {
+                                                        startActivity(new Intent(SignUpActivity.this, LandingActivity.class));
+                                                        finish();
+                                                    } else {
+                                                        Toast.makeText(SignUpActivity.this, "Autentikasi Gagal" + task.getException(), Toast.LENGTH_SHORT).show();
+                                                        finish();
+                                                    }
+                                                }
+                                            });
                                 } else {
-                                    Toast.makeText(SignUpActivity.this, "Autentikasi Gagal" + task.getException(), Toast.LENGTH_SHORT).show();
-                                    finish();
+                                    Toast.makeText(getApplicationContext(), "Email Telah Digunakan", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });
@@ -417,22 +442,22 @@ public class SignUpActivity extends AppCompatActivity {
         });
     }
 
-    private void isEmailExist() {
-        //Email Check on Firebase
-        String email = inputEmail.getText().toString();
-        auth.fetchProvidersForEmail(email)
-                .addOnCompleteListener(new OnCompleteListener<ProviderQueryResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<ProviderQueryResult> task) {
-                        boolean checkEmail = !task.getResult().getProviders().isEmpty();
-                        if (!checkEmail) {
-
-                        } else {
-                            Toast.makeText(getApplicationContext(), "Email Telah Digunakan", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-    }
+//    private void isEmailExist(String email) {
+//        //Email Check on Firebase
+////        String email = inputEmail.getText().toString();
+//        auth.fetchProvidersForEmail(email)
+//                .addOnCompleteListener(new OnCompleteListener<ProviderQueryResult>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<ProviderQueryResult> task) {
+//                        boolean checkEmail = !task.getResult().getProviders().isEmpty();
+//                        if (!checkEmail) {
+//
+//                        } else {
+//                            Toast.makeText(getApplicationContext(), "Email Telah Digunakan", Toast.LENGTH_SHORT).show();
+//                        }
+//                    }
+//                });
+//    }
 
     private void userPhotosMediaOpen() {
         Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
@@ -482,49 +507,49 @@ public class SignUpActivity extends AppCompatActivity {
         }
     }
 
-    private void addUserData() {
-        databaseUsers = FirebaseDatabase.getInstance().getReference().child("users");
-        storageUsers = FirebaseStorage.getInstance().getReference();
-        StorageReference reference = storageUsers.child(STORAGE_PATH + System.currentTimeMillis() + "." + getActualImage(uriUserPhoto));
-        reference.putFile(uriUserPhoto)
-                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        String email = inputEmail.getText().toString().trim();
-                        String userUid = auth.getCurrentUser().getUid();
-                        String fName = inputFullName.getText().toString().trim();
-                        String dobDate = inputDob.getText().toString().trim();
-                        String gender = spinnerGender.getSelectedItem().toString().trim();
-                        String setgender = null;
-                        switch (gender) {
-                            case "Pria":
-                                setgender = "Male";
-                                break;
-                            case "Perempuan":
-                                setgender = "Female";
-                                break;
-                        }
-                        String pPhotoUrl = taskSnapshot.getDownloadUrl().toString();
-                        String province = spinnerProvinces.getSelectedItem().toString().trim();
-                        String city = spinnerCities.getSelectedItem().toString().trim();
-                        Long phone = Long.valueOf(inputPhone.getText().toString());
-                        String address = inputAddress.getText().toString().trim();
-                        String status = "0";
-                        String citystatus = city + "_0";
-
-                        User user = new User(email, userUid, fName, dobDate, setgender, pPhotoUrl, province, city, phone, address, status, citystatus);
-
-                        databaseUsers.child(userUid).setValue(user);
-                        finish();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
-    }
+//    private void addUserData() {
+//        databaseUsers = FirebaseDatabase.getInstance().getReference().child("users");
+//        storageUsers = FirebaseStorage.getInstance().getReference();
+//        StorageReference reference = storageUsers.child(STORAGE_PATH + System.currentTimeMillis() + "." + getActualImage(uriUserPhoto));
+//        reference.putFile(uriUserPhoto)
+//                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+//                    @Override
+//                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+//                        String email = inputEmail.getText().toString().trim();
+//                        String userUid = auth.getCurrentUser().getUid();
+//                        String fName = inputFullName.getText().toString().trim();
+//                        String dobDate = inputDob.getText().toString().trim();
+//                        String gender = spinnerGender.getSelectedItem().toString().trim();
+//                        String setgender = null;
+//                        switch (gender) {
+//                            case "Pria":
+//                                setgender = "Male";
+//                                break;
+//                            case "Perempuan":
+//                                setgender = "Female";
+//                                break;
+//                        }
+//                        String pPhotoUrl = taskSnapshot.getDownloadUrl().toString();
+//                        String province = spinnerProvinces.getSelectedItem().toString().trim();
+//                        String city = spinnerCities.getSelectedItem().toString().trim();
+//                        Long phone = Long.valueOf(inputPhone.getText().toString());
+//                        String address = inputAddress.getText().toString().trim();
+//                        String status = "0";
+//                        String citystatus = city + "_0";
+//
+//                        User user = new User(email, userUid, fName, dobDate, setgender, pPhotoUrl, province, city, phone, address, status, citystatus);
+//
+//                        databaseUsers.child(userUid).setValue(user);
+//                        finish();
+//                    }
+//                })
+//                .addOnFailureListener(new OnFailureListener() {
+//                    @Override
+//                    public void onFailure(@NonNull Exception e) {
+//                        Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+//                    }
+//                });
+//    }
 
     @Override
     public void onBackPressed() {

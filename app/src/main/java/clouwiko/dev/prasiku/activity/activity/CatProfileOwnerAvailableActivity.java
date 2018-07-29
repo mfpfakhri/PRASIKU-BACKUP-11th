@@ -65,7 +65,7 @@ public class CatProfileOwnerAvailableActivity extends AppCompatActivity {
         btnAdopted.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "This is your own cat", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Tidak Bisa Mengadopsi Kucing Milik Sendiri", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -88,8 +88,8 @@ public class CatProfileOwnerAvailableActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(CatProfileOwnerAvailableActivity.this);
-                builder.setMessage("Are You sure want to delete this cat?")
-                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                builder.setMessage("Apakah Anda Yakin Ingin Menghapus Kucing Ini?")
+                        .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 String catId = getIntent().getStringExtra("cat_id");
@@ -148,7 +148,7 @@ public class CatProfileOwnerAvailableActivity extends AppCompatActivity {
                                 }
                             }
                         })
-                        .setNegativeButton("No", null);
+                        .setNegativeButton("Tidak", null);
                 AlertDialog alertDialog = builder.create();
                 alertDialog.show();
             }

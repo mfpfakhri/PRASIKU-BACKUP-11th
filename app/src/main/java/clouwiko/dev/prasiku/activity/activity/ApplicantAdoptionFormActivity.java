@@ -93,6 +93,9 @@ public class ApplicantAdoptionFormActivity extends AppCompatActivity {
                 String phoneValidation = etPhone.getText().toString();
                 if (TextUtils.isEmpty(phoneValidation)) {
                     Toast.makeText(getApplicationContext(), "Anda Belum Mengisi Nomor Telepon Anda", Toast.LENGTH_SHORT).show();
+                    return;
+                } else {
+
                 }
                 final String validPhone = "^[+]?[0-9]{10,13}$";
                 Matcher matcherPhone = Pattern.compile(validPhone).matcher(phoneValidation);
@@ -106,16 +109,25 @@ public class ApplicantAdoptionFormActivity extends AppCompatActivity {
                 String addressValidation = etAddress.getText().toString();
                 if (TextUtils.isEmpty(addressValidation)) {
                     Toast.makeText(getApplicationContext(), "Anda Belum Mengisi Alamat Anda", Toast.LENGTH_SHORT).show();
+                    return;
+                } else {
+
                 }
                 //Applicant Reason Validation
                 String reasonValidation = etReason.getText().toString();
                 if (TextUtils.isEmpty(reasonValidation)) {
                     Toast.makeText(getApplicationContext(), "Anda Belum Mengisi Alasan untuk Mengadopsi", Toast.LENGTH_SHORT).show();
+                    return;
+                } else {
+
                 }
                 //Applicant Number of Animal Validation
                 String noAnimalValidation = etAnimalNumber.getText().toString();
                 if (TextUtils.isEmpty(noAnimalValidation)) {
                     Toast.makeText(getApplicationContext(), "Anda Belum Mengisi Jumlah Peliharaan yang Dimiliki", Toast.LENGTH_SHORT).show();
+                    return;
+                } else {
+
                 }
                 String validNoa = "^\\d{1,3}$";
                 Matcher matcherNoa= Pattern.compile(validNoa).matcher(noAnimalValidation);
@@ -138,6 +150,9 @@ public class ApplicantAdoptionFormActivity extends AppCompatActivity {
                 String houseSizeValidation = etHouseSize.getText().toString();
                 if (TextUtils.isEmpty(houseSizeValidation)) {
                     Toast.makeText(getApplicationContext(), "Anda Belum Mengisi Luas Rumah Anda", Toast.LENGTH_SHORT).show();
+                    return;
+                } else {
+
                 }
                 String validHouseSize = "^\\d{1,5}$";
                 Matcher matcherHouseSize = Pattern.compile(validHouseSize).matcher(houseSizeValidation);
@@ -151,7 +166,10 @@ public class ApplicantAdoptionFormActivity extends AppCompatActivity {
                 //Number of People Validation
                 String peopleNumberValidation = etPeopleNumber.getText().toString();
                 if (TextUtils.isEmpty(peopleNumberValidation)) {
-                    Toast.makeText(getApplicationContext(), "Anda Belum Mengisi Jumlah Orang yang Tinggal Bersama", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Anda Belum Mengisi Jumlah Orang di Rumah", Toast.LENGTH_SHORT).show();
+                    return;
+                } else {
+
                 }
                 String validNop = "^\\d{1,3}$";
                 Matcher matcherNop = Pattern.compile(validNop).matcher(peopleNumberValidation);
@@ -165,6 +183,9 @@ public class ApplicantAdoptionFormActivity extends AppCompatActivity {
                 String animalPlaceValidation = etAnimalLive.getText().toString();
                 if (TextUtils.isEmpty(animalPlaceValidation)) {
                     Toast.makeText(getApplicationContext(), "Anda Belum Mengisi Tempat Kucing Dipelihara", Toast.LENGTH_SHORT).show();
+                    return;
+                } else {
+
                 }
                 //Family Permission Validation
                 if (rgFamilyPermission.getCheckedRadioButtonId() == -1) {
@@ -330,7 +351,7 @@ public class ApplicantAdoptionFormActivity extends AppCompatActivity {
         final String catId = getIntent().getStringExtra("cat_id");
         final String ownerId = getIntent().getStringExtra("owner_id");
         AlertDialog.Builder builder = new AlertDialog.Builder(ApplicantAdoptionFormActivity.this);
-        builder.setMessage("Apakah Anda yakin ingin kembali?")
+        builder.setMessage("Apakah Anda Ingin Kembali?")
                 .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
