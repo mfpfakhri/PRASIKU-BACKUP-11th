@@ -58,10 +58,10 @@ public class CatProfileApplicantAdoptedActivity extends AppCompatActivity {
 
         String pActivity = getIntent().getStringExtra("previousActivity");
 
-        getCatDataAppAdopt();
+        getCatProfile();
     }
 
-    private void getCatDataAppAdopt() {
+    private void getCatProfile() {
         String catId = getIntent().getStringExtra("cat_id");
         String ownerId = getIntent().getStringExtra("owner_id");
 

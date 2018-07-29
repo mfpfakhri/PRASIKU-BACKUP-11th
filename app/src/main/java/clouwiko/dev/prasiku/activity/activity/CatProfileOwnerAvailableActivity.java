@@ -154,10 +154,10 @@ public class CatProfileOwnerAvailableActivity extends AppCompatActivity {
             }
         });
 
-        getCatDataOwnAvailable();
+        getCatProfile();
     }
 
-    private void getCatDataOwnAvailable() {
+    private void getCatProfile() {
         String catId = getIntent().getStringExtra("cat_id");
         String ownerId = getIntent().getStringExtra("owner_id");
 

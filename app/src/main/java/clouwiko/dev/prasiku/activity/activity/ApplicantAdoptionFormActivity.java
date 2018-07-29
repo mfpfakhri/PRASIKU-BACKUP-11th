@@ -319,9 +319,8 @@ public class ApplicantAdoptionFormActivity extends AppCompatActivity {
         String owner_status = ownerId + "_" + status;
         String delete_status = "0";
         String applicantIdDelete = applicantId + "_" + delete_status;
-//        String owner_delete_status = ownerId + delete_status;
         String cat_status = catId + "_" + status;
-        Adoption adoption = new Adoption(delete_status, adoptionId, catId, ownerId, applicantId, applicantIdDelete, phone, address, job, reasonwhy, numberofanimal, housetype, housesize, familynumber, animallive, setfamilypermission, setmovingplan, setmarriageplan, setkids, setfinancial, status, catname, catphoto, applicantname, owner_status, cat_status);
+        Adoption adoption = new Adoption(delete_status, adoptionId, catId, ownerId, applicantId, applicantIdDelete, phone, address, job, reasonwhy, numberofanimal, sethousetype, housesize, familynumber, animallive, setfamilypermission, setmovingplan, setmarriageplan, setkids, setfinancial, status, catname, catphoto, applicantname, owner_status, cat_status);
 
         databaseAdoption.child(adoptionId).setValue(adoption);
     }

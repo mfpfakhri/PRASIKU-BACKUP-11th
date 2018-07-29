@@ -31,7 +31,6 @@ public class Adoption {
     private String adoptionApplicantName;
     private String adoptionOwnerIdApponStatus;
     private String adoptionCatIdApponStatus;
-//    private String adoptionOwnerDeleteStatus;
 
     public Adoption() {
     }

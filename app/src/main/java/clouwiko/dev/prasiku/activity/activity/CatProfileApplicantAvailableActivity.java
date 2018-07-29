@@ -71,10 +71,10 @@ public class CatProfileApplicantAvailableActivity extends AppCompatActivity {
 
         String pActivity = getIntent().getStringExtra("previousActivity");
 
-        getCatDataAppAvail();
+        getCatProfile();
     }
 
-    private void getCatDataAppAvail() {
+    private void getCatProfile() {
         String catId = getIntent().getStringExtra("cat_id");
         String ownerId = getIntent().getStringExtra("owner_id");
 

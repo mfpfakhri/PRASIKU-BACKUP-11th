@@ -71,10 +71,10 @@ public class AppReceivedActivity extends AppCompatActivity {
         //Firebase Database
         firebaseDatabase = FirebaseDatabase.getInstance();
 
-        getAppReceivedData();
+        getReceivedApplicationList();
     }
 
-    void getAppReceivedData() {
+    void getReceivedApplicationList() {
         //Firebase Current User UID
         String userId = auth.getCurrentUser().getUid();
         String useridapponstatus = userId+"_Received";

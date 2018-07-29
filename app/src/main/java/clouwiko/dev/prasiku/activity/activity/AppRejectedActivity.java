@@ -71,10 +71,10 @@ public class AppRejectedActivity extends AppCompatActivity {
         //Firebase Database
         firebaseDatabase = FirebaseDatabase.getInstance();
 
-        getAppRejectedData();
+        getRejectedApplicationList();
     }
 
-    void getAppRejectedData() {
+    void getRejectedApplicationList() {
         //Firebase Current User UID
         String userId = auth.getCurrentUser().getUid();
         String useridapponstatus = userId + "_Rejected";

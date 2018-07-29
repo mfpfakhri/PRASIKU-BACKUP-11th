@@ -151,9 +151,70 @@ public class UploadCatDataActivity extends AppCompatActivity {
         btnUploadCatData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                uploadCatDataValidation();
+//                uploadCatDataValidation();
+                //Cat Photos Validation
+                if (catPhotoIv.getDrawable() != null) {
+
+                } else {
+                    Toast.makeText(getApplicationContext(), "Pilih Foto Kucing Anda", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                //Cat's Name Validation
+                String cName = inputCatName.getText().toString();
+                if (TextUtils.isEmpty(cName)) {
+                    Toast.makeText(getApplicationContext(), "Ketik Nama Kucing Anda", Toast.LENGTH_SHORT).show();
+                }
+
+                //Cat's DOB Validation
+                String catDobDate = inputCatDob.getText().toString().trim();
+                if (TextUtils.isEmpty(catDobDate)) {
+                    Toast.makeText(getApplicationContext(), "Ketik Tanggal Lahir Kucing Anda", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                //Cat's Gender Validation
+                int catSpinnerPosition = spinnerCatGender.getSelectedItemPosition();
+                if (catSpinnerPosition != 0) {
+
+                } else {
+                    Toast.makeText(UploadCatDataActivity.this, "Pilih Jenis Kelamin Kucing Anda", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                //Cat's Description Validation
+                String desc = inputCatDesc.getText().toString();
+                if (TextUtils.isEmpty(desc)) {
+                    Toast.makeText(getApplicationContext(), "Ketik Deskripsi Singkat Tentang Kucing Anda", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                //Vaccine Status Validation
+                if (radioGroupVaccine.getCheckedRadioButtonId() == -1) {
+                    Toast.makeText(getApplicationContext(), "Pilih Status Vaksin Kucing", Toast.LENGTH_SHORT).show();
+                    return;
+                } else {
+
+                }
+
+                //Spay/ Neuter Validation
+                if (radioGroupSpayNeuter.getCheckedRadioButtonId() == -1) {
+                    Toast.makeText(getApplicationContext(), "Pilih Status Kastrasi Kucing", Toast.LENGTH_SHORT).show();
+                    return;
+                } else {
+
+                }
+
+                //Open Adoption Reason
+                int catReasonPosition = spinnerCatReasonOpenAdoption.getSelectedItemPosition();
+                if (catReasonPosition != 0) {
+
+                } else {
+                    Toast.makeText(UploadCatDataActivity.this, "Pilih Alasan Lepas Adopsi", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 addCatData();
-                Toast.makeText(UploadCatDataActivity.this, "Successfully Added Cats Data for Adopt", Toast.LENGTH_SHORT).show();
+                Toast.makeText(UploadCatDataActivity.this, "Berhasil Mengunggah Data Kucing Anda", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(UploadCatDataActivity.this, MainMenuActivity.class));
                 finish();
             }
@@ -337,67 +398,67 @@ public class UploadCatDataActivity extends AppCompatActivity {
         }
     }
 
-    private void uploadCatDataValidation() {
-        //Cat Photos Validation
-        if (catPhotoIv.getDrawable() != null) {
-
-        } else {
-            Toast.makeText(getApplicationContext(), "Choose Your Cat Photo", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        //Cat's Name Validation
-        String cName = inputCatName.getText().toString();
-        if (TextUtils.isEmpty(cName)) {
-            Toast.makeText(getApplicationContext(), "Enter Your Cat Name", Toast.LENGTH_SHORT).show();
-        }
-
-        //Cat's DOB Validation
-        String catDobDate = inputCatDob.getText().toString().trim();
-        if (TextUtils.isEmpty(catDobDate)) {
-            Toast.makeText(getApplicationContext(), "Enter Your Cat's Birth Date", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        //Cat's Gender Validation
-        int catSpinnerPosition = spinnerCatGender.getSelectedItemPosition();
-        if (catSpinnerPosition != 0) {
-
-        } else {
-            Toast.makeText(UploadCatDataActivity.this, "Choose Your Cat's Gender", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        //Cat's Description Validation
-        String desc = inputCatDesc.getText().toString();
-        if (TextUtils.isEmpty(desc)) {
-            Toast.makeText(getApplicationContext(), "Please Describe Your Cat", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        //Vaccine Status Validation
-        if (radioGroupVaccine.getCheckedRadioButtonId() == -1) {
-            Toast.makeText(getApplicationContext(), "Choose Cat's Vaccine Status", Toast.LENGTH_SHORT).show();
-            return;
-        } else {
-
-        }
-
-        //Spay/ Neuter Validation
-        if (radioGroupSpayNeuter.getCheckedRadioButtonId() == -1) {
-            Toast.makeText(getApplicationContext(), "Choose Cat's Spay/ Neuter Status", Toast.LENGTH_SHORT).show();
-            return;
-        } else {
-
-        }
-
-        //Open Adoption Reason
-        int catReasonPosition = spinnerCatReasonOpenAdoption.getSelectedItemPosition();
-        if (catReasonPosition != 0) {
-
-        } else {
-            Toast.makeText(UploadCatDataActivity.this, "Choose The Reason for Open Adopt", Toast.LENGTH_SHORT).show();
-            return;
-        }
-    }
+//    private void uploadCatDataValidation() {
+//        //Cat Photos Validation
+//        if (catPhotoIv.getDrawable() != null) {
+//
+//        } else {
+//            Toast.makeText(getApplicationContext(), "Choose Your Cat Photo", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
+//
+//        //Cat's Name Validation
+//        String cName = inputCatName.getText().toString();
+//        if (TextUtils.isEmpty(cName)) {
+//            Toast.makeText(getApplicationContext(), "Enter Your Cat Name", Toast.LENGTH_SHORT).show();
+//        }
+//
+//        //Cat's DOB Validation
+//        String catDobDate = inputCatDob.getText().toString().trim();
+//        if (TextUtils.isEmpty(catDobDate)) {
+//            Toast.makeText(getApplicationContext(), "Enter Your Cat's Birth Date", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
+//
+//        //Cat's Gender Validation
+//        int catSpinnerPosition = spinnerCatGender.getSelectedItemPosition();
+//        if (catSpinnerPosition != 0) {
+//
+//        } else {
+//            Toast.makeText(UploadCatDataActivity.this, "Choose Your Cat's Gender", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
+//
+//        //Cat's Description Validation
+//        String desc = inputCatDesc.getText().toString();
+//        if (TextUtils.isEmpty(desc)) {
+//            Toast.makeText(getApplicationContext(), "Please Describe Your Cat", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
+//
+//        //Vaccine Status Validation
+//        if (radioGroupVaccine.getCheckedRadioButtonId() == -1) {
+//            Toast.makeText(getApplicationContext(), "Choose Cat's Vaccine Status", Toast.LENGTH_SHORT).show();
+//            return;
+//        } else {
+//
+//        }
+//
+//        //Spay/ Neuter Validation
+//        if (radioGroupSpayNeuter.getCheckedRadioButtonId() == -1) {
+//            Toast.makeText(getApplicationContext(), "Choose Cat's Spay/ Neuter Status", Toast.LENGTH_SHORT).show();
+//            return;
+//        } else {
+//
+//        }
+//
+//        //Open Adoption Reason
+//        int catReasonPosition = spinnerCatReasonOpenAdoption.getSelectedItemPosition();
+//        if (catReasonPosition != 0) {
+//
+//        } else {
+//            Toast.makeText(UploadCatDataActivity.this, "Choose The Reason for Open Adopt", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
+//    }
 }

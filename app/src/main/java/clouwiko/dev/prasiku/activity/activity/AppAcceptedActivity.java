@@ -71,10 +71,10 @@ public class AppAcceptedActivity extends AppCompatActivity {
         //Firebase Database
         firebaseDatabase = FirebaseDatabase.getInstance();
 
-        getAppAcceptedData();
+        getAcceptedApplicationList();
     }
 
-    void getAppAcceptedData() {
+    void getAcceptedApplicationList() {
         //Firebase Current User UID
         String userId = auth.getCurrentUser().getUid();
         String useridapponstatus = userId + "_Accepted".toString().trim();

@@ -177,7 +177,7 @@ public class AppRejectedReviewActivity extends AppCompatActivity {
                 }
                 tvAppName.setText(appname);
                 tvCatName.setText(catname);
-                tvPhone.setText(String.valueOf(appphone));
+                tvPhone.setText(String.valueOf("0"+appphone));
                 tvAddress.setText(appaddress);
                 tvJob.setText(appjob);
                 tvReason.setText(appreason);

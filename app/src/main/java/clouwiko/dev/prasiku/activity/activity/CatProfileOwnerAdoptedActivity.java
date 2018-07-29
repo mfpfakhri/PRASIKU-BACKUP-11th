@@ -121,9 +121,6 @@ public class CatProfileOwnerAdoptedActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 String catId = getIntent().getStringExtra("cat_id");
-//                                String catapponreceived = catId + "_Received";
-//                                String catapponaccepted = catId + "_Accepted";
-//                                String catapponrejected = catId + "_Rejected";
                                 databaseCats = FirebaseDatabase.getInstance().getReference().child("cats").child(catId);
                                 databaseCats.addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
@@ -152,7 +149,6 @@ public class CatProfileOwnerAdoptedActivity extends AppCompatActivity {
                                             updAdoption.setAdoptionOwnerIdApponStatus(updAdoption.getAdoptionOwnerId()+"_Not Available");
                                             updAdoption.setAdoptionDeleteStatus("1");
                                             updAdoption.setAdoptionApplicantIdDeleteStatus(updAdoption.getAdoptionApplicantId()+"_1");
-//                                            updAdoption.setAdoptionOwnerDeleteStatus(updAdoption.getAdoptionOwnerId()+"_1");
                                             databaseDelete.child(updAdoption.getAdoptionId()).setValue(updAdoption);
                                         }
                                     }
@@ -162,63 +158,6 @@ public class CatProfileOwnerAdoptedActivity extends AppCompatActivity {
 
                                     }
                                 });
-//                                databaseDelete.orderByChild("adoptionCatIdApponStatus").equalTo(catapponreceived).addListenerForSingleValueEvent(new ValueEventListener() {
-//                                    @Override
-//                                    public void onDataChange(DataSnapshot dataSnapshot) {
-//                                        for (DataSnapshot updRejectAppSnapshot : dataSnapshot.getChildren()) {
-//                                            Adoption adoptionreceived = updRejectAppSnapshot.getValue(Adoption.class);
-//                                            adoptionreceived.setAdoptionApplicationStatus("Not Available");
-//                                            adoptionreceived.setAdoptionCatIdApponStatus(adoptionreceived.getAdoptionCatId() + "_Not Available");
-//                                            adoptionreceived.setAdoptionOwnerIdApponStatus(adoptionreceived.getAdoptionOwnerId()+"_Not Available");
-//                                            adoptionreceived.setAdoptionDeleteStatus("1");
-//                                            adoptionreceived.setAdoptionOwnerDeleteStatus(adoptionreceived.getAdoptionOwnerId()+"_1");
-//                                            databaseDelete.child(adoptionreceived.getAdoptionId()).setValue(adoptionreceived);
-//                                        }
-//                                    }
-//
-//                                    @Override
-//                                    public void onCancelled(DatabaseError databaseError) {
-//
-//                                    }
-//                                });
-//                                databaseDelete.orderByChild("adoptionCatIdApponStatus").equalTo(catapponaccepted).addListenerForSingleValueEvent(new ValueEventListener() {
-//                                    @Override
-//                                    public void onDataChange(DataSnapshot dataSnapshot) {
-//                                        for (DataSnapshot updRejectAppSnapshot : dataSnapshot.getChildren()) {
-//                                            Adoption adoptionaccepted = updRejectAppSnapshot.getValue(Adoption.class);
-//                                            adoptionaccepted.setAdoptionApplicationStatus("Not Available");
-//                                            adoptionaccepted.setAdoptionCatIdApponStatus(adoptionaccepted.getAdoptionCatId() + "_Not Available");
-//                                            adoptionaccepted.setAdoptionOwnerIdApponStatus(adoptionaccepted.getAdoptionOwnerId()+"_Not Available");
-//                                            adoptionaccepted.setAdoptionDeleteStatus("1");
-//                                            adoptionaccepted.setAdoptionOwnerDeleteStatus(adoptionaccepted.getAdoptionOwnerId()+"_1");
-//                                            databaseDelete.child(adoptionaccepted.getAdoptionId()).setValue(adoptionaccepted);
-//                                        }
-//                                    }
-//
-//                                    @Override
-//                                    public void onCancelled(DatabaseError databaseError) {
-//
-//                                    }
-//                                });
-//                                databaseDelete.orderByChild("adoptionCatIdApponStatus").equalTo(catapponrejected).addListenerForSingleValueEvent(new ValueEventListener() {
-//                                    @Override
-//                                    public void onDataChange(DataSnapshot dataSnapshot) {
-//                                        for (DataSnapshot updRejectAppSnapshot : dataSnapshot.getChildren()) {
-//                                            Adoption adoptionrejected = updRejectAppSnapshot.getValue(Adoption.class);
-//                                            adoptionrejected.setAdoptionApplicationStatus("Not Available");
-//                                            adoptionrejected.setAdoptionCatIdApponStatus(adoptionrejected.getAdoptionCatId() + "_Not Available");
-//                                            adoptionrejected.setAdoptionOwnerIdApponStatus(adoptionrejected.getAdoptionOwnerId()+"_Not Available");
-//                                            adoptionrejected.setAdoptionDeleteStatus("1");
-//                                            adoptionrejected.setAdoptionOwnerDeleteStatus(adoptionrejected.getAdoptionOwnerId()+"_1");
-//                                            databaseDelete.child(adoptionrejected.getAdoptionId()).setValue(adoptionrejected);
-//                                        }
-//                                    }
-//
-//                                    @Override
-//                                    public void onCancelled(DatabaseError databaseError) {
-//
-//                                    }
-//                                });
                                 String pActivity = getIntent().getStringExtra("previousActivity");
                                 Intent intentAdoptionList = new Intent(getApplicationContext(), UserCatListActivity.class);
                                 Intent intentFindCat = new Intent(getApplicationContext(), FindCatForAdoptActivity.class);
@@ -242,10 +181,10 @@ public class CatProfileOwnerAdoptedActivity extends AppCompatActivity {
             }
         });
 
-        getCatDataOwnAdopt();
+        getCatProfile();
     }
 
-    private void getCatDataOwnAdopt() {
+    private void getCatProfile() {
         String catId = getIntent().getStringExtra("cat_id");
         String ownerId = getIntent().getStringExtra("owner_id");
 
