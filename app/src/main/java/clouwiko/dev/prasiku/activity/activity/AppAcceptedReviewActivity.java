@@ -396,7 +396,7 @@ public class AppAcceptedReviewActivity extends AppCompatActivity {
         downloadAsset("Surat Perjanjian Adopsi SIKUCING.pdf");
         AgreementNotificationGenerator.openPdfNotification(getApplicationContext());
         AlertDialog.Builder builder = new AlertDialog.Builder(AppAcceptedReviewActivity.this);
-        builder.setMessage("Apakah Anda ingin membuka surat perjanjian adopsi?")
+        builder.setMessage("Apakah Anda Ingin Membuka Surat Perjanjian Adopsi?")
                 .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
