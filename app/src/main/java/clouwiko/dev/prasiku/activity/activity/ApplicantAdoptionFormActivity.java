@@ -17,6 +17,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -222,129 +223,242 @@ public class ApplicantAdoptionFormActivity extends AppCompatActivity {
                 } else {
 
                 }
-                applyAdoption();
-                backToMainMenu();
+//                applyAdoption();
+
+                //Database Reference Path
+                databaseAdoption = FirebaseDatabase.getInstance().getReference().child("adoptions");
+                int selectedFamilyPermission = rgFamilyPermission.getCheckedRadioButtonId();
+                rbFamilyPermission = findViewById(selectedFamilyPermission);
+                int selectedMovingPlan = rgMovingPlan.getCheckedRadioButtonId();
+                rbMovingPlan = findViewById(selectedMovingPlan);
+                int selectedMarriagePlan = rgMarriagePlan.getCheckedRadioButtonId();
+                rbMarriagePlan = findViewById(selectedMarriagePlan);
+                int selectedKidsHouse = rgKids.getCheckedRadioButtonId();
+                rbKids = findViewById(selectedKidsHouse);
+                int selectedFinancial = rgFinancial.getCheckedRadioButtonId();
+                rbFinancial = findViewById(selectedFinancial);
+
+                String adoptionId = databaseAdoption.push().getKey();
+                String catId = getIntent().getStringExtra("cat_id");
+                String ownerId = getIntent().getStringExtra("owner_id");
+                String catname = getIntent().getStringExtra("cat_name");
+                String catphoto = getIntent().getStringExtra("cat_photo");
+                String applicantname = getIntent().getStringExtra("applicant_name");
+                String applicantId = auth.getCurrentUser().getUid().toString().trim();
+                Long phone = Long.valueOf(etPhone.getText().toString().trim());
+                String address = etAddress.getText().toString().trim();
+                String job = etJob.getText().toString().trim();
+                String reasonwhy = etReason.getText().toString().trim();
+                Long numberofanimal = Long.valueOf(etAnimalNumber.getText().toString().trim());
+                Long housesize = Long.valueOf(etHouseSize.getText().toString().trim());
+                Long familynumber = Long.valueOf(etPeopleNumber.getText().toString().trim());
+                String animallive = etAnimalLive.getText().toString().trim();
+                String housetype = msHouseType.getSelectedItem().toString().trim();
+                String sethousetype = null;
+                switch (housetype){
+                    case "Milik Sendiri":
+                        sethousetype = "Home";
+                        break;
+                    case "Kontrak":
+                        sethousetype = "Rent";
+                        break;
+                    case "Kos":
+                        sethousetype = "Boarding House";
+                        break;
+                    case "Apartemen":
+                        sethousetype = "Apartement/ Condotel";
+                        break;
+                    case "Mess":
+                        sethousetype = "Warehouse";
+                        break;
+                    case "Lainnya":
+                        sethousetype = "Others";
+                        break;
+                }
+                String familypermission = rbFamilyPermission.getText().toString().trim();
+                String setfamilypermission = null;
+                switch (familypermission){
+                    case "Sudah":
+                        setfamilypermission = "Yes";
+                        break;
+                    case "Belum":
+                        setfamilypermission = "No";
+                        break;
+                }
+                String movingplan = rbMovingPlan.getText().toString().trim();
+                String setmovingplan= null;
+                switch (movingplan){
+                    case "Sudah":
+                        setmovingplan = "Yes";
+                        break;
+                    case "Belum":
+                        setmovingplan = "No";
+                        break;
+                }
+                String marriageplan = rbMarriagePlan.getText().toString().trim();
+                String setmarriageplan = null;
+                switch (marriageplan){
+                    case "Sudah":
+                        setmarriageplan = "Yes";
+                        break;
+                    case "Belum":
+                        setmarriageplan = "No";
+                        break;
+                }
+                String kidsinhouse = rbKids.getText().toString().trim();
+                String setkids = null;
+                switch (kidsinhouse){
+                    case "Sudah":
+                        setkids = "Yes";
+                        break;
+                    case "Belum":
+                        setkids = "No";
+                        break;
+                }
+                String financial = rbFinancial.getText().toString().trim();
+                String setfinancial = null;
+                switch (financial){
+                    case "Sudah":
+                        setfinancial = "Yes";
+                        break;
+                    case "Belum":
+                        setfinancial = "No";
+                        break;
+                }
+                String status = "Received";
+                String owner_status = ownerId + "_" + status;
+                String delete_status = "0";
+                String applicantIdDelete = applicantId + "_" + delete_status;
+                String cat_status = catId + "_" + status;
+                Adoption adoption = new Adoption(delete_status, adoptionId, catId, ownerId, applicantId, applicantIdDelete, phone, address, job, reasonwhy, numberofanimal, sethousetype, housesize, familynumber, animallive, setfamilypermission, setmovingplan, setmarriageplan, setkids, setfinancial, status, catname, catphoto, applicantname, owner_status, cat_status);
+
+                databaseAdoption.child(adoptionId).setValue(adoption).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(getApplicationContext(), "Formulir Pengajuan Adopsi Anda Sudah Dikirim", Toast.LENGTH_SHORT).show();
+                        backToMainMenu();
+                    }
+                });
             }
         });
     }
 
     private void backToMainMenu() {
         Intent intent = new Intent(getApplicationContext(), MainMenuActivity.class);
-        Toast.makeText(getApplicationContext(), "Formulir pengajuan Anda sudah dikirim", Toast.LENGTH_SHORT).show();
         startActivity(intent);
         finish();
     }
 
-    private void applyAdoption() {
-        //Database Reference Path
-        databaseAdoption = FirebaseDatabase.getInstance().getReference().child("adoptions");
-        int selectedFamilyPermission = rgFamilyPermission.getCheckedRadioButtonId();
-        rbFamilyPermission = findViewById(selectedFamilyPermission);
-        int selectedMovingPlan = rgMovingPlan.getCheckedRadioButtonId();
-        rbMovingPlan = findViewById(selectedMovingPlan);
-        int selectedMarriagePlan = rgMarriagePlan.getCheckedRadioButtonId();
-        rbMarriagePlan = findViewById(selectedMarriagePlan);
-        int selectedKidsHouse = rgKids.getCheckedRadioButtonId();
-        rbKids = findViewById(selectedKidsHouse);
-        int selectedFinancial = rgFinancial.getCheckedRadioButtonId();
-        rbFinancial = findViewById(selectedFinancial);
-
-        String adoptionId = databaseAdoption.push().getKey();
-        String catId = getIntent().getStringExtra("cat_id");
-        String ownerId = getIntent().getStringExtra("owner_id");
-        String catname = getIntent().getStringExtra("cat_name");
-        String catphoto = getIntent().getStringExtra("cat_photo");
-        String applicantname = getIntent().getStringExtra("applicant_name");
-        String applicantId = auth.getCurrentUser().getUid().toString().trim();
-        Long phone = Long.valueOf(etPhone.getText().toString().trim());
-        String address = etAddress.getText().toString().trim();
-        String job = etJob.getText().toString().trim();
-        String reasonwhy = etReason.getText().toString().trim();
-        Long numberofanimal = Long.valueOf(etAnimalNumber.getText().toString().trim());
-        Long housesize = Long.valueOf(etHouseSize.getText().toString().trim());
-        Long familynumber = Long.valueOf(etPeopleNumber.getText().toString().trim());
-        String animallive = etAnimalLive.getText().toString().trim();
-        String housetype = msHouseType.getSelectedItem().toString().trim();
-        String sethousetype = null;
-        switch (housetype){
-            case "Milik Sendiri":
-                sethousetype = "Home";
-                break;
-            case "Kontrak":
-                sethousetype = "Rent";
-                break;
-            case "Kos":
-                sethousetype = "Boarding House";
-                break;
-            case "Apartemen":
-                sethousetype = "Apartement/ Condotel";
-                break;
-            case "Mess":
-                sethousetype = "Warehouse";
-                break;
-            case "Lainnya":
-                sethousetype = "Others";
-                break;
-        }
-        String familypermission = rbFamilyPermission.getText().toString().trim();
-        String setfamilypermission = null;
-        switch (familypermission){
-            case "Sudah":
-                setfamilypermission = "Yes";
-                break;
-            case "Belum":
-                setfamilypermission = "No";
-                break;
-        }
-        String movingplan = rbMovingPlan.getText().toString().trim();
-        String setmovingplan= null;
-        switch (movingplan){
-            case "Sudah":
-                setmovingplan = "Yes";
-                break;
-            case "Belum":
-                setmovingplan = "No";
-                break;
-        }
-        String marriageplan = rbMarriagePlan.getText().toString().trim();
-        String setmarriageplan = null;
-        switch (marriageplan){
-            case "Sudah":
-                setmarriageplan = "Yes";
-                break;
-            case "Belum":
-                setmarriageplan = "No";
-                break;
-        }
-        String kidsinhouse = rbKids.getText().toString().trim();
-        String setkids = null;
-        switch (kidsinhouse){
-            case "Sudah":
-                setkids = "Yes";
-                break;
-            case "Belum":
-                setkids = "No";
-                break;
-        }
-        String financial = rbFinancial.getText().toString().trim();
-        String setfinancial = null;
-        switch (financial){
-            case "Sudah":
-                setfinancial = "Yes";
-                break;
-            case "Belum":
-                setfinancial = "No";
-                break;
-        }
-        String status = "Received";
-        String owner_status = ownerId + "_" + status;
-        String delete_status = "0";
-        String applicantIdDelete = applicantId + "_" + delete_status;
-        String cat_status = catId + "_" + status;
-        Adoption adoption = new Adoption(delete_status, adoptionId, catId, ownerId, applicantId, applicantIdDelete, phone, address, job, reasonwhy, numberofanimal, sethousetype, housesize, familynumber, animallive, setfamilypermission, setmovingplan, setmarriageplan, setkids, setfinancial, status, catname, catphoto, applicantname, owner_status, cat_status);
-
-        databaseAdoption.child(adoptionId).setValue(adoption);
-    }
+//    private void applyAdoption() {
+//        //Database Reference Path
+//        databaseAdoption = FirebaseDatabase.getInstance().getReference().child("adoptions");
+//        int selectedFamilyPermission = rgFamilyPermission.getCheckedRadioButtonId();
+//        rbFamilyPermission = findViewById(selectedFamilyPermission);
+//        int selectedMovingPlan = rgMovingPlan.getCheckedRadioButtonId();
+//        rbMovingPlan = findViewById(selectedMovingPlan);
+//        int selectedMarriagePlan = rgMarriagePlan.getCheckedRadioButtonId();
+//        rbMarriagePlan = findViewById(selectedMarriagePlan);
+//        int selectedKidsHouse = rgKids.getCheckedRadioButtonId();
+//        rbKids = findViewById(selectedKidsHouse);
+//        int selectedFinancial = rgFinancial.getCheckedRadioButtonId();
+//        rbFinancial = findViewById(selectedFinancial);
+//
+//        String adoptionId = databaseAdoption.push().getKey();
+//        String catId = getIntent().getStringExtra("cat_id");
+//        String ownerId = getIntent().getStringExtra("owner_id");
+//        String catname = getIntent().getStringExtra("cat_name");
+//        String catphoto = getIntent().getStringExtra("cat_photo");
+//        String applicantname = getIntent().getStringExtra("applicant_name");
+//        String applicantId = auth.getCurrentUser().getUid().toString().trim();
+//        Long phone = Long.valueOf(etPhone.getText().toString().trim());
+//        String address = etAddress.getText().toString().trim();
+//        String job = etJob.getText().toString().trim();
+//        String reasonwhy = etReason.getText().toString().trim();
+//        Long numberofanimal = Long.valueOf(etAnimalNumber.getText().toString().trim());
+//        Long housesize = Long.valueOf(etHouseSize.getText().toString().trim());
+//        Long familynumber = Long.valueOf(etPeopleNumber.getText().toString().trim());
+//        String animallive = etAnimalLive.getText().toString().trim();
+//        String housetype = msHouseType.getSelectedItem().toString().trim();
+//        String sethousetype = null;
+//        switch (housetype){
+//            case "Milik Sendiri":
+//                sethousetype = "Home";
+//                break;
+//            case "Kontrak":
+//                sethousetype = "Rent";
+//                break;
+//            case "Kos":
+//                sethousetype = "Boarding House";
+//                break;
+//            case "Apartemen":
+//                sethousetype = "Apartement/ Condotel";
+//                break;
+//            case "Mess":
+//                sethousetype = "Warehouse";
+//                break;
+//            case "Lainnya":
+//                sethousetype = "Others";
+//                break;
+//        }
+//        String familypermission = rbFamilyPermission.getText().toString().trim();
+//        String setfamilypermission = null;
+//        switch (familypermission){
+//            case "Sudah":
+//                setfamilypermission = "Yes";
+//                break;
+//            case "Belum":
+//                setfamilypermission = "No";
+//                break;
+//        }
+//        String movingplan = rbMovingPlan.getText().toString().trim();
+//        String setmovingplan= null;
+//        switch (movingplan){
+//            case "Sudah":
+//                setmovingplan = "Yes";
+//                break;
+//            case "Belum":
+//                setmovingplan = "No";
+//                break;
+//        }
+//        String marriageplan = rbMarriagePlan.getText().toString().trim();
+//        String setmarriageplan = null;
+//        switch (marriageplan){
+//            case "Sudah":
+//                setmarriageplan = "Yes";
+//                break;
+//            case "Belum":
+//                setmarriageplan = "No";
+//                break;
+//        }
+//        String kidsinhouse = rbKids.getText().toString().trim();
+//        String setkids = null;
+//        switch (kidsinhouse){
+//            case "Sudah":
+//                setkids = "Yes";
+//                break;
+//            case "Belum":
+//                setkids = "No";
+//                break;
+//        }
+//        String financial = rbFinancial.getText().toString().trim();
+//        String setfinancial = null;
+//        switch (financial){
+//            case "Sudah":
+//                setfinancial = "Yes";
+//                break;
+//            case "Belum":
+//                setfinancial = "No";
+//                break;
+//        }
+//        String status = "Received";
+//        String owner_status = ownerId + "_" + status;
+//        String delete_status = "0";
+//        String applicantIdDelete = applicantId + "_" + delete_status;
+//        String cat_status = catId + "_" + status;
+//        Adoption adoption = new Adoption(delete_status, adoptionId, catId, ownerId, applicantId, applicantIdDelete, phone, address, job, reasonwhy, numberofanimal, sethousetype, housesize, familynumber, animallive, setfamilypermission, setmovingplan, setmarriageplan, setkids, setfinancial, status, catname, catphoto, applicantname, owner_status, cat_status);
+//
+//        databaseAdoption.child(adoptionId).setValue(adoption);
+//    }
 
     @Override
     public void onBackPressed() {

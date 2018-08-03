@@ -261,7 +261,7 @@ public class AppRejectedReviewActivity extends AppCompatActivity {
                     sendIntent.setPackage("com.whatsapp");
                     startActivity(sendIntent);
                 } catch (android.content.ActivityNotFoundException ex) {
-                    Toast.makeText(getApplicationContext(), "Whatsapp belum dipasang pada perangkat ini.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Whatsapp Belum Dipasang Pada Perangkat Ini.", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.whatsapp")));
                 }
             }

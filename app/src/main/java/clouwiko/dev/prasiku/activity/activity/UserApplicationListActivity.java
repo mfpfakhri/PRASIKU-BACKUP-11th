@@ -166,7 +166,7 @@ public class UserApplicationListActivity extends AppCompatActivity {
                 }
                 holder.name.setText(adoptionData.getAdoptionCatName());
 //            Picasso.get().load(adoptionData.getAdoptionCatPhoto()).resize(128, 128).into(holder.photo);
-                if (cPhoto.equals("")) {
+                if (adoptionData.getAdoptionCatPhoto().equals("")) {
                     String noPhoto = "@drawable/no_image";
                     int imageResource = getResources().getIdentifier(noPhoto, null, getPackageName());
                     Drawable res = getResources().getDrawable(imageResource);

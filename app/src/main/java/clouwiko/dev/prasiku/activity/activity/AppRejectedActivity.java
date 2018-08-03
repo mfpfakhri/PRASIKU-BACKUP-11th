@@ -130,7 +130,7 @@ public class AppRejectedActivity extends AppCompatActivity {
         public void onBindViewHolder(AppRejectedAdapter.AppRejectedViewHolder holder, int position) {
             Adoption receivedData = adoptionList.get(position);
             String applicantname = receivedData.getAdoptionApplicantName().toString().trim();
-            String catname = receivedData.getAdoptionCatName().toString().trim();
+            final String catname = receivedData.getAdoptionCatName().toString().trim();
             String apponstatus = receivedData.getAdoptionApplicationStatus().toString().trim();
             final String applicationid = receivedData.getAdoptionId().toString().trim();
             final String catid = receivedData.getAdoptionCatId().toString().trim();
@@ -188,6 +188,7 @@ public class AppRejectedActivity extends AppCompatActivity {
                     Intent intent = new Intent(getApplicationContext(), AppRejectedReviewActivity.class);
                     intent.putExtra("application_id", applicationid);
                     intent.putExtra("cat_id", catid);
+                    intent.putExtra("cat_name", catname);
                     startActivity(intent);
                     finish();
                 }

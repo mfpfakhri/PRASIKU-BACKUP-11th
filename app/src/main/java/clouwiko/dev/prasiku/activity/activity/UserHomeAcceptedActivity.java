@@ -106,7 +106,7 @@ public class UserHomeAcceptedActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(UserHomeAcceptedActivity.this);
-                builder.setMessage("Apakah Anda yakin ingin melaporkan pengadopsi ini?")
+                builder.setMessage("Apakah Anda Yakin Ingin Melaporkan Pengadopsi Ini?")
                         .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {

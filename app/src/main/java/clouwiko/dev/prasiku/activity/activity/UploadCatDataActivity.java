@@ -218,9 +218,7 @@ public class UploadCatDataActivity extends AppCompatActivity {
                     return;
                 }
                 addCatData();
-                Toast.makeText(UploadCatDataActivity.this, "Berhasil Mengunggah Data Kucing Anda", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(UploadCatDataActivity.this, MainMenuActivity.class));
-                finish();
+                Toast.makeText(UploadCatDataActivity.this, "Sedang Mengunggah Data Kucing", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -276,7 +274,7 @@ public class UploadCatDataActivity extends AppCompatActivity {
                         String dob = inputCatDob.getText().toString().trim();
                         String spinnerGender = spinnerCatGender.getSelectedItem().toString().trim();
                         String setcatgender = null;
-                        switch (spinnerGender){
+                        switch (spinnerGender) {
                             case "Jantan":
                                 setcatgender = "Male";
                                 break;
@@ -291,7 +289,7 @@ public class UploadCatDataActivity extends AppCompatActivity {
                         String medNote = inputCatMedNote.getText().toString().trim();
                         String vacc = radioButtonVacc.getText().toString().trim();
                         String setvacc = null;
-                        switch (vacc){
+                        switch (vacc) {
                             case "Ya, Sudah Divaksin":
                                 setvacc = "Yes, Already Vaccinated";
                                 break;
@@ -301,7 +299,7 @@ public class UploadCatDataActivity extends AppCompatActivity {
                         }
                         String spayNeuter = radioButtonSpayNeuter.getText().toString().trim();
                         String setspayneuter = null;
-                        switch (spayNeuter){
+                        switch (spayNeuter) {
                             case "Ya, Sudah Dikastrasi":
                                 setspayneuter = "Yes, Already Spayed/ Neutered";
                                 break;
@@ -349,7 +347,14 @@ public class UploadCatDataActivity extends AppCompatActivity {
 
                         Cat cat = new Cat(id, ownerId, cPhotoUrl, name, dob, setcatgender, desc, medNote, setvacc, setspayneuter, setreason, province, city, adoptedstatus, deletestatus, ownerdeletestatus, citydeletestatus);
 
-                        databaseCats.child(id).setValue(cat);
+                        databaseCats.child(id).setValue(cat).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Toast.makeText(UploadCatDataActivity.this, "Berhasil Mengunggah Data Kucing Anda", Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(UploadCatDataActivity.this, MainMenuActivity.class));
+                                finish();
+                            }
+                        });
                     }
                 });
     }

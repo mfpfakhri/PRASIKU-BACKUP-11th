@@ -50,7 +50,7 @@ public class AppAcceptedReviewActivity extends AppCompatActivity {
     private String TAG = "AppAcceptedReviewActivity";
     private ImageView imCatPhoto;
     private TextView tvAppName, tvCatName, tvPhone, tvAddress, tvJob, tvReason, tvNoA, tvHouseType, tvHouseSize, tvNoP, tvCatPlace, tvHouseMember, tvMovingPlan, tvMarriagePlan, tvKids, tvFinancial, tvAppStatus;
-    private Button btnSaveNum, btnWa, btnMessage, btnAgreement;
+    private Button btnSaveNum, btnWa, btnMessage, btnAgreement, btnReport;
     private FirebaseAuth auth;
     private DatabaseReference databaseAdoptions, databaseCats;
     private static final int PERMISSION_REQUEST_STORAGE = 1;
@@ -90,6 +90,7 @@ public class AppAcceptedReviewActivity extends AppCompatActivity {
         btnWa = findViewById(R.id.appacceptedreview_whatsapp_button);
         btnMessage = findViewById(R.id.appacceptedreview_message_button);
         btnAgreement = findViewById(R.id.appacceptedreview_agreement_button);
+        btnReport = findViewById(R.id.report_button);
 
         databaseAdoptions = FirebaseDatabase.getInstance().getReference().child("adoptions").child(appId);
         databaseAdoptions.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -219,7 +220,7 @@ public class AppAcceptedReviewActivity extends AppCompatActivity {
             }
         });
 
-        tvAppName.setOnClickListener(new View.OnClickListener() {
+        btnReport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 databaseAdoptions = FirebaseDatabase.getInstance().getReference().child("adoptions").child(appId);
@@ -283,7 +284,7 @@ public class AppAcceptedReviewActivity extends AppCompatActivity {
                     sendIntent.setPackage("com.whatsapp");
                     startActivity(sendIntent);
                 } catch (android.content.ActivityNotFoundException ex) {
-                    Toast.makeText(getApplicationContext(), "Whatsapp belum dipasang pada perangkat.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Whatsapp Belum Dipasang Pada Perangkat.", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.whatsapp")));
                 }
             }
@@ -408,7 +409,7 @@ public class AppAcceptedReviewActivity extends AppCompatActivity {
                         try{
                             AppAcceptedReviewActivity.this.startActivity(pdfOpenIntent);
                         } catch (ActivityNotFoundException e) {
-                            Toast.makeText(getApplicationContext(), "Tidak ada aplikasi yang dapat membuka surat perjanjian adopsi", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Tidak Ada Aplikasi Yang Dapat Membuka Surat Perjanjian Adopsi", Toast.LENGTH_SHORT).show();
                         }
                     }
                 })
@@ -450,10 +451,10 @@ public class AppAcceptedReviewActivity extends AppCompatActivity {
             File outfile = new File(dirPath, filename);
             out = new FileOutputStream(outfile);
             downloadFile(in, out);
-            Toast.makeText(this, "Surat perjanjian telah diunduh, periksa memori penyimpanan Anda", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Surat Perjanjian Telah Diunduh, Periksa Memori Penyimpanan Anda", Toast.LENGTH_SHORT).show();
         } catch (IOException e) {
             e.printStackTrace();
-            Toast.makeText(this, "Gagal mengunduh surat perjanjian", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Gagal Mengunduh Surat Perjanjian", Toast.LENGTH_SHORT).show();
         } finally {
             if (in != null) {
                 try {

@@ -199,8 +199,8 @@ public class ReportFormActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         AlertDialog.Builder builder = new AlertDialog.Builder(ReportFormActivity.this);
-        builder.setMessage("Are You sure want to quit?")
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+        builder.setMessage("Apakah Anda Yakin Ingin Kembali?")
+                .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         String applicationid = getIntent().getStringExtra("application_id");
@@ -211,7 +211,7 @@ public class ReportFormActivity extends AppCompatActivity {
                         startActivity(intent);
                     }
                 })
-                .setNegativeButton("No", null);
+                .setNegativeButton("Tidak", null);
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }
