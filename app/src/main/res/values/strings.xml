@@ -158,8 +158,10 @@
     <string name="findcat_city">Pilih Kota</string>
     <string name="whatsapp">Whatsapp</string>
     <string name="sms">Kirim Pesan</string>
-    <string name="acceptasadopter">Terima</string>
+    <string name="acceptasadopter">Setuju</string>
     <string name="rejectadopter">Tolak</string>
+
+    <string name="about_us_desc">SIKUCING adalah aplikasi yang bertujuan untuk membantu komunitas atau individu yang ingin melepas adopsi kucing yang dimiliki, agar menemukan keluarga barunya. Untuk memakai aplikasi SIKUCING pemilik kucing mengunggah data kucing yang ingin dilepas adopsi, kemudian calon pengadopsi dapat mencari kucing yang dapat diadopsi dengan memasukkan lokasi yang yang diinginkan. Aplikasi SIKUCING dikembangkan oleh Muhammad Fakhrian Putra dengan model pengembangan menggunakan contoh dari Komunitas Indonesia Peduli Kucing Terlantar dan UNDIP Cat Lovers.</string>
 
     <string-array name="gender">
         <item>Pria</item>

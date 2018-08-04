@@ -42,10 +42,10 @@
 
     <item android:title="@string/nav_others_root">
         <menu>
-            <item
-                android:id="@+id/nav_tutorial"
-                android:icon="@drawable/ic_chrome_reader_mode_black_24dp"
-                android:title="@string/tutorial" />
+            <!--<item-->
+                <!--android:id="@+id/nav_tutorial"-->
+                <!--android:icon="@drawable/ic_chrome_reader_mode_black_24dp"-->
+                <!--android:title="@string/tutorial" />-->
             <item
                 android:id="@+id/nav_about_us"
                 android:icon="@drawable/ic_info_outline_black_24dp"

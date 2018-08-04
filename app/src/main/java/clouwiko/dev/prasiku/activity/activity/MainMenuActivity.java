@@ -311,8 +311,8 @@ public class MainMenuActivity extends AppCompatActivity
             startActivity(new Intent(getApplicationContext(), AppAcceptedActivity.class));
         } else if (id == R.id.nav_app_rejected) {
             startActivity(new Intent(getApplicationContext(), AppRejectedActivity.class));
-        } else if (id == R.id.nav_tutorial) {
-            startActivity(new Intent(getApplicationContext(), TutorialActivity.class));
+//        } else if (id == R.id.nav_tutorial) {
+//            startActivity(new Intent(getApplicationContext(), TutorialActivity.class));
         } else if (id == R.id.nav_about_us) {
             startActivity(new Intent(getApplicationContext(), AboutUsActivity.class));
         }
