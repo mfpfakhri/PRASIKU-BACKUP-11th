@@ -43,6 +43,7 @@ public class UserApplicationListActivity extends AppCompatActivity {
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseCats, databaseAdoptions;
     private FirebaseAuth auth;
+//    private TextView emptyApplicationText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +54,7 @@ public class UserApplicationListActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Pengajuan Adopsi Saya");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        emptyApplicationText = findViewById(R.id.application_empty_message);
 
         applicationRecyclerView = (RecyclerView) findViewById(R.id.main_applicationlist);
         applicationRecyclerView.setHasFixedSize(true);
@@ -71,7 +73,12 @@ public class UserApplicationListActivity extends AppCompatActivity {
         //Firebase Database
         firebaseDatabase = FirebaseDatabase.getInstance();
 
-        getUserAdoptionList();
+//        if (linearLayoutManager.getItemCount() == 0) {
+//            emptyApplicationText.setText("Anda Belum Mengajukan Adopsi Kucing");
+//        } else {
+//            emptyApplicationText.setVisibility(View.GONE);
+            getUserAdoptionList();
+//        }
     }
 
     void getUserAdoptionList() {
@@ -84,9 +91,14 @@ public class UserApplicationListActivity extends AppCompatActivity {
         databaseAdoptions.orderByChild("adoptionApplicantIdDeleteStatus").equalTo(applicantdeletestatus).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                Adoption adoptionData = dataSnapshot.getValue(Adoption.class);
-                applicationLists.add(adoptionData);
-                applicationRecyclerView.setAdapter(applicationListAdapter);
+//                if (dataSnapshot.exists()) {
+                    Adoption adoptionData = dataSnapshot.getValue(Adoption.class);
+                    applicationLists.add(adoptionData);
+                    applicationRecyclerView.setAdapter(applicationListAdapter);
+//                } else {
+//                    emptyApplicationText.setText("Anda Belum Mengajukan Adopsi Kucing");
+//                }
+
             }
 
             @Override
@@ -130,59 +142,59 @@ public class UserApplicationListActivity extends AppCompatActivity {
 //            if (applicationListAdapter.getItemCount() == 0){
 //
 //            } else {
-                Adoption adoptionData = applicationListArray.get(position);
-                final String oId = adoptionData.getAdoptionOwnerId();
-                final String cId = adoptionData.getAdoptionCatId();
-                final String aId = adoptionData.getAdoptionApplicantId();
-                final String appId = adoptionData.getAdoptionId();
-                String cPhoto = adoptionData.getAdoptionCatPhoto();
-                String aStatus = adoptionData.getAdoptionApplicationStatus();
-                String setstatus = null;
-                switch (aStatus){
-                    case "Received":
-                        setstatus = "Diterima";
-                        SpannableStringBuilder receivedBuilder = new SpannableStringBuilder();
-                        SpannableString receivedSpannable = new SpannableString(setstatus);
-                        receivedSpannable.setSpan(new ForegroundColorSpan(Color.BLUE),0, receivedSpannable.length(), 0);
-                        receivedBuilder.append(receivedSpannable);
-                        holder.status.setText(receivedBuilder, TextView.BufferType.SPANNABLE);
-                        break;
-                    case "Accepted":
-                        setstatus = "Disetujui";
-                        SpannableStringBuilder acceptedBuilder = new SpannableStringBuilder();
-                        SpannableString acceptedSpannable = new SpannableString(setstatus);
-                        acceptedSpannable.setSpan(new ForegroundColorSpan(Color.GREEN),0, acceptedSpannable.length(), 0);
-                        acceptedBuilder.append(acceptedSpannable);
-                        holder.status.setText(acceptedBuilder, TextView.BufferType.SPANNABLE);
-                        break;
-                    case "Rejected":
-                        setstatus = "Ditolak";
-                        SpannableStringBuilder rejectedBuilder = new SpannableStringBuilder();
-                        SpannableString rejectedSpannable = new SpannableString(setstatus);
-                        rejectedSpannable.setSpan(new ForegroundColorSpan(Color.RED),0, rejectedSpannable.length(), 0);
-                        rejectedBuilder.append(rejectedSpannable);
-                        holder.status.setText(rejectedBuilder, TextView.BufferType.SPANNABLE);
-                        break;
-                }
-                holder.name.setText(adoptionData.getAdoptionCatName());
+            Adoption adoptionData = applicationListArray.get(position);
+            final String oId = adoptionData.getAdoptionOwnerId();
+            final String cId = adoptionData.getAdoptionCatId();
+            final String aId = adoptionData.getAdoptionApplicantId();
+            final String appId = adoptionData.getAdoptionId();
+            String cPhoto = adoptionData.getAdoptionCatPhoto();
+            String aStatus = adoptionData.getAdoptionApplicationStatus();
+            String setstatus = null;
+            switch (aStatus) {
+                case "Received":
+                    setstatus = "Diterima";
+                    SpannableStringBuilder receivedBuilder = new SpannableStringBuilder();
+                    SpannableString receivedSpannable = new SpannableString(setstatus);
+                    receivedSpannable.setSpan(new ForegroundColorSpan(Color.BLUE), 0, receivedSpannable.length(), 0);
+                    receivedBuilder.append(receivedSpannable);
+                    holder.status.setText(receivedBuilder, TextView.BufferType.SPANNABLE);
+                    break;
+                case "Accepted":
+                    setstatus = "Disetujui";
+                    SpannableStringBuilder acceptedBuilder = new SpannableStringBuilder();
+                    SpannableString acceptedSpannable = new SpannableString(setstatus);
+                    acceptedSpannable.setSpan(new ForegroundColorSpan(Color.GREEN), 0, acceptedSpannable.length(), 0);
+                    acceptedBuilder.append(acceptedSpannable);
+                    holder.status.setText(acceptedBuilder, TextView.BufferType.SPANNABLE);
+                    break;
+                case "Rejected":
+                    setstatus = "Ditolak";
+                    SpannableStringBuilder rejectedBuilder = new SpannableStringBuilder();
+                    SpannableString rejectedSpannable = new SpannableString(setstatus);
+                    rejectedSpannable.setSpan(new ForegroundColorSpan(Color.RED), 0, rejectedSpannable.length(), 0);
+                    rejectedBuilder.append(rejectedSpannable);
+                    holder.status.setText(rejectedBuilder, TextView.BufferType.SPANNABLE);
+                    break;
+            }
+            holder.name.setText(adoptionData.getAdoptionCatName());
 //            Picasso.get().load(adoptionData.getAdoptionCatPhoto()).resize(128, 128).into(holder.photo);
-                if (adoptionData.getAdoptionCatPhoto().equals("")) {
-                    String noPhoto = "@drawable/no_image";
-                    int imageResource = getResources().getIdentifier(noPhoto, null, getPackageName());
-                    Drawable res = getResources().getDrawable(imageResource);
-                    holder.photo.setImageDrawable(res);
-                } else {
-                    Picasso.get().load(cPhoto).resize(64, 64).into(holder.photo);
+            if (adoptionData.getAdoptionCatPhoto().equals("")) {
+                String noPhoto = "@drawable/no_image";
+                int imageResource = getResources().getIdentifier(noPhoto, null, getPackageName());
+                Drawable res = getResources().getDrawable(imageResource);
+                holder.photo.setImageDrawable(res);
+            } else {
+                Picasso.get().load(cPhoto).resize(64, 64).into(holder.photo);
+            }
+            holder.layoutroot.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getApplicationContext(), UserApplicationListReviewActivity.class);
+                    intent.putExtra("application_id", appId);
+                    startActivity(intent);
+                    finish();
                 }
-                holder.layoutroot.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(getApplicationContext(), UserApplicationListReviewActivity.class);
-                        intent.putExtra("application_id", appId);
-                        startActivity(intent);
-                        finish();
-                    }
-                });
+            });
 //            }
         }
 

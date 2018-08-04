@@ -196,10 +196,12 @@ public class CatProfileApplicantAdoptedActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         String pActivity = getIntent().getStringExtra("previousActivity");
+        String locHistory = getIntent().getStringExtra("locHistory");
         Intent intentFindCat = new Intent(getApplicationContext(), FindCatForAdoptActivity.class);
         Intent intentMainMenu = new Intent(getApplicationContext(), MainMenuActivity.class);
 
         if (pActivity.equals("findcat")) {
+            intentFindCat.putExtra("locHistory", locHistory);
             startActivity(intentFindCat);
             finish();
         } else {

@@ -65,7 +65,7 @@ public class CatProfileOwnerAvailableActivity extends AppCompatActivity {
         btnAdopted.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "Tidak Bisa Mengadopsi Kucing Milik Sendiri", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Kucing Milik Sendiri", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -75,10 +75,12 @@ public class CatProfileOwnerAvailableActivity extends AppCompatActivity {
                 String catId = getIntent().getStringExtra("cat_id");
                 String ownerId = getIntent().getStringExtra("owner_id");
                 String pActivity = getIntent().getStringExtra("previousActivity");
+                String locHistory = getIntent().getStringExtra("locHistory");
                 Intent intent = new Intent(getApplicationContext(), EditCatDataAvailableActivity.class);
                 intent.putExtra("cat_id", catId);
                 intent.putExtra("owner_id", ownerId);
                 intent.putExtra("previousActivity", pActivity);
+                intent.putExtra("locHistory", locHistory);
                 startActivity(intent);
                 finish();
             }
@@ -296,6 +298,7 @@ public class CatProfileOwnerAvailableActivity extends AppCompatActivity {
             fam.close(true);
         } else {
             String pActivity = getIntent().getStringExtra("previousActivity");
+            String locHistory = getIntent().getStringExtra("locHistory");
             Intent intentAdoptionList = new Intent(getApplicationContext(), UserCatListActivity.class);
             Intent intentFindCat = new Intent(getApplicationContext(), FindCatForAdoptActivity.class);
             Intent intentMainMenu = new Intent(getApplicationContext(), MainMenuActivity.class);
@@ -304,6 +307,7 @@ public class CatProfileOwnerAvailableActivity extends AppCompatActivity {
                 startActivity(intentAdoptionList);
                 finish();
             } else if (pActivity.equals("findcat")){
+                intentFindCat.putExtra("locHistory", locHistory);
                 startActivity(intentFindCat);
                 finish();
             } else {

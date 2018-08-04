@@ -310,7 +310,7 @@ public class SignUpActivity extends AppCompatActivity {
                 //DOB Validation
                 String dobDate = inputDob.getText().toString().trim();
                 if (TextUtils.isEmpty(dobDate)) {
-                    Toast.makeText(getApplicationContext(), "Ketik Tanggal Lahir Anda", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Masukkan Tanggal Lahir Anda", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -363,6 +363,7 @@ public class SignUpActivity extends AppCompatActivity {
                     return;
                 }
 //                isEmailExist(email);
+                btnSignUp.setEnabled(false);
                 auth.fetchProvidersForEmail(email)
                         .addOnCompleteListener(new OnCompleteListener<ProviderQueryResult>() {
                             @Override

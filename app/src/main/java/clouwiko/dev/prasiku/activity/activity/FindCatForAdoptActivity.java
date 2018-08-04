@@ -205,12 +205,53 @@ public class FindCatForAdoptActivity extends AppCompatActivity {
                 }
             }
         });
+
+        String locHistory = getIntent().getStringExtra("locHistory");
+        if (locHistory == null) {
+
+        } else {
+            spinnerProvinces.setVisibility(View.GONE);
+            spinnerCities.setVisibility(View.GONE);
+            btnSearchCat.setVisibility(View.GONE);
+            //Database Reference
+            databaseCats = FirebaseDatabase.getInstance().getReference().child("cats");
+            databaseCats.orderByChild("catCityDeleteStatus").equalTo(locHistory).addChildEventListener(new ChildEventListener() {
+                @Override
+                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                    Cat userCatData = dataSnapshot.getValue(Cat.class);
+                    catLists.add(userCatData);
+                    catResultsRecyclerView.setAdapter(findCatAdapter);
+                }
+
+                @Override
+                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                }
+
+                @Override
+                public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                }
+
+                @Override
+                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+        }
     }
 
     void getCatList() {
         //Firebase Current User UID
         String userUID = auth.getUid();
 
+//        String locHistory = getIntent().getStringExtra("locHistory");
+//        if (locHistory == null){
         String keyCityValue = spinnerCities.getSelectedItem().toString().trim();
         String cityDeleteStatus = keyCityValue + "_0";
 
@@ -244,6 +285,38 @@ public class FindCatForAdoptActivity extends AppCompatActivity {
 
             }
         });
+//        } else {
+//            //Database Reference
+//            databaseCats = FirebaseDatabase.getInstance().getReference().child("cats");
+//            databaseCats.orderByChild("catCityDeleteStatus").equalTo(locHistory).addChildEventListener(new ChildEventListener() {
+//                @Override
+//                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+//                    Cat userCatData = dataSnapshot.getValue(Cat.class);
+//                    catLists.add(userCatData);
+//                    catResultsRecyclerView.setAdapter(findCatAdapter);
+//                }
+//
+//                @Override
+//                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+//
+//                }
+//
+//                @Override
+//                public void onChildRemoved(DataSnapshot dataSnapshot) {
+//
+//                }
+//
+//                @Override
+//                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+//
+//                }
+//
+//                @Override
+//                public void onCancelled(DatabaseError databaseError) {
+//
+//                }
+//            });
+//        }
     }
 
     public class FindCatAdapter extends RecyclerView.Adapter<FindCatForAdoptActivity.FindCatAdapter.AdoptCatViewHolder> {
@@ -330,47 +403,103 @@ public class FindCatForAdoptActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     //Firebase Current User Logged In ID
                     String userID = auth.getCurrentUser().getUid().toString().trim();
+                    String locHistory = getIntent().getStringExtra("locHistory");
+                    if (locHistory == null) {
+                        String keyCityValue = spinnerCities.getSelectedItem().toString().trim();
+                        String cityDeleteStatus = keyCityValue + "_0";
 
-                    if (userID.equals(oId)) {
-                        if (cStat.equals("Available")) {
-                            Intent intent = new Intent(getApplicationContext(), CatProfileOwnerAvailableActivity.class);
-                            intent.putExtra("previousActivity", "findcat");
-                            intent.putExtra("owner_id", oId);
-                            intent.putExtra("cat_id", cId);
-                            startActivity(intent);
-                            finish();
-                        } else if (cStat.equals("Adopted")) {
-                            Intent intent = new Intent(getApplicationContext(), CatProfileOwnerAdoptedActivity.class);
-                            intent.putExtra("previousActivity", "findcat");
-                            intent.putExtra("owner_id", oId);
-                            intent.putExtra("cat_id", cId);
-                            startActivity(intent);
-                            finish();
+                        if (userID.equals(oId)) {
+                            if (cStat.equals("Available")) {
+                                Intent intent = new Intent(getApplicationContext(), CatProfileOwnerAvailableActivity.class);
+                                intent.putExtra("previousActivity", "findcat");
+                                intent.putExtra("owner_id", oId);
+                                intent.putExtra("cat_id", cId);
+                                intent.putExtra("locHistory", cityDeleteStatus);
+                                startActivity(intent);
+                                finish();
+                            } else if (cStat.equals("Adopted")) {
+                                Intent intent = new Intent(getApplicationContext(), CatProfileOwnerAdoptedActivity.class);
+                                intent.putExtra("previousActivity", "findcat");
+                                intent.putExtra("owner_id", oId);
+                                intent.putExtra("cat_id", cId);
+                                intent.putExtra("locHistory", cityDeleteStatus);
+                                startActivity(intent);
+                                finish();
+                            } else {
+                                Toast.makeText(getApplicationContext(), "You have no right to choose this option", Toast.LENGTH_SHORT).show();
+                            }
                         } else {
-                            Toast.makeText(getApplicationContext(), "You have no right to choose this option", Toast.LENGTH_SHORT).show();
+                            if (cStat.equals("Available")) {
+                                String applicantname = getIntent().getStringExtra("applicant_name");
+                                String applicantphoto = getIntent().getStringExtra("applicant_photo");
+                                Intent intent = new Intent(getApplicationContext(), CatProfileApplicantAvailableActivity.class);
+                                intent.putExtra("previousActivity", "findcat");
+                                intent.putExtra("owner_id", oId);
+                                intent.putExtra("cat_id", cId);
+                                intent.putExtra("cat_name", cName);
+                                intent.putExtra("cat_photo", cPhoto);
+                                intent.putExtra("applicant_name", applicantname);
+                                intent.putExtra("locHistory", cityDeleteStatus);
+                                startActivity(intent);
+                                finish();
+                            } else if (cStat.equals("Adopted")) {
+                                Intent intent = new Intent(getApplicationContext(), CatProfileApplicantAdoptedActivity.class);
+                                intent.putExtra("previousActivity", "findcat");
+                                intent.putExtra("owner_id", oId);
+                                intent.putExtra("cat_id", cId);
+                                intent.putExtra("locHistory", cityDeleteStatus);
+                                startActivity(intent);
+                                finish();
+                            } else {
+                                Toast.makeText(getApplicationContext(), "You have no right to choose this option", Toast.LENGTH_SHORT).show();
+                            }
                         }
                     } else {
-                        if (cStat.equals("Available")) {
-                            String applicantname = getIntent().getStringExtra("applicant_name");
-                            String applicantphoto = getIntent().getStringExtra("applicant_photo");
-                            Intent intent = new Intent(getApplicationContext(), CatProfileApplicantAvailableActivity.class);
-                            intent.putExtra("previousActivity", "findcat");
-                            intent.putExtra("owner_id", oId);
-                            intent.putExtra("cat_id", cId);
-                            intent.putExtra("cat_name", cName);
-                            intent.putExtra("cat_photo", cPhoto);
-                            intent.putExtra("applicant_name", applicantname);
-                            startActivity(intent);
-                            finish();
-                        } else if (cStat.equals("Adopted")) {
-                            Intent intent = new Intent(getApplicationContext(), CatProfileApplicantAdoptedActivity.class);
-                            intent.putExtra("previousActivity", "findcat");
-                            intent.putExtra("owner_id", oId);
-                            intent.putExtra("cat_id", cId);
-                            startActivity(intent);
-                            finish();
+                        if (userID.equals(oId)) {
+                            if (cStat.equals("Available")) {
+                                Intent intent = new Intent(getApplicationContext(), CatProfileOwnerAvailableActivity.class);
+                                intent.putExtra("previousActivity", "findcat");
+                                intent.putExtra("owner_id", oId);
+                                intent.putExtra("cat_id", cId);
+                                intent.putExtra("locHistory", locHistory);
+                                startActivity(intent);
+                                finish();
+                            } else if (cStat.equals("Adopted")) {
+                                Intent intent = new Intent(getApplicationContext(), CatProfileOwnerAdoptedActivity.class);
+                                intent.putExtra("previousActivity", "findcat");
+                                intent.putExtra("owner_id", oId);
+                                intent.putExtra("cat_id", cId);
+                                intent.putExtra("locHistory", locHistory);
+                                startActivity(intent);
+                                finish();
+                            } else {
+                                Toast.makeText(getApplicationContext(), "You have no right to choose this option", Toast.LENGTH_SHORT).show();
+                            }
                         } else {
-                            Toast.makeText(getApplicationContext(), "You have no right to choose this option", Toast.LENGTH_SHORT).show();
+                            if (cStat.equals("Available")) {
+                                String applicantname = getIntent().getStringExtra("applicant_name");
+                                String applicantphoto = getIntent().getStringExtra("applicant_photo");
+                                Intent intent = new Intent(getApplicationContext(), CatProfileApplicantAvailableActivity.class);
+                                intent.putExtra("previousActivity", "findcat");
+                                intent.putExtra("owner_id", oId);
+                                intent.putExtra("cat_id", cId);
+                                intent.putExtra("cat_name", cName);
+                                intent.putExtra("cat_photo", cPhoto);
+                                intent.putExtra("applicant_name", applicantname);
+                                intent.putExtra("locHistory", locHistory);
+                                startActivity(intent);
+                                finish();
+                            } else if (cStat.equals("Adopted")) {
+                                Intent intent = new Intent(getApplicationContext(), CatProfileApplicantAdoptedActivity.class);
+                                intent.putExtra("previousActivity", "findcat");
+                                intent.putExtra("owner_id", oId);
+                                intent.putExtra("cat_id", cId);
+                                intent.putExtra("locHistory", locHistory);
+                                startActivity(intent);
+                                finish();
+                            } else {
+                                Toast.makeText(getApplicationContext(), "You have no right to choose this option", Toast.LENGTH_SHORT).show();
+                            }
                         }
                     }
                 }
@@ -401,7 +530,12 @@ public class FindCatForAdoptActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(getApplicationContext(), MainMenuActivity.class);
-        startActivity(intent);
+        if (btnSearchCat.getVisibility() == View.VISIBLE){
+            Intent intent = new Intent(getApplicationContext(), MainMenuActivity.class);
+            startActivity(intent);
+        } else {
+            Intent intent = new Intent(getApplicationContext(), FindCatForAdoptActivity.class);
+            startActivity(intent);
+        }
     }
 }

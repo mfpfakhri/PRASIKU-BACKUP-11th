@@ -58,12 +58,14 @@ public class CatProfileApplicantAvailableActivity extends AppCompatActivity {
                 String cName = getIntent().getStringExtra("cat_name");
                 String cPhoto = getIntent().getStringExtra("cat_photo");
                 String applicantname = getIntent().getStringExtra("applicant_name");
+//                String locHistory = getIntent().getStringExtra("locHistory");
                 Intent intent = new Intent(getApplicationContext(), ApplicantAdoptionFormActivity.class);
                 intent.putExtra("owner_id", oId);
                 intent.putExtra("cat_id", cId);
                 intent.putExtra("cat_name", cName);
                 intent.putExtra("cat_photo", cPhoto);
                 intent.putExtra("applicant_name", applicantname);
+//                intent.putExtra("locHistory", locHistory);
                 startActivity(intent);
                 finish();
             }
@@ -209,11 +211,13 @@ public class CatProfileApplicantAvailableActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         String pActivity = getIntent().getStringExtra("previousActivity");
+        String locHistory = getIntent().getStringExtra("locHistory");
         Intent intentFindCat = new Intent(getApplicationContext(), FindCatForAdoptActivity.class);
         Intent intentMainMenu = new Intent(getApplicationContext(), MainMenuActivity.class);
 
         if (pActivity.equals("findcat")) {
             intentFindCat.putExtra("previousActivity", "findcat");
+            intentFindCat.putExtra("locHistory", locHistory);
             startActivity(intentFindCat);
             finish();
         } else {

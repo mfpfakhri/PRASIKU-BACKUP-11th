@@ -1534,9 +1534,11 @@ public class EditCatDataAvailableActivity extends AppCompatActivity {
                         String ownerId = getIntent().getStringExtra("owner_id");
                         Intent intent = new Intent(getApplicationContext(), CatProfileOwnerAvailableActivity.class);
                         if (pActivity.equals("findcat")) {
+                            String locHistory = getIntent().getStringExtra("locHistory");
                             intent.putExtra("previousActivity", pActivity);
                             intent.putExtra("cat_id", catId);
                             intent.putExtra("owner_id", ownerId);
+                            intent.putExtra("locHistory", locHistory);
                             startActivity(intent);
                             finish();
                         } else if (pActivity.equals("adoptionlist")) {

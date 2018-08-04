@@ -78,7 +78,7 @@
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="8dp"
                         android:background="@drawable/rounded_corner_button"
-                        android:text="@string/available"
+                        android:text="@string/my_cat"
                         android:textAllCaps="false"
                         android:textColor="#ffffff"
                         android:textSize="14dp" />

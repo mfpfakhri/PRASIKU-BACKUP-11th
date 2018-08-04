@@ -3,6 +3,7 @@ package clouwiko.dev.prasiku.activity.activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,7 +18,9 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -25,6 +28,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Arrays;
 import java.util.regex.Matcher;
@@ -90,6 +95,8 @@ public class ApplicantAdoptionFormActivity extends AppCompatActivity {
         btnApply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+//                checkApplicantApplied();
+
                 //Applicant Phone Validation
                 String phoneValidation = etPhone.getText().toString();
                 if (TextUtils.isEmpty(phoneValidation)) {
@@ -131,7 +138,7 @@ public class ApplicantAdoptionFormActivity extends AppCompatActivity {
 
                 }
                 String validNoa = "^\\d{1,3}$";
-                Matcher matcherNoa= Pattern.compile(validNoa).matcher(noAnimalValidation);
+                Matcher matcherNoa = Pattern.compile(validNoa).matcher(noAnimalValidation);
                 if (matcherNoa.matches()) {
 
                 } else {
@@ -255,7 +262,7 @@ public class ApplicantAdoptionFormActivity extends AppCompatActivity {
                 String animallive = etAnimalLive.getText().toString().trim();
                 String housetype = msHouseType.getSelectedItem().toString().trim();
                 String sethousetype = null;
-                switch (housetype){
+                switch (housetype) {
                     case "Milik Sendiri":
                         sethousetype = "Home";
                         break;
@@ -277,7 +284,7 @@ public class ApplicantAdoptionFormActivity extends AppCompatActivity {
                 }
                 String familypermission = rbFamilyPermission.getText().toString().trim();
                 String setfamilypermission = null;
-                switch (familypermission){
+                switch (familypermission) {
                     case "Sudah":
                         setfamilypermission = "Yes";
                         break;
@@ -286,8 +293,8 @@ public class ApplicantAdoptionFormActivity extends AppCompatActivity {
                         break;
                 }
                 String movingplan = rbMovingPlan.getText().toString().trim();
-                String setmovingplan= null;
-                switch (movingplan){
+                String setmovingplan = null;
+                switch (movingplan) {
                     case "Sudah":
                         setmovingplan = "Yes";
                         break;
@@ -297,7 +304,7 @@ public class ApplicantAdoptionFormActivity extends AppCompatActivity {
                 }
                 String marriageplan = rbMarriagePlan.getText().toString().trim();
                 String setmarriageplan = null;
-                switch (marriageplan){
+                switch (marriageplan) {
                     case "Sudah":
                         setmarriageplan = "Yes";
                         break;
@@ -307,7 +314,7 @@ public class ApplicantAdoptionFormActivity extends AppCompatActivity {
                 }
                 String kidsinhouse = rbKids.getText().toString().trim();
                 String setkids = null;
-                switch (kidsinhouse){
+                switch (kidsinhouse) {
                     case "Sudah":
                         setkids = "Yes";
                         break;
@@ -317,7 +324,7 @@ public class ApplicantAdoptionFormActivity extends AppCompatActivity {
                 }
                 String financial = rbFinancial.getText().toString().trim();
                 String setfinancial = null;
-                switch (financial){
+                switch (financial) {
                     case "Sudah":
                         setfinancial = "Yes";
                         break;
@@ -332,9 +339,9 @@ public class ApplicantAdoptionFormActivity extends AppCompatActivity {
                 String cat_status = catId + "_" + status;
                 Adoption adoption = new Adoption(delete_status, adoptionId, catId, ownerId, applicantId, applicantIdDelete, phone, address, job, reasonwhy, numberofanimal, sethousetype, housesize, familynumber, animallive, setfamilypermission, setmovingplan, setmarriageplan, setkids, setfinancial, status, catname, catphoto, applicantname, owner_status, cat_status);
 
-                databaseAdoption.child(adoptionId).setValue(adoption).addOnSuccessListener(new OnSuccessListener<Void>() {
+                databaseAdoption.child(adoptionId).setValue(adoption).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
-                    public void onSuccess(Void aVoid) {
+                    public void onComplete(@NonNull Task<Void> task) {
                         Toast.makeText(getApplicationContext(), "Formulir Pengajuan Adopsi Anda Sudah Dikirim", Toast.LENGTH_SHORT).show();
                         backToMainMenu();
                     }
@@ -348,6 +355,24 @@ public class ApplicantAdoptionFormActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
+//    private void checkApplicantApplied(){
+//        String applicantId = auth.getCurrentUser().getUid();
+//        databaseAdoption = FirebaseDatabase.getInstance().getReference().child("adoptions");
+//        Query applicantAppliedQuery = databaseAdoption.orderByChild("adoptionApplicantId").equalTo(applicantId).addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                if (dataSnapshot.exists()){
+//                    Toast.makeText("Anda Sudah Mengajukan Adopsi Untuk Kucing Ini")
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
+//    }
 
 //    private void applyAdoption() {
 //        //Database Reference Path

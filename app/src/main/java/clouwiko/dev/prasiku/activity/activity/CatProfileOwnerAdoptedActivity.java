@@ -74,6 +74,7 @@ public class CatProfileOwnerAdoptedActivity extends AppCompatActivity {
                 final String catId = getIntent().getStringExtra("cat_id");
                 final String ownerId = getIntent().getStringExtra("owner_id");
                 final String apponstatus = catId + "_Accepted";
+                final String locHistory = getIntent().getStringExtra("locHistory");
                 databaseAdoptions = FirebaseDatabase.getInstance().getReference().child("adoptions").child("adoptionCatIdApponStatus");
                 databaseAdoptions.equalTo(apponstatus).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -87,6 +88,7 @@ public class CatProfileOwnerAdoptedActivity extends AppCompatActivity {
                                 intentadopter.putExtra("cat_id", catId);
                                 intentadopter.putExtra("owner_id", ownerId);
                                 intentadopter.putExtra("application_id", appid);
+                                intentadopter.putExtra("locHistory", locHistory);
                                 startActivity(intentadopter);
                                 finish();
                             } else {
@@ -94,6 +96,7 @@ public class CatProfileOwnerAdoptedActivity extends AppCompatActivity {
                                 intent.putExtra("previousActivity", pActivity);
                                 intent.putExtra("cat_id", catId);
                                 intent.putExtra("owner_id", ownerId);
+                                intent.putExtra("locHistory", locHistory);
                                 startActivity(intent);
                                 finish();
                             }
@@ -318,6 +321,7 @@ public class CatProfileOwnerAdoptedActivity extends AppCompatActivity {
             fam.close(true);
         } else {
             String pActivity = getIntent().getStringExtra("previousActivity");
+            final String locHistory = getIntent().getStringExtra("locHistory");
             Intent intentAdoptionList = new Intent(getApplicationContext(), UserCatListActivity.class);
             Intent intentFindCat = new Intent(getApplicationContext(), FindCatForAdoptActivity.class);
             Intent intentMainMenu = new Intent(getApplicationContext(), MainMenuActivity.class);
@@ -326,6 +330,7 @@ public class CatProfileOwnerAdoptedActivity extends AppCompatActivity {
                 startActivity(intentAdoptionList);
                 finish();
             } else if (pActivity.equals("findcat")) {
+                intentFindCat.putExtra("locHistory", locHistory);
                 startActivity(intentFindCat);
                 finish();
             } else {

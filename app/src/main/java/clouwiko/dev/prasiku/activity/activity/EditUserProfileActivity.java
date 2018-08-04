@@ -69,6 +69,10 @@ public class EditUserProfileActivity extends AppCompatActivity {
     private static final String STORAGE_PATH = "userProfilePhoto/";
     Uri uriUserPhoto;
 
+//    ArrayAdapter<String> citiesRetrieveAdapter;
+//    List<String> citiesRetrieve;
+    List<String> provincesRetrieveKey;
+
     ArrayAdapter<String> citiesAdapter;
     List<String> cities;
     List<String> provincesKey;
@@ -109,6 +113,8 @@ public class EditUserProfileActivity extends AppCompatActivity {
                 String address = userData.getUserAddress();
                 String gender = userData.getUserGender();
                 String photo = userData.getUserProfilePhoto();
+                final String province = userData.getUserProvince();
+                String city = userData.getUserCity();
                 if (userData.getUserProfilePhoto().equals("")) {
                     btnUpdatePhoto.setVisibility(View.VISIBLE);
                 } else {
@@ -125,9 +131,36 @@ public class EditUserProfileActivity extends AppCompatActivity {
                     default:
 
                 }
+                //Spinner Provinces
+                provincesRetrieveKey = new ArrayList<>();
+                databaseProvinces = FirebaseDatabase.getInstance().getReference().child("provinces");
+                //TODO:RWP change addEventListener to addListenerForSingleValueEvent
+                databaseProvinces.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        // Is better to use a List, because you don't know the size
+                        // of the iterator returned by dataSnapshot.getChildren() to
+                        // initialize the array
+                        final List<String> provinces = new ArrayList<String>();
+                        for (DataSnapshot provinceSnapshot : dataSnapshot.getChildren()) {
+                            final String provinceName = provinceSnapshot.child("provinceName").getValue(String.class);
+                            provinces.add(provinceName);
+                        }
+                        ArrayAdapter<String> provincesAdapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.spinner_style, provinces);
+                        msProvince.setAdapter(provincesAdapter);
+                        int spinnerprovinceposition = provincesAdapter.getPosition(province);
+                        msProvince.setSelection(spinnerprovinceposition+1);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
                 etName.setText(name);
                 etDob.setText(dob);
-                etPhone.setText("0"+String.valueOf(phone));
+                etPhone.setText("0" + String.valueOf(phone));
                 etAddress.setText(address);
             }
 
@@ -397,7 +430,7 @@ public class EditUserProfileActivity extends AppCompatActivity {
                                                         String address = etAddress.getText().toString().trim();
                                                         String gender = msGender.getSelectedItem().toString().trim();
                                                         String setgender = null;
-                                                        switch (gender){
+                                                        switch (gender) {
                                                             case "Pria":
                                                                 setgender = "Male";
                                                                 break;
@@ -484,7 +517,7 @@ public class EditUserProfileActivity extends AppCompatActivity {
                                         String address = etAddress.getText().toString().trim();
                                         String gender = msGender.getSelectedItem().toString().trim();
                                         String setgender = null;
-                                        switch (gender){
+                                        switch (gender) {
                                             case "Pria":
                                                 setgender = "Male";
                                                 break;
@@ -570,7 +603,7 @@ public class EditUserProfileActivity extends AppCompatActivity {
                             String address = etAddress.getText().toString().trim();
                             String gender = msGender.getSelectedItem().toString().trim();
                             String setgender = null;
-                            switch (gender){
+                            switch (gender) {
                                 case "Pria":
                                     setgender = "Male";
                                     break;
