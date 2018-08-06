@@ -146,9 +146,9 @@ public class EditUserProfileActivity extends AppCompatActivity {
                             final String provinceName = provinceSnapshot.child("provinceName").getValue(String.class);
                             provinces.add(provinceName);
                         }
-                        ArrayAdapter<String> provincesAdapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.spinner_style, provinces);
-                        msProvince.setAdapter(provincesAdapter);
-                        int spinnerprovinceposition = provincesAdapter.getPosition(province);
+                        ArrayAdapter<String> provincesRetrieveAdapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.spinner_style, provinces);
+                        msProvince.setAdapter(provincesRetrieveAdapter);
+                        int spinnerprovinceposition = provincesRetrieveAdapter.getPosition(province);
                         msProvince.setSelection(spinnerprovinceposition+1);
                     }
 
@@ -160,7 +160,7 @@ public class EditUserProfileActivity extends AppCompatActivity {
 
                 etName.setText(name);
                 etDob.setText(dob);
-                etPhone.setText("0" + String.valueOf(phone));
+                etPhone.setText(String.valueOf("0"+phone));
                 etAddress.setText(address);
             }
 

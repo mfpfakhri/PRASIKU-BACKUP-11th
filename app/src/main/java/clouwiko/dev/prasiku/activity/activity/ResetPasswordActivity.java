@@ -1,5 +1,6 @@
 package clouwiko.dev.prasiku.activity.activity;
 
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -65,5 +66,11 @@ public class ResetPasswordActivity extends AppCompatActivity {
                         });
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(ResetPasswordActivity.this, SignInActivity.class));
+        finish();
     }
 }
